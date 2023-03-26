@@ -16,6 +16,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
     }
     private Dictionary<Direction, Vector3> mDirections;
     private Direction mCurrentDirection;
+    private Border mCurrentBorder;
 
 
     public GameObject mBackground;
@@ -59,6 +60,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
 
         mBackgrounds = new List<Background>();
         mBackgrounds.Add(new Background(mBackground, mMinBorderPos, mMaxBorderPos, 0));
+        mCurrentBorder = mBackgrounds[0].getFuzzyBorder(transform.position);
 
         mEnnemies = new List<GameObject>();
         for (int i = 0; i < mEnnemy.transform.childCount; ++i)
@@ -78,6 +80,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
             updateDirection();
             if(mCurrentTrail)
             {
+                setOnBorder();
                 splitBackground();
             }
             deleteLine();
@@ -179,35 +182,102 @@ public class CharacterMoveOthogonal : MonoBehaviour
         }
     }
 
+    bool movingVertical()
+    {
+        return mCurrentDirection == Direction.Up || mCurrentDirection == Direction.Down;
+    }
+    bool movingHorizontal()
+    {
+        return mCurrentDirection == Direction.Left || mCurrentDirection == Direction.Right;
+    }
+
+    //bool onBorder()
+    //{
+    //    if (mCurrentBorder.mBorder.tag == "VerticalBorder" && movingVertical())
+    //    {
+    //
+    //    }
+    //    else if(mCurrentBorder.mBorder.tag == "VerticalBorder" && movingVertical())
+    //    {
+    //
+    //    }
+    //    return true;
+    //}
+    
     bool onBorder()
     {
-        if (transform.position.x == mMinBorderPos.x || transform.position.x == mMaxBorderPos.x)
-            return true;
-        if (transform.position.y == mMinBorderPos.y || transform.position.y == mMaxBorderPos.y)
-            return true;
-        return false;
-    }
-    //    foreach (Background background in mBackgrounds)
-    //    {
-    //        if (background.onBorder(transform.position))
-    //        {
-    //            if (mCurrentTrail)
-    //            {
-    //                Border border = background.getBorder(transform.position);
-    //                if (border.mBorder.tag == "VerticalBorder")
-    //                {
-    //                    mCurrentDirection = Direction.None;
-    //                }
-    //                else if (border.mBorder.tag == "HorizontalBorder")
-    //                {
-    //                    mCurrentDirection = Direction.None;
-    //                }
-    //            }
-    //            return true;
-    //        }
-    //    }
+    //    if (transform.position.x == mMinBorderPos.x || transform.position.x == mMaxBorderPos.x)
+    //        return true;
+    //    if (transform.position.y == mMinBorderPos.y || transform.position.y == mMaxBorderPos.y)
+    //        return true;
     //    return false;
     //}
+        foreach (Background background in mBackgrounds)
+        {
+            if (background.Fuzzycontains(transform.position) && background.onFuzzyBorder(transform.position))
+            {
+                if (mCurrentTrail)
+                {
+                    Border border = background.getFuzzyBorder(transform.position);
+                    if (border.mBorder.tag == "VerticalBorder")
+                    {
+                        mCurrentDirection = Direction.None;
+                    }
+                    else if (border.mBorder.tag == "HorizontalBorder")
+                    {
+                        mCurrentDirection = Direction.None;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void setOnBorder()
+    {
+        foreach (Background background in mBackgrounds)
+        {
+            if (background.onFuzzyBorder(transform.position))
+            {
+                Border border = background.getFuzzyBorder(transform.position);
+
+                if (border.mBorder.tag == "VerticalBorder")
+                {
+                    transform.position = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
+                }
+                else if (border.mBorder.tag == "HorizontalBorder")
+                {
+                    transform.position = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
+                }
+            }
+        }
+    }
+
+    Vector3 getFuzzyPositionInBorder(Vector3 position)
+    {
+        foreach (Background bg in mBackgrounds)
+        {
+            if (bg.onFuzzyBorder(transform.position) && !bg.onBorder(transform.position))
+            {
+                setOnBorder();
+            }
+            else if (bg.onFuzzyBorder(transform.position))
+            {
+                Border border = bg.getFuzzyBorder(transform.position);
+                
+                if (border.mBorder.tag == "VerticalBorder" && (mCurrentDirection == Direction.Up || mCurrentDirection == Direction.Down))
+                {
+                    return new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
+                }
+                else if (border.mBorder.tag == "HorizontalBorder" && (mCurrentDirection == Direction.Left || mCurrentDirection == Direction.Right))
+                {
+                    return new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
+                }
+            }
+        }
+        return position;
+    }
     Vector3 getPositionInBorder(Vector3 position)
     {
         if (position.x < mMinBorderPos.x)
@@ -232,6 +302,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
         }
         Vector3 new_pos = transform.position + mDirections[mCurrentDirection] * mSpeed * Time.deltaTime;
         transform.position = getPositionInBorder(new_pos);
+        //transform.position = getFuzzyPositionInBorder(new_pos);
     }
 
 

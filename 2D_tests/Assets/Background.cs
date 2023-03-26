@@ -34,6 +34,7 @@ public class Background
         float scale_y = max_border_pos.y - min_border_pos.y;
         mBackground.transform.localScale = new Vector3(scale_x, scale_y, 1);
         mBackground.transform.parent = GameObject.Find("Backgrounds").transform;
+        //mBackground.transform.rotation = Quaternion.Euler(90, 0, 0);
         SpriteRenderer render = mBackground.GetComponent<SpriteRenderer>();
         render.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
 
@@ -77,6 +78,14 @@ public class Background
         mMinBorderPos = min_border_pos;
         mMaxBorderPos = max_border_pos;
     }
+    public bool Fuzzycontains(Vector3 pos, float epsilon = -1f)
+    {
+        if(epsilon == -1f)
+        {
+            epsilon = mEpsilon;
+        }
+        return pos.x > mMinBorderPos.x - epsilon && pos.x < mMaxBorderPos.x + epsilon && pos.y > mMinBorderPos.y - epsilon && pos.y < mMaxBorderPos.y + epsilon;
+    }
     public bool contains(Vector3 pos)
     {
         return pos.x > mMinBorderPos.x && pos.x < mMaxBorderPos.x && pos.y > mMinBorderPos.y && pos.y < mMaxBorderPos.y;
@@ -89,25 +98,25 @@ public class Background
     {
         return val_1 > val_2 - epsilon && val_1 < val_2 + epsilon;
     }
-    //public bool onBorder(Vector3 pos)
-    //{
-    //    return fuzzyCompare(pos.x, mMinBorderPos.x, mEpsilon) 
-    //        || fuzzyCompare(pos.x, mMaxBorderPos.x, mEpsilon) 
-    //        || fuzzyCompare(pos.y, mMinBorderPos.y, mEpsilon) 
-    //        || fuzzyCompare(pos.y, mMaxBorderPos.y, mEpsilon);
-    //}
-    //public Border getBorder(Vector3 pos)
-    //{
-    //    if (fuzzyCompare(pos.y, mMinBorderPos.y, mEpsilon))
-    //        return mBorders[0];
-    //    if (fuzzyCompare(pos.x, mMaxBorderPos.x, mEpsilon))
-    //        return mBorders[1];
-    //    if (fuzzyCompare(pos.y, mMaxBorderPos.y, mEpsilon))
-    //        return mBorders[2];
-    //    if (fuzzyCompare(pos.x, mMinBorderPos.x, mEpsilon))
-    //        return mBorders[4];
-    //    return null;
-    //}
+    public bool onFuzzyBorder(Vector3 pos)
+    {
+        return fuzzyCompare(pos.x, mMinBorderPos.x, mEpsilon) 
+            || fuzzyCompare(pos.x, mMaxBorderPos.x, mEpsilon) 
+            || fuzzyCompare(pos.y, mMinBorderPos.y, mEpsilon) 
+            || fuzzyCompare(pos.y, mMaxBorderPos.y, mEpsilon);
+    }
+    public Border getFuzzyBorder(Vector3 pos)
+    {
+        if (fuzzyCompare(pos.y, mMaxBorderPos.y, mEpsilon))
+            return mBorders[0];
+        if (fuzzyCompare(pos.x, mMaxBorderPos.x, mEpsilon))
+            return mBorders[1];
+        if (fuzzyCompare(pos.y, mMinBorderPos.y, mEpsilon))
+            return mBorders[2];
+        if (fuzzyCompare(pos.x, mMinBorderPos.x, mEpsilon))
+            return mBorders[3];
+        return null;
+    }
     public bool onBorder(Vector3 pos)
     {
         return pos.x == mMinBorderPos.x

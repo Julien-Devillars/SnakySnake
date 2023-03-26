@@ -6,8 +6,8 @@ public class Border
 {
     Background mBackground;
     public GameObject mBorder;
-    Vector3 mStartPoint;
-    Vector3 mEndPoint;
+    public Vector3 mStartPoint;
+    public Vector3 mEndPoint;
     
     public Border(Background _background, Vector3 start_point, Vector3 end_point)
     {
