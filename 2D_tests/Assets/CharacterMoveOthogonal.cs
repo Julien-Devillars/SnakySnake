@@ -2,39 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Background
-{
-    public GameObject mBackground;
-    private Vector3 mMinBorderPos;
-    private Vector3 mMaxBorderPos;
-    private List<GameObject> mEnnemyList;
-
-    public Background(GameObject go)
-    {
-        mEnnemyList = new List<GameObject>();
-        mBackground = GameObject.Instantiate(go);
-
-        mBackground.transform.parent = GameObject.Find("Backgrounds").transform;
-    }
-    public Background(GameObject go, Vector3 min_border_pos, Vector3 max_border_pos)
-    {
-        mEnnemyList = new List<GameObject>();
-        mBackground = GameObject.Instantiate(go);
-        mMinBorderPos = min_border_pos;
-        mMaxBorderPos = max_border_pos;
-        mBackground.transform.position = (max_border_pos + min_border_pos)/2;
-        float scale_x = max_border_pos.x - min_border_pos.x;
-        float scale_y = max_border_pos.y - min_border_pos.y;
-        mBackground.transform.localScale = new Vector3(scale_x, scale_y, 0);
-        mBackground.transform.parent = GameObject.Find("Backgrounds").transform;
-    }
-    public void setBorder(Vector3 min_border_pos, Vector3 max_border_pos)
-    {
-        mMinBorderPos = min_border_pos;
-        mMaxBorderPos = max_border_pos;
-    }
-}
-
 public class CharacterMoveOthogonal : MonoBehaviour
 {
     public float mSpeed;
@@ -44,19 +11,23 @@ public class CharacterMoveOthogonal : MonoBehaviour
         Left,
         Up,
         Right,
-        Down
+        Down,
+        None
     }
     private Dictionary<Direction, Vector3> mDirections;
     private Direction mCurrentDirection;
 
 
     public GameObject mBackground;
-    private List<Background> mBackgrounds;
+    public List<Background> mBackgrounds;
 
     public GameObject mBorder;
-    private List<GameObject> mBorders;
     private Vector3 mMinBorderPos;
     private Vector3 mMaxBorderPos;
+
+
+    public GameObject mEnnemy;
+    private List<GameObject> mEnnemies;
 
     public GameObject mTrail;
     private GameObject mCurrentTrail;
@@ -65,32 +36,38 @@ public class CharacterMoveOthogonal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mCurrentDirection = Direction.Right;
+        mCurrentDirection = Direction.None;
 
         mDirections = new Dictionary<Direction, Vector3>();
         mDirections.Add(Direction.Left, Vector3.left);
         mDirections.Add(Direction.Up, Vector3.up);
         mDirections.Add(Direction.Right, Vector3.right);
         mDirections.Add(Direction.Down, Vector3.down);
+        mDirections.Add(Direction.None, Vector3.zero);
 
-        mBorders = new List<GameObject>();
-        mMinBorderPos = new Vector3(0, 0, 0);
-        mMaxBorderPos = new Vector3(0, 0, 0);
-        for (int i = 0; i < mBorder.transform.childCount; ++i)
-        {
-            GameObject border = mBorder.transform.GetChild(i).gameObject;
-            mBorders.Add(border);
-            Collider2D collider = border.GetComponent<Collider2D>();
-            Vector3 center = collider.bounds.center;
-            if (center.x < mMinBorderPos.x) mMinBorderPos.x = center.x;
-            if (center.x > mMaxBorderPos.x) mMaxBorderPos.x = center.x;
-            if (center.y < mMinBorderPos.y) mMinBorderPos.y = center.y;
-            if (center.y > mMaxBorderPos.y) mMaxBorderPos.y = center.y;
-        }
+        Camera cam = Camera.main;
+        float height = 2f * cam.orthographicSize;
+        float width = height * cam.aspect;
+
+        width = cam.aspect * cam.orthographicSize;
+        height = cam.orthographicSize;
+
+        mMinBorderPos = new Vector3(-width, -height, 0);
+        mMaxBorderPos = new Vector3(width, height, 0);
+
         transform.position = new Vector3(mMinBorderPos.x, mMinBorderPos.y, 0);
 
         mBackgrounds = new List<Background>();
-        mBackgrounds.Add(new Background(mBackground, mMinBorderPos, mMaxBorderPos));
+        mBackgrounds.Add(new Background(mBackground, mMinBorderPos, mMaxBorderPos, 0));
+
+        mEnnemies = new List<GameObject>();
+        for (int i = 0; i < mEnnemy.transform.childCount; ++i)
+        {
+            GameObject ennemy = mEnnemy.transform.GetChild(i).gameObject;
+            mEnnemies.Add(ennemy);
+            mBackgrounds[0].addEnnemy(ennemy);
+        }
+
     }
 
     // Update is called once per frame
@@ -120,7 +97,6 @@ public class CharacterMoveOthogonal : MonoBehaviour
     void createLine()
     {
         mCurrentTrail = GameObject.Instantiate(mTrail);
-        mLastPosition = transform.position;
         //For creating line renderer object
         LineRenderer lineRenderer = mCurrentTrail.GetComponent<LineRenderer>();
         lineRenderer.startColor = Color.red;
@@ -132,7 +108,13 @@ public class CharacterMoveOthogonal : MonoBehaviour
     }
     void deleteLine()
     {
+        if (mCurrentTrail == null)
+            return;
+
         Destroy(mCurrentTrail);
+        LineRenderer lineRenderer = mCurrentTrail.GetComponent<LineRenderer>();
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.white;
         mCurrentTrail = null;
     }
     void updateLine()
@@ -145,26 +127,53 @@ public class CharacterMoveOthogonal : MonoBehaviour
 
     void splitBackground()
     {
-        
-        //mLastPosition;
-        //transform.position;
+        Background current_bg = null;
+        foreach(Background bg in mBackgrounds)
+        {
+            if (bg.contains((mLastPosition + transform.position)/2))
+            {
+                current_bg = bg;
+            }
+        }
+        if(current_bg == null)
+        {
+            Debug.Log("Current BG not found!");
+            return;
+        }
+        if(!current_bg.hasEnnemies())
+        {
+            Debug.Log("No ennemy, no split intended");
+            return;
+        }
+
+        List<Background> background_splitten = current_bg.split(mLastPosition, transform.position);
+        if(background_splitten == null && background_splitten.Count != 2)
+        {
+            return;
+        }
+        Background bg_1 = background_splitten[0];
+        Background bg_2 = background_splitten[1];
+
+        mBackgrounds.Remove(current_bg);
+        mBackgrounds.Add(bg_1);
+        mBackgrounds.Add(bg_2);
     }
 
     void updateDirection()
     {
-        if ((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow)) && mCurrentDirection != Direction.Right)
+        if ((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))/* && mCurrentDirection != Direction.Right*/)
         {
             mCurrentDirection = Direction.Left;
-        }
-        else if ((Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow)) && mCurrentDirection != Direction.Down)
+         }
+        else if ((Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow))/* && mCurrentDirection != Direction.Down*/)
         {
             mCurrentDirection = Direction.Up;
         }
-        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && mCurrentDirection != Direction.Left)
+        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))/* && mCurrentDirection != Direction.Left*/)
         {
             mCurrentDirection = Direction.Right;
         }
-        else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && mCurrentDirection != Direction.Up)
+        else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))/* && mCurrentDirection != Direction.Up*/)
         {
             mCurrentDirection = Direction.Down;
         }
@@ -178,6 +187,27 @@ public class CharacterMoveOthogonal : MonoBehaviour
             return true;
         return false;
     }
+    //    foreach (Background background in mBackgrounds)
+    //    {
+    //        if (background.onBorder(transform.position))
+    //        {
+    //            if (mCurrentTrail)
+    //            {
+    //                Border border = background.getBorder(transform.position);
+    //                if (border.mBorder.tag == "VerticalBorder")
+    //                {
+    //                    mCurrentDirection = Direction.None;
+    //                }
+    //                else if (border.mBorder.tag == "HorizontalBorder")
+    //                {
+    //                    mCurrentDirection = Direction.None;
+    //                }
+    //            }
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
     Vector3 getPositionInBorder(Vector3 position)
     {
         if (position.x < mMinBorderPos.x)
@@ -193,6 +223,13 @@ public class CharacterMoveOthogonal : MonoBehaviour
 
     void moveBall()
     {
+        foreach(Background bg in mBackgrounds)
+        {
+            if (bg.onBorder(transform.position))
+            {
+                mLastPosition = transform.position;
+            }
+        }
         Vector3 new_pos = transform.position + mDirections[mCurrentDirection] * mSpeed * Time.deltaTime;
         transform.position = getPositionInBorder(new_pos);
     }
