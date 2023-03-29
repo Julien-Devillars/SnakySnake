@@ -107,13 +107,13 @@ public class Background
     }
     public Border getFuzzyBorder(Vector3 pos)
     {
-        if (fuzzyCompare(pos.y, mMaxBorderPos.y, mEpsilon))
+        if (fuzzyCompare(pos.y, mMaxBorderPos.y, mEpsilon) && pos.x > mMinBorderPos.x && pos.x < mMaxBorderPos.x)
             return (mBorders.Count > 0) ? mBorders[0] : null;
-        if (fuzzyCompare(pos.x, mMaxBorderPos.x, mEpsilon))
+        if (fuzzyCompare(pos.x, mMaxBorderPos.x, mEpsilon) && pos.y > mMinBorderPos.y && pos.y < mMaxBorderPos.y)
             return (mBorders.Count > 1) ? mBorders[1] : null;
-        if (fuzzyCompare(pos.y, mMinBorderPos.y, mEpsilon))
+        if (fuzzyCompare(pos.y, mMinBorderPos.y, mEpsilon) && pos.x > mMinBorderPos.x && pos.x < mMaxBorderPos.x)
             return (mBorders.Count > 2) ? mBorders[2] : null;
-        if (fuzzyCompare(pos.x, mMinBorderPos.x, mEpsilon))
+        if (fuzzyCompare(pos.x, mMinBorderPos.x, mEpsilon) && pos.y > mMinBorderPos.y && pos.y < mMaxBorderPos.y)
             return (mBorders.Count > 3) ? mBorders[3] : null;
         return null;
     }
@@ -168,7 +168,7 @@ public class Background
                 {
                     continue;
                 }
-                duplicate_border.mBackground.removeBorder(duplicate_border);
+                //duplicate_border.mBackground.removeBorder(duplicate_border);
                 duplicate_border.Destroy();
             }
         }

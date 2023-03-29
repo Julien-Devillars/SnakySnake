@@ -95,7 +95,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
         }
 
         moveBall();
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
     }
 
     void createLine()
@@ -242,6 +242,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
 
     void setOnBorder()
     {
+        Vector3 pos = new Vector3();
         foreach (Background background in mBackgrounds)
         {
             if (background.onFuzzyBorder(transform.position))
@@ -254,14 +255,17 @@ public class CharacterMoveOthogonal : MonoBehaviour
 
                 if (border.mBorder.tag == "VerticalBorder")
                 {
-                    transform.position = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
+                    pos = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
+                    Debug.Log("VerticalBorder : " + border.mBorder.name + " : " + pos);
                 }
                 else if (border.mBorder.tag == "HorizontalBorder")
                 {
-                    transform.position = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
+                    pos = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
+                    Debug.Log("HorizontalBorder : " + border.mBorder.name + " : " + pos);
                 }
             }
         }
+        transform.position = pos;
     }
 
     Vector3 getFuzzyPositionInBorder(Vector3 position)
