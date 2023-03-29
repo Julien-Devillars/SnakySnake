@@ -10,7 +10,7 @@ public class Background
     public Vector3 mMinBorderPos;
     public Vector3 mMaxBorderPos;
     private List<GameObject> mEnnemyList;
-    private List<Border> mBorders;
+    public List<Border> mBorders;
     float mEpsilon;
     public GameObject mCharacter;
 
@@ -108,13 +108,13 @@ public class Background
     public Border getFuzzyBorder(Vector3 pos)
     {
         if (fuzzyCompare(pos.y, mMaxBorderPos.y, mEpsilon))
-            return mBorders[0];
+            return (mBorders.Count > 0) ? mBorders[0] : null;
         if (fuzzyCompare(pos.x, mMaxBorderPos.x, mEpsilon))
-            return mBorders[1];
+            return (mBorders.Count > 1) ? mBorders[1] : null;
         if (fuzzyCompare(pos.y, mMinBorderPos.y, mEpsilon))
-            return mBorders[2];
+            return (mBorders.Count > 2) ? mBorders[2] : null;
         if (fuzzyCompare(pos.x, mMinBorderPos.x, mEpsilon))
-            return mBorders[3];
+            return (mBorders.Count > 3) ? mBorders[3] : null;
         return null;
     }
     public bool onBorder(Vector3 pos)
@@ -152,11 +152,25 @@ public class Background
     {
         return mEnnemyList.Count != 0;
     }
+    public void removeBorder(Border border)
+    {
+        mBorders.Remove(border);
+    }
     public void destroy()
     {
         foreach(Border border in mBorders)
         {
             border.Destroy();
+            if(border.mDuplicateBorder != null)
+            {
+                Border duplicate_border = border.mDuplicateBorder;
+                if(duplicate_border.mDuplicateBorder == null)
+                {
+                    continue;
+                }
+                duplicate_border.mBackground.removeBorder(duplicate_border);
+                duplicate_border.Destroy();
+            }
         }
         GameObject.DestroyImmediate(mBackground);
     }
@@ -203,10 +217,35 @@ public class Background
         backgrounds.Add(bg_1);
         backgrounds.Add(bg_2);
 
-
         destroy();
-        hideCommonBorder(bg_1, bg_2);
+        handleDuplicateBorder(bg_1, bg_2);
+        //hideCommonBorder(bg_1, bg_2);
         return backgrounds;
+    }
+
+    void handleDuplicateBorder(Background bg_1, Background bg_2)
+    {
+        foreach (Border border_bg_1 in bg_1.mBorders)
+        {
+            foreach (Border border_bg_2 in bg_2.mBorders)
+            {
+                if (isSameBorder(border_bg_1, border_bg_2))
+                {
+                    border_bg_1.mDuplicateBorder = border_bg_2;
+                    border_bg_2.mDuplicateBorder = border_bg_1;
+                    
+                    border_bg_1.hideColliderBorder();
+                }
+            }
+        }
+    }
+    public bool isSameBorder(Border border_1, Border border_2)
+    {
+        Vector3 line_start_point_1 = border_1.mStartPoint;
+        Vector3 line_start_point_2 = border_2.mStartPoint;
+        Vector3 line_end_point_1 = border_1.mEndPoint;
+        Vector3 line_end_point_2 = border_2.mEndPoint;
+        return (line_start_point_1 == line_start_point_2 && line_end_point_1 == line_end_point_2) || (line_start_point_1 == line_end_point_2 && line_start_point_2 == line_end_point_1);
     }
 
     void hideCommonBorder(Background bg_1, Background bg_2)
@@ -226,4 +265,16 @@ public class Background
             }
         }
     }
+
+    //public Border findBorderWithGameobject(Background bg)
+    //{
+    //    foreach (Border border in bg.mBorders)
+    //    {
+    //        if (border.mBorder == go)
+    //        {
+    //            return border;
+    //        }
+    //    }
+    //    return null;
+    //}
 }

@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Border
 {
-    Background mBackground;
+    public Background mBackground;
     public GameObject mBorder;
     public Vector3 mStartPoint;
     public Vector3 mEndPoint;
+    public Border mDuplicateBorder;
     
     public Border(Background _background, Vector3 start_point, Vector3 end_point)
     {
@@ -24,6 +25,7 @@ public class Border
         mBorder.transform.parent = GameObject.Find("Borders").transform;
 
         mBorder.name = mBorder.name.Replace("(Clone)", "");
+        mDuplicateBorder = null;
     }
     public void setName(string new_name)
     {
@@ -65,14 +67,19 @@ public class Border
             }
             if ((line_start_point == mStartPoint && line_end_point == mEndPoint) || (line_start_point == mEndPoint && line_end_point == mStartPoint) && border_child_collider.enabled == true)
             {
+                //GameObject ball = GameObject.Find("Ball");
+                //CharacterMoveOthogonal ball_info = ball.GetComponent<CharacterMoveOthogonal>();
+                //Border duplicate_border = ball_info.findBorderWithGameobject(ball);
+                //mDuplicateBorder = duplicate_border;
+                //duplicate_border.mDuplicateBorder = this;
                 return true;
             }
         }
         return false;
     }
+
     private void addCollider2D()
     {
-        //bool hide_collider = false;// checkColliderAlreadyExist();
         mBorder.AddComponent<BoxCollider2D>();
         BoxCollider2D box_collider = mBorder.GetComponent<BoxCollider2D>();
 
@@ -83,9 +90,8 @@ public class Border
         }
         else if (mBorder.tag == "HorizontalBorder")
         {
-            box_collider.size = new Vector2(Mathf.Abs(mEndPoint.x - mStartPoint.x)  /*box_collider.size.x*/, lineRenderer.startWidth);
+            box_collider.size = new Vector2(Mathf.Abs(mEndPoint.x - mStartPoint.x) , lineRenderer.startWidth);
         }
-        //box_collider.enabled = !hide_collider;
     }
 
     private void addTag()
@@ -137,6 +143,10 @@ public class Border
                 borders_checked.Add(border_child_line);
             }
         }*/
+        if(mBorder == null) // Already deleted somewhere else
+        {
+            return;
+        }
         BoxCollider2D border_child_collider = mBorder.GetComponent<BoxCollider2D>();
         border_child_collider.enabled = false;
         GameObject.DestroyImmediate(mBorder);

@@ -95,6 +95,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
         }
 
         moveBall();
+        Debug.Log(transform.position);
     }
 
     void createLine()
@@ -150,7 +151,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
         }
 
         List<Background> background_splitten = current_bg.split(mLastPosition, transform.position);
-        if(background_splitten == null && background_splitten.Count != 2)
+        if(background_splitten == null || background_splitten.Count != 2)
         {
             return;
         }
@@ -219,6 +220,11 @@ public class CharacterMoveOthogonal : MonoBehaviour
                 if (mCurrentTrail)
                 {
                     Border border = background.getFuzzyBorder(transform.position);
+                    if(border == null || border.mBorder == null)
+                    {
+                        continue;
+                    }
+
                     if (border.mBorder.tag == "VerticalBorder")
                     {
                         mCurrentDirection = Direction.None;
@@ -241,6 +247,10 @@ public class CharacterMoveOthogonal : MonoBehaviour
             if (background.onFuzzyBorder(transform.position))
             {
                 Border border = background.getFuzzyBorder(transform.position);
+                if (border == null || border.mBorder == null)
+                {
+                    continue;
+                }
 
                 if (border.mBorder.tag == "VerticalBorder")
                 {
@@ -265,7 +275,11 @@ public class CharacterMoveOthogonal : MonoBehaviour
             else if (bg.onFuzzyBorder(transform.position))
             {
                 Border border = bg.getFuzzyBorder(transform.position);
-                
+                if (border == null || border.mBorder == null)
+                {
+                    continue;
+                }
+
                 if (border.mBorder.tag == "VerticalBorder" && (mCurrentDirection == Direction.Up || mCurrentDirection == Direction.Down))
                 {
                     return new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
@@ -304,6 +318,5 @@ public class CharacterMoveOthogonal : MonoBehaviour
         transform.position = getPositionInBorder(new_pos);
         //transform.position = getFuzzyPositionInBorder(new_pos);
     }
-
 
 }
