@@ -56,20 +56,14 @@ public class CharacterMoveOthogonal : MonoBehaviour
         mMaxBorderPos = new Vector3(width, height, 0);
 
         transform.position = new Vector3(mMinBorderPos.x, mMinBorderPos.y, 0);
-
-        //mBackgrounds = new List<Background>();
-        //mBackgrounds.Add(new Background(mBackground, mMinBorderPos, mMaxBorderPos, 0));
-        //mCurrentBorder = mBackgrounds[0].getFuzzyBorder(transform.position);
-
-        //mEnnemies = new List<GameObject>();
-        //for (int i = 0; i < mEnnemy.transform.childCount; ++i)
-        //{
-        //    GameObject ennemy = mEnnemy.transform.GetChild(i).gameObject;
-        //    mEnnemies.Add(ennemy);
-        //    mBackgrounds[0].addEnnemy(ennemy);
-        //}
         mBorders = new List<Border>();
         makeBorders();
+    }
+
+    void addBorder(Border border)
+    {
+        border.setName("Border_" + mBorders.Count);
+        mBorders.Add(border);
     }
 
     private void makeBorders()
@@ -83,17 +77,10 @@ public class CharacterMoveOthogonal : MonoBehaviour
         Border right = new Border(top_right, bot_right);
         Border bot = new Border(bot_right, bot_left);
         Border left = new Border(bot_left, top_left);
-
-        string bg_number = mBackground.name.Replace("Background_", "");
-        top.setName("Border_" + bg_number + "_top");
-        right.setName("Border_" + bg_number + "_right");
-        bot.setName("Border_" + bg_number + "_bot");
-        left.setName("Border_" + bg_number + "_left");
-
-        mBorders.Add(top);
-        mBorders.Add(right);
-        mBorders.Add(bot);
-        mBorders.Add(left);
+        addBorder(top);
+        addBorder(right);
+        addBorder(bot);
+        addBorder(left);
     }
 
     // Update is called once per frame
@@ -105,7 +92,6 @@ public class CharacterMoveOthogonal : MonoBehaviour
             if(mCurrentTrail)
             {
                 setOnBorder();
-                //splitBackground();
             }
             deleteLine();
         }
@@ -119,7 +105,6 @@ public class CharacterMoveOthogonal : MonoBehaviour
         }
 
         moveBall();
-        //Debug.Log(transform.position);
     }
 
     void createLine()
@@ -141,10 +126,8 @@ public class CharacterMoveOthogonal : MonoBehaviour
 
         LineRenderer lineRenderer = mCurrentTrail.GetComponent<LineRenderer>();
         Border line_to_border = new Border(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
-        mBorders.Add(line_to_border);
+        addBorder(line_to_border);
         Destroy(mCurrentTrail);
-        //lineRenderer.startColor = Color.white;
-        //lineRenderer.endColor = Color.white;
         mCurrentTrail = null;
     }
     void updateLine()
@@ -153,40 +136,6 @@ public class CharacterMoveOthogonal : MonoBehaviour
         //For drawing line in the world space, provide the x,y,z values
         lineRenderer.SetPosition(0, mLastPosition); //x,y and z position of the starting point of the line
         lineRenderer.SetPosition(1, transform.position); //x,y and z position of the end point of the line
-    }
-
-    void splitBackground()
-    {
-        Background current_bg = null;
-        foreach(Background bg in mBackgrounds)
-        {
-            if (bg.contains((mLastPosition + transform.position)/2))
-            {
-                current_bg = bg;
-            }
-        }
-        if(current_bg == null)
-        {
-            Debug.Log("Current BG not found!");
-            return;
-        }
-        if(!current_bg.hasEnnemies())
-        {
-            Debug.Log("No ennemy, no split intended");
-            return;
-        }
-
-        List<Background> background_splitten = current_bg.split(mLastPosition, transform.position);
-        if(background_splitten == null || background_splitten.Count != 2)
-        {
-            return;
-        }
-        Background bg_1 = background_splitten[0];
-        Background bg_2 = background_splitten[1];
-
-        mBackgrounds.Remove(current_bg);
-        mBackgrounds.Add(bg_1);
-        mBackgrounds.Add(bg_2);
     }
 
     void updateDirection()
@@ -217,19 +166,6 @@ public class CharacterMoveOthogonal : MonoBehaviour
     {
         return mCurrentDirection == Direction.Left || mCurrentDirection == Direction.Right;
     }
-
-    //bool onBorder()
-    //{
-    //    if (mCurrentBorder.mBorder.tag == "VerticalBorder" && movingVertical())
-    //    {
-    //
-    //    }
-    //    else if(mCurrentBorder.mBorder.tag == "VerticalBorder" && movingVertical())
-    //    {
-    //
-    //    }
-    //    return true;
-    //}
     
     bool onBorder()
     {
@@ -281,34 +217,6 @@ public class CharacterMoveOthogonal : MonoBehaviour
         transform.position = pos;
     }
 
-    Vector3 getFuzzyPositionInBorder(Vector3 position)
-    {
-        foreach (Background bg in mBackgrounds)
-        {
-            if (bg.onFuzzyBorder(transform.position) && !bg.onBorder(transform.position))
-            {
-                setOnBorder();
-            }
-            else if (bg.onFuzzyBorder(transform.position))
-            {
-                Border border = bg.getFuzzyBorder(transform.position);
-                if (border == null || border.mBorder == null)
-                {
-                    continue;
-                }
-
-                if (border.mBorder.tag == "VerticalBorder" && (mCurrentDirection == Direction.Up || mCurrentDirection == Direction.Down))
-                {
-                    return new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
-                }
-                else if (border.mBorder.tag == "HorizontalBorder" && (mCurrentDirection == Direction.Left || mCurrentDirection == Direction.Right))
-                {
-                    return new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
-                }
-            }
-        }
-        return position;
-    }
     Vector3 getPositionInBorder(Vector3 position)
     {
         if (position.x < mMinBorderPos.x)
