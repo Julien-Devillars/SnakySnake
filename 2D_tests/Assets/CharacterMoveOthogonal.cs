@@ -58,6 +58,17 @@ public class CharacterMoveOthogonal : MonoBehaviour
         transform.position = new Vector3(mMinBorderPos.x, mMinBorderPos.y, 0);
         mBorders = new List<Border>();
         makeBorders();
+
+        mBackgrounds = new List<Background>();
+        mBackgrounds.Add(new Background(mBackground, mMinBorderPos, mMaxBorderPos, 0));
+
+        mEnnemies = new List<GameObject>();
+        for (int i = 0; i < mEnnemy.transform.childCount; ++i)
+        {
+            GameObject ennemy = mEnnemy.transform.GetChild(i).gameObject;
+            mEnnemies.Add(ennemy);
+            mBackgrounds[0].addEnnemy(ennemy);
+        }
     }
 
     void addBorder(Border border)
@@ -127,6 +138,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
         LineRenderer lineRenderer = mCurrentTrail.GetComponent<LineRenderer>();
         Border line_to_border = new Border(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
         addBorder(line_to_border);
+        splitBackground();
         Destroy(mCurrentTrail);
         mCurrentTrail = null;
     }
@@ -156,6 +168,41 @@ public class CharacterMoveOthogonal : MonoBehaviour
         {
             mCurrentDirection = Direction.Down;
         }
+    }
+
+
+    void splitBackground()
+    {
+        Background current_bg = null;
+        foreach (Background bg in mBackgrounds)
+        {
+            if (bg.contains((mLastPosition + transform.position) / 2))
+            {
+                current_bg = bg;
+            }
+        }
+        if (current_bg == null)
+        {
+            Debug.Log("Current BG not found!");
+            return;
+        }
+        if (!current_bg.hasEnnemies())
+        {
+            Debug.Log("No ennemy, no split intended");
+            return;
+        }
+
+        List<Background> background_splitten = current_bg.split(mLastPosition, transform.position);
+        if (background_splitten == null || background_splitten.Count != 2)
+        {
+            return;
+        }
+        Background bg_1 = background_splitten[0];
+        Background bg_2 = background_splitten[1];
+
+        mBackgrounds.Remove(current_bg);
+        mBackgrounds.Add(bg_1);
+        mBackgrounds.Add(bg_2);
     }
 
     bool movingVertical()

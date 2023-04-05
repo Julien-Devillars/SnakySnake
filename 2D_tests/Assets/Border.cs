@@ -9,7 +9,7 @@ public class Border
     public Vector3 mStartPoint;
     public Vector3 mEndPoint;
     public Border mDuplicateBorder;
-    private float mEpsilon = 0.1f; 
+    private float mEpsilon; 
     
     public Border(Vector3 start_point, Vector3 end_point)
     {
@@ -27,6 +27,9 @@ public class Border
 
         mBorder.name = mBorder.name.Replace("(Clone)", "");
         mDuplicateBorder = null;
+
+        GameObject ball = GameObject.Find("Ball");
+        mEpsilon = ball.transform.localScale.x / 2f;
     }
     public void setName(string new_name)
     {
