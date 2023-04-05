@@ -94,6 +94,25 @@ public class Background
     {
         return contains(go.transform.position);
     }
+    public bool containsOrOnBorder(Vector3 pos)
+    {
+        return pos.x >= mMinBorderPos.x && pos.x <= mMaxBorderPos.x && pos.y >= mMinBorderPos.y && pos.y <= mMaxBorderPos.y;
+    }
+    public bool containsOrOnBorder(GameObject go)
+    {
+        return containsOrOnBorder(go.transform.position);
+    }
+    //public bool onFuzzyContainsOrOnBorder(Vector3 pos)
+    //{
+    //    return pos.x >= mMinBorderPos.x - mEpsilon && pos.x <= mMinBorderPos.x + mEpsilon
+    //        && pos.x >= mMaxBorderPos.x - mEpsilon && pos.x <= mMaxBorderPos.x + mEpsilon 
+    //        && pos.y >= mMinBorderPos.y - mEpsilon && pos.y <= mMinBorderPos.y + mEpsilon 
+    //        && pos.y >= mMaxBorderPos.y - mEpsilon && pos.y <= mMaxBorderPos.y + mEpsilon;
+    //}
+    //public bool onFuzzyContainsOrOnBorder(GameObject go)
+    //{
+    //    return onFuzzyContainsOrOnBorder(go.transform.position);
+    //}
     private bool fuzzyCompare(float val_1, float val_2, float epsilon)
     {
         return val_1 > val_2 - epsilon && val_1 < val_2 + epsilon;

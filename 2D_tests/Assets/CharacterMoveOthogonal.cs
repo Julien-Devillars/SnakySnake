@@ -207,12 +207,6 @@ public class CharacterMoveOthogonal : MonoBehaviour
     
     bool onBorder()
     {
-    //    if (transform.position.x == mMinBorderPos.x || transform.position.x == mMaxBorderPos.x)
-    //        return true;
-    //    if (transform.position.y == mMinBorderPos.y || transform.position.y == mMaxBorderPos.y)
-    //        return true;
-    //    return false;
-    //}
         foreach (Background background in mBackgrounds)
         {
             if (background.Fuzzycontains(transform.position) && background.onFuzzyBorder(transform.position))
@@ -313,7 +307,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
     {
         foreach(Background bg in mBackgrounds)
         {
-            if (bg.onBorder(transform.position))
+            if (bg.onBorder(transform.position) && bg.containsOrOnBorder(transform.position))
             {
                 mLastPosition = transform.position;
             }

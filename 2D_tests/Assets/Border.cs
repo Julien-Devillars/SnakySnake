@@ -112,37 +112,6 @@ public class Border
 
     public void Destroy()
     {
-        /*
-        GameObject border_parent = GameObject.Find("Borders");
-        List<LineRenderer> borders_checked = new List<LineRenderer>();
-        for (int i = 0; i < border_parent.transform.childCount; ++i)
-        {
-            GameObject border_child = border_parent.transform.GetChild(i).gameObject;
-            LineRenderer border_child_line = border_child.GetComponent<LineRenderer>();
-            Vector3 line_start_point = border_child_line.GetPosition(0);
-            Vector3 line_end_point = border_child_line.GetPosition(1);
-            if ((line_start_point == mStartPoint && line_end_point == mEndPoint) || (line_start_point == mEndPoint && line_end_point == mStartPoint))
-            {
-                bool is_already_checked = false;
-                foreach(LineRenderer line_renderer_checked in borders_checked)
-                {
-                    Vector3 line_checked_start_point = line_renderer_checked.GetPosition(0);
-                    Vector3 line_checked_end_point = line_renderer_checked.GetPosition(1);
-                    if ((line_checked_start_point == mStartPoint && line_checked_end_point == mEndPoint) || (line_checked_start_point == mEndPoint && line_checked_end_point == mStartPoint))
-                    {
-                        is_already_checked = true;
-                        break;
-                    }
-                }
-                if(is_already_checked)
-                {
-                    continue;
-                }
-                Collider2D border_child_collider = border_child.GetComponent<Collider2D>();
-                border_child_collider.enabled = true;
-                borders_checked.Add(border_child_line);
-            }
-        }*/
         if(mBorder == null) // Already deleted somewhere else
         {
             return;
