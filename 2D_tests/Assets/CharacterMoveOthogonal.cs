@@ -22,6 +22,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
     public GameObject mBackground;
     public List<Background> mBackgrounds;
 
+    public List<Border> mBorders;
     public GameObject mBorder;
     private Vector3 mMinBorderPos;
     private Vector3 mMaxBorderPos;
@@ -47,29 +48,52 @@ public class CharacterMoveOthogonal : MonoBehaviour
         mDirections.Add(Direction.None, Vector3.zero);
 
         Camera cam = Camera.main;
-        float height = 2f * cam.orthographicSize;
-        float width = height * cam.aspect;
 
-        width = cam.aspect * cam.orthographicSize;
-        height = cam.orthographicSize;
+        float width = cam.aspect * cam.orthographicSize;
+        float height = cam.orthographicSize;
 
         mMinBorderPos = new Vector3(-width, -height, 0);
         mMaxBorderPos = new Vector3(width, height, 0);
 
         transform.position = new Vector3(mMinBorderPos.x, mMinBorderPos.y, 0);
 
-        mBackgrounds = new List<Background>();
-        mBackgrounds.Add(new Background(mBackground, mMinBorderPos, mMaxBorderPos, 0));
-        mCurrentBorder = mBackgrounds[0].getFuzzyBorder(transform.position);
+        //mBackgrounds = new List<Background>();
+        //mBackgrounds.Add(new Background(mBackground, mMinBorderPos, mMaxBorderPos, 0));
+        //mCurrentBorder = mBackgrounds[0].getFuzzyBorder(transform.position);
 
-        mEnnemies = new List<GameObject>();
-        for (int i = 0; i < mEnnemy.transform.childCount; ++i)
-        {
-            GameObject ennemy = mEnnemy.transform.GetChild(i).gameObject;
-            mEnnemies.Add(ennemy);
-            mBackgrounds[0].addEnnemy(ennemy);
-        }
+        //mEnnemies = new List<GameObject>();
+        //for (int i = 0; i < mEnnemy.transform.childCount; ++i)
+        //{
+        //    GameObject ennemy = mEnnemy.transform.GetChild(i).gameObject;
+        //    mEnnemies.Add(ennemy);
+        //    mBackgrounds[0].addEnnemy(ennemy);
+        //}
+        mBorders = new List<Border>();
+        makeBorders();
+    }
 
+    private void makeBorders()
+    {
+        Vector3 top_left = new Vector3(mMinBorderPos.x, mMaxBorderPos.y, mMinBorderPos.z);
+        Vector3 top_right = new Vector3(mMaxBorderPos.x, mMaxBorderPos.y, mMinBorderPos.z);
+        Vector3 bot_left = new Vector3(mMinBorderPos.x, mMinBorderPos.y, mMinBorderPos.z);
+        Vector3 bot_right = new Vector3(mMaxBorderPos.x, mMinBorderPos.y, mMinBorderPos.z);
+
+        Border top = new Border(top_left, top_right);
+        Border right = new Border(top_right, bot_right);
+        Border bot = new Border(bot_right, bot_left);
+        Border left = new Border(bot_left, top_left);
+
+        string bg_number = mBackground.name.Replace("Background_", "");
+        top.setName("Border_" + bg_number + "_top");
+        right.setName("Border_" + bg_number + "_right");
+        bot.setName("Border_" + bg_number + "_bot");
+        left.setName("Border_" + bg_number + "_left");
+
+        mBorders.Add(top);
+        mBorders.Add(right);
+        mBorders.Add(bot);
+        mBorders.Add(left);
     }
 
     // Update is called once per frame
@@ -81,7 +105,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
             if(mCurrentTrail)
             {
                 setOnBorder();
-                splitBackground();
+                //splitBackground();
             }
             deleteLine();
         }
@@ -115,10 +139,12 @@ public class CharacterMoveOthogonal : MonoBehaviour
         if (mCurrentTrail == null)
             return;
 
-        Destroy(mCurrentTrail);
         LineRenderer lineRenderer = mCurrentTrail.GetComponent<LineRenderer>();
-        lineRenderer.startColor = Color.white;
-        lineRenderer.endColor = Color.white;
+        Border line_to_border = new Border(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
+        mBorders.Add(line_to_border);
+        Destroy(mCurrentTrail);
+        //lineRenderer.startColor = Color.white;
+        //lineRenderer.endColor = Color.white;
         mCurrentTrail = null;
     }
     void updateLine()
@@ -207,18 +233,12 @@ public class CharacterMoveOthogonal : MonoBehaviour
     
     bool onBorder()
     {
-        foreach (Background background in mBackgrounds)
+        foreach (Border border in mBorders)
         {
-            if (background.Fuzzycontains(transform.position) && background.onFuzzyBorder(transform.position))
+            if(border.onFuzzyBorder(transform.position))
             {
                 if (mCurrentTrail)
                 {
-                    Border border = background.getFuzzyBorder(transform.position);
-                    if(border == null || border.mBorder == null)
-                    {
-                        continue;
-                    }
-
                     if (border.mBorder.tag == "VerticalBorder")
                     {
                         mCurrentDirection = Direction.None;
@@ -237,11 +257,10 @@ public class CharacterMoveOthogonal : MonoBehaviour
     void setOnBorder()
     {
         Vector3 pos = new Vector3();
-        foreach (Background background in mBackgrounds)
+        foreach (Border border in mBorders)
         {
-            if (background.onFuzzyBorder(transform.position))
+            if (border.onFuzzyBorder(transform.position))
             {
-                Border border = background.getFuzzyBorder(transform.position);
                 if (border == null || border.mBorder == null)
                 {
                     continue;
@@ -305,9 +324,9 @@ public class CharacterMoveOthogonal : MonoBehaviour
 
     void moveBall()
     {
-        foreach(Background bg in mBackgrounds)
+        foreach(Border border in mBorders)
         {
-            if (bg.onBorder(transform.position) && bg.containsOrOnBorder(transform.position))
+            if (border.onFuzzyBorder(transform.position))
             {
                 mLastPosition = transform.position;
             }

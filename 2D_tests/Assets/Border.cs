@@ -9,10 +9,11 @@ public class Border
     public Vector3 mStartPoint;
     public Vector3 mEndPoint;
     public Border mDuplicateBorder;
+    private float mEpsilon = 0.1f; 
     
-    public Border(Background _background, Vector3 start_point, Vector3 end_point)
+    public Border(Vector3 start_point, Vector3 end_point)
     {
-        mBackground = _background;
+        //mBackground = _background;
         mStartPoint = start_point;
         mEndPoint = end_point;
         mBorder = new GameObject("Border");
@@ -123,6 +124,24 @@ public class Border
     public bool equals(Border other_border)
     {
         return (mStartPoint == other_border.mStartPoint && mEndPoint == other_border.mEndPoint) || (mStartPoint == other_border.mEndPoint && mEndPoint == other_border.mStartPoint);
+    }
+    private bool fuzzyCompare(float val_1, float val_2)
+    {
+        return val_1 > val_2 - mEpsilon && val_1 < val_2 + mEpsilon;
+    }
+    public bool onFuzzyBorder(Vector3 position)
+    {
+        return (fuzzyCompare(position.x, mStartPoint.x) && fuzzyCompare(position.x, mEndPoint.x) && position.y >= mStartPoint.y - mEpsilon && position.y <= mEndPoint.y + mEpsilon && mStartPoint.y < mEndPoint.y)
+            || (fuzzyCompare(position.y, mStartPoint.y) && fuzzyCompare(position.y, mEndPoint.y) && position.x >= mStartPoint.x - mEpsilon && position.x <= mEndPoint.x + mEpsilon && mStartPoint.x < mEndPoint.x)
+            || (fuzzyCompare(position.x, mStartPoint.x) && fuzzyCompare(position.x, mEndPoint.x) && position.y <= mStartPoint.y + mEpsilon && position.y >= mEndPoint.y - mEpsilon && mStartPoint.y > mEndPoint.y)
+            || (fuzzyCompare(position.y, mStartPoint.y) && fuzzyCompare(position.y, mEndPoint.y) && position.x <= mStartPoint.x + mEpsilon && position.x >= mEndPoint.x - mEpsilon && mStartPoint.x > mEndPoint.x);
+    }
+    public bool onBorder(Vector3 position)
+    {
+        return (position.x == mStartPoint.x && position.x == mEndPoint.x && position.y >= mStartPoint.y && position.y <= mEndPoint.y && mStartPoint.y < mEndPoint.y) 
+            || (position.y == mStartPoint.y && position.y == mEndPoint.y && position.x >= mStartPoint.x && position.x <= mEndPoint.x && mStartPoint.x < mEndPoint.x)
+            || (position.x == mStartPoint.x && position.x == mEndPoint.x && position.y <= mStartPoint.y && position.y >= mEndPoint.y && mStartPoint.y > mEndPoint.y)
+            || (position.y == mStartPoint.y && position.y == mEndPoint.y && position.x <= mStartPoint.x && position.x >= mEndPoint.x && mStartPoint.x > mEndPoint.x);
     }
     public void hideColliderBorder()
     {

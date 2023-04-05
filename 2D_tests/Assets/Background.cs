@@ -46,7 +46,7 @@ public class Background
         GameObject ball = GameObject.Find("Ball");
         mEpsilon = ball.transform.localScale.x/2f;
 
-        mBorders = new List<Border>();
+        //mBorders = new List<Border>();
         makeBorders();
     }
     private void makeBorders()
@@ -56,10 +56,10 @@ public class Background
         Vector3 bot_left = new Vector3(mMinBorderPos.x, mMinBorderPos.y, mMinBorderPos.z);
         Vector3 bot_right = new Vector3(mMaxBorderPos.x, mMinBorderPos.y, mMinBorderPos.z);
 
-        Border top = new Border(this, top_left, top_right);
-        Border right = new Border(this, top_right, bot_right);
-        Border bot = new Border(this, bot_right, bot_left);
-        Border left = new Border(this, bot_left, top_left);
+        Border top = new Border(top_left, top_right);
+        Border right = new Border(top_right, bot_right);
+        Border bot = new Border(bot_right, bot_left);
+        Border left = new Border(bot_left, top_left);
 
         string bg_number = mBackground.name.Replace("Background_", "");
         top.setName("Border_" + bg_number + "_top");
@@ -126,14 +126,14 @@ public class Background
     }
     public Border getFuzzyBorder(Vector3 pos)
     {
-        if (fuzzyCompare(pos.y, mMaxBorderPos.y, mEpsilon) && pos.x > mMinBorderPos.x && pos.x < mMaxBorderPos.x)
-            return (mBorders.Count > 0) ? mBorders[0] : null;
-        if (fuzzyCompare(pos.x, mMaxBorderPos.x, mEpsilon) && pos.y > mMinBorderPos.y && pos.y < mMaxBorderPos.y)
-            return (mBorders.Count > 1) ? mBorders[1] : null;
-        if (fuzzyCompare(pos.y, mMinBorderPos.y, mEpsilon) && pos.x > mMinBorderPos.x && pos.x < mMaxBorderPos.x)
-            return (mBorders.Count > 2) ? mBorders[2] : null;
-        if (fuzzyCompare(pos.x, mMinBorderPos.x, mEpsilon) && pos.y > mMinBorderPos.y && pos.y < mMaxBorderPos.y)
-            return (mBorders.Count > 3) ? mBorders[3] : null;
+        //if (fuzzyCompare(pos.y, mMaxBorderPos.y, mEpsilon) && pos.x > mMinBorderPos.x && pos.x < mMaxBorderPos.x)
+        //    return (mBorders.Count > 0) ? mBorders[0] : null;
+        //if (fuzzyCompare(pos.x, mMaxBorderPos.x, mEpsilon) && pos.y > mMinBorderPos.y && pos.y < mMaxBorderPos.y)
+        //    return (mBorders.Count > 1) ? mBorders[1] : null;
+        //if (fuzzyCompare(pos.y, mMinBorderPos.y, mEpsilon) && pos.x > mMinBorderPos.x && pos.x < mMaxBorderPos.x)
+        //    return (mBorders.Count > 2) ? mBorders[2] : null;
+        //if (fuzzyCompare(pos.x, mMinBorderPos.x, mEpsilon) && pos.y > mMinBorderPos.y && pos.y < mMaxBorderPos.y)
+        //    return (mBorders.Count > 3) ? mBorders[3] : null;
         return null;
     }
     public bool onBorder(Vector3 pos)
