@@ -103,16 +103,25 @@ public class CharacterMoveOthogonal : MonoBehaviour
             if(mCurrentTrail)
             {
                 setOnBorder();
+                updateLine();
             }
             deleteLine();
         }
         else
         {
-            if (!mCurrentTrail)
+            Background current_bg = GetBackground(transform.position);
+            if(current_bg != null && current_bg.hasEnnemies())
             {
-                createLine();
+                if (!mCurrentTrail)
+                {
+                    createLine();
+                }
+                updateLine();
             }
-            updateLine();
+            else
+            {
+                updateDirection();
+            }
         }
 
         moveBall();
@@ -136,9 +145,14 @@ public class CharacterMoveOthogonal : MonoBehaviour
             return;
 
         LineRenderer lineRenderer = mCurrentTrail.GetComponent<LineRenderer>();
-        Border line_to_border = new Border(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
-        addBorder(line_to_border);
-        splitBackground();
+        Vector3 point_middle_line = (lineRenderer.GetPosition(0) + lineRenderer.GetPosition(1))/2;
+        Background bg = GetBackground(point_middle_line);
+        if(bg.hasEnnemies())
+        {
+            Border line_to_border = new Border(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
+            addBorder(line_to_border);
+            splitBackground();
+        }
         Destroy(mCurrentTrail);
         mCurrentTrail = null;
     }
@@ -170,8 +184,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
         }
     }
 
-
-    void splitBackground()
+    Background GetBackground(Vector3 pos)
     {
         Background current_bg = null;
         foreach (Background bg in mBackgrounds)
@@ -184,6 +197,16 @@ public class CharacterMoveOthogonal : MonoBehaviour
         if (current_bg == null)
         {
             Debug.Log("Current BG not found!");
+            return null;
+        }
+        return current_bg;
+    }
+
+    void splitBackground()
+    {
+        Background current_bg = GetBackground(mLastPosition + transform.position);
+        if (current_bg == null)
+        {
             return;
         }
         if (!current_bg.hasEnnemies())

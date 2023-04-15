@@ -55,7 +55,7 @@ public class Background
         }
         else
         {
-            render.color = new Color(0f, 0f, 1f);
+            render.color = new Color(0f, 1f, 1f);
         }
         render.material = new Material(Shader.Find("Sprites/Default"));
         render.material.color = render.color;
