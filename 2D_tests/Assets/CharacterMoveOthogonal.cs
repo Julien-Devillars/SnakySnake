@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class CharacterMoveOthogonal : MonoBehaviour
@@ -69,6 +70,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
             mEnnemies.Add(ennemy);
             mBackgrounds[0].addEnnemy(ennemy);
         }
+        mBackgrounds[0].changeBackgroundColor();
     }
 
     void addBorder(Border border)
@@ -226,6 +228,14 @@ public class CharacterMoveOthogonal : MonoBehaviour
         mBackgrounds.Remove(current_bg);
         mBackgrounds.Add(bg_1);
         mBackgrounds.Add(bg_2);
+        if(!bg_1.hasEnnemies())
+        {
+            Score.Instance.mCurrentScore += (int)(bg_1.getArea()*10f);
+        }
+        if (!bg_2.hasEnnemies())
+        {
+            Score.Instance.mCurrentScore += (int)(bg_2.getArea()*10f);
+        }
     }
 
     bool movingVertical()
@@ -243,17 +253,17 @@ public class CharacterMoveOthogonal : MonoBehaviour
         {
             if(border.onFuzzyBorder(transform.position))
             {
-                if (mCurrentTrail)
-                {
-                    if (border.mBorder.tag == "VerticalBorder")
-                    {
-                        mCurrentDirection = Direction.None;
-                    }
-                    else if (border.mBorder.tag == "HorizontalBorder")
-                    {
-                        mCurrentDirection = Direction.None;
-                    }
-                }
+                //if (mCurrentTrail)
+                //{
+                //    if (border.mBorder.tag == "VerticalBorder")
+                //    {
+                //        mCurrentDirection = Direction.None;
+                //    }
+                //    else if (border.mBorder.tag == "HorizontalBorder")
+                //    {
+                //        mCurrentDirection = Direction.None;
+                //    }
+                //}
                 return true;
             }
         }
