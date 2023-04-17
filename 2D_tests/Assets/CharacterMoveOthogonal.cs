@@ -233,11 +233,11 @@ public class CharacterMoveOthogonal : MonoBehaviour
         mBackgrounds.Add(bg_2);
         if(!bg_1.hasEnnemies())
         {
-            Score.Instance.mCurrentScore += (int)(bg_1.getArea()*10f);
+            Score.Instance.mCurrentScore += bg_1.getArea();
         }
         if (!bg_2.hasEnnemies())
         {
-            Score.Instance.mCurrentScore += (int)(bg_2.getArea()*10f);
+            Score.Instance.mCurrentScore += bg_2.getArea();
         }
     }
 
