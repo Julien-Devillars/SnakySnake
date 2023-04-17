@@ -14,18 +14,11 @@ public class Background
     float mEpsilon;
     public GameObject mCharacter;
 
-    public Background(GameObject go)
+    public Background(Vector3 min_border_pos, Vector3 max_border_pos, int _id)
     {
         mEnnemyList = new List<GameObject>();
-        mBackground = GameObject.Instantiate(go);
-        mId = 0;
+        mBackground = new GameObject();
 
-        mBackground.transform.parent = GameObject.Find("Backgrounds").transform;
-    }
-    public Background(GameObject go, Vector3 min_border_pos, Vector3 max_border_pos, int _id)
-    {
-        mEnnemyList = new List<GameObject>();
-        mBackground = GameObject.Instantiate(go);
         mId = _id;
         mMinBorderPos = min_border_pos;
         mMaxBorderPos = max_border_pos;
@@ -35,13 +28,17 @@ public class Background
         mBackground.transform.localScale = new Vector3(scale_x, scale_y, 1);
         mBackground.transform.parent = GameObject.Find("Backgrounds").transform;
 
-        SpriteRenderer render = mBackground.GetComponent<SpriteRenderer>();
-        render.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+        SpriteRenderer renderer = mBackground.AddComponent<SpriteRenderer>();
+        //renderer.sprite = Sprite.
+        renderer.color = new Color(1f, 1f, 1f);
 
         mBackground.name = "Background" + "_" + mId;
 
-        render.material = new Material(Shader.Find("Sprites/Default"));
-        render.material.color = render.color;
+        renderer.material = new Material(Shader.Find("Sprites/Default"));
+        renderer.material.color = renderer.color;
+        renderer.sprite = Resources.Load<Sprite>("Sprites/Square");
+
+        renderer.sortingLayerName = "Background";
 
         GameObject ball = GameObject.Find("Ball");
         mEpsilon = ball.transform.localScale.x / 2f;
@@ -108,13 +105,13 @@ public class Background
         Background bg_2 = null;
         if (start_point.x == end_point.x)
         {
-            bg_1 = new Background(mBackground, mMinBorderPos, (fuzzyCompare(start_point.y, mMinBorderPos.y)) ? end_point : start_point, mId + 1);
-            bg_2 = new Background(mBackground, (fuzzyCompare(start_point.y, mMaxBorderPos.y)) ? end_point : start_point, mMaxBorderPos, mId + 2);
+            bg_1 = new Background(mMinBorderPos, (fuzzyCompare(start_point.y, mMinBorderPos.y)) ? end_point : start_point, mId + 1);
+            bg_2 = new Background((fuzzyCompare(start_point.y, mMaxBorderPos.y)) ? end_point : start_point, mMaxBorderPos, mId + 2);
         }
         else if (start_point.y == end_point.y)
         {
-            bg_1 = new Background(mBackground, mMinBorderPos, (fuzzyCompare(start_point.x, mMinBorderPos.x)) ? end_point : start_point, mId + 1);
-            bg_2 = new Background(mBackground, (fuzzyCompare(start_point.x, mMaxBorderPos.x)) ? end_point : start_point, mMaxBorderPos, mId + 2);
+            bg_1 = new Background(mMinBorderPos, (fuzzyCompare(start_point.x, mMinBorderPos.x)) ? end_point : start_point, mId + 1);
+            bg_2 = new Background((fuzzyCompare(start_point.x, mMaxBorderPos.x)) ? end_point : start_point, mMaxBorderPos, mId + 2);
         }
 
         if (bg_1 == null || bg_2 == null)

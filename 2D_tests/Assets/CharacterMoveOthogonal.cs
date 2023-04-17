@@ -19,8 +19,6 @@ public class CharacterMoveOthogonal : MonoBehaviour
     private Direction mCurrentDirection;
     private Border mCurrentBorder;
 
-
-    public GameObject mBackground;
     public List<Background> mBackgrounds;
 
     public List<Border> mBorders;
@@ -32,7 +30,6 @@ public class CharacterMoveOthogonal : MonoBehaviour
     public GameObject mEnnemy;
     private List<GameObject> mEnnemies;
 
-    public GameObject mTrail;
     private GameObject mCurrentTrail;
     private Vector3 mLastPosition;
 
@@ -61,7 +58,7 @@ public class CharacterMoveOthogonal : MonoBehaviour
         makeBorders();
 
         mBackgrounds = new List<Background>();
-        mBackgrounds.Add(new Background(mBackground, mMinBorderPos, mMaxBorderPos, 0));
+        mBackgrounds.Add(new Background(mMinBorderPos, mMaxBorderPos, 0));
 
         mEnnemies = new List<GameObject>();
         for (int i = 0; i < mEnnemy.transform.childCount; ++i)
@@ -131,15 +128,21 @@ public class CharacterMoveOthogonal : MonoBehaviour
 
     void createLine()
     {
-        mCurrentTrail = GameObject.Instantiate(mTrail);
-        //For creating line renderer object
-        LineRenderer lineRenderer = mCurrentTrail.GetComponent<LineRenderer>();
-        lineRenderer.startColor = Color.red;
-        lineRenderer.endColor = Color.red;
+        mCurrentTrail = new GameObject();
+        LineRenderer lineRenderer = mCurrentTrail.AddComponent<LineRenderer>();
+        //For creating line renderer 
+        Color line_color = Color.red;
+        lineRenderer.startColor = line_color;
+        lineRenderer.endColor = line_color;
         lineRenderer.startWidth = transform.localScale.x;
         lineRenderer.endWidth = transform.localScale.x;
         lineRenderer.positionCount = 2;
         lineRenderer.useWorldSpace = true;
+        
+        // Set Material
+        Material red_mat = new Material(Shader.Find("Sprites/Default"));
+        red_mat.SetColor("_Color", line_color);
+        lineRenderer.material = red_mat;
     }
     void deleteLine()
     {
