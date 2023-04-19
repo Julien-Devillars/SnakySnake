@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Movement_ennemies : MonoBehaviour
+public class EnnemyBehavior : MonoBehaviour
 {
     public float speed_x;
     public float speed_y;
@@ -19,16 +20,24 @@ public class Movement_ennemies : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(!collision.gameObject.name.Contains("Border")) return;
-        
-        if (collision.gameObject.tag == "VerticalBorder")
+        if (collision.gameObject.name.Contains("Border"))
         {
-            speed_x = -speed_x;
+            if (collision.gameObject.tag == "VerticalBorder")
+            {
+                speed_x = -speed_x;
+            }
+            if (collision.gameObject.tag == "HorizontalBorder")
+            {
+                speed_y = -speed_y;
+            }
         }
-        if (collision.gameObject.tag == "HorizontalBorder")
+        if (collision.gameObject.tag.Contains("Trail"))
         {
-            speed_y = -speed_y;
+            Debug.Log("Lose");
+            SceneManager.LoadScene("Level_1");
         }
+
+
     }
 
 }
