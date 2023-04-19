@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 public class Score : MonoBehaviour
 {
@@ -21,7 +23,7 @@ public class Score : MonoBehaviour
     void Start()
     {
         mCurrentScore = 0;
-        mGoalScore = 60;
+        mGoalScore = 75;
 
         Camera cam = Camera.main;
 
@@ -36,7 +38,28 @@ public class Score : MonoBehaviour
     {
         Text text_ui = gameObject.GetComponent<Text>();
         int area_percentage = (int)(mCurrentScore * 100f / mTotalArea);
+        checkWinCondition(area_percentage);
         text_ui.text = "Score : " + area_percentage.ToString() + "/" + mGoalScore.ToString() + "%";
+    }
+
+    void checkWinCondition(float area_percentage)
+    {
+        if (area_percentage >= mGoalScore)
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            string scene_name = scene.name;
+            string[] scene_split = scene_name.Split('_');
+
+            if(scene_split.Length != 2)
+            {
+                return;
+            }
+
+            int scene_number = int.Parse(scene_split[1]);
+            scene_number += 1;
+
+            SceneManager.LoadScene(scene_split[0] + "_" + scene_number.ToString());
+        }
     }
 
 }

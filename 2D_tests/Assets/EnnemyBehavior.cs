@@ -36,8 +36,6 @@ public class EnnemyBehavior : MonoBehaviour
             Debug.Log("Lose");
             SceneManager.LoadScene("Level_1");
         }
-
-
     }
 
 }
