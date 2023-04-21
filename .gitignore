@@ -77,5 +77,4 @@ crashlytics-build.properties
 /2D_tests/Packages
 /2D_tests/Temp
 /2D_tests/UserSettings
-*.meta
 [Bb]uild/
