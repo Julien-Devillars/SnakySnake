@@ -72,4 +72,9 @@ public class Trail : MonoBehaviour
             collider.size = new Vector2((position_end.x - middle_point.x) * 2f, collider.size.y);
         }
     }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Trail deleted");
+    }
 }

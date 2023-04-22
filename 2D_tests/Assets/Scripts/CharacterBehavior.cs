@@ -19,7 +19,6 @@ public class CharacterBehavior : MonoBehaviour
     private List<GameObject> mEnnemies;
 
     private GameObject mCurrentTrail;
-    private Vector3 mLastPosition;
     private GameObject mLastPosition_go;
 
     // Start is called before the first frame update
@@ -51,6 +50,9 @@ public class CharacterBehavior : MonoBehaviour
             mBackgrounds[0].addEnnemy(ennemy);
         }
         mBackgrounds[0].changeBackgroundColor();
+
+        mLastPosition_go = new GameObject();
+        mLastPosition_go.name = "start_point";
     }
 
     void addBorder(Border border)
@@ -111,10 +113,6 @@ public class CharacterBehavior : MonoBehaviour
     {
         mCurrentTrail = new GameObject();
         mCurrentTrail.AddComponent<Trail>();
-        mLastPosition_go = new GameObject();
-        mLastPosition_go.name = "start_point";
-        mLastPosition_go.transform.position = mLastPosition;
-
     }
     void deleteLine()
     {
@@ -132,7 +130,6 @@ public class CharacterBehavior : MonoBehaviour
         }
         Destroy(mCurrentTrail);
         mCurrentTrail = null;
-        Destroy(mLastPosition_go);
     }
 
     void updateDirection()
@@ -160,7 +157,7 @@ public class CharacterBehavior : MonoBehaviour
         Background current_bg = null;
         foreach (Background bg in mBackgrounds)
         {
-            if (bg.contains((mLastPosition + transform.position) / 2))
+            if (bg.contains((getLastPosition() + transform.position) / 2))
             {
                 current_bg = bg;
             }
@@ -175,7 +172,7 @@ public class CharacterBehavior : MonoBehaviour
 
     void splitBackground()
     {
-        Background current_bg = GetBackground(mLastPosition + transform.position);
+        Background current_bg = GetBackground(getLastPosition() + transform.position);
         if (current_bg == null)
         {
             return;
@@ -186,7 +183,7 @@ public class CharacterBehavior : MonoBehaviour
             return;
         }
 
-        List<Background> background_splitten = current_bg.split(mLastPosition, transform.position);
+        List<Background> background_splitten = current_bg.split(getLastPosition(), transform.position);
         if (background_splitten == null || background_splitten.Count != 2)
         {
             return;
@@ -205,15 +202,6 @@ public class CharacterBehavior : MonoBehaviour
         {
             Score.Instance.mCurrentScore += bg_2.getArea();
         }
-    }
-
-    bool movingVertical()
-    {
-        return mCurrentDirection == Direction.Up || mCurrentDirection == Direction.Down;
-    }
-    bool movingHorizontal()
-    {
-        return mCurrentDirection == Direction.Left || mCurrentDirection == Direction.Right;
     }
     
     bool onBorder()
@@ -274,15 +262,19 @@ public class CharacterBehavior : MonoBehaviour
         {
             if (border.onFuzzyBorder(transform.position))
             {
-                mLastPosition = transform.position;
+                setLastPosition(transform.position);
             }
         }
         Vector3 new_pos = transform.position + mDirections[mCurrentDirection] * mSpeed * Time.deltaTime;
         transform.position = getPositionInBorder(new_pos);
     }
 
-    //private Vector3 getLastPosition()
-    //{
-    //
-    //}
+    private Vector3 getLastPosition()
+    {
+        return mLastPosition_go.transform.position;
+    }
+    private void setLastPosition(Vector3 pos)
+    {
+        mLastPosition_go.transform.position = pos;
+    }
 }
