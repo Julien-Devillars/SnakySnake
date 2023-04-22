@@ -28,5 +28,26 @@ public class Direction
     public static direction Down   = direction.Down;
     public static direction None   = direction.None;
 
+    public static direction getDirectionFrom2Points(Vector3 start_point, Vector3 end_point)
+    {
+        if(start_point.y == end_point.y && start_point.x > end_point.x)
+        {
+            return Left;
+        }
+        if(start_point.x == end_point.x && start_point.y < end_point.y)
+        {
+            return Up;
+        }
+        if(start_point.y == end_point.y && start_point.x < end_point.x)
+        {
+            return Right;
+        }
+        if(start_point.x == end_point.x && start_point.y > end_point.y)
+        {
+            return Down;
+        }
+        return None;
+    }
+
 }
 
