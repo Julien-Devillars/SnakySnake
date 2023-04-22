@@ -16,17 +16,15 @@ public class CharacterBehavior : MonoBehaviour
     private Vector3 mMinBorderPos;
     private Vector3 mMaxBorderPos;
 
-
     private List<GameObject> mEnnemies;
 
     private GameObject mCurrentTrail;
     private Vector3 mLastPosition;
+    private GameObject mLastPosition_go;
 
     // Start is called before the first frame update
     void Start()
     {
-        //mCurrentDirection = Direction.None;
-
         mDirections = Direction.directions;
 
         Camera cam = Camera.main;
@@ -87,7 +85,6 @@ public class CharacterBehavior : MonoBehaviour
             if(mCurrentTrail)
             {
                 setOnBorder();
-                updateLine();
             }
             deleteLine();
         }
@@ -100,7 +97,6 @@ public class CharacterBehavior : MonoBehaviour
                 {
                     createLine();
                 }
-                updateLine();
             }
             else
             {
@@ -114,27 +110,11 @@ public class CharacterBehavior : MonoBehaviour
     void createLine()
     {
         mCurrentTrail = new GameObject();
-        mCurrentTrail.name = "Trail";
-        mCurrentTrail.tag = "Trail";
-        LineRenderer lineRenderer = mCurrentTrail.AddComponent<LineRenderer>();
-        //For creating line renderer 
-        Color line_color = Color.red;
-        lineRenderer.startColor = line_color;
-        lineRenderer.endColor = line_color;
-        lineRenderer.startWidth = transform.localScale.x;
-        lineRenderer.endWidth = transform.localScale.x;
-        lineRenderer.positionCount = 2;
-        lineRenderer.useWorldSpace = true;
+        mCurrentTrail.AddComponent<Trail>();
+        mLastPosition_go = new GameObject();
+        mLastPosition_go.name = "start_point";
+        mLastPosition_go.transform.position = mLastPosition;
 
-        // Create Box collider
-        BoxCollider2D collider = mCurrentTrail.AddComponent<BoxCollider2D>();
-        collider.size = new Vector2(transform.localScale.x, transform.localScale.x);
-        collider.offset = new Vector2(transform.position.x, transform.position.y);
-
-        // Set Material
-        Material red_mat = new Material(Shader.Find("Sprites/Default"));
-        red_mat.SetColor("_Color", line_color);
-        lineRenderer.material = red_mat;
     }
     void deleteLine()
     {
@@ -152,35 +132,7 @@ public class CharacterBehavior : MonoBehaviour
         }
         Destroy(mCurrentTrail);
         mCurrentTrail = null;
-    }
-    void updateLine()
-    {
-        LineRenderer lineRenderer = mCurrentTrail.GetComponent<LineRenderer>();
-        //For drawing line in the world space, provide the x,y,z values
-        lineRenderer.SetPosition(0, mLastPosition); //x,y and z position of the starting point of the line
-        lineRenderer.SetPosition(1, transform.position); //x,y and z position of the end point of the line
-
-        Vector3 middle_point = (mLastPosition + transform.position) / 2f;
-        // Update Box collider
-        BoxCollider2D collider = mCurrentTrail.GetComponent<BoxCollider2D>();
-        collider.offset = new Vector2(middle_point.x, middle_point.y);
-        if(mCurrentDirection == Direction.Up)
-        {
-            collider.size = new Vector2(collider.size.x, (transform.position.y - middle_point.y) * 2f);
-        }
-        if (mCurrentDirection == Direction.Down)
-        {
-            collider.size = new Vector2(collider.size.x, (middle_point.y - transform.position.y) * 2f);
-        }
-        if (mCurrentDirection == Direction.Left)
-        {
-            collider.size = new Vector2((middle_point.x - transform.position.x) * 2f, collider.size.y);
-        }
-        if (mCurrentDirection == Direction.Right)
-        {
-            collider.size = new Vector2((transform.position.x - middle_point.x) * 2f, collider.size.y);
-        }
-
+        Destroy(mLastPosition_go);
     }
 
     void updateDirection()
@@ -329,4 +281,8 @@ public class CharacterBehavior : MonoBehaviour
         transform.position = getPositionInBorder(new_pos);
     }
 
+    //private Vector3 getLastPosition()
+    //{
+    //
+    //}
 }
