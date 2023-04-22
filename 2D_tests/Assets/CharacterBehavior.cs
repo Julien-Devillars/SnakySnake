@@ -17,17 +17,14 @@ public class CharacterBehavior : MonoBehaviour
     }
     private Dictionary<Direction, Vector3> mDirections;
     private Direction mCurrentDirection;
-    private Border mCurrentBorder;
 
     public List<Background> mBackgrounds;
 
     public List<Border> mBorders;
-    public GameObject mBorder;
     private Vector3 mMinBorderPos;
     private Vector3 mMaxBorderPos;
 
 
-    public GameObject mEnnemy;
     private List<GameObject> mEnnemies;
 
     private GameObject mCurrentTrail;
@@ -61,9 +58,10 @@ public class CharacterBehavior : MonoBehaviour
         mBackgrounds.Add(new Background(mMinBorderPos, mMaxBorderPos, 0));
 
         mEnnemies = new List<GameObject>();
-        for (int i = 0; i < mEnnemy.transform.childCount; ++i)
+        GameObject ennemies_go = GameObject.Find("Ennemies"); 
+        for (int i = 0; i < ennemies_go.transform.childCount; ++i)
         {
-            GameObject ennemy = mEnnemy.transform.GetChild(i).gameObject;
+            GameObject ennemy = ennemies_go.transform.GetChild(i).gameObject;
             mEnnemies.Add(ennemy);
             mBackgrounds[0].addEnnemy(ennemy);
         }

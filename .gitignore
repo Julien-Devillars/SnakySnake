@@ -78,3 +78,4 @@ crashlytics-build.properties
 /2D_tests/Temp
 /2D_tests/UserSettings
 [Bb]uild/
+.vsconfig

@@ -709,7 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 935b660f6e3abef4ab08508d2a2f6c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSpeed: 0
+  mSpeed: 15
   mBorder: {fileID: 727324699}
   mEnnemy: {fileID: 317167102}
 --- !u!222 &2066144163
