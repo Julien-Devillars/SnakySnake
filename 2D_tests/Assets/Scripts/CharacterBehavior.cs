@@ -7,16 +7,8 @@ public class CharacterBehavior : MonoBehaviour
 {
     public float mSpeed;
 
-    enum Direction
-    {
-        Left,
-        Up,
-        Right,
-        Down,
-        None
-    }
-    private Dictionary<Direction, Vector3> mDirections;
-    private Direction mCurrentDirection;
+    private Dictionary<Direction.direction, Vector3> mDirections;
+    private Direction.direction mCurrentDirection;
 
     public List<Background> mBackgrounds;
 
@@ -33,14 +25,9 @@ public class CharacterBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mCurrentDirection = Direction.None;
+        //mCurrentDirection = Direction.None;
 
-        mDirections = new Dictionary<Direction, Vector3>();
-        mDirections.Add(Direction.Left, Vector3.left);
-        mDirections.Add(Direction.Up, Vector3.up);
-        mDirections.Add(Direction.Right, Vector3.right);
-        mDirections.Add(Direction.Down, Vector3.down);
-        mDirections.Add(Direction.None, Vector3.zero);
+        mDirections = Direction.directions;
 
         Camera cam = Camera.main;
 
@@ -283,17 +270,6 @@ public class CharacterBehavior : MonoBehaviour
         {
             if(border.onFuzzyBorder(transform.position))
             {
-                //if (mCurrentTrail)
-                //{
-                //    if (border.mBorder.tag == "VerticalBorder")
-                //    {
-                //        mCurrentDirection = Direction.None;
-                //    }
-                //    else if (border.mBorder.tag == "HorizontalBorder")
-                //    {
-                //        mCurrentDirection = Direction.None;
-                //    }
-                //}
                 return true;
             }
         }
@@ -351,7 +327,6 @@ public class CharacterBehavior : MonoBehaviour
         }
         Vector3 new_pos = transform.position + mDirections[mCurrentDirection] * mSpeed * Time.deltaTime;
         transform.position = getPositionInBorder(new_pos);
-        //transform.position = getFuzzyPositionInBorder(new_pos);
     }
 
 }
