@@ -16,7 +16,7 @@ public class CharacterBehavior : MonoBehaviour
     private Vector3 mMinBorderPos;
     private Vector3 mMaxBorderPos;
 
-    private List<GameObject> mEnnemies;
+    private List<GameObject> mEnemies;
 
     private GameObject mCurrentTrail;
     private GameObject mLastPosition_go;
@@ -41,13 +41,13 @@ public class CharacterBehavior : MonoBehaviour
         mBackgrounds = new List<Background>();
         mBackgrounds.Add(new Background(mMinBorderPos, mMaxBorderPos, 0));
 
-        mEnnemies = new List<GameObject>();
-        GameObject ennemies_go = GameObject.Find("Ennemies"); 
-        for (int i = 0; i < ennemies_go.transform.childCount; ++i)
+        mEnemies = new List<GameObject>();
+        GameObject enemies_go = GameObject.Find("Enemies"); 
+        for (int i = 0; i < enemies_go.transform.childCount; ++i)
         {
-            GameObject ennemy = ennemies_go.transform.GetChild(i).gameObject;
-            mEnnemies.Add(ennemy);
-            mBackgrounds[0].addEnnemy(ennemy);
+            GameObject enemy = enemies_go.transform.GetChild(i).gameObject;
+            mEnemies.Add(enemy);
+            mBackgrounds[0].addEnemy(enemy);
         }
         mBackgrounds[0].changeBackgroundColor();
 
@@ -93,7 +93,7 @@ public class CharacterBehavior : MonoBehaviour
         else
         {
             Background current_bg = GetBackground(transform.position);
-            if(current_bg != null && current_bg.hasEnnemies())
+            if(current_bg != null && current_bg.hasEnemies())
             {
                 if (!mCurrentTrail)
                 {
@@ -122,7 +122,7 @@ public class CharacterBehavior : MonoBehaviour
         LineRenderer lineRenderer = mCurrentTrail.GetComponent<LineRenderer>();
         Vector3 point_middle_line = (lineRenderer.GetPosition(0) + lineRenderer.GetPosition(1))/2;
         Background bg = GetBackground(point_middle_line);
-        if(bg.hasEnnemies())
+        if(bg.hasEnemies())
         {
             Border line_to_border = new Border(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
             addBorder(line_to_border);
@@ -177,9 +177,9 @@ public class CharacterBehavior : MonoBehaviour
         {
             return;
         }
-        if (!current_bg.hasEnnemies())
+        if (!current_bg.hasEnemies())
         {
-            Debug.Log("No ennemy, no split intended");
+            Debug.Log("No enemy, no split intended");
             return;
         }
 
@@ -194,11 +194,11 @@ public class CharacterBehavior : MonoBehaviour
         mBackgrounds.Remove(current_bg);
         mBackgrounds.Add(bg_1);
         mBackgrounds.Add(bg_2);
-        if(!bg_1.hasEnnemies())
+        if(!bg_1.hasEnemies())
         {
             Score.Instance.mCurrentScore += bg_1.getArea();
         }
-        if (!bg_2.hasEnnemies())
+        if (!bg_2.hasEnemies())
         {
             Score.Instance.mCurrentScore += bg_2.getArea();
         }

@@ -23,7 +23,7 @@ public class Score : MonoBehaviour
     void Start()
     {
         mCurrentScore = 0;
-        mGoalScore = 75;
+        mGoalScore = 50;
 
         Camera cam = Camera.main;
 

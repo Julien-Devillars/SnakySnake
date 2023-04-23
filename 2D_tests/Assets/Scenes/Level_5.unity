@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsForLevel:
-    number_enemies: 5
+    number_enemies: 9
     random_direction: 1
     random_position: 1
     enemies_direction: []

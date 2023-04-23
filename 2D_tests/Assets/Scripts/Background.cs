@@ -9,12 +9,12 @@ public class Background
     private int mId;
     public Vector3 mMinBorderPos;
     public Vector3 mMaxBorderPos;
-    private List<GameObject> mEnnemyList;
+    private List<GameObject> mEnemyList;
     public GameObject mCharacter;
 
     public Background(Vector3 min_border_pos, Vector3 max_border_pos, int _id)
     {
-        mEnnemyList = new List<GameObject>();
+        mEnemyList = new List<GameObject>();
         mBackground = new GameObject();
 
         mId = _id;
@@ -41,7 +41,7 @@ public class Background
     public void changeBackgroundColor()
     {
         SpriteRenderer render = mBackground.GetComponent<SpriteRenderer>();
-        if (hasEnnemies())
+        if (hasEnemies())
         {
             render.color = new Color(0f, 1f, 0f);
         }
@@ -77,17 +77,17 @@ public class Background
     {
         return (mMaxBorderPos.x - mMinBorderPos.x) * (mMaxBorderPos.y - mMinBorderPos.y);
     }
-    public List<GameObject> getEnnemies()
+    public List<GameObject> getEnemies()
     {
-        return mEnnemyList;
+        return mEnemyList;
     }
-    public void addEnnemy(GameObject ennemy)
+    public void addEnemy(GameObject enemy)
     {
-        mEnnemyList.Add(ennemy);
+        mEnemyList.Add(enemy);
     }
-    public bool hasEnnemies()
+    public bool hasEnemies()
     {
-        return mEnnemyList.Count != 0;
+        return mEnemyList.Count != 0;
     }
     public void destroy()
     {
@@ -115,19 +115,19 @@ public class Background
             return null;
         }
 
-        foreach (GameObject ennemy in getEnnemies())
+        foreach (GameObject enemy in getEnemies())
         {
-            if (bg_1.contains(ennemy))
+            if (bg_1.contains(enemy))
             {
-                bg_1.addEnnemy(ennemy);
+                bg_1.addEnemy(enemy);
             }
-            else if (bg_2.contains(ennemy))
+            else if (bg_2.contains(enemy))
             {
-                bg_2.addEnnemy(ennemy);
+                bg_2.addEnemy(enemy);
             }
             else
             {
-                Debug.Log("Issue, ennemy not set in new background");
+                Debug.Log("Issue, enemy not set in new background");
             }
         }
 

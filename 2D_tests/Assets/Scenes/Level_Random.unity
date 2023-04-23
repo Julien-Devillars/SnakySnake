@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 317167103}
   - component: {fileID: 317167104}
   m_Layer: 0
-  m_Name: Enemies
+  m_Name: Ennemies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -266,12 +266,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1701cca2cbcd28844bcfc699c2751c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingsForLevel:
-    number_enemies: 5
-    random_direction: 1
-    random_position: 1
-    enemies_direction: []
-    enemies_position: []
+  number_ennemies: 1
+  random_value: 0
+  ennemies:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ennemies_direction:
+  - {x: 1, y: 1}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
