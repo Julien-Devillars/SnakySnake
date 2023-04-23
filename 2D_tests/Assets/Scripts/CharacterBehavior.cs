@@ -231,12 +231,10 @@ public class CharacterBehavior : MonoBehaviour
                 if (border.mBorder.tag == "VerticalBorder")
                 {
                     pos = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
-                    Debug.Log("VerticalBorder : " + border.mBorder.name + " : " + pos);
                 }
                 else if (border.mBorder.tag == "HorizontalBorder")
                 {
                     pos = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
-                    Debug.Log("HorizontalBorder : " + border.mBorder.name + " : " + pos);
                 }
             }
         }

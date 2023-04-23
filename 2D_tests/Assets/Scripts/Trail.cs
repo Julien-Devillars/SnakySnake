@@ -12,7 +12,7 @@ public class Trail : MonoBehaviour
         LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
 
         // Need a ball to have a trail
-        GameObject ball = GameObject.Find("Ball");
+        GameObject ball = GameObject.Find(Utils.CHARACTER);
         Transform transform = ball.transform;
 
         // Line color
@@ -75,6 +75,6 @@ public class Trail : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("Trail deleted");
+        //Debug.Log("Trail deleted");
     }
 }

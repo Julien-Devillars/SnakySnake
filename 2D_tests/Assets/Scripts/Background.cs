@@ -10,8 +10,6 @@ public class Background
     public Vector3 mMinBorderPos;
     public Vector3 mMaxBorderPos;
     private List<GameObject> mEnnemyList;
-    //public List<Border> mBorders;
-    float mEpsilon;
     public GameObject mCharacter;
 
     public Background(Vector3 min_border_pos, Vector3 max_border_pos, int _id)
@@ -39,9 +37,6 @@ public class Background
         renderer.sprite = Resources.Load<Sprite>("Sprites/Square");
 
         renderer.sortingLayerName = "Background";
-
-        GameObject ball = GameObject.Find("Ball");
-        mEpsilon = ball.transform.localScale.x / 2f;
     }
     public void changeBackgroundColor()
     {
@@ -69,7 +64,7 @@ public class Background
 
     private bool fuzzyCompare(float val_1, float val_2)
     {
-        return val_1 > val_2 - mEpsilon && val_1 < val_2 + mEpsilon;
+        return val_1 > val_2 - Utils.EPSILON && val_1 < val_2 + Utils.EPSILON;
     }
     public bool onBorder(Vector3 pos)
     {
