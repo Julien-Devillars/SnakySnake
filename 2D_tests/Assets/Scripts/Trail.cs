@@ -26,6 +26,8 @@ public class Trail : MonoBehaviour
         lineRenderer.positionCount = 2;
         lineRenderer.useWorldSpace = true;
         lineRenderer.numCapVertices = 8;
+        // Hide linerenderer until update
+        lineRenderer.enabled = false;
 
         // Create Box collider
         BoxCollider2D collider = gameObject.AddComponent<BoxCollider2D>();
@@ -51,42 +53,31 @@ public class Trail : MonoBehaviour
         GameObject end_point_go = GameObject.Find("Ball");
 
         int nb_points = points.transform.childCount;
-        if(nb_points == 0)
+
+        string[] trail_name_splitted = gameObject.transform.name.Split(' ');
+        if(trail_name_splitted.Length != 2)
         {
+            Debug.Log("Trail name is wrong : " + gameObject.transform.name);
+            return;
+        }
+
+        int trail_number = int.Parse(trail_name_splitted[1]);
+
+        if(trail_number == nb_points - 1)
+        {
+            position_start = points.transform.GetChild(nb_points - 1).position;
             position_end = end_point_go.transform.position;
-            position_start = start_point_go.transform.position;
         }
         else
         {
-            string[] trail_name_splitted = gameObject.transform.name.Split(' ');
-            if(trail_name_splitted.Length != 2)
-            {
-                Debug.Log("Trail name is wrong : " + gameObject.transform.name);
-                return;
-            }
-
-            int trail_number = int.Parse(trail_name_splitted[1]);
-
-            if(trail_number == 0)
-            {
-                position_start = start_point_go.transform.position;
-                position_end = points.transform.GetChild(0).position;
-            }
-            else if(trail_number == nb_points)
-            {
-                position_start = points.transform.GetChild(nb_points - 1).position;
-                position_end = end_point_go.transform.position;
-            }
-            else
-            {
-                position_start = points.transform.GetChild(trail_number - 1).position;
-                position_end = points.transform.GetChild(trail_number).position;
-            }
+            position_start = points.transform.GetChild(trail_number).position;
+            position_end = points.transform.GetChild(trail_number + 1).position;
         }
 
 
         lineRenderer.SetPosition(0, position_start); //x,y and z position of the starting point of the line
         lineRenderer.SetPosition(1, position_end); //x,y and z position of the end point of the line
+        lineRenderer.enabled = true ;
 
         Vector3 middle_point = (position_start + position_end) / 2f;
         // Update Box collider

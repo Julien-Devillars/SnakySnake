@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 public class CharacterBehavior : MonoBehaviour
 {
@@ -93,7 +94,12 @@ public class CharacterBehavior : MonoBehaviour
     void Update()
     {
         bool direction_updated = updateDirection();
-        if (onBorder())
+
+        bool should_create_line = false;
+        should_create_line = isInBackground();
+        
+
+        if (onBorder() && !should_create_line)
         {
             if(mTrailPoints.Count > 0)
             {
@@ -109,6 +115,23 @@ public class CharacterBehavior : MonoBehaviour
             }
         }
         moveBall();
+    }
+
+    private bool isInBackground()
+    {
+        Vector3 current_pos = transform.position;
+        Vector3 next_pos = current_pos + Direction.directions[mCurrentDirection] * transform.localScale.x;
+        Background next_bg = GetBackground(next_pos);
+        if(next_bg == null)
+        {
+            Debug.Log("Next move cannot find BG");
+            return false;
+        }
+        if(!next_bg.hasEnemies())
+        {
+            return false;
+        }
+        return true;
     }
 
     void addLine()
@@ -178,7 +201,7 @@ public class CharacterBehavior : MonoBehaviour
         Background current_bg = null;
         foreach (Background bg in mBackgrounds)
         {
-            if (bg.contains((getLastPosition() + transform.position) / 2))
+            if (bg.contains(pos))
             {
                 current_bg = bg;
             }
@@ -193,7 +216,7 @@ public class CharacterBehavior : MonoBehaviour
 
     void splitBackground()
     {
-        Background current_bg = GetBackground(getLastPosition() + transform.position);
+        Background current_bg = GetBackground((getLastPosition() + transform.position)/2f);
         if (current_bg == null)
         {
             return;
