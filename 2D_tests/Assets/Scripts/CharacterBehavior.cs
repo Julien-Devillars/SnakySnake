@@ -10,6 +10,7 @@ public class CharacterBehavior : MonoBehaviour
 
     private Dictionary<Direction.direction, Vector3> mDirections;
     private Direction.direction mCurrentDirection;
+    private bool mCanMove;
 
     public List<Background> mBackgrounds;
 
@@ -29,6 +30,7 @@ public class CharacterBehavior : MonoBehaviour
     void Start()
     {
         mDirections = Direction.directions;
+        mCanMove = true;
 
         Camera cam = Camera.main;
 
@@ -98,6 +100,10 @@ public class CharacterBehavior : MonoBehaviour
         bool should_create_line = false;
         should_create_line = isInBackground();
         
+        if(direction_updated)
+        {
+            StartCoroutine(waiter());
+        }
 
         if (onBorder() && !should_create_line)
         {
@@ -124,7 +130,7 @@ public class CharacterBehavior : MonoBehaviour
         Background next_bg = GetBackground(next_pos);
         if(next_bg == null)
         {
-            Debug.Log("Next move cannot find BG");
+            //Debug.Log("Next move cannot find BG");
             return false;
         }
         if(!next_bg.hasEnemies())
@@ -169,6 +175,11 @@ public class CharacterBehavior : MonoBehaviour
 
     bool updateDirection()
     {
+        if(!mCanMove)
+        {
+            return false;
+        }
+
         if ((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow)) && mCurrentDirection != Direction.Left /* && mCurrentDirection != Direction.Right*/)
         {
             mCurrentDirection = Direction.Left;
@@ -195,6 +206,12 @@ public class CharacterBehavior : MonoBehaviour
         }
         return false;
     }
+    IEnumerator waiter()
+    {
+        mCanMove = false;
+        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+        mCanMove = true;
+    }
 
     Background GetBackground(Vector3 pos)
     {
@@ -208,7 +225,7 @@ public class CharacterBehavior : MonoBehaviour
         }
         if (current_bg == null)
         {
-            Debug.Log("Current BG not found!");
+            //Debug.Log("Current BG not found!");
             return null;
         }
         return current_bg;
