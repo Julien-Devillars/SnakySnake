@@ -18,7 +18,10 @@ public class CharacterBehavior : MonoBehaviour
 
     private List<GameObject> mEnemies;
 
-    private GameObject mCurrentTrail;
+    private List<GameObject> mTrailPoints;
+    private GameObject mTrailPointsGO;
+    private List<GameObject> mTrails;
+    private GameObject mTrailGO;
     private GameObject mLastPosition_go;
 
     // Start is called before the first frame update
@@ -53,6 +56,14 @@ public class CharacterBehavior : MonoBehaviour
 
         mLastPosition_go = new GameObject();
         mLastPosition_go.name = "start_point";
+
+        mTrailPointsGO = new GameObject();
+        mTrailPointsGO.name = "Trail Points";
+        mTrailPoints = new List<GameObject>();
+
+        mTrailGO = new GameObject();
+        mTrailGO.name = "Trail";
+        mTrails = new List<GameObject>();
     }
 
     void addBorder(Border border)
@@ -81,10 +92,10 @@ public class CharacterBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool direction_updated = updateDirection();
         if (onBorder())
         {
-            updateDirection();
-            if(mCurrentTrail)
+            if(mTrailPoints.Count > 0)
             {
                 setOnBorder();
             }
@@ -92,64 +103,74 @@ public class CharacterBehavior : MonoBehaviour
         }
         else
         {
-            Background current_bg = GetBackground(transform.position);
-            if(current_bg != null && current_bg.hasEnemies())
+            if (direction_updated)
             {
-                if (!mCurrentTrail)
-                {
-                    createLine();
-                }
-            }
-            else
-            {
-                updateDirection();
+                addLine();
             }
         }
-
         moveBall();
     }
 
-    void createLine()
+    void addLine()
     {
-        mCurrentTrail = new GameObject();
-        mCurrentTrail.AddComponent<Trail>();
+        GameObject current_point = new GameObject();
+        current_point.gameObject.transform.parent = mTrailPointsGO.gameObject.transform;
+        current_point.name = "Trail Points " + mTrailPoints.Count.ToString();
+        current_point.transform.position = transform.position;
+        mTrailPoints.Add(current_point);
+
+        GameObject current_trail = new GameObject();
+        current_trail.gameObject.transform.parent = mTrailGO.gameObject.transform;
+        current_trail.name = "Trail " + mTrails.Count.ToString();
+        current_trail.AddComponent<Trail>();
+        mTrails.Add(current_trail);
+                
     }
+
     void deleteLine()
     {
-        if (mCurrentTrail == null)
+        if (mTrailPoints.Count == 0)
             return;
 
-        LineRenderer lineRenderer = mCurrentTrail.GetComponent<LineRenderer>();
-        Vector3 point_middle_line = (lineRenderer.GetPosition(0) + lineRenderer.GetPosition(1))/2;
-        Background bg = GetBackground(point_middle_line);
-        if(bg.hasEnemies())
+        foreach (GameObject trail_point in mTrailPoints)
         {
-            Border line_to_border = new Border(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
-            addBorder(line_to_border);
-            splitBackground();
+            Destroy(trail_point);
         }
-        Destroy(mCurrentTrail);
-        mCurrentTrail = null;
+        mTrailPoints.Clear();
+        foreach (GameObject trail in mTrails)
+        {
+            Destroy(trail);
+        }
+        mTrails.Clear();
     }
 
-    void updateDirection()
+    bool updateDirection()
     {
-        if ((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))/* && mCurrentDirection != Direction.Right*/)
+        if ((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow)) && mCurrentDirection != Direction.Left /* && mCurrentDirection != Direction.Right*/)
         {
             mCurrentDirection = Direction.Left;
-         }
-        else if ((Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow))/* && mCurrentDirection != Direction.Down*/)
+            Debug.Log("Left");
+            return true;
+        }
+        else if ((Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow) && mCurrentDirection != Direction.Up)/* && mCurrentDirection != Direction.Down*/)
         {
             mCurrentDirection = Direction.Up;
+            Debug.Log("Up");
+            return true;
         }
-        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))/* && mCurrentDirection != Direction.Left*/)
+        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) && mCurrentDirection != Direction.Right)/* && mCurrentDirection != Direction.Left*/)
         {
             mCurrentDirection = Direction.Right;
+            Debug.Log("Right");
+            return true;
         }
-        else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))/* && mCurrentDirection != Direction.Up*/)
+        else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) && mCurrentDirection != Direction.Down)/* && mCurrentDirection != Direction.Up*/)
         {
             mCurrentDirection = Direction.Down;
+            Debug.Log("Down");
+            return true;
         }
+        return false;
     }
 
     Background GetBackground(Vector3 pos)

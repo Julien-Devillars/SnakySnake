@@ -7,7 +7,7 @@ public class Trail : MonoBehaviour
 {
     void Start()
     {
-        gameObject.name = "Trail";
+        //gameObject.name = "Trail";
         gameObject.tag = "Trail";
         LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
 
@@ -25,6 +25,7 @@ public class Trail : MonoBehaviour
         // Set 2 points
         lineRenderer.positionCount = 2;
         lineRenderer.useWorldSpace = true;
+        lineRenderer.numCapVertices = 8;
 
         // Create Box collider
         BoxCollider2D collider = gameObject.AddComponent<BoxCollider2D>();
@@ -39,13 +40,51 @@ public class Trail : MonoBehaviour
 
     void Update()
     {
-        GameObject end_point_go = GameObject.Find("Ball");
-        Vector3 position_end = end_point_go.transform.position;
-        GameObject start_point_go = GameObject.Find("start_point");
-        Vector3 position_start = start_point_go.transform.position;
+        Vector3 position_end = new Vector3();
+        Vector3 position_start = new Vector3();
 
         LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
         //For drawing line in the world space, provide the x,y,z values
+
+        GameObject points = GameObject.Find("Trail Points");
+        GameObject start_point_go = GameObject.Find("start_point");
+        GameObject end_point_go = GameObject.Find("Ball");
+
+        int nb_points = points.transform.childCount;
+        if(nb_points == 0)
+        {
+            position_end = end_point_go.transform.position;
+            position_start = start_point_go.transform.position;
+        }
+        else
+        {
+            string[] trail_name_splitted = gameObject.transform.name.Split(' ');
+            if(trail_name_splitted.Length != 2)
+            {
+                Debug.Log("Trail name is wrong : " + gameObject.transform.name);
+                return;
+            }
+
+            int trail_number = int.Parse(trail_name_splitted[1]);
+
+            if(trail_number == 0)
+            {
+                position_start = start_point_go.transform.position;
+                position_end = points.transform.GetChild(0).position;
+            }
+            else if(trail_number == nb_points)
+            {
+                position_start = points.transform.GetChild(nb_points - 1).position;
+                position_end = end_point_go.transform.position;
+            }
+            else
+            {
+                position_start = points.transform.GetChild(trail_number - 1).position;
+                position_end = points.transform.GetChild(trail_number).position;
+            }
+        }
+
+
         lineRenderer.SetPosition(0, position_start); //x,y and z position of the starting point of the line
         lineRenderer.SetPosition(1, position_end); //x,y and z position of the end point of the line
 
