@@ -168,6 +168,12 @@ public class CharacterBehavior : MonoBehaviour
         mTrailPoints.Clear();
         foreach (GameObject trail in mTrails)
         {
+            // Transform line to border
+            LineRenderer lineRenderer = trail.GetComponent<LineRenderer>();
+            Border line_to_border = new Border(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
+            addBorder(line_to_border);
+
+            // Delete trail
             Destroy(trail);
         }
         mTrails.Clear();
