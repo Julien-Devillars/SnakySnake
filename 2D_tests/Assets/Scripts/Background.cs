@@ -142,4 +142,29 @@ public class Background
         destroy();
         return backgrounds;
     }
+
+    public Vector3 getEndPointFromBackground(Vector3 start_point, Vector3 middle_point)
+    {
+        Vector3 direction = middle_point - start_point;
+        direction = direction.normalized;
+
+        if (direction == Vector3.up)
+        {
+            return new Vector3(start_point.x, mMaxBorderPos.y);
+        }
+        else if (direction == Vector3.right)
+        {
+            return new Vector3(mMaxBorderPos.x, start_point.y);
+        }
+        else if (direction == Vector3.down)
+        {
+            return new Vector3(start_point.x, mMinBorderPos.y);
+        }
+        else if (direction == Vector3.left)
+        {
+            return new Vector3(mMinBorderPos.x, start_point.y);
+        }
+
+        return Vector3.zero;
+    }
 }

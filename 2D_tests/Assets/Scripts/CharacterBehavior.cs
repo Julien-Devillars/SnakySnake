@@ -174,6 +174,26 @@ public class CharacterBehavior : MonoBehaviour
             addBorder(line_to_border);
 
             // Delete trail
+            List<Vector3> points = Utils.getIntermediatePointFromTrail(line_to_border);
+            List<Background> bgs = new List<Background>();
+            foreach(Vector3 point in points)
+            {
+                Background bg = GetBackground(point);
+                if(bg != null && !bgs.Contains(bg))
+                {
+                    bgs.Add(bg);
+                }
+            }
+
+            foreach(Background bg in bgs)
+            {
+                Vector3 start_point = lineRenderer.GetPosition(0);
+                Vector3 middle_point = lineRenderer.GetPosition(1);
+                Vector3 end_point = bg.getEndPointFromBackground(start_point, middle_point);
+                splitBackground(bg, start_point, end_point);// bg.split(start_point, middle_point);
+            }
+            Debug.Log("Number of BG found : " + bgs.Count);
+
             Destroy(trail);
         }
         mTrails.Clear();
@@ -237,20 +257,9 @@ public class CharacterBehavior : MonoBehaviour
         return current_bg;
     }
 
-    void splitBackground()
+    void splitBackground(Background current_bg, Vector3 start_point, Vector3 end_point)
     {
-        Background current_bg = GetBackground((getLastPosition() + transform.position)/2f);
-        if (current_bg == null)
-        {
-            return;
-        }
-        if (!current_bg.hasEnemies())
-        {
-            Debug.Log("No enemy, no split intended");
-            return;
-        }
-
-        List<Background> background_splitten = current_bg.split(getLastPosition(), transform.position);
+        List<Background> background_splitten = current_bg.split(start_point, end_point);
         if (background_splitten == null || background_splitten.Count != 2)
         {
             return;

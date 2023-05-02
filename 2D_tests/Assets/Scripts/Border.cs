@@ -40,6 +40,7 @@ public class Border
         lineRenderer.endColor = Color.blue;
         lineRenderer.positionCount = 2;
         lineRenderer.useWorldSpace = true;
+        lineRenderer.numCapVertices = 8;
 
         GameObject ball = GameObject.Find(Utils.CHARACTER);
         lineRenderer.startWidth = ball.transform.localScale.x;
@@ -75,10 +76,9 @@ public class Border
 
     private void addCollider2D()
     {
-        mBorder.AddComponent<BoxCollider2D>();
-        BoxCollider2D box_collider = mBorder.GetComponent<BoxCollider2D>();
-
+        BoxCollider2D box_collider = mBorder.AddComponent<BoxCollider2D>();
         LineRenderer lineRenderer = mBorder.GetComponent<LineRenderer>();
+
         if(mBorder.tag == "VerticalBorder")
         {
             box_collider.size = new Vector2(lineRenderer.startWidth, Mathf.Abs(mEndPoint.y - mStartPoint.y));
@@ -150,5 +150,15 @@ public class Border
             box_collider.size = new Vector2(box_collider.size.x, lineRenderer.startWidth);
         }
         box_collider.enabled = false;
+    }
+    public Vector3 getStartPoint()
+    {
+        LineRenderer lineRenderer = mBorder.GetComponent<LineRenderer>();
+        return lineRenderer.GetPosition(0);
+    }
+    public Vector3 getLastPoint()
+    {
+        LineRenderer lineRenderer = mBorder.GetComponent<LineRenderer>();
+        return lineRenderer.GetPosition(1);
     }
 }

@@ -42,14 +42,10 @@ public class Trail : MonoBehaviour
 
     void Update()
     {
-        Vector3 position_end = new Vector3();
-        Vector3 position_start = new Vector3();
-
         LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
         //For drawing line in the world space, provide the x,y,z values
 
         GameObject points = GameObject.Find("Trail Points");
-        GameObject start_point_go = GameObject.Find("start_point");
         GameObject end_point_go = GameObject.Find("Ball");
 
         int nb_points = points.transform.childCount;
@@ -63,7 +59,9 @@ public class Trail : MonoBehaviour
 
         int trail_number = int.Parse(trail_name_splitted[1]);
 
-        if(trail_number == nb_points - 1)
+        Vector3 position_end;
+        Vector3 position_start;
+        if (trail_number == nb_points - 1)
         {
             position_start = points.transform.GetChild(nb_points - 1).position;
             position_end = end_point_go.transform.position;

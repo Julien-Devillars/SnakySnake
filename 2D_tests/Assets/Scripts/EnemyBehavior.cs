@@ -40,7 +40,7 @@ public class EnemyBehavior : MonoBehaviour
         if (collision.gameObject.tag.Contains("Trail"))
         {
             Debug.Log("Lose");
-            SceneManager.LoadScene("Level_1");
+            SceneManager.LoadScene("Level_2");
         }
     }
 
