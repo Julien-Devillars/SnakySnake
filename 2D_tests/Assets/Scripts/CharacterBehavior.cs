@@ -95,12 +95,13 @@ public class CharacterBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Background current_bg = GetBackground(transform.position);
         bool direction_updated = updateDirection();
 
         bool should_create_line = false;
         should_create_line = isInBackground();
-        
-        if(direction_updated)
+
+        if (direction_updated)
         {
             StartCoroutine(waiter());
         }
@@ -115,7 +116,11 @@ public class CharacterBehavior : MonoBehaviour
         }
         else
         {
-            if (direction_updated)
+            if (current_bg != null)
+            {
+                should_create_line &= current_bg.hasEnemies();
+            }
+            if (direction_updated && (current_bg == null || current_bg.hasEnemies()))
             {
                 addLine();
             }
@@ -126,10 +131,6 @@ public class CharacterBehavior : MonoBehaviour
         foreach (Background bg in mBackgrounds)
         {
             nb_ennemy += bg.getEnemies().Count;
-        }
-        if(nb_ennemy != mEnemies.Count)
-        {
-            Debug.Log("Number of enemis changed : " + nb_ennemy);
         }
     }
 
@@ -204,7 +205,6 @@ public class CharacterBehavior : MonoBehaviour
                 Vector3 bg_end_point = bg.getPointFromBackground(middle_point, start_point);
                 splitBackground(bg, bg_start_point, bg_end_point);// bg.split(start_point, middle_point);
             }
-            Debug.Log("Number of BG found : " + bgs.Count);
 
             Destroy(trail);
         }
@@ -220,12 +220,24 @@ public class CharacterBehavior : MonoBehaviour
                     continue;
                 
                 Vector3 center_2 = bg_2.getCenterPoint();
-                bool is_connected = true;
+                Vector3 mix_point_1 = new Vector3(center_1.x, center_2.y);
+                Vector3 mix_point_2 = new Vector3(center_2.x, center_1.y);
+                bool c1_is_connected = true;
+                bool c2_is_connected = true;
                 foreach(Border border in mBorders)
                 {
-                    is_connected &= !Utils.intersect(border.mStartPoint, border.mEndPoint, center_1, center_2);
+                    bool mix1_c1_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_1, center_1);
+                    bool mix1_c2_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_1, center_2);
+                    bool mix2_c1_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_2, center_1);
+                    bool mix2_c2_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_2, center_2);
+
+                    bool mix1_is_ok = mix1_c1_intersect && mix1_c2_intersect;
+                    bool mix2_is_ok = mix2_c1_intersect && mix2_c2_intersect;
+
+                    c1_is_connected &= mix1_is_ok;
+                    c2_is_connected &= mix2_is_ok;
                 }
-                if(is_connected)
+                if(c1_is_connected || c2_is_connected)
                 {
                     bg_1.addConnection(bg_2);
                 }
@@ -243,7 +255,6 @@ public class CharacterBehavior : MonoBehaviour
         }
         
         // Draw bg
-        Debug.Log("stop");
     }
 
     bool updateDirection()
@@ -256,25 +267,21 @@ public class CharacterBehavior : MonoBehaviour
         if ((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow)) && mCurrentDirection != Direction.Left /* && mCurrentDirection != Direction.Right*/)
         {
             mCurrentDirection = Direction.Left;
-            Debug.Log("Left");
             return true;
         }
         else if ((Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow) && mCurrentDirection != Direction.Up)/* && mCurrentDirection != Direction.Down*/)
         {
             mCurrentDirection = Direction.Up;
-            Debug.Log("Up");
             return true;
         }
         else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) && mCurrentDirection != Direction.Right)/* && mCurrentDirection != Direction.Left*/)
         {
             mCurrentDirection = Direction.Right;
-            Debug.Log("Right");
             return true;
         }
         else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) && mCurrentDirection != Direction.Down)/* && mCurrentDirection != Direction.Up*/)
         {
             mCurrentDirection = Direction.Down;
-            Debug.Log("Down");
             return true;
         }
         return false;
