@@ -121,6 +121,16 @@ public class CharacterBehavior : MonoBehaviour
             }
         }
         moveBall();
+
+        int nb_ennemy = 0;
+        foreach (Background bg in mBackgrounds)
+        {
+            nb_ennemy += bg.getEnemies().Count;
+        }
+        if(nb_ennemy != mEnemies.Count)
+        {
+            Debug.Log("Number of enemis changed : " + nb_ennemy);
+        }
     }
 
     private bool isInBackground()
@@ -189,14 +199,51 @@ public class CharacterBehavior : MonoBehaviour
             {
                 Vector3 start_point = lineRenderer.GetPosition(0);
                 Vector3 middle_point = lineRenderer.GetPosition(1);
-                Vector3 end_point = bg.getEndPointFromBackground(start_point, middle_point);
-                splitBackground(bg, start_point, end_point);// bg.split(start_point, middle_point);
+
+                Vector3 bg_start_point = bg.getPointFromBackground(start_point, middle_point);
+                Vector3 bg_end_point = bg.getPointFromBackground(middle_point, start_point);
+                splitBackground(bg, bg_start_point, bg_end_point);// bg.split(start_point, middle_point);
             }
             Debug.Log("Number of BG found : " + bgs.Count);
 
             Destroy(trail);
         }
         mTrails.Clear();
+
+
+        foreach (Background bg_1 in mBackgrounds)
+        {
+            Vector3 center_1 = bg_1.getCenterPoint();
+            foreach (Background bg_2 in mBackgrounds)
+            {
+                if (bg_1 == bg_2)
+                    continue;
+                
+                Vector3 center_2 = bg_2.getCenterPoint();
+                bool is_connected = true;
+                foreach(Border border in mBorders)
+                {
+                    is_connected &= !Utils.intersect(border.mStartPoint, border.mEndPoint, center_1, center_2);
+                }
+                if(is_connected)
+                {
+                    bg_1.addConnection(bg_2);
+                }
+            }
+        }
+
+        // Propagate connection
+        Utils.propagateBackgrounds(mBackgrounds);
+
+        // Add ennemis related to propagate
+        foreach(Background bg in mBackgrounds)
+        {
+            bg.addConnectedEnemy();
+            bg.changeBackgroundColor();
+        }
+        
+        // Draw bg
+        Debug.Log("stop");
     }
 
     bool updateDirection()
@@ -272,11 +319,11 @@ public class CharacterBehavior : MonoBehaviour
         mBackgrounds.Add(bg_2);
         if(!bg_1.hasEnemies())
         {
-            Score.Instance.mCurrentScore += bg_1.getArea();
+            //Score.Instance.mCurrentScore += bg_1.getArea();
         }
         if (!bg_2.hasEnemies())
         {
-            Score.Instance.mCurrentScore += bg_2.getArea();
+            //Score.Instance.mCurrentScore += bg_2.getArea();
         }
     }
     

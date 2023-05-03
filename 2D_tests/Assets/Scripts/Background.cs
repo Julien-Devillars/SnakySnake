@@ -11,6 +11,7 @@ public class Background
     public Vector3 mMaxBorderPos;
     private List<GameObject> mEnemyList;
     public GameObject mCharacter;
+    public List<Background> mConnectedBackground;
 
     public Background(Vector3 min_border_pos, Vector3 max_border_pos, int _id)
     {
@@ -37,7 +38,18 @@ public class Background
         renderer.sprite = Resources.Load<Sprite>("Sprites/Square");
 
         renderer.sortingLayerName = "Background";
+        mConnectedBackground = new List<Background>();
     }
+    public void Clone(Background target)
+    {
+        target.mBackground = mBackground;
+        target.mId = mId;
+        target.mMinBorderPos = mMinBorderPos;
+        target.mMaxBorderPos = mMaxBorderPos;
+        target.mEnemyList = mEnemyList;
+        target.mCharacter = mCharacter;
+        target.mConnectedBackground = mConnectedBackground;
+}
     public void changeBackgroundColor()
     {
         SpriteRenderer render = mBackground.GetComponent<SpriteRenderer>();
@@ -81,9 +93,25 @@ public class Background
     {
         return mEnemyList;
     }
-    public void addEnemy(GameObject enemy)
+    public void addConnectedEnemy()
     {
-        mEnemyList.Add(enemy);
+        foreach(Background bg in mConnectedBackground)
+        {
+            foreach(GameObject enemy in bg.mEnemyList)
+            {
+                addEnemy(enemy);
+            }
+        }
+        
+    }
+    public bool addEnemy(GameObject enemy)
+    {
+        if (!mEnemyList.Contains(enemy))
+        {
+            mEnemyList.Add(enemy);
+            return true;
+        }
+        return false;
     }
     public bool hasEnemies()
     {
@@ -131,8 +159,8 @@ public class Background
             }
         }
 
-        bg_1.changeBackgroundColor();
-        bg_2.changeBackgroundColor();
+        //bg_1.changeBackgroundColor();
+        //bg_2.changeBackgroundColor();
 
         List<Background> backgrounds = new List<Background>();
 
@@ -143,9 +171,9 @@ public class Background
         return backgrounds;
     }
 
-    public Vector3 getEndPointFromBackground(Vector3 start_point, Vector3 middle_point)
+    public Vector3 getPointFromBackground(Vector3 start_point, Vector3 end_point)
     {
-        Vector3 direction = middle_point - start_point;
+        Vector3 direction = end_point - start_point;
         direction = direction.normalized;
 
         if (direction == Vector3.up)
@@ -167,4 +195,19 @@ public class Background
 
         return Vector3.zero;
     }
+
+    public Vector3 getCenterPoint()
+    {
+        return (mMinBorderPos + mMaxBorderPos) / 2f;
+    }
+    public bool addConnection(Background bg)
+    {
+        if (!mConnectedBackground.Contains(bg) && this != bg)
+        {
+            mConnectedBackground.Add(bg);
+            return true;
+        }
+        return false;
+    }
+
 }
