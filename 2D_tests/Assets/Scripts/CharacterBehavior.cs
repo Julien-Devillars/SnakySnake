@@ -97,16 +97,16 @@ public class CharacterBehavior : MonoBehaviour
     {
         Background current_bg = GetBackground(transform.position);
         bool direction_updated = updateDirection();
+        Background next_bg = getNextBackground();
 
-        bool should_create_line = false;
-        should_create_line = isInBackground();
+        bool should_create_line = isInBackground();
 
         if (direction_updated)
         {
             StartCoroutine(waiter());
         }
 
-        if (onBorder() && !should_create_line)
+        if (next_bg == null || (next_bg != current_bg && !next_bg.hasEnemies()))//onBorder() && !should_create_line)
         {
             if(mTrailPoints.Count > 0)
             {
@@ -116,29 +116,35 @@ public class CharacterBehavior : MonoBehaviour
         }
         else
         {
-            if (current_bg != null)
-            {
-                should_create_line &= current_bg.hasEnemies();
-            }
             if (direction_updated && (current_bg == null || current_bg.hasEnemies()))
             {
                 addLine();
             }
+            else if(next_bg != null && next_bg != current_bg && next_bg.hasEnemies())
+            {
+                setOnBorder();
+                addLine();
+            }
+
+            //if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies())
+            //{
+            //    setOnBorder();
+            //    addLine();
+            //}
         }
         moveBall();
 
-        int nb_ennemy = 0;
-        foreach (Background bg in mBackgrounds)
-        {
-            nb_ennemy += bg.getEnemies().Count;
-        }
     }
 
-    private bool isInBackground()
+    private Background getNextBackground()
     {
         Vector3 current_pos = transform.position;
         Vector3 next_pos = current_pos + Direction.directions[mCurrentDirection] * transform.localScale.x;
-        Background next_bg = GetBackground(next_pos);
+        return GetBackground(next_pos);
+    }
+    private bool isInBackground()
+    {
+        Background next_bg = getNextBackground();
         if(next_bg == null)
         {
             //Debug.Log("Next move cannot find BG");
@@ -348,7 +354,7 @@ public class CharacterBehavior : MonoBehaviour
 
     void setOnBorder()
     {
-        Vector3 pos = new Vector3();
+        Vector3 pos = transform.position;
         foreach (Border border in mBorders)
         {
             if (border.onFuzzyBorder(transform.position))
@@ -366,7 +372,12 @@ public class CharacterBehavior : MonoBehaviour
                 {
                     pos = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
                 }
+                Debug.Log("Found");
             }
+        }
+        if(pos == transform.position) 
+        {
+            Debug.Log("Not found");
         }
         transform.position = pos;
     }
