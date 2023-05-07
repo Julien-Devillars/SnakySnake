@@ -121,14 +121,14 @@ public class Border
     }
     private bool fuzzyCompare(float val_1, float val_2)
     {
-        return val_1 > val_2 - Utils.EPSILON && val_1 < val_2 + Utils.EPSILON;
+        return val_1 > val_2 - Utils.EPSILON*2f && val_1 < val_2 + Utils.EPSILON*2f;
     }
     public bool onFuzzyBorder(Vector3 position)
     {
-        return (fuzzyCompare(position.x, mStartPoint.x) && fuzzyCompare(position.x, mEndPoint.x) && position.y >= mStartPoint.y - Utils.EPSILON && position.y <= mEndPoint.y + Utils.EPSILON && mStartPoint.y < mEndPoint.y)
-            || (fuzzyCompare(position.y, mStartPoint.y) && fuzzyCompare(position.y, mEndPoint.y) && position.x >= mStartPoint.x - Utils.EPSILON && position.x <= mEndPoint.x + Utils.EPSILON && mStartPoint.x < mEndPoint.x)
-            || (fuzzyCompare(position.x, mStartPoint.x) && fuzzyCompare(position.x, mEndPoint.x) && position.y <= mStartPoint.y + Utils.EPSILON && position.y >= mEndPoint.y - Utils.EPSILON && mStartPoint.y > mEndPoint.y)
-            || (fuzzyCompare(position.y, mStartPoint.y) && fuzzyCompare(position.y, mEndPoint.y) && position.x <= mStartPoint.x + Utils.EPSILON && position.x >= mEndPoint.x - Utils.EPSILON && mStartPoint.x > mEndPoint.x);
+        return (fuzzyCompare(position.x, mStartPoint.x) && fuzzyCompare(position.x, mEndPoint.x) && position.y >= mStartPoint.y - Utils.EPSILON*2f && position.y <= mEndPoint.y + Utils.EPSILON*2f && mStartPoint.y < mEndPoint.y)
+            || (fuzzyCompare(position.y, mStartPoint.y) && fuzzyCompare(position.y, mEndPoint.y) && position.x >= mStartPoint.x - Utils.EPSILON*2f && position.x <= mEndPoint.x + Utils.EPSILON*2f && mStartPoint.x < mEndPoint.x)
+            || (fuzzyCompare(position.x, mStartPoint.x) && fuzzyCompare(position.x, mEndPoint.x) && position.y <= mStartPoint.y + Utils.EPSILON*2f && position.y >= mEndPoint.y - Utils.EPSILON*2f && mStartPoint.y > mEndPoint.y)
+            || (fuzzyCompare(position.y, mStartPoint.y) && fuzzyCompare(position.y, mEndPoint.y) && position.x <= mStartPoint.x + Utils.EPSILON*2f && position.x >= mEndPoint.x - Utils.EPSILON*2f && mStartPoint.x > mEndPoint.x);
     }
     public bool onBorder(Vector3 position)
     {

@@ -6,14 +6,14 @@ using UnityEngine;
 public class Background
 {
     public GameObject mBackground;
-    private int mId;
+    private string mId;
     public Vector3 mMinBorderPos;
     public Vector3 mMaxBorderPos;
     private List<GameObject> mEnemyList;
     public GameObject mCharacter;
     public List<Background> mConnectedBackground;
 
-    public Background(Vector3 min_border_pos, Vector3 max_border_pos, int _id)
+    public Background(Vector3 min_border_pos, Vector3 max_border_pos, string _id)
     {
         mEnemyList = new List<GameObject>();
         mBackground = new GameObject();
@@ -128,13 +128,13 @@ public class Background
         Background bg_2 = null;
         if (start_point.x == end_point.x)
         {
-            bg_1 = new Background(mMinBorderPos, (fuzzyCompare(start_point.y, mMinBorderPos.y)) ? end_point : start_point, mId + 1);
-            bg_2 = new Background((fuzzyCompare(start_point.y, mMaxBorderPos.y)) ? end_point : start_point, mMaxBorderPos, mId + 2);
+            bg_1 = new Background(mMinBorderPos, (fuzzyCompare(start_point.y, mMinBorderPos.y)) ? end_point : start_point, mId + "_1");
+            bg_2 = new Background((fuzzyCompare(start_point.y, mMaxBorderPos.y)) ? end_point : start_point, mMaxBorderPos, mId + "_2");
         }
         else if (start_point.y == end_point.y)
         {
-            bg_1 = new Background(mMinBorderPos, (fuzzyCompare(start_point.x, mMinBorderPos.x)) ? end_point : start_point, mId + 1);
-            bg_2 = new Background((fuzzyCompare(start_point.x, mMaxBorderPos.x)) ? end_point : start_point, mMaxBorderPos, mId + 2);
+            bg_1 = new Background(mMinBorderPos, (fuzzyCompare(start_point.x, mMinBorderPos.x)) ? end_point : start_point, mId + "_1");
+            bg_2 = new Background((fuzzyCompare(start_point.x, mMaxBorderPos.x)) ? end_point : start_point, mMaxBorderPos, mId + "_2");
         }
 
         if (bg_1 == null || bg_2 == null)
@@ -143,21 +143,21 @@ public class Background
             return null;
         }
 
-        foreach (GameObject enemy in getEnemies())
-        {
-            if (bg_1.contains(enemy))
-            {
-                bg_1.addEnemy(enemy);
-            }
-            else if (bg_2.contains(enemy))
-            {
-                bg_2.addEnemy(enemy);
-            }
-            else
-            {
-                Debug.Log("Issue, enemy not set in new background");
-            }
-        }
+        //foreach (GameObject enemy in getEnemies())
+        //{
+        //    if (bg_1.contains(enemy))
+        //    {
+        //        bg_1.addEnemy(enemy);
+        //    }
+        //    else if (bg_2.contains(enemy))
+        //    {
+        //        bg_2.addEnemy(enemy);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("Issue, enemy not set in new background");
+        //    }
+        //}
 
         //bg_1.changeBackgroundColor();
         //bg_2.changeBackgroundColor();

@@ -45,7 +45,7 @@ public class CharacterBehavior : MonoBehaviour
         makeBorders();
 
         mBackgrounds = new List<Background>();
-        mBackgrounds.Add(new Background(mMinBorderPos, mMaxBorderPos, 0));
+        mBackgrounds.Add(new Background(mMinBorderPos, mMaxBorderPos, "0"));
 
         mEnemies = new List<GameObject>();
         GameObject enemies_go = GameObject.Find("Enemies"); 
@@ -116,15 +116,20 @@ public class CharacterBehavior : MonoBehaviour
         }
         else
         {
+            //if(onBorder(getNextPosition()))
+            //{
+            //    setOnBorder();
+            //}
             if (direction_updated && (current_bg == null || current_bg.hasEnemies()))
             {
                 addLine();
             }
-            else if(next_bg != null && next_bg != current_bg && next_bg.hasEnemies())
+            else if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies())
             {
                 setOnBorder();
                 addLine();
             }
+            
 
             //if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies())
             //{
@@ -136,11 +141,13 @@ public class CharacterBehavior : MonoBehaviour
 
     }
 
+    private Vector3 getNextPosition()
+    {
+        return transform.position + Direction.directions[mCurrentDirection] * transform.localScale.x;
+    }
     private Background getNextBackground()
     {
-        Vector3 current_pos = transform.position;
-        Vector3 next_pos = current_pos + Direction.directions[mCurrentDirection] * transform.localScale.x;
-        return GetBackground(next_pos);
+        return GetBackground(getNextPosition());
     }
     private bool isInBackground()
     {
@@ -183,6 +190,7 @@ public class CharacterBehavior : MonoBehaviour
             Destroy(trail_point);
         }
         mTrailPoints.Clear();
+        List<Background> deleted_bgs = new List<Background>();
         foreach (GameObject trail in mTrails)
         {
             // Transform line to border
@@ -210,15 +218,38 @@ public class CharacterBehavior : MonoBehaviour
                 Vector3 bg_start_point = bg.getPointFromBackground(start_point, middle_point);
                 Vector3 bg_end_point = bg.getPointFromBackground(middle_point, start_point);
                 splitBackground(bg, bg_start_point, bg_end_point);// bg.split(start_point, middle_point);
+                deleted_bgs.Add(bg);
             }
 
             Destroy(trail);
         }
         mTrails.Clear();
 
+        List<GameObject> ennemies_to_reassign = new List<GameObject>();
+        foreach(Background deleted_bg in deleted_bgs)
+        {
+            ennemies_to_reassign.AddRange(deleted_bg.getEnemies());
+        }
+
+        //foreach (GameObject ennemy_to_reassign in ennemies_to_reassign)
+        //{
+        //    foreach (Background deleted_bg in mBackgrounds)
+        //    {
+        //        ennemies_to_reassign.AddRange(deleted_bg.getEnemies());
+        //    }
+        //}
 
         foreach (Background bg_1 in mBackgrounds)
         {
+            foreach (GameObject ennemy_to_reassign in ennemies_to_reassign)
+            {
+                if(bg_1.contains(ennemy_to_reassign.transform.position))
+                {
+                    bg_1.addEnemy(ennemy_to_reassign);
+                    Debug.Log(ennemy_to_reassign.name + " added in " + bg_1.mBackground.name);
+                }
+            }
+            
             Vector3 center_1 = bg_1.getCenterPoint();
             foreach (Background bg_2 in mBackgrounds)
             {
@@ -246,6 +277,7 @@ public class CharacterBehavior : MonoBehaviour
                 if(c1_is_connected || c2_is_connected)
                 {
                     bg_1.addConnection(bg_2);
+                    Debug.Log(bg_1.mBackground.name + " connected with " + bg_2.mBackground.name);
                 }
             }
         }
@@ -340,11 +372,11 @@ public class CharacterBehavior : MonoBehaviour
         }
     }
     
-    bool onBorder()
+    bool onBorder(Vector3 pos)
     {
         foreach (Border border in mBorders)
         {
-            if(border.onFuzzyBorder(transform.position))
+            if(border.onFuzzyBorder(pos))
             {
                 return true;
             }
@@ -372,12 +404,7 @@ public class CharacterBehavior : MonoBehaviour
                 {
                     pos = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
                 }
-                Debug.Log("Found");
             }
-        }
-        if(pos == transform.position) 
-        {
-            Debug.Log("Not found");
         }
         transform.position = pos;
     }
