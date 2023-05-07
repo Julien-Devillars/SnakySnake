@@ -295,7 +295,7 @@ public class CharacterBehavior : MonoBehaviour
 
     bool updateDirection()
     {
-        if(!mCanMove)
+        if(!mCanAddLine || !mCanMove)
         {
             return false;
         }
@@ -333,7 +333,7 @@ public class CharacterBehavior : MonoBehaviour
     IEnumerator waiterAddLine()
     {
         mCanAddLine = false;
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+        yield return new WaitForSeconds(Utils.ADD_LINE_UPDATE_TIME);
         mCanAddLine = true;
     }
 
