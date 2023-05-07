@@ -268,12 +268,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingsForLevel:
     number_enemies: 1
-    random_direction: 0
-    random_position: 0
-    enemies_direction:
-    - {x: 0, y: 0}
-    enemies_position:
-    - {x: 0, y: -2}
+    random_direction: 1
+    random_position: 1
+    enemies_direction: []
+    enemies_position: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
