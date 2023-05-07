@@ -11,6 +11,7 @@ public class CharacterBehavior : MonoBehaviour
     private Dictionary<Direction.direction, Vector3> mDirections;
     private Direction.direction mCurrentDirection;
     private bool mCanMove;
+    private bool mCanAddLine;
 
     public List<Background> mBackgrounds;
 
@@ -31,6 +32,7 @@ public class CharacterBehavior : MonoBehaviour
     {
         mDirections = Direction.directions;
         mCanMove = true;
+        mCanAddLine = true;
 
         Camera cam = Camera.main;
 
@@ -108,7 +110,8 @@ public class CharacterBehavior : MonoBehaviour
 
         if (next_bg == null || (next_bg != current_bg && !next_bg.hasEnemies()))//onBorder() && !should_create_line)
         {
-            if(mTrailPoints.Count > 0)
+            Debug.Log("1");
+            if (mTrailPoints.Count > 0)
             {
                 setOnBorder();
             }
@@ -122,10 +125,12 @@ public class CharacterBehavior : MonoBehaviour
             //}
             if (direction_updated && (current_bg == null || current_bg.hasEnemies()))
             {
+                Debug.Log("2");
                 addLine();
             }
-            else if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies())
+            else if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies() && (current_bg  == null || current_bg != null && !current_bg.hasEnemies()))
             {
+                Debug.Log("3");
                 setOnBorder();
                 addLine();
             }
@@ -166,6 +171,9 @@ public class CharacterBehavior : MonoBehaviour
 
     void addLine()
     {
+        if (!mCanAddLine)
+            return;
+
         GameObject current_point = new GameObject();
         current_point.gameObject.transform.parent = mTrailPointsGO.gameObject.transform;
         current_point.name = "Trail Points " + mTrailPoints.Count.ToString();
@@ -177,6 +185,7 @@ public class CharacterBehavior : MonoBehaviour
         current_trail.name = "Trail " + mTrails.Count.ToString();
         current_trail.AddComponent<Trail>();
         mTrails.Add(current_trail);
+        StartCoroutine(waiterAddLine());
                 
     }
 
@@ -305,22 +314,24 @@ public class CharacterBehavior : MonoBehaviour
             return false;
         }
 
-        if ((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow)) && mCurrentDirection != Direction.Left /* && mCurrentDirection != Direction.Right*/)
+        bool can_move_backward = mTrailPoints.Count == 0;
+
+        if ((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow) && mCurrentDirection != Direction.Left)  && (can_move_backward || mCurrentDirection != Direction.Right))
         {
             mCurrentDirection = Direction.Left;
             return true;
         }
-        else if ((Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow) && mCurrentDirection != Direction.Up)/* && mCurrentDirection != Direction.Down*/)
+        else if ((Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow) && mCurrentDirection != Direction.Up) && (can_move_backward || mCurrentDirection != Direction.Down))
         {
             mCurrentDirection = Direction.Up;
             return true;
         }
-        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) && mCurrentDirection != Direction.Right)/* && mCurrentDirection != Direction.Left*/)
+        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) && mCurrentDirection != Direction.Right) && (can_move_backward || mCurrentDirection != Direction.Left))
         {
             mCurrentDirection = Direction.Right;
             return true;
         }
-        else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) && mCurrentDirection != Direction.Down)/* && mCurrentDirection != Direction.Up*/)
+        else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) && mCurrentDirection != Direction.Down) && (can_move_backward || mCurrentDirection != Direction.Up))
         {
             mCurrentDirection = Direction.Down;
             return true;
@@ -332,6 +343,12 @@ public class CharacterBehavior : MonoBehaviour
         mCanMove = false;
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
         mCanMove = true;
+    }
+    IEnumerator waiterAddLine()
+    {
+        mCanAddLine = false;
+        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+        mCanAddLine = true;
     }
 
     Background GetBackground(Vector3 pos)

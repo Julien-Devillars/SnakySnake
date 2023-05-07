@@ -112,6 +112,7 @@ public class Trail : MonoBehaviour
     {
         if (collider.gameObject.name == Utils.CHARACTER)
         {
+            Debug.Log("Trail hit : " + gameObject.name);
             Transform trail = GameObject.Find("Trail").transform;
             Transform trail_child = trail.GetChild(trail.childCount - 1);
             if (transform != trail_child)
