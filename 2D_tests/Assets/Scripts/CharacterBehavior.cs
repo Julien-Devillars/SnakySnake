@@ -231,16 +231,21 @@ public class CharacterBehavior : MonoBehaviour
             ennemies_to_reassign.AddRange(deleted_bg.getEnemies());
         }
 
-        //foreach (GameObject ennemy_to_reassign in ennemies_to_reassign)
-        //{
-        //    foreach (Background deleted_bg in mBackgrounds)
-        //    {
-        //        ennemies_to_reassign.AddRange(deleted_bg.getEnemies());
-        //    }
-        //}
+        // Clean backgrounds information (connection & enemies) before assigned it again
+        foreach (Background bg_1 in mBackgrounds)
+        {
+            foreach (GameObject ennemy_to_reassign in ennemies_to_reassign)
+            {
+                if (bg_1.mEnemyList.Contains(ennemy_to_reassign))
+                {
+                    bg_1.mEnemyList.Remove(ennemy_to_reassign);
+                }
+            }
+        }
 
         foreach (Background bg_1 in mBackgrounds)
         {
+            bg_1.mConnectedBackground.Clear();
             foreach (GameObject ennemy_to_reassign in ennemies_to_reassign)
             {
                 if(bg_1.contains(ennemy_to_reassign.transform.position))
@@ -277,6 +282,21 @@ public class CharacterBehavior : MonoBehaviour
                 if(c1_is_connected || c2_is_connected)
                 {
                     bg_1.addConnection(bg_2);
+                    if(c1_is_connected)
+                    {
+                        Debug.Log("c1_is_connected");
+
+                        Debug.Log(center_1);
+                        Debug.Log(mix_point_1);
+                        Debug.Log(mix_point_2);
+                    }
+                    if (c2_is_connected)
+                    {
+                        Debug.Log("c2_is_connected");
+                        Debug.Log(center_2);
+                        Debug.Log(mix_point_1);
+                        Debug.Log(mix_point_2);
+                    }
                     Debug.Log(bg_1.mBackground.name + " connected with " + bg_2.mBackground.name);
                 }
             }

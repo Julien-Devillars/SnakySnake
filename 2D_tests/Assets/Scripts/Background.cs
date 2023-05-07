@@ -9,7 +9,7 @@ public class Background
     private string mId;
     public Vector3 mMinBorderPos;
     public Vector3 mMaxBorderPos;
-    private List<GameObject> mEnemyList;
+    public List<GameObject> mEnemyList;
     public GameObject mCharacter;
     public List<Background> mConnectedBackground;
 
@@ -99,6 +99,7 @@ public class Background
         {
             foreach(GameObject enemy in bg.mEnemyList)
             {
+                Debug.Log("BG : " + mBackground.name + " connected to " + bg.mBackground.name + " add enemy " + enemy.name);
                 addEnemy(enemy);
             }
         }
@@ -119,6 +120,10 @@ public class Background
     }
     public void destroy()
     {
+        foreach (Background connected_bg in mConnectedBackground)
+        {
+            connected_bg.mConnectedBackground.Remove(this);
+        }
         GameObject.DestroyImmediate(mBackground);
     }
 
