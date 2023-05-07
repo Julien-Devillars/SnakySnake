@@ -138,7 +138,7 @@ public class CharacterBehavior : MonoBehaviour
             //}
         }
         moveBall();
-
+        countScore();
     }
 
     private Vector3 getNextPosition()
@@ -382,16 +382,20 @@ public class CharacterBehavior : MonoBehaviour
         mBackgrounds.Remove(current_bg);
         mBackgrounds.Add(bg_1);
         mBackgrounds.Add(bg_2);
-        if(!bg_1.hasEnemies())
+    }
+
+    void countScore()
+    {
+        Score.Instance.mCurrentScore = 0;
+        foreach (Background bg in mBackgrounds)
         {
-            //Score.Instance.mCurrentScore += bg_1.getArea();
-        }
-        if (!bg_2.hasEnemies())
-        {
-            //Score.Instance.mCurrentScore += bg_2.getArea();
+            if (!bg.hasEnemies())
+            {
+                Score.Instance.mCurrentScore += bg.getArea();
+            }
         }
     }
-    
+
     bool onBorder(Vector3 pos)
     {
         foreach (Border border in mBorders)
