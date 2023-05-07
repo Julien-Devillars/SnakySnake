@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Trail : MonoBehaviour
 {
@@ -104,5 +105,19 @@ public class Trail : MonoBehaviour
     private void OnDestroy()
     {
         //Debug.Log("Trail deleted");
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.name == Utils.CHARACTER)
+        {
+            Transform trail = GameObject.Find("Trail").transform;
+            Transform trail_child = trail.GetChild(trail.childCount - 1);
+            if (transform != trail_child)
+            {
+                SceneManager.LoadScene("Level_1");
+            }
+        }
     }
 }
