@@ -110,7 +110,6 @@ public class CharacterBehavior : MonoBehaviour
 
         if (next_bg == null || (next_bg != current_bg && !next_bg.hasEnemies()))//onBorder() && !should_create_line)
         {
-            Debug.Log("1");
             if (mTrailPoints.Count > 0)
             {
                 setOnBorder();
@@ -119,28 +118,15 @@ public class CharacterBehavior : MonoBehaviour
         }
         else
         {
-            //if(onBorder(getNextPosition()))
-            //{
-            //    setOnBorder();
-            //}
             if (direction_updated && (current_bg == null || current_bg.hasEnemies()))
             {
-                Debug.Log("2");
                 addLine();
             }
             else if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies() && (current_bg  == null || current_bg != null && !current_bg.hasEnemies()))
             {
-                Debug.Log("3");
                 setOnBorder();
                 addLine();
             }
-            
-
-            //if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies())
-            //{
-            //    setOnBorder();
-            //    addLine();
-            //}
         }
         moveBall();
         countScore();
