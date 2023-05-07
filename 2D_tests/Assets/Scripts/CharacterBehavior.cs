@@ -130,6 +130,11 @@ public class CharacterBehavior : MonoBehaviour
         }
         moveBall();
         countScore();
+
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
     }
 
     private Vector3 getNextPosition()
