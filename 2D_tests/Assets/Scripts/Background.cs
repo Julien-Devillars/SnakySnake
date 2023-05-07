@@ -99,7 +99,6 @@ public class Background
         {
             foreach(GameObject enemy in bg.mEnemyList)
             {
-                Debug.Log("BG : " + mBackground.name + " connected to " + bg.mBackground.name + " add enemy " + enemy.name);
                 addEnemy(enemy);
             }
         }

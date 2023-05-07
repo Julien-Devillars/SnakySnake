@@ -251,7 +251,6 @@ public class CharacterBehavior : MonoBehaviour
                 if(bg_1.contains(ennemy_to_reassign.transform.position))
                 {
                     bg_1.addEnemy(ennemy_to_reassign);
-                    Debug.Log(ennemy_to_reassign.name + " added in " + bg_1.mBackground.name);
                 }
             }
             
@@ -282,22 +281,6 @@ public class CharacterBehavior : MonoBehaviour
                 if(c1_is_connected || c2_is_connected)
                 {
                     bg_1.addConnection(bg_2);
-                    if(c1_is_connected)
-                    {
-                        Debug.Log("c1_is_connected");
-
-                        Debug.Log(center_1);
-                        Debug.Log(mix_point_1);
-                        Debug.Log(mix_point_2);
-                    }
-                    if (c2_is_connected)
-                    {
-                        Debug.Log("c2_is_connected");
-                        Debug.Log(center_2);
-                        Debug.Log(mix_point_1);
-                        Debug.Log(mix_point_2);
-                    }
-                    Debug.Log(bg_1.mBackground.name + " connected with " + bg_2.mBackground.name);
                 }
             }
         }
