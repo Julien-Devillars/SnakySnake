@@ -190,11 +190,17 @@ public class CharacterBehavior : MonoBehaviour
             Destroy(trail_point);
         }
         mTrailPoints.Clear();
+
         List<Background> deleted_bgs = new List<Background>();
         foreach (GameObject trail in mTrails)
         {
             // Transform line to border
             LineRenderer lineRenderer = trail.GetComponent<LineRenderer>();
+            if(trail == mTrails[mTrails.Count - 1])
+            {
+                Vector3 pos_on_border = getOnBorder(lineRenderer.GetPosition(1));
+                lineRenderer.SetPosition(1, pos_on_border);
+            }
             Border line_to_border = new Border(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
             addBorder(line_to_border);
 
@@ -422,6 +428,30 @@ public class CharacterBehavior : MonoBehaviour
             }
         }
         transform.position = pos;
+    }
+    Vector3 getOnBorder(Vector3 old_pos)
+    {
+        Vector3 pos = new Vector3();
+        foreach (Border border in mBorders)
+        {
+            if (border.onFuzzyBorder(old_pos))
+            {
+                if (border == null || border.mBorder == null)
+                {
+                    continue;
+                }
+
+                if (border.mBorder.tag == "VerticalBorder")
+                {
+                    pos = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
+                }
+                else if (border.mBorder.tag == "HorizontalBorder")
+                {
+                    pos = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
+                }
+            }
+        }
+        return pos;
     }
 
     Vector3 getPositionInBorder(Vector3 position)
