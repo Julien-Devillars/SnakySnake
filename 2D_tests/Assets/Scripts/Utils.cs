@@ -6,9 +6,13 @@ public class Utils
 {
     public static string CHARACTER = "Ball";
     public static string BACKGROUND_STR = "Backgrounds";
+    public static string ENEMIES_STR = "Enemies";
     public static float EPSILON() => GameObject.Find(CHARACTER).transform.localScale.x / 2f;
     public static float DIRECTION_UPDATE_TIME = 0.1f;
     public static float ADD_LINE_UPDATE_TIME = 0.05f;
+
+    public static bool HAS_SCORE_ACTIVATED = true;
+    public static bool HAS_ENEMY_COLLISION = true;
 
     public static List<Vector3> getIntermediatePointFromTrail(Border border)
     {

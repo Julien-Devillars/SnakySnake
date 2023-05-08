@@ -44,7 +44,7 @@ public class Score : MonoBehaviour
 
     void checkWinCondition(float area_percentage)
     {
-        if (area_percentage >= mGoalScore)
+        if (Utils.HAS_SCORE_ACTIVATED && area_percentage >= mGoalScore)
         {
             Scene scene = SceneManager.GetActiveScene();
             string scene_name = scene.name;
