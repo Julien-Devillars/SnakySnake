@@ -371,12 +371,7 @@ public class BackgroundTests
         setCharacterPositionInAnchor(character, "bottom-left");
 
         // Corner bottom-left
-        character.updateDirection(Direction.Right);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-        character.updateDirection(Direction.Up);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-        character.updateDirection(Direction.Left);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+        yield return move(character, ">^<");
 
         checkNumberOfBackgrounds(3);
         checkBackgroundAreEquals();
@@ -384,12 +379,7 @@ public class BackgroundTests
         setCharacterPositionInAnchor(character, "top-left");
 
         // Corner top-left
-        character.updateDirection(Direction.Right);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-        character.updateDirection(Direction.Down);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-        character.updateDirection(Direction.Left);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+        yield return move(character, ">v<");
 
         checkNumberOfBackgrounds(5);
         checkBackgroundAreEquals();
@@ -397,12 +387,7 @@ public class BackgroundTests
         setCharacterPositionInAnchor(character, "top-right");
 
         // Corner top-right
-        character.updateDirection(Direction.Left);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-        character.updateDirection(Direction.Down);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-        character.updateDirection(Direction.Right);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+        yield return move(character, "<v>");
 
         checkNumberOfBackgrounds(7);
         checkBackgroundAreEquals();
@@ -410,12 +395,7 @@ public class BackgroundTests
         setCharacterPositionInAnchor(character, "bottom-right");
 
         // Corner top-right
-        character.updateDirection(Direction.Left);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-        character.updateDirection(Direction.Up);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-        character.updateDirection(Direction.Right);
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+        yield return move(character, "<^>");
 
         checkNumberOfBackgrounds(9);
         checkBackgroundAreEquals();
