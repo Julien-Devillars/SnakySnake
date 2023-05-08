@@ -6,7 +6,7 @@ public class EnemiesGenerator : MonoBehaviour
 {
     private List<GameObject> enemies;
     
-    [SerializeField] private LevelSettings settingsForLevel;
+    [SerializeField] public LevelSettings settingsForLevel;
     
     // Start is called before the first frame update
     void Start()

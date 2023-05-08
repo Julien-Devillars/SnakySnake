@@ -5,7 +5,7 @@ using UnityEngine;
 public class Utils
 {
     public static string CHARACTER = "Ball";
-    public static float EPSILON = GameObject.Find(CHARACTER).transform.localScale.x / 2f;
+    public static float EPSILON() => GameObject.Find(CHARACTER).transform.localScale.x / 2f;
     public static float DIRECTION_UPDATE_TIME = 0.1f;
     public static float ADD_LINE_UPDATE_TIME = 0.05f;
 
@@ -20,13 +20,13 @@ public class Utils
         
         points.Add(start_point);
 
-        Vector3 current_point = start_point + direction * EPSILON;
+        Vector3 current_point = start_point + direction * EPSILON();
         
 
         while(border.onBorder(current_point))
         {
             points.Add(current_point);
-            current_point = current_point + direction * EPSILON;
+            current_point = current_point + direction * EPSILON();
         }
 
         points.Add(last_point);

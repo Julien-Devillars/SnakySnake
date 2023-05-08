@@ -15,8 +15,8 @@ public class EnemyBehavior : MonoBehaviour
         float width = cam.aspect * cam.orthographicSize;
         float height = cam.orthographicSize;
 
-        mMinPos = new Vector3(-width + Utils.EPSILON * 2f, -height + Utils.EPSILON * 2f, 0);
-        mMaxPos = new Vector3(width - Utils.EPSILON * 2f, height - Utils.EPSILON * 2f, 0);
+        mMinPos = new Vector3(-width + Utils.EPSILON() * 2f, -height + Utils.EPSILON() * 2f, 0);
+        mMaxPos = new Vector3(width - Utils.EPSILON() * 2f, height - Utils.EPSILON() * 2f, 0);
     }
 
     private void FixedUpdate()

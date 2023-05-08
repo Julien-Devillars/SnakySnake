@@ -76,7 +76,7 @@ public class Background
 
     private bool fuzzyCompare(float val_1, float val_2)
     {
-        return val_1 > val_2 - Utils.EPSILON && val_1 < val_2 + Utils.EPSILON;
+        return val_1 > val_2 - Utils.EPSILON() && val_1 < val_2 + Utils.EPSILON();
     }
     public bool onBorder(Vector3 pos)
     {

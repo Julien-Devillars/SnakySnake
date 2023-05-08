@@ -9,15 +9,15 @@ public class CharacterBehavior : MonoBehaviour
     public float mSpeed;
 
     private Dictionary<Direction.direction, Vector3> mDirections;
-    private Direction.direction mCurrentDirection;
+    public Direction.direction mCurrentDirection;
     private bool mCanMove;
     private bool mCanAddLine;
 
     public List<Background> mBackgrounds;
 
     public List<Border> mBorders;
-    private Vector3 mMinBorderPos;
-    private Vector3 mMaxBorderPos;
+    [HideInInspector] public Vector3 mMinBorderPos;
+    [HideInInspector] public Vector3 mMaxBorderPos;
 
     private List<GameObject> mEnemies;
 
@@ -98,15 +98,13 @@ public class CharacterBehavior : MonoBehaviour
     void Update()
     {
         Background current_bg = GetBackground(transform.position);
-        bool direction_updated = updateDirection();
+
+        Direction.direction new_direction = getInputDirection();
+        bool direction_updated = updateDirection(new_direction);
+
         Background next_bg = getNextBackground();
 
         bool should_create_line = isInBackground();
-
-        if (direction_updated)
-        {
-            StartCoroutine(waiter());
-        }
 
         if (next_bg == null || (next_bg != current_bg && !next_bg.hasEnemies()))//onBorder() && !should_create_line)
         {
@@ -304,7 +302,28 @@ public class CharacterBehavior : MonoBehaviour
         // Draw bg
     }
 
-    bool updateDirection()
+    Direction.direction getInputDirection()
+    {
+        if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            return Direction.Left;
+        }
+        else if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow))
+        {
+            return Direction.Up;
+        }
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            return Direction.Right;
+        }
+        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
+            return Direction.Down;
+        }
+        return Direction.None;
+    }
+
+    public bool updateDirection(Direction.direction new_direction)
     {
         if(!mCanAddLine || !mCanMove)
         {
@@ -313,28 +332,33 @@ public class CharacterBehavior : MonoBehaviour
 
         bool can_move_backward = mTrailPoints.Count == 0;
 
-        if ((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow) && mCurrentDirection != Direction.Left)  && (can_move_backward || mCurrentDirection != Direction.Right))
+        if ((new_direction == Direction.Left && mCurrentDirection != Direction.Left)  && (can_move_backward || mCurrentDirection != Direction.Right))
         {
+            StartCoroutine(waiter());
             mCurrentDirection = Direction.Left;
             return true;
         }
-        else if ((Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow) && mCurrentDirection != Direction.Up) && (can_move_backward || mCurrentDirection != Direction.Down))
+        else if ((new_direction == Direction.Up && mCurrentDirection != Direction.Up) && (can_move_backward || mCurrentDirection != Direction.Down))
         {
+            StartCoroutine(waiter());
             mCurrentDirection = Direction.Up;
             return true;
         }
-        else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) && mCurrentDirection != Direction.Right) && (can_move_backward || mCurrentDirection != Direction.Left))
+        else if ((new_direction == Direction.Right && mCurrentDirection != Direction.Right) && (can_move_backward || mCurrentDirection != Direction.Left))
         {
+            StartCoroutine(waiter());
             mCurrentDirection = Direction.Right;
             return true;
         }
-        else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) && mCurrentDirection != Direction.Down) && (can_move_backward || mCurrentDirection != Direction.Up))
+        else if ((new_direction == Direction.Down && mCurrentDirection != Direction.Down) && (can_move_backward || mCurrentDirection != Direction.Up))
         {
+            StartCoroutine(waiter());
             mCurrentDirection = Direction.Down;
             return true;
         }
         return false;
     }
+
     IEnumerator waiter()
     {
         mCanMove = false;
