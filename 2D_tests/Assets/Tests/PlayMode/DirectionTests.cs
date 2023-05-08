@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 
-public class CharacterTests
+public class DirectionTests
 {
 
     [UnityTest]
