@@ -46,9 +46,9 @@ public class BackgroundTests
         }
     }
 
-    public void setCharacterPositionInCorner(CharacterBehavior character, string corner)
+    public void setCharacterPositionInAnchor(CharacterBehavior character, string anchor_position)
     {
-        switch(corner)
+        switch(anchor_position)
         {
             case "bottom-left":
                 character.transform.position = character.mMinBorderPos;
@@ -62,9 +62,48 @@ public class BackgroundTests
             case "top-right":
                 character.transform.position = character.mMaxBorderPos;
                 break;
-            default:
-                Debug.Log("Corenr not found");
+            case "right":
+                character.transform.position = new Vector3(character.mMaxBorderPos.x, 0, 0);
                 break;
+            case "bottom":
+                character.transform.position = new Vector3(0, character.mMinBorderPos.y, 0);
+                break;
+            case "left":
+                character.transform.position = new Vector3(character.mMinBorderPos.x, 0, 0);
+                break;
+            case "top":
+                character.transform.position = new Vector3(0, character.mMaxBorderPos.y, 0);
+                break;
+            default:
+                Debug.Log("Anchor position not found");
+                break;
+        }
+    }
+
+    public IEnumerator move(CharacterBehavior character, string movement)
+    {
+        foreach (char move in movement)
+        {
+            if (move == '<')
+            {
+                character.updateDirection(Direction.Left);
+                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+            }
+            if (move == '^')
+            {
+                character.updateDirection(Direction.Up);
+                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+            }
+            if (move == '>')
+            {
+                character.updateDirection(Direction.Right);
+                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+            }
+            if (move == 'v')
+            {
+                character.updateDirection(Direction.Down);
+                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+            }
         }
     }
 
@@ -147,7 +186,7 @@ public class BackgroundTests
         character.updateDirection(Direction.Up);
         yield return new WaitUntil(() => character.transform.position.y == character.mMaxBorderPos.y);
 
-        setCharacterPositionInCorner(character, "bottom-left");
+        setCharacterPositionInAnchor(character, "bottom-left");
 
         // Second split -> Horizontal
         character.updateDirection(Direction.Up);
@@ -180,7 +219,7 @@ public class BackgroundTests
         character.updateDirection(Direction.Right);
         yield return new WaitUntil(() => character.transform.position.x == character.mMaxBorderPos.x);
 
-        setCharacterPositionInCorner(character, "bottom-left");
+        setCharacterPositionInAnchor(character, "bottom-left");
 
         // Second split -> Vertical
         character.updateDirection(Direction.Right);
@@ -216,7 +255,7 @@ public class BackgroundTests
         checkNumberOfBackgrounds(2);
         checkBackgroundAreEquals();
 
-        setCharacterPositionInCorner(character, "top-left");
+        setCharacterPositionInAnchor(character, "top-left");
 
         // Second split -> Horizontal 2
         character.updateDirection(Direction.Down);
@@ -228,7 +267,7 @@ public class BackgroundTests
         checkNumberOfBackgrounds(3);
         checkBackgroundAreEquals();
 
-        setCharacterPositionInCorner(character, "bottom-left");
+        setCharacterPositionInAnchor(character, "bottom-left");
 
         // Third split -> Vertical 1
         character.updateDirection(Direction.Right);
@@ -240,7 +279,7 @@ public class BackgroundTests
         checkNumberOfBackgrounds(4);
         checkBackgroundAreEquals();
 
-        setCharacterPositionInCorner(character, "bottom-right");
+        setCharacterPositionInAnchor(character, "bottom-right");
 
         // Fourth split -> Vertical 2
         character.updateDirection(Direction.Left);
@@ -273,12 +312,12 @@ public class BackgroundTests
         character.updateDirection(Direction.Right);
         yield return new WaitUntil(() => character.transform.position.x == character.mMaxBorderPos.x);
 
-        setCharacterPositionInCorner(character, "top-left");
+        setCharacterPositionInAnchor(character, "top-left");
 
         checkNumberOfBackgrounds(2);
         checkBackgroundAreEquals();
 
-        setCharacterPositionInCorner(character, "bottom-left");
+        setCharacterPositionInAnchor(character, "bottom-left");
 
         // Second split -> Vertical 1
         character.updateDirection(Direction.Right);
@@ -290,7 +329,7 @@ public class BackgroundTests
         checkNumberOfBackgrounds(3);
         checkBackgroundAreEquals();
 
-        setCharacterPositionInCorner(character, "top-left");
+        setCharacterPositionInAnchor(character, "top-left");
 
         // Third split -> Horizontal 2
         character.updateDirection(Direction.Down);
@@ -303,7 +342,7 @@ public class BackgroundTests
         checkBackgroundAreEquals();
 
         character.transform.position = new Vector3(character.mMaxBorderPos.x, character.mMinBorderPos.y, 0);
-        setCharacterPositionInCorner(character, "bottom-right");
+        setCharacterPositionInAnchor(character, "bottom-right");
 
         // Fourth split -> Vertical 2
         character.updateDirection(Direction.Left);
@@ -329,7 +368,7 @@ public class BackgroundTests
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
         character.mSpeed = 30;
 
-        setCharacterPositionInCorner(character, "bottom-left");
+        setCharacterPositionInAnchor(character, "bottom-left");
 
         // Corner bottom-left
         character.updateDirection(Direction.Right);
@@ -342,7 +381,7 @@ public class BackgroundTests
         checkNumberOfBackgrounds(3);
         checkBackgroundAreEquals();
 
-        setCharacterPositionInCorner(character, "top-left");
+        setCharacterPositionInAnchor(character, "top-left");
 
         // Corner top-left
         character.updateDirection(Direction.Right);
@@ -355,7 +394,7 @@ public class BackgroundTests
         checkNumberOfBackgrounds(5);
         checkBackgroundAreEquals();
 
-        setCharacterPositionInCorner(character, "top-right");
+        setCharacterPositionInAnchor(character, "top-right");
 
         // Corner top-right
         character.updateDirection(Direction.Left);
@@ -368,7 +407,7 @@ public class BackgroundTests
         checkNumberOfBackgrounds(7);
         checkBackgroundAreEquals();
 
-        setCharacterPositionInCorner(character, "bottom-right");
+        setCharacterPositionInAnchor(character, "bottom-right");
 
         // Corner top-right
         character.updateDirection(Direction.Left);
@@ -402,7 +441,7 @@ public class BackgroundTests
         Utils.HAS_ENEMY_COLLISION = false;
         Utils.HAS_SCORE_ACTIVATED = false;
 
-        setCharacterPositionInCorner(character, "bottom-left");
+        setCharacterPositionInAnchor(character, "bottom-left");
         int number_expected_bg = 2;
         while(character.transform.position.x < enemy.position.x - epsilon * 4f)
         {
@@ -448,7 +487,7 @@ public class BackgroundTests
         Utils.HAS_ENEMY_COLLISION = false;
         Utils.HAS_SCORE_ACTIVATED = false;
 
-        setCharacterPositionInCorner(character, "bottom-left");
+        setCharacterPositionInAnchor(character, "bottom-left");
         int number_expected_bg = 2;
         while (character.transform.position.y < enemy.position.y - epsilon * 4f)
         {
@@ -471,6 +510,43 @@ public class BackgroundTests
             checkBackgroundAreEquals();
             number_expected_bg++;
         }
+    }
+
+
+    [UnityTest]
+    public IEnumerator test_Background_2Turns_Sides()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
+        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        setCharacterPositionInAnchor(character, "bottom");
+
+        yield return move(character, ">^<<v");
+        checkNumberOfBackgrounds(4);
+        checkBackgroundAreEquals();
+
+        setCharacterPositionInAnchor(character, "left");
+
+        yield return move(character, "v>^^<");
+        checkNumberOfBackgrounds(7);
+        checkBackgroundAreEquals();
+
+        setCharacterPositionInAnchor(character, "top");
+
+        yield return move(character, "<v>>^");
+        checkNumberOfBackgrounds(10);
+        checkBackgroundAreEquals();
+
+        setCharacterPositionInAnchor(character, "right");
+
+        yield return move(character, "^<vv>");
+        checkNumberOfBackgrounds(13);
+        checkBackgroundAreEquals();
     }
 
 }
