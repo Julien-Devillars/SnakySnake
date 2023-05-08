@@ -10,6 +10,7 @@ public class CharacterBehavior : MonoBehaviour
 
     private Dictionary<Direction.direction, Vector3> mDirections;
     public Direction.direction mCurrentDirection;
+    private bool mDirectionUpdated;
     private bool mCanMove;
     private bool mCanAddLine;
 
@@ -100,7 +101,7 @@ public class CharacterBehavior : MonoBehaviour
         Background current_bg = GetBackground(transform.position);
 
         Direction.direction new_direction = getInputDirection();
-        bool direction_updated = updateDirection(new_direction);
+        updateDirection(new_direction);
 
         Background next_bg = getNextBackground();
 
@@ -116,7 +117,7 @@ public class CharacterBehavior : MonoBehaviour
         }
         else
         {
-            if (direction_updated && (current_bg == null || current_bg.hasEnemies()))
+            if (mDirectionUpdated && (current_bg == null || current_bg.hasEnemies()))
             {
                 addLine();
             }
@@ -362,6 +363,7 @@ public class CharacterBehavior : MonoBehaviour
     IEnumerator waiter()
     {
         mCanMove = false;
+        mDirectionUpdated = true;
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
         mCanMove = true;
     }
@@ -502,6 +504,7 @@ public class CharacterBehavior : MonoBehaviour
         }
         Vector3 new_pos = transform.position + mDirections[mCurrentDirection] * mSpeed * Time.deltaTime;
         transform.position = getPositionInBorder(new_pos);
+        mDirectionUpdated = false;
     }
 
     private Vector3 getLastPosition()
