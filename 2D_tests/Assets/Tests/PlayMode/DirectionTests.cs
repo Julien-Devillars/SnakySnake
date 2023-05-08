@@ -17,22 +17,16 @@ public class DirectionTests
         // Use yield to skip a frame.
         yield return null;
 
-        string character_name = Utils.CHARACTER;
-
-        GameObject character_go = GameObject.Find(character_name);
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
-        //character.timer_move = direction_update_time;
 
-        bool moved = character.updateDirection(Direction.Right);
-        Assert.IsTrue(moved);
-        
+        Assert.IsTrue(character.updateDirection(Direction.Right));
+
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-        moved = character.updateDirection(Direction.Up);
-        Assert.IsTrue(moved);
+        Assert.IsTrue(character.updateDirection(Direction.Up));
 
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME / 2f);
-        moved = character.updateDirection(Direction.Left);
-        Assert.IsFalse(moved);
+        Assert.IsFalse(character.updateDirection(Direction.Left));
     }
 
     [UnityTest]
@@ -41,9 +35,7 @@ public class DirectionTests
         SceneManager.LoadScene("TestScene_1Enemy_Static");
         yield return null;
 
-        string character_name = Utils.CHARACTER;
-
-        GameObject character_go = GameObject.Find(character_name);
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
 
         Vector3 old_pos = new Vector3();
@@ -127,9 +119,7 @@ public class DirectionTests
         SceneManager.LoadScene("TestScene_1Enemy_Static");
         yield return null;
 
-        string character_name = "Ball";
-
-        GameObject character_go = GameObject.Find(character_name);
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
         Vector3 old_pos = new Vector3();
 
@@ -170,9 +160,7 @@ public class DirectionTests
         SceneManager.LoadScene("TestScene_1Enemy_Static");
         yield return null;
 
-        string character_name = "Ball";
-
-        GameObject character_go = GameObject.Find(character_name);
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
         Vector3 old_pos = new Vector3();
 
