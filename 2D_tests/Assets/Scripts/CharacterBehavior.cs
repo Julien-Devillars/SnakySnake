@@ -195,7 +195,8 @@ public class CharacterBehavior : MonoBehaviour
         {
             // Transform line to border
             LineRenderer lineRenderer = trail.GetComponent<LineRenderer>();
-            if(trail == mTrails[mTrails.Count - 1])
+            //Utils.fixGivenPointsIfNeeded(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
+            if (trail == mTrails[mTrails.Count - 1])
             {
                 Vector3 pos_on_border = getOnBorder(lineRenderer.GetPosition(1));
                 lineRenderer.SetPosition(1, pos_on_border);

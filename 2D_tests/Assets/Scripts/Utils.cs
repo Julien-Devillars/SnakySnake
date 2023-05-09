@@ -86,4 +86,21 @@ public class Utils
         
     }
 
+    public static bool fuzzyCompare(float val_1, float val_2)
+    {
+        return val_1 > val_2 - Utils.EPSILON() * 2f && val_1 < val_2 + Utils.EPSILON() * 2f;
+    }
+    public static void fixGivenPointsIfNeeded(Vector3 position_start, Vector3 position_end)
+    {
+        if (Utils.fuzzyCompare(position_start.x, position_end.x) && position_start.x != position_end.x)
+        {
+            Debug.Log("Fix Line Point x");
+            position_end.x = position_start.x;
+        }
+        if (Utils.fuzzyCompare(position_start.y, position_end.y) && position_start.y != position_end.y)
+        {
+            Debug.Log("Fix Line Point y");
+            position_end.y = position_start.y;
+        }
+    }
 }

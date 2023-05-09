@@ -8,105 +8,6 @@ using UnityEngine.SceneManagement;
 public class BackgroundTests
 {
 
-    public List<GameObject> getBackgroundsGameObject()
-    {
-        List<GameObject> bgs_go = new List<GameObject>();
-
-        GameObject bg_parent = GameObject.Find(Utils.BACKGROUND_STR);
-        for(int i = 0;  i < bg_parent.transform.childCount; ++i)
-        {
-            GameObject child = bg_parent.transform.GetChild(i).gameObject;
-            bgs_go.Add(child);
-
-        }
-        return bgs_go;
-    }
-
-    public void checkNumberOfBackgrounds(int number_bg_expected)
-    {
-        List<GameObject> bgs_go = getBackgroundsGameObject();
-        Assert.AreEqual(bgs_go.Count, number_bg_expected);
-    }
-
-    public void checkBackgroundAreEquals()
-    {
-        List<GameObject> bgs_go = getBackgroundsGameObject();
-
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
-
-        Assert.AreEqual(bgs_go.Count, character.mBackgrounds.Count);
-        for (int i = 0; i < character.mBackgrounds.Count; ++i)
-        {
-            Background character_bg = character.mBackgrounds[i];
-            GameObject character_bg_go = character_bg.mBackground;
-            GameObject bg_go = bgs_go[i];
-
-            Assert.AreEqual(character_bg_go, bg_go);
-        }
-    }
-
-    public void setCharacterPositionInAnchor(CharacterBehavior character, string anchor_position)
-    {
-        switch(anchor_position)
-        {
-            case "bottom-left":
-                character.transform.position = character.mMinBorderPos;
-                break;
-            case "top-left":
-                character.transform.position = new Vector3(character.mMinBorderPos.x, character.mMaxBorderPos.y, 0);
-                break;
-            case "bottom-right":
-                character.transform.position = new Vector3(character.mMaxBorderPos.x, character.mMinBorderPos.y, 0);
-                break;
-            case "top-right":
-                character.transform.position = character.mMaxBorderPos;
-                break;
-            case "right":
-                character.transform.position = new Vector3(character.mMaxBorderPos.x, 0, 0);
-                break;
-            case "bottom":
-                character.transform.position = new Vector3(0, character.mMinBorderPos.y, 0);
-                break;
-            case "left":
-                character.transform.position = new Vector3(character.mMinBorderPos.x, 0, 0);
-                break;
-            case "top":
-                character.transform.position = new Vector3(0, character.mMaxBorderPos.y, 0);
-                break;
-            default:
-                Debug.Log("Anchor position not found");
-                break;
-        }
-    }
-
-    public IEnumerator move(CharacterBehavior character, string movement)
-    {
-        foreach (char move in movement)
-        {
-            if (move == '<')
-            {
-                character.updateDirection(Direction.Left);
-                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-            }
-            if (move == '^')
-            {
-                character.updateDirection(Direction.Up);
-                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-            }
-            if (move == '>')
-            {
-                character.updateDirection(Direction.Right);
-                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-            }
-            if (move == 'v')
-            {
-                character.updateDirection(Direction.Down);
-                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-            }
-        }
-    }
-
     [UnityTest]
     public IEnumerator test_CheckBackgroundAtStartUp()
     {
@@ -115,8 +16,8 @@ public class BackgroundTests
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
         yield return null;
-        checkNumberOfBackgrounds(1);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(1);
+        TestUtils.checkBackgroundAreEquals();
     }
 
     [UnityTest]
@@ -138,8 +39,8 @@ public class BackgroundTests
         character.updateDirection(Direction.Right);
         yield return new WaitUntil(() => character.transform.position.x == character.mMaxBorderPos.x);
 
-        checkNumberOfBackgrounds(2);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(2);
+        TestUtils.checkBackgroundAreEquals();
     }
 
     [UnityTest]
@@ -162,8 +63,8 @@ public class BackgroundTests
         character.updateDirection(Direction.Up);
         yield return new WaitUntil(() => character.transform.position.y == character.mMaxBorderPos.y);
 
-        checkNumberOfBackgrounds(2);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(2);
+        TestUtils.checkBackgroundAreEquals();
     }
 
     [UnityTest]
@@ -186,7 +87,7 @@ public class BackgroundTests
         character.updateDirection(Direction.Up);
         yield return new WaitUntil(() => character.transform.position.y == character.mMaxBorderPos.y);
 
-        setCharacterPositionInAnchor(character, "bottom-left");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
 
         // Second split -> Horizontal
         character.updateDirection(Direction.Up);
@@ -195,8 +96,8 @@ public class BackgroundTests
         character.updateDirection(Direction.Right);
         yield return new WaitUntil(() => character.transform.position.x == character.mMaxBorderPos.x);
 
-        checkNumberOfBackgrounds(3);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(3);
+        TestUtils.checkBackgroundAreEquals();
     }
 
     [UnityTest]
@@ -219,7 +120,7 @@ public class BackgroundTests
         character.updateDirection(Direction.Right);
         yield return new WaitUntil(() => character.transform.position.x == character.mMaxBorderPos.x);
 
-        setCharacterPositionInAnchor(character, "bottom-left");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
 
         // Second split -> Vertical
         character.updateDirection(Direction.Right);
@@ -228,8 +129,8 @@ public class BackgroundTests
         character.updateDirection(Direction.Up);
         yield return new WaitUntil(() => character.transform.position.y == character.mMaxBorderPos.y);
 
-        checkNumberOfBackgrounds(3);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(3);
+        TestUtils.checkBackgroundAreEquals();
     }
 
     [UnityTest]
@@ -252,10 +153,10 @@ public class BackgroundTests
         character.updateDirection(Direction.Right);
         yield return new WaitUntil(() => character.transform.position.x == character.mMaxBorderPos.x);
 
-        checkNumberOfBackgrounds(2);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(2);
+        TestUtils.checkBackgroundAreEquals();
 
-        setCharacterPositionInAnchor(character, "top-left");
+        TestUtils.setCharacterPositionInAnchor(character, "top-left");
 
         // Second split -> Horizontal 2
         character.updateDirection(Direction.Down);
@@ -264,10 +165,10 @@ public class BackgroundTests
         character.updateDirection(Direction.Right);
         yield return new WaitUntil(() => character.transform.position.x == character.mMaxBorderPos.x);
 
-        checkNumberOfBackgrounds(3);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(3);
+        TestUtils.checkBackgroundAreEquals();
 
-        setCharacterPositionInAnchor(character, "bottom-left");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
 
         // Third split -> Vertical 1
         character.updateDirection(Direction.Right);
@@ -276,10 +177,10 @@ public class BackgroundTests
         character.updateDirection(Direction.Up);
         yield return new WaitUntil(() => character.transform.position.y == character.mMaxBorderPos.y);
 
-        checkNumberOfBackgrounds(4);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(4);
+        TestUtils.checkBackgroundAreEquals();
 
-        setCharacterPositionInAnchor(character, "bottom-right");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-right");
 
         // Fourth split -> Vertical 2
         character.updateDirection(Direction.Left);
@@ -288,8 +189,8 @@ public class BackgroundTests
         character.updateDirection(Direction.Up);
         yield return new WaitUntil(() => character.transform.position.y == character.mMaxBorderPos.y);
 
-        checkNumberOfBackgrounds(5);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(5);
+        TestUtils.checkBackgroundAreEquals();
     }
 
     [UnityTest]
@@ -312,12 +213,12 @@ public class BackgroundTests
         character.updateDirection(Direction.Right);
         yield return new WaitUntil(() => character.transform.position.x == character.mMaxBorderPos.x);
 
-        setCharacterPositionInAnchor(character, "top-left");
+        TestUtils.setCharacterPositionInAnchor(character, "top-left");
 
-        checkNumberOfBackgrounds(2);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(2);
+        TestUtils.checkBackgroundAreEquals();
 
-        setCharacterPositionInAnchor(character, "bottom-left");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
 
         // Second split -> Vertical 1
         character.updateDirection(Direction.Right);
@@ -326,10 +227,10 @@ public class BackgroundTests
         character.updateDirection(Direction.Up);
         yield return new WaitUntil(() => character.transform.position.y == character.mMaxBorderPos.y);
 
-        checkNumberOfBackgrounds(3);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(3);
+        TestUtils.checkBackgroundAreEquals();
 
-        setCharacterPositionInAnchor(character, "top-left");
+        TestUtils.setCharacterPositionInAnchor(character, "top-left");
 
         // Third split -> Horizontal 2
         character.updateDirection(Direction.Down);
@@ -338,11 +239,11 @@ public class BackgroundTests
         character.updateDirection(Direction.Right);
         yield return new WaitUntil(() => character.transform.position.x == character.mMaxBorderPos.x);
 
-        checkNumberOfBackgrounds(4);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(4);
+        TestUtils.checkBackgroundAreEquals();
 
         character.transform.position = new Vector3(character.mMaxBorderPos.x, character.mMinBorderPos.y, 0);
-        setCharacterPositionInAnchor(character, "bottom-right");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-right");
 
         // Fourth split -> Vertical 2
         character.updateDirection(Direction.Left);
@@ -351,8 +252,8 @@ public class BackgroundTests
         character.updateDirection(Direction.Up);
         yield return new WaitUntil(() => character.transform.position.y == character.mMaxBorderPos.y);
 
-        checkNumberOfBackgrounds(5);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(5);
+        TestUtils.checkBackgroundAreEquals();
     }
 
     [UnityTest]
@@ -368,37 +269,37 @@ public class BackgroundTests
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
         character.mSpeed = 30;
 
-        setCharacterPositionInAnchor(character, "bottom-left");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
 
         // Corner bottom-left
-        yield return move(character, ">^<");
+        yield return TestUtils.move(character, ">^<");
 
-        checkNumberOfBackgrounds(3);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(3);
+        TestUtils.checkBackgroundAreEquals();
 
-        setCharacterPositionInAnchor(character, "top-left");
+        TestUtils.setCharacterPositionInAnchor(character, "top-left");
 
         // Corner top-left
-        yield return move(character, ">v<");
+        yield return TestUtils.move(character, ">v<");
 
-        checkNumberOfBackgrounds(5);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(5);
+        TestUtils.checkBackgroundAreEquals();
 
-        setCharacterPositionInAnchor(character, "top-right");
-
-        // Corner top-right
-        yield return move(character, "<v>");
-
-        checkNumberOfBackgrounds(7);
-        checkBackgroundAreEquals();
-
-        setCharacterPositionInAnchor(character, "bottom-right");
+        TestUtils.setCharacterPositionInAnchor(character, "top-right");
 
         // Corner top-right
-        yield return move(character, "<^>");
+        yield return TestUtils.move(character, "<v>");
 
-        checkNumberOfBackgrounds(9);
-        checkBackgroundAreEquals();
+        TestUtils.checkNumberOfBackgrounds(7);
+        TestUtils.checkBackgroundAreEquals();
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-right");
+
+        // Corner top-right
+        yield return TestUtils.move(character, "<^>");
+
+        TestUtils.checkNumberOfBackgrounds(9);
+        TestUtils.checkBackgroundAreEquals();
     }
     [UnityTest]
     public IEnumerator test_Background_MultiVertical()
@@ -421,7 +322,7 @@ public class BackgroundTests
         Utils.HAS_ENEMY_COLLISION = false;
         Utils.HAS_SCORE_ACTIVATED = false;
 
-        setCharacterPositionInAnchor(character, "bottom-left");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
         int number_expected_bg = 2;
         while(character.transform.position.x < enemy.position.x - epsilon * 4f)
         {
@@ -440,8 +341,8 @@ public class BackgroundTests
                 character.updateDirection(Direction.Down);
                 yield return new WaitUntil(() => character.transform.position.y == character.mMinBorderPos.y);
             }
-            checkNumberOfBackgrounds(number_expected_bg);
-            checkBackgroundAreEquals();
+            TestUtils.checkNumberOfBackgrounds(number_expected_bg);
+            TestUtils.checkBackgroundAreEquals();
             number_expected_bg++;
         }
     }
@@ -467,7 +368,7 @@ public class BackgroundTests
         Utils.HAS_ENEMY_COLLISION = false;
         Utils.HAS_SCORE_ACTIVATED = false;
 
-        setCharacterPositionInAnchor(character, "bottom-left");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
         int number_expected_bg = 2;
         while (character.transform.position.y < enemy.position.y - epsilon * 4f)
         {
@@ -486,8 +387,8 @@ public class BackgroundTests
                 character.updateDirection(Direction.Left);
                 yield return new WaitUntil(() => character.transform.position.x == character.mMinBorderPos.x);
             }
-            checkNumberOfBackgrounds(number_expected_bg);
-            checkBackgroundAreEquals();
+            TestUtils.checkNumberOfBackgrounds(number_expected_bg);
+            TestUtils.checkBackgroundAreEquals();
             number_expected_bg++;
         }
     }
@@ -504,29 +405,122 @@ public class BackgroundTests
 
         GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
-        setCharacterPositionInAnchor(character, "bottom");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
 
-        yield return move(character, ">^<<v");
-        checkNumberOfBackgrounds(4);
-        checkBackgroundAreEquals();
+        yield return TestUtils.move(character, ">^<<v");
+        TestUtils.checkNumberOfBackgrounds(4);
+        TestUtils.checkBackgroundAreEquals();
 
-        setCharacterPositionInAnchor(character, "left");
+        TestUtils.setCharacterPositionInAnchor(character, "left");
 
-        yield return move(character, "v>^^<");
-        checkNumberOfBackgrounds(7);
-        checkBackgroundAreEquals();
+        yield return TestUtils.move(character, "v>^^<");
+        TestUtils.checkNumberOfBackgrounds(7);
+        TestUtils.checkBackgroundAreEquals();
 
-        setCharacterPositionInAnchor(character, "top");
+        TestUtils.setCharacterPositionInAnchor(character, "top");
 
-        yield return move(character, "<v>>^");
-        checkNumberOfBackgrounds(10);
-        checkBackgroundAreEquals();
+        yield return TestUtils.move(character, "<v>>^");
+        TestUtils.checkNumberOfBackgrounds(10);
+        TestUtils.checkBackgroundAreEquals();
 
-        setCharacterPositionInAnchor(character, "right");
+        TestUtils.setCharacterPositionInAnchor(character, "right");
 
-        yield return move(character, "^<vv>");
-        checkNumberOfBackgrounds(13);
-        checkBackgroundAreEquals();
+        yield return TestUtils.move(character, "^<vv>");
+        TestUtils.checkNumberOfBackgrounds(13);
+        TestUtils.checkBackgroundAreEquals();
+    }
+    [UnityTest]
+    public IEnumerator test_Background_SideSquareInsideSideSquare()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
+        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+
+        GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
+        GameObject enemy = enemies_go.transform.GetChild(0).gameObject;
+        TestUtils.setEnemyPositionInAnchor(character, enemy, "top");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+
+        Utils.HAS_ENEMY_COLLISION = false;
+
+        yield return TestUtils.move(character, ">^^<<vv>");
+        TestUtils.checkNumberOfBackgrounds(4);
+        TestUtils.checkBackgroundAreEquals();
+        yield return TestUtils.move(character, "^>>^^<<<<vv>>");
+        TestUtils.checkNumberOfBackgrounds(11);
+        TestUtils.checkBackgroundAreEquals();
+    }
+
+    [UnityTest]
+    public IEnumerator test_Background_SideSquare_HitOnUpperSide()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
+        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+
+        GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
+        GameObject enemy = enemies_go.transform.GetChild(0).gameObject;
+        TestUtils.setEnemyPositionInAnchor(character, enemy, "top");
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+
+        Utils.HAS_ENEMY_COLLISION = false;
+
+        yield return TestUtils.move(character, ">^^<<vv>");
+        TestUtils.checkNumberOfBackgrounds(4);
+        TestUtils.checkBackgroundAreEquals();
+        yield return TestUtils.move(character, ">>^^<<");
+        TestUtils.checkNumberOfBackgrounds(6);
+        TestUtils.checkBackgroundAreEquals();
+    }
+
+    [UnityTest]
+    public IEnumerator test_Background_CornerLoop()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
+        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+
+        GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
+        GameObject enemy = enemies_go.transform.GetChild(0).gameObject;
+        TestUtils.setEnemyPositionInAnchor(character, enemy, "top-right");
+
+        Utils.HAS_ENEMY_COLLISION = false;
+        character.mSpeed = 15;
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">^<");
+        TestUtils.checkNumberOfBackgrounds(3);
+        TestUtils.checkBackgroundAreEquals();
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">>^<^<");
+        TestUtils.checkNumberOfBackgrounds(8);
+        TestUtils.checkBackgroundAreEquals();
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">>>^<^<^<");
+        TestUtils.checkNumberOfBackgrounds(14);
+        TestUtils.checkBackgroundAreEquals();
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">>>>^<^<^<^<");
+        TestUtils.checkNumberOfBackgrounds(21);
+        TestUtils.checkBackgroundAreEquals();
     }
 
 }

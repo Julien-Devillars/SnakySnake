@@ -73,7 +73,6 @@ public class Trail : MonoBehaviour
             position_end = points.transform.GetChild(trail_number + 1).position;
         }
 
-
         lineRenderer.SetPosition(0, position_start); //x,y and z position of the starting point of the line
         lineRenderer.SetPosition(1, position_end); //x,y and z position of the end point of the line
         lineRenderer.enabled = true ;
@@ -120,4 +119,5 @@ public class Trail : MonoBehaviour
             }
         }
     }
+
 }

@@ -9,6 +9,7 @@ public class Border
     public Vector3 mStartPoint;
     public Vector3 mEndPoint;
     public Border mDuplicateBorder;
+    public bool mHasError;
     
     public Border(Vector3 start_point, Vector3 end_point)
     {
@@ -21,11 +22,12 @@ public class Border
         addTag();
 
         addCollider2D();
-
+        
         mBorder.transform.parent = GameObject.Find("Borders").transform;
 
         mBorder.name = mBorder.name.Replace("(Clone)", "");
         mDuplicateBorder = null;
+        mHasError = false;
     }
     public void setName(string new_name)
     {
@@ -52,6 +54,7 @@ public class Border
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.material.color = Color.white;
     }
+
     public bool checkColliderAlreadyExist()
     {
         GameObject border_parent = GameObject.Find("Borders");
@@ -102,6 +105,7 @@ public class Border
         else
         {
             Debug.Log("Issue setting tag for border.");
+            mHasError = true;
         }
     }
 
@@ -119,16 +123,12 @@ public class Border
     {
         return (mStartPoint == other_border.mStartPoint && mEndPoint == other_border.mEndPoint) || (mStartPoint == other_border.mEndPoint && mEndPoint == other_border.mStartPoint);
     }
-    private bool fuzzyCompare(float val_1, float val_2)
-    {
-        return val_1 > val_2 - Utils.EPSILON() * 2f && val_1 < val_2 + Utils.EPSILON() * 2f;
-    }
     public bool onFuzzyBorder(Vector3 position)
     {
-        return (fuzzyCompare(position.x, mStartPoint.x) && fuzzyCompare(position.x, mEndPoint.x) && position.y >= mStartPoint.y - Utils.EPSILON() * 2f && position.y <= mEndPoint.y + Utils.EPSILON() * 2f && mStartPoint.y < mEndPoint.y)
-            || (fuzzyCompare(position.y, mStartPoint.y) && fuzzyCompare(position.y, mEndPoint.y) && position.x >= mStartPoint.x - Utils.EPSILON() * 2f && position.x <= mEndPoint.x + Utils.EPSILON() * 2f && mStartPoint.x < mEndPoint.x)
-            || (fuzzyCompare(position.x, mStartPoint.x) && fuzzyCompare(position.x, mEndPoint.x) && position.y <= mStartPoint.y + Utils.EPSILON() * 2f && position.y >= mEndPoint.y - Utils.EPSILON() * 2f && mStartPoint.y > mEndPoint.y)
-            || (fuzzyCompare(position.y, mStartPoint.y) && fuzzyCompare(position.y, mEndPoint.y) && position.x <= mStartPoint.x + Utils.EPSILON() * 2f && position.x >= mEndPoint.x - Utils.EPSILON() * 2f && mStartPoint.x > mEndPoint.x);
+        return (Utils.fuzzyCompare(position.x, mStartPoint.x) && Utils.fuzzyCompare(position.x, mEndPoint.x) && position.y >= mStartPoint.y - Utils.EPSILON() * 2f && position.y <= mEndPoint.y + Utils.EPSILON() * 2f && mStartPoint.y < mEndPoint.y)
+            || (Utils.fuzzyCompare(position.y, mStartPoint.y) && Utils.fuzzyCompare(position.y, mEndPoint.y) && position.x >= mStartPoint.x - Utils.EPSILON() * 2f && position.x <= mEndPoint.x + Utils.EPSILON() * 2f && mStartPoint.x < mEndPoint.x)
+            || (Utils.fuzzyCompare(position.x, mStartPoint.x) && Utils.fuzzyCompare(position.x, mEndPoint.x) && position.y <= mStartPoint.y + Utils.EPSILON() * 2f && position.y >= mEndPoint.y - Utils.EPSILON() * 2f && mStartPoint.y > mEndPoint.y)
+            || (Utils.fuzzyCompare(position.y, mStartPoint.y) && Utils.fuzzyCompare(position.y, mEndPoint.y) && position.x <= mStartPoint.x + Utils.EPSILON() * 2f && position.x >= mEndPoint.x - Utils.EPSILON() * 2f && mStartPoint.x > mEndPoint.x);
     }
     public bool onBorder(Vector3 position)
     {
