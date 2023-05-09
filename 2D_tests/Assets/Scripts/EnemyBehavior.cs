@@ -18,7 +18,10 @@ public class EnemyBehavior : MonoBehaviour
         mMinPos = new Vector3(-width + Utils.EPSILON() * 2f, -height + Utils.EPSILON() * 2f, 0);
         mMaxPos = new Vector3(width - Utils.EPSILON() * 2f, height - Utils.EPSILON() * 2f, 0);
     }
-
+    private void Start()
+    {
+        Physics2D.IgnoreLayerCollision(7, 7, true);
+    }
     private void FixedUpdate()
     {
         gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
