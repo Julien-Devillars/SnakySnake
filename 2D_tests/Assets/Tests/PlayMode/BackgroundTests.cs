@@ -519,11 +519,11 @@ public class BackgroundTests
         Border top_border = TestUtils.getBorder(0);
         Border right_border = TestUtils.getBorder(1);
         Border bottom_border = TestUtils.getBorder(2);
-        yield return TestUtils.moveUntilReachingPoint(character, '^', top_border, 3);
-        yield return TestUtils.moveUntilReachingPoint(character, '>', right_border, 3);
-        yield return TestUtils.moveUntilReachingPoint(character, 'v', bottom_border, 3);
+        yield return TestUtils.moveUntilReachingPoint(character, '^', top_border, 15, 3);
+        yield return TestUtils.moveUntilReachingPoint(character, '>', right_border, 15, 3);
+        yield return TestUtils.moveUntilReachingPoint(character, 'v', bottom_border, 15, 3);
         Trail trail_0 = TestUtils.getTrail(0);
-        yield return TestUtils.moveUntilReachingPoint(character, '<', trail_0, 3);
+        yield return TestUtils.moveUntilReachingPoint(character, '<', trail_0, 15, 3);
         yield return TestUtils.moveUntilBorder(character, 'v');
 
         TestUtils.checkNumberOfBackgrounds(6);
@@ -583,6 +583,68 @@ public class BackgroundTests
             }
         }
         Assert.AreEqual(true, bg_without_enemy);
+    }
+
+    [UnityTest]
+    public IEnumerator test_CheckConnectionBetweenBackgroundWithCornerSnake()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        TestUtils.setEnemyPositionInAnchor(character, enemy, "top-right");
+        float epsilon = Utils.EPSILON();
+
+        Border top_border = TestUtils.getBorder(0);
+        Border right_border = TestUtils.getBorder(1);
+        Border bottom_border = TestUtils.getBorder(2);
+
+        yield return TestUtils.move(character, ">", 10);
+        yield return TestUtils.moveUntilReachingPoint(character, '^', top_border, 30);
+        yield return TestUtils.move(character, ">", 10);
+
+        yield return TestUtils.moveUntilReachingPoint(character, 'v', bottom_border, 30);
+        yield return TestUtils.moveUntilReachingPoint(character, '>', right_border, 30);
+        yield return TestUtils.move(character, "^", 10);
+
+        Trail t2 = TestUtils.getTrail(2);
+        yield return TestUtils.moveUntilReachingPoint(character, '<', t2, 30);
+        yield return TestUtils.moveUntilReachingPoint(character, '^', top_border, 30);
+        yield return TestUtils.move(character, ">", 10);
+
+        Trail t5 = TestUtils.getTrail(5);
+        yield return TestUtils.moveUntilReachingPoint(character, 'v', t5, 30);
+        yield return TestUtils.moveUntilReachingPoint(character, '>', right_border, 30);
+        yield return TestUtils.move(character, "^", 10);
+
+        Trail t8 = TestUtils.getTrail(8);
+        yield return TestUtils.moveUntilReachingPoint(character, '<', t8, 30);
+        yield return TestUtils.moveUntilReachingPoint(character, '^', top_border, 30);
+        yield return TestUtils.move(character, ">", 10);
+
+        Trail t11 = TestUtils.getTrail(11);
+        yield return TestUtils.moveUntilReachingPoint(character, 'v', t11, 30);
+
+        yield return TestUtils.moveUntilBorder(character, '>', 30);
+
+        bool bg_without_enemy = false;
+        float sum_area =0f;
+        foreach (Background bg in character.mBackgrounds)
+        {
+            if (!bg.hasEnemies())
+            {
+                bg_without_enemy = true;
+                sum_area += bg.getArea();
+            }
+        }
+        Assert.AreEqual(true, bg_without_enemy);
+        Debug.Log(sum_area);
+        yield return new WaitForSeconds(3);
     }
 
 }

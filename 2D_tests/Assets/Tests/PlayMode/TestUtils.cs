@@ -126,8 +126,45 @@ public class TestUtils
         }
     }
 
-    public static IEnumerator move(CharacterBehavior character, string movement)
+    public static IEnumerator move(CharacterBehavior character, string movement, List<float> speeds)
     {
+        float initial_speed = character.mSpeed;
+        Assert.AreEqual(speeds.Count, movement.Length);
+        int idx = 0;
+        foreach (char move in movement)
+        {
+            character.mSpeed = speeds[idx];
+            if (move == '<')
+            {
+                character.updateDirection(Direction.Left);
+                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+            }
+            if (move == '^')
+            {
+                character.updateDirection(Direction.Up);
+                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+            }
+            if (move == '>')
+            {
+                character.updateDirection(Direction.Right);
+                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+            }
+            if (move == 'v')
+            {
+                character.updateDirection(Direction.Down);
+                yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+            }
+            idx++;
+        }
+        character.mSpeed = initial_speed;
+    }
+    public static IEnumerator move(CharacterBehavior character, string movement, float speed = -1f)
+    {
+        float previous_speed = character.mSpeed;
+        if(speed != -1)
+        {
+            character.mSpeed = speed;
+        }
         foreach (char move in movement)
         {
             if (move == '<')
@@ -151,9 +188,15 @@ public class TestUtils
                 yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
             }
         }
+        character.mSpeed = previous_speed;
     }
-    public static IEnumerator moveUntilBorder(CharacterBehavior character, char movement)
+    public static IEnumerator moveUntilBorder(CharacterBehavior character, char movement, float speed = -1f)
     {
+        float previous_speed = character.mSpeed;
+        if (speed != -1)
+        {
+            character.mSpeed = speed;
+        }
         if (movement == '<')
         {
             character.updateDirection(Direction.Left);
@@ -174,17 +217,23 @@ public class TestUtils
             character.updateDirection(Direction.Down);
             yield return new WaitUntil(() => character.transform.position.y == character.mMinBorderPos.y);
         }
+        character.mSpeed = previous_speed;
     }
-    public static IEnumerator moveUntilReachingPoint(CharacterBehavior character, char movement, Border border, float offset = 4f)
+    public static IEnumerator moveUntilReachingPoint(CharacterBehavior character, char movement, Border border, float speed = -1f, float offset = 4f)
     {
-        yield return moveUntilReachingPoint(character, movement, border.mStartPoint, offset);
+        yield return moveUntilReachingPoint(character, movement, border.mStartPoint, speed, offset);
     }
-    public static IEnumerator moveUntilReachingPoint(CharacterBehavior character, char movement, Trail trail, float offset = 4f)
+    public static IEnumerator moveUntilReachingPoint(CharacterBehavior character, char movement, Trail trail, float speed = -1f, float offset = 4f)
     {
-        yield return moveUntilReachingPoint(character, movement, trail.GetComponent<LineRenderer>().GetPosition(0), offset);
+        yield return moveUntilReachingPoint(character, movement, trail.GetComponent<LineRenderer>().GetPosition(0), speed, offset);
     }
-    public static IEnumerator moveUntilReachingPoint(CharacterBehavior character, char movement, Vector3 point, float offset = 4f)
+    public static IEnumerator moveUntilReachingPoint(CharacterBehavior character, char movement, Vector3 point, float speed = -1f, float offset = 4f)
     {
+        float previous_speed = character.mSpeed;
+        if (speed != -1)
+        {
+            character.mSpeed = speed;
+        }
         float epsilon = Utils.EPSILON() * offset;
         if (movement == '<')
         {
@@ -206,6 +255,7 @@ public class TestUtils
             character.updateDirection(Direction.Down);
             yield return new WaitUntil(() => character.transform.position.y < point.y + epsilon);
         }
+        character.mSpeed = previous_speed;
     }
     public static bool bordersAreValid(List<Border> borders)
     {
