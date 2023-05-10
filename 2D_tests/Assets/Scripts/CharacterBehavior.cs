@@ -254,7 +254,7 @@ public class CharacterBehavior : MonoBehaviour
             bg_1.mConnectedBackground.Clear();
             foreach (GameObject ennemy_to_reassign in ennemies_to_reassign)
             {
-                if(bg_1.contains(ennemy_to_reassign.transform.position))
+                if(bg_1.containsEquals(ennemy_to_reassign.transform.position))
                 {
                     bg_1.addEnemy(ennemy_to_reassign);
                 }

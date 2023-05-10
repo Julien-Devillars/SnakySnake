@@ -67,6 +67,10 @@ public class Background
 
     public bool contains(Vector3 pos)
     {
+        return pos.x > mMinBorderPos.x && pos.x < mMaxBorderPos.x && pos.y > mMinBorderPos.y && pos.y < mMaxBorderPos.y;
+    }
+    public bool containsEquals(Vector3 pos)
+    {
         return pos.x >= mMinBorderPos.x && pos.x <= mMaxBorderPos.x && pos.y >= mMinBorderPos.y && pos.y <= mMaxBorderPos.y;
     }
     public bool contains(GameObject go)
