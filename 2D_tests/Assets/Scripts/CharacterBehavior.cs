@@ -68,7 +68,7 @@ public class CharacterBehavior : MonoBehaviour
         mTrailPoints = new List<GameObject>();
 
         mTrailGO = new GameObject();
-        mTrailGO.name = "Trail";
+        mTrailGO.name = "Trails";
         mTrails = new List<GameObject>();
     }
 

@@ -14,7 +14,6 @@ public class TestUtils
         {
             GameObject child = bg_parent.transform.GetChild(i).gameObject;
             bgs_go.Add(child);
-
         }
         return bgs_go;
     }
@@ -23,6 +22,22 @@ public class TestUtils
     {
         List<GameObject> bgs_go = getBackgroundsGameObject();
         Assert.AreEqual(number_bg_expected, bgs_go.Count);
+    }
+    public static void checkBackgroundsHasEnnemy(List<bool> has_enemies)
+    {
+        CharacterBehavior character = getCharacter();
+        Assert.AreEqual(has_enemies.Count, character.mBackgrounds.Count);
+
+        for (int i = 0; i < has_enemies.Count; ++i)
+        {
+            bool has_enemy = has_enemies[i];
+            Assert.AreEqual(has_enemy, character.mBackgrounds[i].hasEnemies(), "Issue on background : " + i);
+        }
+    }
+    public static void checkBackgroundHasEnnemy(int backgroundg_idx, bool has_enemy)
+    {
+        CharacterBehavior character = getCharacter();
+        Assert.AreEqual(has_enemy, character.mBackgrounds[backgroundg_idx].hasEnemies());
     }
 
     public static void checkBackgroundAreEquals()
@@ -160,6 +175,38 @@ public class TestUtils
             yield return new WaitUntil(() => character.transform.position.y == character.mMinBorderPos.y);
         }
     }
+    public static IEnumerator moveUntilReachingPoint(CharacterBehavior character, char movement, Border border, float offset = 4f)
+    {
+        yield return moveUntilReachingPoint(character, movement, border.mStartPoint, offset);
+    }
+    public static IEnumerator moveUntilReachingPoint(CharacterBehavior character, char movement, Trail trail, float offset = 4f)
+    {
+        yield return moveUntilReachingPoint(character, movement, trail.GetComponent<LineRenderer>().GetPosition(0), offset);
+    }
+    public static IEnumerator moveUntilReachingPoint(CharacterBehavior character, char movement, Vector3 point, float offset = 4f)
+    {
+        float epsilon = Utils.EPSILON() * offset;
+        if (movement == '<')
+        {
+            character.updateDirection(Direction.Left);
+            yield return new WaitUntil(() => character.transform.position.x < point.x + epsilon);
+        }
+        if (movement == '^')
+        {
+            character.updateDirection(Direction.Up);
+            yield return new WaitUntil(() => character.transform.position.y > point.y - epsilon);
+        }
+        if (movement == '>')
+        {
+            character.updateDirection(Direction.Right);
+            yield return new WaitUntil(() => character.transform.position.x > point.x - epsilon);
+        }
+        if (movement == 'v')
+        {
+            character.updateDirection(Direction.Down);
+            yield return new WaitUntil(() => character.transform.position.y < point.y + epsilon);
+        }
+    }
     public static bool bordersAreValid(List<Border> borders)
     {
         foreach (Border border in borders)
@@ -185,5 +232,11 @@ public class TestUtils
     {
         CharacterBehavior character = getCharacter();
         return character.mBorders[i];
+    }
+    public static Trail getTrail(int i)
+    {
+        GameObject trails_go = GameObject.Find(Utils.TRAILS_STR);
+        GameObject trail_go = trails_go.transform.GetChild(i).gameObject;
+        return trail_go.GetComponent<Trail>();
     }
 }

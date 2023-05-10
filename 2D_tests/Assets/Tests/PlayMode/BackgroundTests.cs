@@ -503,5 +503,32 @@ public class BackgroundTests
         TestUtils.checkNumberOfBackgrounds(21);
         TestUtils.checkBackgroundAreEquals();
     }
+    [UnityTest]
+    public IEnumerator test_CheckConnectionBetweenBackgroundIsCorrectlyWorkingWithSmallBackground()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        character.mSpeed = 15;
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">");
+        Border top_border = TestUtils.getBorder(0);
+        Border right_border = TestUtils.getBorder(1);
+        Border bottom_border = TestUtils.getBorder(2);
+        yield return TestUtils.moveUntilReachingPoint(character, '^', top_border, 3);
+        yield return TestUtils.moveUntilReachingPoint(character, '>', right_border, 3);
+        yield return TestUtils.moveUntilReachingPoint(character, 'v', bottom_border, 3);
+        Trail trail_0 = TestUtils.getTrail(0);
+        yield return TestUtils.moveUntilReachingPoint(character, '<', trail_0, 3);
+        yield return TestUtils.moveUntilBorder(character, 'v');
+
+        TestUtils.checkNumberOfBackgrounds(6);
+        TestUtils.checkBackgroundsHasEnnemy(new List<bool>{ false, false, false, true, true, false});
+
+    }
 
 }
