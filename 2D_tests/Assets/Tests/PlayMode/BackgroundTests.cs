@@ -528,7 +528,61 @@ public class BackgroundTests
 
         TestUtils.checkNumberOfBackgrounds(6);
         TestUtils.checkBackgroundsHasEnnemy(new List<bool>{ false, false, false, true, true, false});
+    }
+    [UnityTest]
+    public IEnumerator test_CheckConnectionBetweenBackgroundWithVerticalSnake()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
 
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        TestUtils.setEnemyPositionInAnchor(character, enemy, "right");
+        float epsilon = Utils.EPSILON();
+
+        Border top_border = TestUtils.getBorder(0);
+        Border bottom_border = TestUtils.getBorder(2);
+
+        bool is_going_top = true;
+        while (character.transform.position.x < enemy.transform.position.x - epsilon * 8f)
+        {
+            character.mSpeed = 10;
+            yield return TestUtils.move(character, ">");
+
+            character.mSpeed = 30;
+            if (is_going_top)
+            {
+                yield return TestUtils.moveUntilReachingPoint(character, '^', top_border);
+            }
+            else
+            {
+                yield return TestUtils.moveUntilReachingPoint(character, 'v', bottom_border);
+            }
+            is_going_top = !is_going_top;
+        }
+
+        if(is_going_top) // Reversed on the last execution of the while
+        {
+            yield return TestUtils.moveUntilBorder(character, 'v');
+        }
+        else
+        {
+            yield return TestUtils.moveUntilBorder(character, '^');
+        }
+
+        bool bg_without_enemy = false; ;
+        foreach(Background bg in character.mBackgrounds)
+        {
+            if(!bg.hasEnemies())
+            {
+                bg_without_enemy = true;
+            }
+        }
+        Assert.AreEqual(true, bg_without_enemy);
     }
 
 }
