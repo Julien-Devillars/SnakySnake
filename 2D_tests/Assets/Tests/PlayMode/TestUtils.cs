@@ -39,6 +39,28 @@ public class TestUtils
         CharacterBehavior character = getCharacter();
         Assert.AreEqual(has_enemy, character.mBackgrounds[backgroundg_idx].hasEnemies());
     }
+    public static bool hasBackgroundWithEnemy(CharacterBehavior character)
+    {
+        foreach (Background bg in character.mBackgrounds)
+        {
+            if (bg.hasEnemies())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static bool hasBackgroundWithoutEnemy(CharacterBehavior character)
+    {
+        foreach (Background bg in character.mBackgrounds)
+        {
+            if (!bg.hasEnemies())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static void checkBackgroundAreEquals()
     {

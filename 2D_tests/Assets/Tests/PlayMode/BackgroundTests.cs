@@ -574,15 +574,7 @@ public class BackgroundTests
             yield return TestUtils.moveUntilBorder(character, '^');
         }
 
-        bool bg_without_enemy = false; ;
-        foreach(Background bg in character.mBackgrounds)
-        {
-            if(!bg.hasEnemies())
-            {
-                bg_without_enemy = true;
-            }
-        }
-        Assert.AreEqual(true, bg_without_enemy);
+        Assert.IsTrue(TestUtils.hasBackgroundWithoutEnemy(character));
     }
 
     [UnityTest]
@@ -632,19 +624,28 @@ public class BackgroundTests
 
         yield return TestUtils.moveUntilBorder(character, '>', 30);
 
-        bool bg_without_enemy = false;
-        float sum_area =0f;
-        foreach (Background bg in character.mBackgrounds)
-        {
-            if (!bg.hasEnemies())
-            {
-                bg_without_enemy = true;
-                sum_area += bg.getArea();
-            }
-        }
-        Assert.AreEqual(true, bg_without_enemy);
-        Debug.Log(sum_area);
-        yield return new WaitForSeconds(3);
+        Assert.IsTrue(TestUtils.hasBackgroundWithoutEnemy(character));
+    }
+
+    [UnityTest]
+    public IEnumerator test_EnemyPositionOnBackgroundSplit()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        TestUtils.setCharacterPositionInAnchor(character, "left");
+
+        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        TestUtils.setEnemyPositionInAnchor(character, enemy, "right");
+
+        yield return TestUtils.move(character, ">", 15);
+        yield return TestUtils.moveUntilBorder(character, 'v');
+
+        Assert.IsTrue(TestUtils.hasBackgroundWithEnemy(character));
     }
 
 }
