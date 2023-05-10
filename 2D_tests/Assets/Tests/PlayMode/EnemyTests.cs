@@ -36,4 +36,30 @@ public class EnemyTests
             yield return new WaitForSeconds(1);
         }
     }
+
+    [UnityTest]
+    public IEnumerator test_LoseWhenEnemyTouchsTrail()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        Utils.HAS_LOSE = false;
+
+        GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
+        GameObject enemy_go = enemies_go.transform.GetChild(0).gameObject;
+        EnemyBehavior enemy = enemy_go.GetComponent<EnemyBehavior>();
+        enemy.setDirection(new Vector2(-7, 0));
+
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
+        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        TestUtils.setCharacterPositionInAnchor(character, "left");
+        character.mSpeed = 10;
+        yield return TestUtils.move(character, "^>vv");
+        yield return TestUtils.moveUntilBorder(character, '>');
+
+        Assert.AreEqual(GameControler.GameStatus.Lose, GameControler.status);
+    }
 }

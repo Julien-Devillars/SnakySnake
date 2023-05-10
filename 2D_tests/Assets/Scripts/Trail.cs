@@ -115,7 +115,14 @@ public class Trail : MonoBehaviour
             Transform trail_child = trail.GetChild(trail.childCount - 1);
             if (transform != trail_child)
             {
-                SceneManager.LoadScene("Level_1");
+                
+                CharacterBehavior character = collider.gameObject.GetComponent<CharacterBehavior>();
+
+                GameControler.status = GameControler.GameStatus.Lose;
+                if (Utils.HAS_LOSE)
+                {
+                    SceneManager.LoadScene("Level_1");
+                }
             }
         }
     }

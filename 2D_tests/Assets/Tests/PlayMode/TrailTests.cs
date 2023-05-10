@@ -122,4 +122,24 @@ public class TrailTests
         yield return TestUtils.move(character, "^>>v");
         Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
     }
+
+    [UnityTest]
+    public IEnumerator test_LoseWhenCharacterTouchsTrail()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        Utils.HAS_LOSE = false;
+
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
+        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        TestUtils.setCharacterPositionInAnchor(character, "left");
+        character.mSpeed = 10;
+        yield return TestUtils.move(character, ">^>v<");
+
+        Assert.AreEqual(GameControler.GameStatus.Lose, GameControler.status);
+    }
 }

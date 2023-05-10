@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 public class Score : MonoBehaviour
 {
     // Start is called before the first frame update
-
     public float mCurrentScore;
     public int mGoalScore;
     public static Score Instance { get; private set; }
@@ -44,8 +43,9 @@ public class Score : MonoBehaviour
 
     void checkWinCondition(float area_percentage)
     {
-        if (Utils.HAS_SCORE_ACTIVATED && area_percentage >= mGoalScore)
+        if (Utils.HAS_WIN && area_percentage >= mGoalScore)
         {
+            GameControler.status = GameControler.GameStatus.Win;
             Scene scene = SceneManager.GetActiveScene();
             string scene_name = scene.name;
             string[] scene_split = scene_name.Split('_');

@@ -319,8 +319,8 @@ public class BackgroundTests
         float epsilon = Utils.EPSILON();
         enemy.position = new Vector3(character.mMaxBorderPos.x - epsilon * 2f, 0f, 0f);
 
-        Utils.HAS_ENEMY_COLLISION = false;
-        Utils.HAS_SCORE_ACTIVATED = false;
+        Utils.HAS_LOSE = false;
+        Utils.HAS_WIN = false;
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
         int number_expected_bg = 2;
@@ -365,8 +365,8 @@ public class BackgroundTests
         float epsilon = Utils.EPSILON();
         enemy.position = new Vector3(0f, character.mMaxBorderPos.y - epsilon * 2f, 0f);
 
-        Utils.HAS_ENEMY_COLLISION = false;
-        Utils.HAS_SCORE_ACTIVATED = false;
+        Utils.HAS_LOSE = false;
+        Utils.HAS_WIN = false;
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
         int number_expected_bg = 2;
@@ -446,7 +446,7 @@ public class BackgroundTests
         TestUtils.setEnemyPositionInAnchor(character, enemy, "top");
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
 
-        Utils.HAS_ENEMY_COLLISION = false;
+        Utils.HAS_LOSE = false;
 
         yield return TestUtils.move(character, ">^^<<vv>");
         TestUtils.checkNumberOfBackgrounds(4);
@@ -473,7 +473,7 @@ public class BackgroundTests
         TestUtils.setEnemyPositionInAnchor(character, enemy, "top");
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
 
-        Utils.HAS_ENEMY_COLLISION = false;
+        Utils.HAS_LOSE = false;
 
         yield return TestUtils.move(character, ">^^<<vv>");
         TestUtils.checkNumberOfBackgrounds(4);
@@ -499,7 +499,7 @@ public class BackgroundTests
         GameObject enemy = enemies_go.transform.GetChild(0).gameObject;
         TestUtils.setEnemyPositionInAnchor(character, enemy, "top-right");
 
-        Utils.HAS_ENEMY_COLLISION = false;
+        Utils.HAS_LOSE = false;
         character.mSpeed = 15;
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");

@@ -40,10 +40,13 @@ public class EnemyBehavior : MonoBehaviour
                 speed.y = -speed.y;
             }
         }
-        if (Utils.HAS_ENEMY_COLLISION && collision.gameObject.tag.Contains("Trail"))
+        if (collision.gameObject.tag.Contains("Trail"))
         {
-            Debug.Log("Lose");
-            SceneManager.LoadScene("Level_1");
+            GameControler.status = GameControler.GameStatus.Lose;
+            if(Utils.HAS_LOSE)
+            {
+                SceneManager.LoadScene("Level_1");
+            }
         }
     }
 

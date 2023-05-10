@@ -11,8 +11,8 @@ public class Utils
     public static float DIRECTION_UPDATE_TIME = 0.1f;
     public static float ADD_LINE_UPDATE_TIME = 0.05f;
 
-    public static bool HAS_SCORE_ACTIVATED = true;
-    public static bool HAS_ENEMY_COLLISION = true;
+    public static bool HAS_LOSE = true;
+    public static bool HAS_WIN = true;
 
     public static List<Vector3> getIntermediatePointFromTrail(Border border)
     {
