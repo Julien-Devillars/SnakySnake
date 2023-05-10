@@ -29,8 +29,7 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         character.mSpeed = 30;
         character.updateDirection(Direction.Up);
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
@@ -52,8 +51,7 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         character.mSpeed = 30;
 
         character.updateDirection(Direction.Right);
@@ -76,8 +74,7 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         character.mSpeed = 30;
 
         // First split -> Vertical
@@ -109,8 +106,7 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         character.mSpeed = 30;
 
         // First split -> Horizontal
@@ -142,8 +138,7 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         character.mSpeed = 30;
 
         // First split -> Horizontal 1
@@ -202,8 +197,7 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         character.mSpeed = 30;
 
         // First split -> Horizontal 1
@@ -265,8 +259,7 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         character.mSpeed = 30;
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
@@ -310,8 +303,7 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         character.mSpeed = 10;
 
         GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
@@ -356,8 +348,7 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         character.mSpeed = 10;
 
         GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
@@ -403,8 +394,7 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
 
         yield return TestUtils.move(character, ">^<<v");
@@ -438,11 +428,8 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
-
-        GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
-        GameObject enemy = enemies_go.transform.GetChild(0).gameObject;
+        CharacterBehavior character = TestUtils.getCharacter();
+        EnemyBehavior enemy = TestUtils.getEnemy(0);
         TestUtils.setEnemyPositionInAnchor(character, enemy, "top");
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
 
@@ -465,11 +452,8 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
-
-        GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
-        GameObject enemy = enemies_go.transform.GetChild(0).gameObject;
+        CharacterBehavior character = TestUtils.getCharacter();
+        EnemyBehavior enemy = TestUtils.getEnemy(0);
         TestUtils.setEnemyPositionInAnchor(character, enemy, "top");
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
 
@@ -492,11 +476,8 @@ public class BackgroundTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
-
-        GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
-        GameObject enemy = enemies_go.transform.GetChild(0).gameObject;
+        CharacterBehavior character = TestUtils.getCharacter();
+        EnemyBehavior enemy = TestUtils.getEnemy(0);
         TestUtils.setEnemyPositionInAnchor(character, enemy, "top-right");
 
         Utils.HAS_LOSE = false;

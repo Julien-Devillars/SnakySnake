@@ -16,8 +16,7 @@ public class TrailTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
 
         TestUtils.setCharacterPositionInAnchor(character, "left");
         character.mSpeed = 10;
@@ -44,8 +43,7 @@ public class TrailTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         Assert.AreEqual(4, character.mBorders.Count);
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
@@ -74,8 +72,7 @@ public class TrailTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         Assert.AreEqual(4, character.mBorders.Count);
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
@@ -108,8 +105,7 @@ public class TrailTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         Assert.AreEqual(4, character.mBorders.Count);
         character.mSpeed = 5;
 
@@ -134,8 +130,7 @@ public class TrailTests
 
         Utils.HAS_LOSE = false;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         TestUtils.setCharacterPositionInAnchor(character, "left");
         character.mSpeed = 10;
         yield return TestUtils.move(character, ">^>v<");

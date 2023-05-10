@@ -16,8 +16,7 @@ public class BorderTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         character.mSpeed = 10;
         yield return TestUtils.move(character, ">");
         Vector3 fixed_pos = character.transform.position;
@@ -51,8 +50,7 @@ public class BorderTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         character.mSpeed = 3;
         yield return TestUtils.move(character, ">");
         character.mSpeed = 30;
@@ -73,8 +71,7 @@ public class BorderTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
 
         TestUtils.setCharacterPositionInAnchor(character, "left");
         character.mSpeed = 10;
@@ -101,8 +98,7 @@ public class BorderTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
         character.mSpeed = 10;

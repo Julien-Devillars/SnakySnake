@@ -16,9 +16,8 @@ public class EnemyTests
         // Use yield to skip a frame.
         yield return null;
 
-        GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
-        GameObject enemy_1 = enemies_go.transform.GetChild(1).gameObject;
-        GameObject enemy_2 = enemies_go.transform.GetChild(0).gameObject;
+        EnemyBehavior enemy_1 = TestUtils.getEnemy(1);
+        EnemyBehavior enemy_2 = TestUtils.getEnemy(0);
         Vector3 previous_pos_1 = new Vector3();
         Vector3 previous_pos_2 = new Vector3();
         Vector3 first_pos_1 = enemy_1.transform.position;
@@ -47,10 +46,8 @@ public class EnemyTests
         yield return null;
 
         Utils.HAS_LOSE = false;
-
-        GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
-        GameObject enemy_go = enemies_go.transform.GetChild(0).gameObject;
-        EnemyBehavior enemy = enemy_go.GetComponent<EnemyBehavior>();
+        
+        EnemyBehavior enemy = TestUtils.getEnemy(0);
         enemy.setDirection(new Vector2(-7, 0));
 
         GameObject character_go = GameObject.Find(Utils.CHARACTER);

@@ -35,14 +35,11 @@ public class DirectionTests
         SceneManager.LoadScene("TestScene_1Enemy_Static");
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
-
-        Vector3 old_pos = new Vector3();
+        CharacterBehavior character = TestUtils.getCharacter();
 
         // Check Bottom right place
-        character_go.transform.position = new Vector3(character.mMinBorderPos.x, character.mMinBorderPos.y, 0);
-        old_pos = character_go.transform.position;
+        character.transform.position = new Vector3(character.mMinBorderPos.x, character.mMinBorderPos.y, 0);
+        Vector3 old_pos = character.transform.position;
 
         // Right
         Assert.IsTrue(character.updateDirection(Direction.Right));
@@ -59,8 +56,8 @@ public class DirectionTests
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME * 2f);
         Assert.IsTrue(old_pos == character.transform.position);
 
-        character_go.transform.position = new Vector3(character.mMinBorderPos.x, character.mMaxBorderPos.y, 0);
-        old_pos = character_go.transform.position;
+        character.transform.position = new Vector3(character.mMinBorderPos.x, character.mMaxBorderPos.y, 0);
+        old_pos = character.transform.position;
 
         // Right
         Assert.IsTrue(character.updateDirection(Direction.Right));
@@ -76,8 +73,8 @@ public class DirectionTests
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME * 2f);
         Assert.IsTrue(old_pos == character.transform.position);
 
-        character_go.transform.position = new Vector3(character.mMaxBorderPos.x, character.mMaxBorderPos.y, 0);
-        old_pos = character_go.transform.position;
+        character.transform.position = new Vector3(character.mMaxBorderPos.x, character.mMaxBorderPos.y, 0);
+        old_pos = character.transform.position;
 
         // Left
         Assert.IsTrue(character.updateDirection(Direction.Left));
@@ -94,8 +91,8 @@ public class DirectionTests
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME * 2f);
         Assert.IsTrue(old_pos == character.transform.position);
 
-        character_go.transform.position = new Vector3(character.mMaxBorderPos.x, character.mMinBorderPos.y, 0);
-        old_pos = character_go.transform.position;
+        character.transform.position = new Vector3(character.mMaxBorderPos.x, character.mMinBorderPos.y, 0);
+        old_pos = character.transform.position;
 
         // Left
         Assert.IsTrue(character.updateDirection(Direction.Left));
@@ -119,13 +116,7 @@ public class DirectionTests
         SceneManager.LoadScene("TestScene_1Enemy_Static");
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
-        Vector3 old_pos = new Vector3();
-
-        // Check Bottom right place
-        character_go.transform.position = new Vector3(0, character.mMinBorderPos.y, 0);
-        old_pos = character_go.transform.position;
+        CharacterBehavior character = TestUtils.getCharacter();
 
         // Up
         Assert.IsTrue(character.updateDirection(Direction.Up));
@@ -160,13 +151,12 @@ public class DirectionTests
         SceneManager.LoadScene("TestScene_1Enemy_Static");
         yield return null;
 
-        GameObject character_go = GameObject.Find(Utils.CHARACTER);
-        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        CharacterBehavior character = TestUtils.getCharacter();
         Vector3 old_pos = new Vector3();
 
         // Check Bottom right place
-        character_go.transform.position = character.mMinBorderPos;
-        old_pos = character_go.transform.position;
+        character.transform.position = character.mMinBorderPos;
+        old_pos = character.transform.position;
 
         // Right
         Assert.IsTrue(character.updateDirection(Direction.Right));
