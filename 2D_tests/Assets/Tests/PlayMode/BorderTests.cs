@@ -37,10 +37,10 @@ public class BorderTests
         yield return TestUtils.moveUntilBorder(character, '^');
 
         Border border = character.mBorders[character.mBorders.Count - 1];
-        Assert.AreEqual(border.mStartPoint.x, border.mEndPoint.x);
+        Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
 
-        Assert.AreEqual(fixed_pos.x, border.mEndPoint.x);
-        Assert.AreEqual(fixed_pos.x, border.mStartPoint.x);
+        Assert.AreEqual(border.mEndPoint.x, fixed_pos.x);
+        Assert.AreEqual(border.mStartPoint.x, fixed_pos.x);
     }
     [UnityTest]
     public IEnumerator test_BallShoulMovedToAnOriginalBorderIfLeavingABorder()
@@ -59,10 +59,10 @@ public class BorderTests
         yield return TestUtils.moveUntilBorder(character, '^');
 
         Border border = character.mBorders[character.mBorders.Count - 1];
-        Assert.AreEqual(border.mStartPoint.x, border.mEndPoint.x);
+        Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
 
-        Assert.AreEqual(character.mMinBorderPos.x, border.mEndPoint.x);
-        Assert.AreEqual(character.mMinBorderPos.x, border.mStartPoint.x);
+        Assert.AreEqual(border.mEndPoint.x, character.mMinBorderPos.x);
+        Assert.AreEqual(border.mStartPoint.x, character.mMinBorderPos.x);
     }
     [UnityTest]
     public IEnumerator test_BallShoulNotMovedToTheBorderIfHaveATrail()
@@ -88,8 +88,8 @@ public class BorderTests
         yield return TestUtils.moveUntilBorder(character, '^');
 
         Border border = character.mBorders[character.mBorders.Count - 1];
-        Assert.AreEqual(border.mStartPoint.x, border.mEndPoint.x);
-        Assert.AreEqual(border.mEndPoint.y, character.mMaxBorderPos.y);
+        Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
+        Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
     }
 
     [UnityTest]
@@ -117,7 +117,7 @@ public class BorderTests
         yield return TestUtils.moveUntilBorder(character, '^');
 
         Border border = character.mBorders[character.mBorders.Count - 1];
-        Assert.AreEqual(border.mStartPoint.x, border.mEndPoint.x);
-        Assert.AreEqual(border.mEndPoint.y, character.mMaxBorderPos.y);
+        Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
+        Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
     }
 }

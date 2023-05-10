@@ -22,7 +22,7 @@ public class TestUtils
     public static void checkNumberOfBackgrounds(int number_bg_expected)
     {
         List<GameObject> bgs_go = getBackgroundsGameObject();
-        Assert.AreEqual(bgs_go.Count, number_bg_expected);
+        Assert.AreEqual(number_bg_expected, bgs_go.Count);
     }
 
     public static void checkBackgroundAreEquals()
@@ -32,14 +32,14 @@ public class TestUtils
         GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
 
-        Assert.AreEqual(bgs_go.Count, character.mBackgrounds.Count);
+        Assert.AreEqual(character.mBackgrounds.Count, bgs_go.Count);
         for (int i = 0; i < character.mBackgrounds.Count; ++i)
         {
             Background character_bg = character.mBackgrounds[i];
             GameObject character_bg_go = character_bg.mBackground;
             GameObject bg_go = bgs_go[i];
 
-            Assert.AreEqual(character_bg_go, bg_go);
+            Assert.AreEqual(bg_go, character_bg_go);
         }
     }
 

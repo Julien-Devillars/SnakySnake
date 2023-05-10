@@ -31,8 +31,8 @@ public class TrailTests
         yield return TestUtils.moveUntilBorder(character, '^');
 
         Border border = character.mBorders[character.mBorders.Count - 1];
-        Assert.AreEqual(border.mStartPoint.x, border.mEndPoint.x);
-        Assert.AreEqual(border.mEndPoint.y, character.mMaxBorderPos.y);
+        Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
+        Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
     }
 
     [UnityTest]
@@ -46,23 +46,23 @@ public class TrailTests
 
         GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
-        Assert.AreEqual(character.mBorders.Count, 4);
+        Assert.AreEqual(4, character.mBorders.Count);
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
         yield return TestUtils.move(character, ">^<>>v");
-        Assert.AreEqual(character.mBorders.Count, 8);
+        Assert.AreEqual(8, character.mBorders.Count);
 
         TestUtils.setCharacterPositionInAnchor(character, "top-left");
         yield return TestUtils.move(character, "v>^vv<");
-        Assert.AreEqual(character.mBorders.Count, 12);
+        Assert.AreEqual(12, character.mBorders.Count);
 
         TestUtils.setCharacterPositionInAnchor(character, "top-right");
         yield return TestUtils.move(character, "<v><<^");
-        Assert.AreEqual(character.mBorders.Count, 16);
+        Assert.AreEqual(16, character.mBorders.Count);
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-right");
         yield return TestUtils.move(character, "^<v^^>");
-        Assert.AreEqual(character.mBorders.Count, 20);
+        Assert.AreEqual(20, character.mBorders.Count);
     }
 
     [UnityTest]
@@ -76,27 +76,27 @@ public class TrailTests
 
         GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
-        Assert.AreEqual(character.mBorders.Count, 4);
+        Assert.AreEqual(4, character.mBorders.Count);
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
         yield return TestUtils.move(character, ">^<<v");
-        Assert.AreEqual(character.mBorders.Count, 7);
+        Assert.AreEqual(7, character.mBorders.Count);
         Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
         yield return TestUtils.move(character, "^>>v");
-        Assert.AreEqual(character.mBorders.Count, 9);
+        Assert.AreEqual(9, character.mBorders.Count);
         Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
-        //Assert.AreEqual(character.mBorders.Count, 10);
+        //Assert.AreEqual(10, character.mBorders.Count);
         //TestUtils.setCharacterPositionInAnchor(character, "bottom");
         //yield return TestUtils.move(character, "^<<v");
-        //Assert.AreEqual(character.mBorders.Count, 11);
+        //Assert.AreEqual(11, character.mBorders.Count);
         //TestUtils.setCharacterPositionInAnchor(character, "bottom");
         //yield return TestUtils.move(character, "^^>v");
-        //Assert.AreEqual(character.mBorders.Count, 14);
+        //Assert.AreEqual(14, character.mBorders.Count);
         //TestUtils.setCharacterPositionInAnchor(character, "bottom");
         //yield return TestUtils.move(character, "^^<v");
-        //Assert.AreEqual(character.mBorders.Count, 16);
+        //Assert.AreEqual(16, character.mBorders.Count);
     }
 
     [UnityTest]
@@ -110,12 +110,12 @@ public class TrailTests
 
         GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
-        Assert.AreEqual(character.mBorders.Count, 4);
+        Assert.AreEqual(4, character.mBorders.Count);
         character.mSpeed = 5;
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
         yield return TestUtils.move(character, ">^<<v");
-        Assert.AreEqual(character.mBorders.Count, 7);
+        Assert.AreEqual(7, character.mBorders.Count);
         Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
