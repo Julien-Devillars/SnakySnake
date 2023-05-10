@@ -160,4 +160,15 @@ public class TestUtils
             yield return new WaitUntil(() => character.transform.position.y == character.mMinBorderPos.y);
         }
     }
+    public static bool bordersAreValid(List<Border> borders)
+    {
+        foreach (Border border in borders)
+        {
+            if (border.mStartPoint.x == border.mEndPoint.x && border.mStartPoint.y == border.mEndPoint.y)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
