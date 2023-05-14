@@ -11,6 +11,7 @@ public class Utils
     public static float EPSILON() => GameObject.Find(CHARACTER).transform.localScale.x / 2f;
     public static float DIRECTION_UPDATE_TIME = 0.1f;
     public static float ADD_LINE_UPDATE_TIME = 0.05f;
+    public static float ENNEMY_COLLIDER_UPDATE_TIME = Time.deltaTime * 2f;
 
     public static bool HAS_LOSE = true;
     public static bool HAS_WIN = true;

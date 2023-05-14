@@ -8,6 +8,7 @@ public class EnemyBehavior : MonoBehaviour
     public Vector2 speed;
     private Vector3 mMinPos;
     private Vector3 mMaxPos;
+    private bool mHasCollide;
     void Awake()
     {
         Camera cam = Camera.main;
@@ -17,6 +18,7 @@ public class EnemyBehavior : MonoBehaviour
 
         mMinPos = new Vector3(-width + Utils.EPSILON() * 2f, -height + Utils.EPSILON() * 2f, 0);
         mMaxPos = new Vector3(width - Utils.EPSILON() * 2f, height - Utils.EPSILON() * 2f, 0);
+        mHasCollide = false;
     }
     private void Start()
     {
@@ -29,8 +31,9 @@ public class EnemyBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name.Contains("Border"))
+        if (!mHasCollide && collision.gameObject.name.Contains("Border"))
         {
+            StartCoroutine(waiterCollider());
             if (collision.gameObject.tag == "VerticalBorder")
             {
                 speed.x = -speed.x;
@@ -48,6 +51,12 @@ public class EnemyBehavior : MonoBehaviour
                 SceneManager.LoadScene("Level_1");
             }
         }
+    }
+    IEnumerator waiterCollider()
+    {
+        mHasCollide = true;
+        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+        mHasCollide = false;
     }
 
     public void setRandomDirection()
