@@ -648,4 +648,30 @@ public class BackgroundTests
         Assert.IsTrue(TestUtils.hasBackgroundWithEnemy(character));
     }
 
+    [UnityTest]
+    public IEnumerator test_CrossingBorderShouldCreateBackground()
+    {
+        SceneManager.LoadScene("TestScene_2Enemies_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+
+        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
+        TestUtils.setEnemyPositionInAnchor(character, enemy_1, "right");
+        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        TestUtils.setEnemyPositionInAnchor(character, enemy_2, "left");
+
+        yield return TestUtils.moveUntilBorder(character, '^', 35);
+        yield return TestUtils.move(character, ">v<<v");
+
+        Assert.IsTrue(character.mBackgrounds.Count > 2);
+        Assert.IsTrue(character.mBackgrounds.Count == 4);
+        yield return new WaitForSeconds(3);
+
+    }
+
 }
