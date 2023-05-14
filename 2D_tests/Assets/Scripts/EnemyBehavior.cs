@@ -119,5 +119,10 @@ public class EnemyBehavior : MonoBehaviour
             setDefaultPosition();
         }
     }
+    public void setPosition(float x, float y)
+    {
+        Vector2 pos = new Vector2(x, y);
+        setPosition(pos);
+    }
 
 }
