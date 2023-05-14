@@ -8,7 +8,8 @@ public class EnemyBehavior : MonoBehaviour
     public Vector2 speed;
     private Vector3 mMinPos;
     private Vector3 mMaxPos;
-    private bool mHasCollide;
+    private bool mHasCollideVertical;
+    private bool mHasCollideHorizontal;
     void Awake()
     {
         Camera cam = Camera.main;
@@ -18,7 +19,8 @@ public class EnemyBehavior : MonoBehaviour
 
         mMinPos = new Vector3(-width + Utils.EPSILON() * 2f, -height + Utils.EPSILON() * 2f, 0);
         mMaxPos = new Vector3(width - Utils.EPSILON() * 2f, height - Utils.EPSILON() * 2f, 0);
-        mHasCollide = false;
+        mHasCollideVertical = false;
+        mHasCollideHorizontal = false;
     }
     private void Start()
     {
@@ -31,32 +33,39 @@ public class EnemyBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!mHasCollide && collision.gameObject.name.Contains("Border"))
+        if (collision.gameObject.name.Contains("Border"))
         {
-            StartCoroutine(waiterCollider());
-            if (collision.gameObject.tag == "VerticalBorder")
+            if (!mHasCollideVertical && collision.gameObject.tag == "VerticalBorder")
             {
+                StartCoroutine(waiterColliderVertical());
                 speed.x = -speed.x;
             }
-            if (collision.gameObject.tag == "HorizontalBorder")
+            if (!mHasCollideHorizontal && collision.gameObject.tag == "HorizontalBorder")
             {
+                StartCoroutine(waiterColliderHorizontal());
                 speed.y = -speed.y;
             }
         }
         if (collision.gameObject.tag.Contains("Trail"))
         {
             GameControler.status = GameControler.GameStatus.Lose;
-            if(Utils.HAS_LOSE)
+            if (Utils.HAS_LOSE)
             {
                 SceneManager.LoadScene("Level_1");
             }
         }
     }
-    IEnumerator waiterCollider()
+    IEnumerator waiterColliderVertical()
     {
-        mHasCollide = true;
+        mHasCollideVertical = true;
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-        mHasCollide = false;
+        mHasCollideVertical = false;
+    }
+    IEnumerator waiterColliderHorizontal()
+    {
+        mHasCollideHorizontal = true;
+        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
+        mHasCollideHorizontal = false;
     }
 
     public void setRandomDirection()
@@ -101,7 +110,7 @@ public class EnemyBehavior : MonoBehaviour
 
     public void setPosition(Vector2 pos)
     {
-        if(checkPositionIsValid(pos))
+        if (checkPositionIsValid(pos))
         {
             transform.position = pos;
         }

@@ -61,7 +61,7 @@ public class EnemyTests
     }
 
     [UnityTest]
-    public IEnumerator test_EnemyCollidingWithBorderCorner()
+    public IEnumerator test_EnemyCollidingWith2BorderCorner()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
 
@@ -115,5 +115,31 @@ public class EnemyTests
         yield return TestUtils.moveUntilBorder(character, 'v');
         TestUtils.checkBackgroundHasEnnemy(0, false);
         TestUtils.checkBackgroundHasEnnemy(1, false);
+    }
+    [UnityTest]
+    public IEnumerator test_EnemyColliderInCorner()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        Utils.HAS_LOSE = false;
+
+        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
+        //CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+
+        TestUtils.setEnemyPositionInAnchor(TestUtils.getCharacter(), enemy, "top-right");
+        Vector3 expected_pos = enemy.transform.position;
+        enemy.setDirection(new Vector2(3, 3));
+        
+        int cpt = 0;
+        while (enemy.transform.position.x > expected_pos.x - 1f  || enemy.transform.position.y > expected_pos.y - 1f)
+        {
+            Assert.AreNotEqual(10, cpt++);
+            yield return new WaitForSeconds(1);
+        }
     }
 }
