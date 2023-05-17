@@ -668,10 +668,13 @@ public class BackgroundTests
         yield return TestUtils.moveUntilBorder(character, '^', 35);
         yield return TestUtils.move(character, ">v<<v");
 
-        Assert.IsTrue(character.mBackgrounds.Count > 2);
-        Assert.IsTrue(character.mBackgrounds.Count == 4);
-        yield return new WaitForSeconds(3);
+        Assert.AreEqual(4, character.mBackgrounds.Count);
+        Assert.AreEqual(7, character.mBorders.Count);
 
+        yield return TestUtils.move(character, ">>>v");
+
+        Assert.AreEqual(7, character.mBackgrounds.Count);
+        Assert.AreEqual(10, character.mBorders.Count);
     }
 
 }

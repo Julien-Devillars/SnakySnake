@@ -132,6 +132,29 @@ public class CharacterBehavior : MonoBehaviour
             }
         }
         moveBall();
+
+        // Delete line if crossing a border.
+        if(mTrails.Count > 0)
+        {
+            GameObject trail_go = mTrails[mTrails.Count - 1];
+            LineRenderer trail = trail_go.GetComponent<LineRenderer>();
+            if(trail != null)
+            {
+                for (int i = 0; i < mBorders.Count; ++i) // Use for instead of foreach to avoid exception due to mBorders updates when deleting line
+                {
+                    Border border = mBorders[i];
+                    if (!border.contains(trail.GetPosition(0)) 
+                        && !border.contains(trail.GetPosition(1)) 
+                        && Utils.intersect(trail.GetPosition(0), trail.GetPosition(1), border.mStartPoint, border.mEndPoint))
+                    {
+                        deleteLine();
+                        addLine();
+                        break;
+                    }
+                }
+            }
+        }
+
         countScore();
 
         if (Input.GetKey("escape"))
