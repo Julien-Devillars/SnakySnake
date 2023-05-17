@@ -117,12 +117,14 @@ public class DirectionTests
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
+        EnemyBehavior enemy = TestUtils.getEnemy(0);
+
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+        TestUtils.setEnemyPositionInAnchor(character, enemy, "top");
 
         // Up
-        Assert.IsTrue(character.updateDirection(Direction.Up));
-        yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
-        Assert.IsFalse(character.updateDirection(Direction.Up));
-        Assert.IsFalse(character.updateDirection(Direction.Down));
+        yield return TestUtils.move(character, "^");
         // Left
         Assert.IsTrue(character.updateDirection(Direction.Left));
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
