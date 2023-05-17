@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class BorderTests
 {
     [UnityTest]
-    public IEnumerator test_BallShoulMovedToACreatedBorderIfLeavingABorder()
+    public IEnumerator test_CharacterShoulMovedToACreatedBorderIfLeavingABorder()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
 
@@ -42,7 +42,7 @@ public class BorderTests
         Assert.AreEqual(border.mStartPoint.x, fixed_pos.x);
     }
     [UnityTest]
-    public IEnumerator test_BallShoulMovedToAnOriginalBorderIfLeavingABorder()
+    public IEnumerator test_CharacterShoulMovedToAnOriginalBorderIfLeavingABorder()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
 
@@ -63,7 +63,7 @@ public class BorderTests
         Assert.AreEqual(border.mStartPoint.x, character.mMinBorderPos.x);
     }
     [UnityTest]
-    public IEnumerator test_BallShoulNotMovedToTheBorderIfHaveATrail()
+    public IEnumerator test_CharacterShoulNotMovedToTheBorderIfHaveATrail()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
 
@@ -90,7 +90,7 @@ public class BorderTests
     }
 
     [UnityTest]
-    public IEnumerator test_BallShoulNotMovedToTheBorderOnBackground()
+    public IEnumerator test_CharacterShoulNotMovedToTheBorderOnBackground()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
 
@@ -118,7 +118,7 @@ public class BorderTests
     }
 
     [UnityTest]
-    public IEnumerator test_BallShoulNotMovedToTheBorderAfterTurningIfHaveATrail()
+    public IEnumerator test_CharacterShouldNotBeSetOnSameDirectionLineWhenDeletingTrail()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
 
