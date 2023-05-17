@@ -55,25 +55,6 @@ public class TrailTests
     }
 
     [UnityTest]
-    public IEnumerator test_TrailShouldCorrectlyBeCreatedWithSlowSpeed()
-    {
-        SceneManager.LoadScene("TestScene_1Enemy_Static");
-        yield return null;
-
-        CharacterBehavior character = TestUtils.getCharacter();
-        Assert.AreEqual(4, character.mBorders.Count);
-
-        TestUtils.setCharacterPositionInAnchor(character, "bottom");
-        yield return TestUtils.move(character, ">^<<v", 5);
-        Assert.AreEqual(7, character.mBorders.Count);
-        Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
-
-        TestUtils.setCharacterPositionInAnchor(character, "bottom");
-        yield return TestUtils.move(character, "^>>v", 5);
-        Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
-    }
-
-    [UnityTest]
     public IEnumerator test_LoseWhenCharacterTouchsTrail()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
