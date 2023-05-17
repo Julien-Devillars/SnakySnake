@@ -34,19 +34,19 @@ public class TrailTests
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
         yield return null;
-
+    
         CharacterBehavior character = TestUtils.getCharacter();
-
+    
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
         yield return TestUtils.move(character, "^>", 15);
         Vector3 pos = character.transform.position;
         yield return TestUtils.move(character, "^^<", 15);
-
+    
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
         yield return TestUtils.move(character, ">", 15);
         yield return TestUtils.move(character, ">", 3);
         yield return TestUtils.moveUntilBorder(character, '^', 15);
-
+    
         Border border = character.mBorders[character.mBorders.Count - 1];
         Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
         Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
@@ -124,6 +124,50 @@ public class TrailTests
         Border b2 = TestUtils.getBorder(character.mBorders.Count - 1);
         Assert.AreEqual(b2.mStartPoint.x, b1.mStartPoint.x, "Start point of the border is not at the right position (Should be on the border)");
         Assert.AreEqual(b2.mEndPoint.x, character.mMaxBorderPos.x);
+    }
 
+    [UnityTest]
+    public IEnumerator test_TrailIsNotGlitchingOnCloseBorderWhenMovingToIt()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">");
+        Vector3 pos = character.transform.position;
+        yield return TestUtils.moveUntilBorder(character, '^');
+
+        TestUtils.setCharacterPositionInAnchor(character, "left");
+        yield return TestUtils.move(character, "v>>^<<", 15);
+
+        TestUtils.setCharacterPositionInAnchor(character, "left");
+        yield return TestUtils.move(character, "v", 17);
+        yield return TestUtils.moveUntilBorder(character, '>', 30);
+
+        Assert.AreEqual(character.mBorders.Count, 9);
+        Border border = TestUtils.getBorder(character.mBorders.Count - 1);
+        Assert.AreEqual(border.mEndPoint.y, border.mStartPoint.y);
+    }
+
+    [UnityTest]
+    public IEnumerator test_TrailIsCorrectlyCreatedAfterAutomaticallySetOnBorder()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">^<");
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">v");
+        yield return TestUtils.moveUntilBorder(character, '^', 4);
+
+        Border border = character.mBorders[character.mBorders.Count - 1];
+        Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
+        Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
     }
 }
