@@ -117,4 +117,27 @@ public class BorderTests
         Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
     }
 
+    [UnityTest]
+    public IEnumerator test_BallShoulNotMovedToTheBorderAfterTurningIfHaveATrail()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+
+        TestUtils.setCharacterPositionInAnchor(character, "left");
+        yield return TestUtils.move(character, ">", 15);
+        yield return TestUtils.moveUntilBorder(character, '^', 35);
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">", 15);
+        yield return TestUtils.move(character, ">", 3);
+        yield return TestUtils.moveUntilBorder(character, '^', 3);
+
+        Border border = character.mBorders[character.mBorders.Count - 1];
+        Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
+    }
 }
