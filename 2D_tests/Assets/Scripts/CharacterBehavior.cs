@@ -127,7 +127,7 @@ public class CharacterBehavior : MonoBehaviour
             }
             else if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies() && (current_bg  == null || current_bg != null && !current_bg.hasEnemies()))
             {
-                //setOnBorder();
+                setOnBorder();
                 addLine();
             }
         }
