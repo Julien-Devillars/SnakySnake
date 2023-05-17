@@ -49,5 +49,14 @@ public class Direction
         return None;
     }
 
+    public static bool isVertical(direction d)
+    {
+        return d == Up || d == Down;
+    }
+    public static bool isHorizontal(direction d)
+    {
+        return d == Left || d == Right;
+    }
+
 }
 

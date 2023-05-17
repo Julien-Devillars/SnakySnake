@@ -116,4 +116,5 @@ public class BorderTests
         Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
         Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
     }
+
 }

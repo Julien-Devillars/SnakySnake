@@ -82,11 +82,11 @@ public class Border
         BoxCollider2D box_collider = mBorder.AddComponent<BoxCollider2D>();
         LineRenderer lineRenderer = mBorder.GetComponent<LineRenderer>();
 
-        if(mBorder.tag == "VerticalBorder")
+        if(isVertical())
         {
             box_collider.size = new Vector2(lineRenderer.startWidth, Mathf.Abs(mEndPoint.y - mStartPoint.y));
         }
-        else if (mBorder.tag == "HorizontalBorder")
+        else if (isHorizontal())
         {
             box_collider.size = new Vector2(Mathf.Abs(mEndPoint.x - mStartPoint.x) , lineRenderer.startWidth);
         }
@@ -123,6 +123,13 @@ public class Border
     {
         return (mStartPoint == other_border.mStartPoint && mEndPoint == other_border.mEndPoint) || (mStartPoint == other_border.mEndPoint && mEndPoint == other_border.mStartPoint);
     }
+    public bool onSmallFuzzyBorder(Vector3 position)
+    {
+        return (Utils.fuzzyCompare(position.x, mStartPoint.x) && Utils.fuzzyCompare(position.x, mEndPoint.x) && position.y >= mStartPoint.y - Utils.EPSILON() && position.y <= mEndPoint.y + Utils.EPSILON() && mStartPoint.y < mEndPoint.y)
+            || (Utils.fuzzyCompare(position.y, mStartPoint.y) && Utils.fuzzyCompare(position.y, mEndPoint.y) && position.x >= mStartPoint.x - Utils.EPSILON() && position.x <= mEndPoint.x + Utils.EPSILON() && mStartPoint.x < mEndPoint.x)
+            || (Utils.fuzzyCompare(position.x, mStartPoint.x) && Utils.fuzzyCompare(position.x, mEndPoint.x) && position.y <= mStartPoint.y + Utils.EPSILON() && position.y >= mEndPoint.y - Utils.EPSILON() && mStartPoint.y > mEndPoint.y)
+            || (Utils.fuzzyCompare(position.y, mStartPoint.y) && Utils.fuzzyCompare(position.y, mEndPoint.y) && position.x <= mStartPoint.x + Utils.EPSILON() && position.x >= mEndPoint.x - Utils.EPSILON() && mStartPoint.x > mEndPoint.x);
+    }
     public bool onFuzzyBorder(Vector3 position)
     {
         return (Utils.fuzzyCompare(position.x, mStartPoint.x) && Utils.fuzzyCompare(position.x, mEndPoint.x) && position.y >= mStartPoint.y - Utils.EPSILON() * 2f && position.y <= mEndPoint.y + Utils.EPSILON() * 2f && mStartPoint.y < mEndPoint.y)
@@ -141,11 +148,11 @@ public class Border
     {
         BoxCollider2D box_collider = mBorder.GetComponent<BoxCollider2D>();
         LineRenderer lineRenderer = mBorder.GetComponent<LineRenderer>();
-        if (mBorder.tag == "VerticalBorder")
+        if (isVertical())
         {
             box_collider.size = new Vector2(lineRenderer.startWidth, box_collider.size.y);
         }
-        else if (mBorder.tag == "HorizontalBorder")
+        else if (isHorizontal())
         {
             box_collider.size = new Vector2(box_collider.size.x, lineRenderer.startWidth);
         }
@@ -160,5 +167,13 @@ public class Border
     {
         LineRenderer lineRenderer = mBorder.GetComponent<LineRenderer>();
         return lineRenderer.GetPosition(1);
+    }
+    public bool isVertical()
+    {
+        return mBorder.tag == "VerticalBorder";
+    }
+    public bool isHorizontal()
+    {
+        return mBorder.tag == "HorizontalBorder";
     }
 }

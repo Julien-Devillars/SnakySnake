@@ -102,6 +102,10 @@ public class CharacterBehavior : MonoBehaviour
 
         Direction.direction new_direction = getInputDirection();
         updateDirection(new_direction);
+        if(mTrailPoints.Count == 0)
+        {
+            setOnBorderSameDirection();
+        }
 
         Background next_bg = getNextBackground();
 
@@ -117,13 +121,13 @@ public class CharacterBehavior : MonoBehaviour
         }
         else
         {
-            if (mDirectionUpdated && (current_bg == null || current_bg.hasEnemies()))
+            if (mDirectionUpdated && (current_bg == null || current_bg.hasEnemies())) // Leave border to create trail inside BG
             {
                 addLine();
             }
             else if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies() && (current_bg  == null || current_bg != null && !current_bg.hasEnemies()))
             {
-                setOnBorder();
+                //setOnBorder();
                 addLine();
             }
         }
@@ -455,6 +459,43 @@ public class CharacterBehavior : MonoBehaviour
             }
         }
         transform.position = pos;
+    }
+    void setOnBorderSameDirection()
+    {
+        List<Vector3> border_points = new List<Vector3>();
+        foreach (Border border in mBorders)
+        {
+            if (border.onSmallFuzzyBorder(transform.position))
+            {
+                if(Direction.isVertical(mCurrentDirection) && border.isVertical())
+                {
+                    Vector3 point = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
+                    border_points.Add(point);
+                }
+                else if (Direction.isHorizontal(mCurrentDirection) && border.isHorizontal())
+                {
+                    Vector3 point = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
+                    border_points.Add(point);
+                }
+            }
+        }
+
+        if(border_points.Count == 0)
+        {
+            return;
+        }
+
+        Vector3 closest_point = border_points[0];
+        foreach (Vector3 border_point in border_points)
+        {
+            if(Vector3.Distance(transform.position, border_point) < Vector3.Distance(transform.position, closest_point))
+            {
+                closest_point = border_point;
+            }
+
+        }
+
+        transform.position = closest_point;
     }
     Vector3 getOnBorder(Vector3 old_pos)
     {
