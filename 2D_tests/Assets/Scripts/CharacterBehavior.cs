@@ -509,11 +509,11 @@ public class CharacterBehavior : MonoBehaviour
                     continue;
                 }
 
-                if (border.mBorder.tag == "VerticalBorder")
+                if (border.isVertical())
                 {
                     pos = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
                 }
-                else if (border.mBorder.tag == "HorizontalBorder")
+                else if (border.isHorizontal())
                 {
                     pos = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
                 }
@@ -542,7 +542,7 @@ public class CharacterBehavior : MonoBehaviour
 
         foreach (Border border in borders)
         {
-            if (border.isHorizontal())
+            if (border.isHorizontal() && Direction.isVertical(mCurrentDirection))
             {
                 Vector3 point_on_border = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
                 if(border.contains(point_on_border) && Vector3.Distance(transform.position, point_on_border) < Vector3.Distance(transform.position, closest_point))
@@ -550,7 +550,7 @@ public class CharacterBehavior : MonoBehaviour
                     closest_point = point_on_border;
                 }
             }
-            else if (border.isVertical())
+            else if (border.isVertical() && Direction.isHorizontal(mCurrentDirection))
             {
                 Vector3 point_on_border = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
                 if (border.contains(point_on_border) && Vector3.Distance(transform.position, point_on_border) < Vector3.Distance(transform.position, closest_point))
