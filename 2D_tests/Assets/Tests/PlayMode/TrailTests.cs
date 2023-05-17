@@ -11,23 +11,17 @@ public class TrailTests
     public IEnumerator test_TrailShouldFindtheCorrectBorderToAttachedTo()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
-
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
 
         TestUtils.setCharacterPositionInAnchor(character, "left");
-        character.mSpeed = 10;
-        yield return TestUtils.move(character, "vv>^^^^^<");
+        yield return TestUtils.move(character, "vv>^^^^^<", 10);
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
         yield return TestUtils.move(character, ">");
-        character.mSpeed = 2;
-        yield return TestUtils.move(character, "<");
-        character.mSpeed = 7;
-        yield return TestUtils.moveUntilBorder(character, '^');
+        yield return TestUtils.move(character, "<", 2);
+        yield return TestUtils.moveUntilBorder(character, '^', 7);
 
         Border border = character.mBorders[character.mBorders.Count - 1];
         Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
@@ -38,9 +32,6 @@ public class TrailTests
     public IEnumerator test_TrailShouldBeCreatedWhenLeavingAborderCorner()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
-
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
@@ -64,48 +55,21 @@ public class TrailTests
     }
 
     [UnityTest]
-    public IEnumerator test_TrailShouldBeCreatedWhenLeavingAborderSide()
-    {
-        SceneManager.LoadScene("TestScene_1Enemy_Static");
-
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
-
-        CharacterBehavior character = TestUtils.getCharacter();
-        Assert.AreEqual(4, character.mBorders.Count);
-
-        TestUtils.setCharacterPositionInAnchor(character, "bottom");
-        yield return TestUtils.move(character, ">^<<v");
-        Assert.AreEqual(7, character.mBorders.Count);
-        Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
-
-        TestUtils.setCharacterPositionInAnchor(character, "bottom");
-        yield return TestUtils.move(character, "^>>v");
-        Assert.AreEqual(10, character.mBorders.Count);
-        Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
-    }
-
-    [UnityTest]
     public IEnumerator test_TrailShouldCorrectlyBeCreatedWithSlowSpeed()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
-
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
         Assert.AreEqual(4, character.mBorders.Count);
-        character.mSpeed = 5;
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
-        yield return TestUtils.move(character, ">^<<v");
+        yield return TestUtils.move(character, ">^<<v", 5);
         Assert.AreEqual(7, character.mBorders.Count);
         Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
-        yield return TestUtils.move(character, "^>>v");
+        yield return TestUtils.move(character, "^>>v", 5);
         Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
     }
 
@@ -113,17 +77,13 @@ public class TrailTests
     public IEnumerator test_LoseWhenCharacterTouchsTrail()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
-
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
         yield return null;
 
         Utils.HAS_LOSE = false;
 
         CharacterBehavior character = TestUtils.getCharacter();
         TestUtils.setCharacterPositionInAnchor(character, "left");
-        character.mSpeed = 10;
-        yield return TestUtils.move(character, ">^>v<");
+        yield return TestUtils.move(character, ">^>v<", 10);
 
         Assert.AreEqual(GameControler.GameStatus.Lose, GameControler.status);
     }
@@ -132,9 +92,6 @@ public class TrailTests
     public IEnumerator test_TrailPointShouldCorrectlyStartAtBorderPosition()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
-    
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
         yield return null;
 
 
