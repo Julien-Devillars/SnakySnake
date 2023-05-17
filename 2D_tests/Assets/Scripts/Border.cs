@@ -176,4 +176,16 @@ public class Border
     {
         return mBorder.tag == "HorizontalBorder";
     }
+    public bool contains(Vector3 pos)
+    {
+        if(pos.x == mStartPoint.x && pos.x == mEndPoint.x)
+        {
+            return (mStartPoint.y <= pos.y && pos.y <= mEndPoint.y) || (mStartPoint.y >= pos.y && pos.y >= mEndPoint.y);
+        }
+        if (pos.y == mStartPoint.y && pos.y == mEndPoint.y)
+        {
+            return (mStartPoint.x <= pos.x && pos.x <= mEndPoint.x) || (mStartPoint.x >= pos.x && pos.x >= mEndPoint.x);
+        }
+        return false;
+    }
 }

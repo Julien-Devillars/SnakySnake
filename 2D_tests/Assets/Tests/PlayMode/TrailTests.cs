@@ -8,20 +8,44 @@ using UnityEngine.SceneManagement;
 public class TrailTests
 {
     [UnityTest]
-    public IEnumerator test_TrailShouldFindtheCorrectBorderToAttachedTo()
+    public IEnumerator test_TrailShouldFindtheCorrectBorderToAttachedTo_LeftSide()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
 
-        TestUtils.setCharacterPositionInAnchor(character, "left");
-        yield return TestUtils.move(character, "vv>^^^^^<", 10);
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, "^>", 15);
+        Vector3 pos = character.transform.position;
+        yield return TestUtils.move(character, "^^<", 15);
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
-        yield return TestUtils.move(character, ">");
-        yield return TestUtils.move(character, "<", 2);
-        yield return TestUtils.moveUntilBorder(character, '^', 7);
+        yield return TestUtils.move(character, ">", 15);
+        yield return TestUtils.move(character, "<", 3);
+        yield return TestUtils.move(character, "^^<", 15);
+
+        Border border = character.mBorders[character.mBorders.Count - 1];
+        Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
+        Assert.AreEqual(pos.y, border.mEndPoint.y);
+    }
+    [UnityTest]
+    public IEnumerator test_TrailShouldFindtheCorrectBorderToAttachedTo_RightSide()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, "^>", 15);
+        Vector3 pos = character.transform.position;
+        yield return TestUtils.move(character, "^^<", 15);
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">", 15);
+        yield return TestUtils.move(character, ">", 3);
+        yield return TestUtils.moveUntilBorder(character, '^', 15);
 
         Border border = character.mBorders[character.mBorders.Count - 1];
         Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
