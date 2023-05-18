@@ -229,6 +229,7 @@ public class CharacterBehavior : MonoBehaviour
                 lineRenderer.SetPosition(1, pos_on_border);
             }
             Border line_to_border = new Border(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
+            line_to_border.mNewBorderOnDelete = true;
             addBorder(line_to_border);
 
             // Delete trail
@@ -257,6 +258,11 @@ public class CharacterBehavior : MonoBehaviour
             Destroy(trail);
         }
         mTrails.Clear();
+
+        foreach(Border border in mBorders)
+        {
+            border.mNewBorderOnDelete = false;
+        }
 
         List<GameObject> ennemies_to_reassign = new List<GameObject>();
         foreach(Background deleted_bg in deleted_bgs)
@@ -544,12 +550,12 @@ public class CharacterBehavior : MonoBehaviour
         }
         return pos;
     }
-    Vector3 getOnClosestBorder(Vector3 old_pos)
-    { 
+    Vector3 getOnClosestBorder(Vector3 old_pos, List<Border> _borders)
+    {
         List<Border> borders = new List<Border>();
-        foreach (Border border in mBorders)
+        foreach (Border border in _borders)
         {
-            if (border.onSmallFuzzyBorder(transform.position))
+            if (border.onSmallFuzzyBorder(transform.position) && !border.mNewBorderOnDelete)
             {
                 borders.Add(border);
             }
@@ -568,7 +574,7 @@ public class CharacterBehavior : MonoBehaviour
             if (border.isHorizontal() && Direction.isVertical(mCurrentDirection))
             {
                 Vector3 point_on_border = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
-                if(border.contains(point_on_border) && Vector3.Distance(transform.position, point_on_border) < Vector3.Distance(transform.position, closest_point))
+                if (border.contains(point_on_border) && Vector3.Distance(transform.position, point_on_border) < Vector3.Distance(transform.position, closest_point))
                 {
                     closest_point = point_on_border;
                 }
@@ -581,10 +587,14 @@ public class CharacterBehavior : MonoBehaviour
                     closest_point = point_on_border;
                 }
             }
-            
+
         }
 
         return closest_point;
+    }
+    Vector3 getOnClosestBorder(Vector3 old_pos)
+    {
+        return getOnClosestBorder(old_pos, mBorders);
     }
 
     Vector3 getPositionInBorder(Vector3 position)

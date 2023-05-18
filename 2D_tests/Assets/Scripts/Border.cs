@@ -10,6 +10,7 @@ public class Border
     public Vector3 mEndPoint;
     public Border mDuplicateBorder;
     public bool mHasError;
+    public bool mNewBorderOnDelete = false;
     
     public Border(Vector3 start_point, Vector3 end_point)
     {
