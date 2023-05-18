@@ -278,28 +278,16 @@ public class CharacterBehavior : MonoBehaviour
             border.mNewBorderOnDelete = false;
         }
 
-        List<GameObject> ennemies_to_reassign = new List<GameObject>();
-        foreach(Background deleted_bg in deleted_bgs)
-        {
-            ennemies_to_reassign.AddRange(deleted_bg.getEnemies());
-        }
-
         // Clean backgrounds information (connection & enemies) before assigned it again
-        foreach (Background bg_1 in mBackgrounds)
+        foreach (Background bg in mBackgrounds)
         {
-            foreach (GameObject ennemy_to_reassign in mEnemies)
-            {
-                if (bg_1.mEnemyList.Contains(ennemy_to_reassign))
-                {
-                    bg_1.mEnemyList.Remove(ennemy_to_reassign);
-                }
-            }
+            bg.mEnemyList.Clear();
         }
 
         foreach (Background bg_1 in mBackgrounds)
         {
             bg_1.mConnectedBackground.Clear();
-            foreach (GameObject ennemy_to_reassign in ennemies_to_reassign)
+            foreach (GameObject ennemy_to_reassign in mEnemies)
             {
                 if(bg_1.containsEquals(ennemy_to_reassign.transform.position))
                 {

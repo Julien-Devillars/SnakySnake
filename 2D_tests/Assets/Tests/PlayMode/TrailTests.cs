@@ -169,7 +169,6 @@ public class TrailTests
         Border border = character.mBorders[character.mBorders.Count - 1];
         Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
         Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
-        yield return new WaitForSeconds(5);
     }
 
     [UnityTest]
