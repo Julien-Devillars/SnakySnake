@@ -169,5 +169,24 @@ public class TrailTests
         Border border = character.mBorders[character.mBorders.Count - 1];
         Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
         Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
+        yield return new WaitForSeconds(5);
+    }
+
+    [UnityTest]
+    public IEnumerator test_TrailIsCorrectlyCreatedAfterTurningBackOnCreatedBorder()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, "^>v");
+
+        yield return TestUtils.moveUntilBorder(character, '^');
+
+        Border border = character.mBorders[character.mBorders.Count - 1];
+        Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
+        Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
     }
 }

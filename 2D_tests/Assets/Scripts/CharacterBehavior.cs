@@ -32,6 +32,7 @@ public class CharacterBehavior : MonoBehaviour
     void Start()
     {
         mDirections = Direction.directions;
+        mCurrentDirection = Direction.direction.None;
         mCanMove = true;
         mCanAddLine = true;
 
@@ -99,6 +100,7 @@ public class CharacterBehavior : MonoBehaviour
     void Update()
     {
         Background current_bg = GetBackground(transform.position);
+        Border current_border = GetBorder(transform.position);
 
         Direction.direction new_direction = getInputDirection();
         updateDirection(new_direction);
@@ -108,15 +110,19 @@ public class CharacterBehavior : MonoBehaviour
         }
 
         Background next_bg = getNextBackground();
+        Border next_border = GetBorder(getNextPosition());
+        Vector3 next_pos = getNextPosition();
 
-        bool should_create_line = isInBackground();
-
-        if (next_bg == null || (next_bg != current_bg && !next_bg.hasEnemies()))//onBorder() && !should_create_line)
+        if (current_bg == null && next_bg == null && current_border != null && current_border != next_border && next_border == null)
         {
-            //if (mTrailPoints.Count > 0)
-            //{
-            //    setOnBorder();
-            //}
+            if(isInScreen(next_pos))
+            {
+                setOnBorderOppositeDirection();
+                addLine();
+            }
+        }
+        else if (!isInScreen(next_pos) || (next_bg != null && next_bg != current_bg && !next_bg.hasEnemies()))//onBorder() && !should_create_line)
+        { 
             deleteLine();
         }
         else
@@ -127,7 +133,7 @@ public class CharacterBehavior : MonoBehaviour
             }
             else if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies() && (current_bg  == null || current_bg != null && !current_bg.hasEnemies()))
             {
-                setOnBorder();
+                setOnBorderOppositeDirection();
                 addLine();
             }
         }
@@ -140,13 +146,18 @@ public class CharacterBehavior : MonoBehaviour
             LineRenderer trail = trail_go.GetComponent<LineRenderer>();
             if(trail != null)
             {
+                Vector3 trail_start_point = trail.GetPosition(0);
                 for (int i = 0; i < mBorders.Count; ++i) // Use for instead of foreach to avoid exception due to mBorders updates when deleting line
                 {
                     Border border = mBorders[i];
-                    if (!border.contains(trail.GetPosition(0)) 
-                        && !border.contains(trail.GetPosition(1)) 
+
+                    //if ( !(border.mStartPoint.x == trail_start_point.x && border.mEndPoint.x == trail_start_point.x || border.mStartPoint.y == trail_start_point.y && border.mEndPoint.y == trail_start_point.y)
+                    //    && Utils.intersect(trail.GetPosition(0), trail.GetPosition(1), border.mStartPoint, border.mEndPoint))
+                    //{
+                    if (!border.contains(trail.GetPosition(0))
                         && Utils.intersect(trail.GetPosition(0), trail.GetPosition(1), border.mStartPoint, border.mEndPoint))
                     {
+                        Debug.Log("Stop");
                         deleteLine();
                         addLine();
                         break;
@@ -162,7 +173,10 @@ public class CharacterBehavior : MonoBehaviour
             Application.Quit();
         }
     }
-
+    bool isInScreen(Vector3 point)
+    {
+        return point.x > mMinBorderPos.x && point.x < mMaxBorderPos.x && point.y > mMinBorderPos.y && point.y < mMaxBorderPos.y;
+    }
     private Vector3 getNextPosition()
     {
         return transform.position + Direction.directions[mCurrentDirection] * transform.localScale.x;
@@ -273,7 +287,7 @@ public class CharacterBehavior : MonoBehaviour
         // Clean backgrounds information (connection & enemies) before assigned it again
         foreach (Background bg_1 in mBackgrounds)
         {
-            foreach (GameObject ennemy_to_reassign in ennemies_to_reassign)
+            foreach (GameObject ennemy_to_reassign in mEnemies)
             {
                 if (bg_1.mEnemyList.Contains(ennemy_to_reassign))
                 {
@@ -410,20 +424,25 @@ public class CharacterBehavior : MonoBehaviour
 
     Background GetBackground(Vector3 pos)
     {
-        Background current_bg = null;
         foreach (Background bg in mBackgrounds)
         {
             if (bg.contains(pos))
             {
-                current_bg = bg;
+                return bg;
             }
         }
-        if (current_bg == null)
+        return null;
+    }
+    Border GetBorder(Vector3 pos)
+    {
+        foreach (Border border in mBorders)
         {
-            //Debug.Log("Current BG not found!");
-            return null;
+            if (border.contains(pos))
+            {
+                return border;
+            }
         }
-        return current_bg;
+        return null;
     }
 
     void splitBackground(Background current_bg, Vector3 start_point, Vector3 end_point)
@@ -526,6 +545,44 @@ public class CharacterBehavior : MonoBehaviour
 
         transform.position = closest_point;
     }
+
+    void setOnBorderOppositeDirection()
+    {
+        List<Vector3> border_points = new List<Vector3>();
+        foreach (Border border in mBorders)
+        {
+            if (border.onSmallFuzzyBorder(transform.position))
+            {
+                if (Direction.isVertical(mCurrentDirection) && border.isHorizontal())
+                {
+                    Vector3 point = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
+                    border_points.Add(point);
+                }
+                else if (Direction.isHorizontal(mCurrentDirection) && border.isVertical())
+                {
+                    Vector3 point = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
+                    border_points.Add(point);
+                }
+            }
+        }
+
+        if (border_points.Count == 0)
+        {
+            return;
+        }
+
+        Vector3 closest_point = border_points[0];
+        foreach (Vector3 border_point in border_points)
+        {
+            if (Vector3.Distance(transform.position, border_point) < Vector3.Distance(transform.position, closest_point))
+            {
+                closest_point = border_point;
+            }
+
+        }
+        transform.position = closest_point;
+    }
+
     Vector3 getOnBorder(Vector3 old_pos)
     {
         Vector3 pos = new Vector3();
