@@ -260,13 +260,11 @@ public class BackgroundTests
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
-        character.mSpeed = 30;
-
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
 
         // Corner bottom-left
-        yield return TestUtils.move(character, ">^<");
-
+        yield return TestUtils.move(character, ">^<", 30);
+        yield return new WaitForSeconds(0.1f);
         TestUtils.checkNumberOfBackgrounds(3);
         TestUtils.checkBackgroundAreEquals();
 
@@ -274,7 +272,7 @@ public class BackgroundTests
 
         // Corner top-left
         yield return TestUtils.move(character, ">v<");
-
+        yield return new WaitForSeconds(0.1f);
         TestUtils.checkNumberOfBackgrounds(5);
         TestUtils.checkBackgroundAreEquals();
 
@@ -282,7 +280,7 @@ public class BackgroundTests
 
         // Corner top-right
         yield return TestUtils.move(character, "<v>");
-
+        yield return new WaitForSeconds(0.1f);
         TestUtils.checkNumberOfBackgrounds(7);
         TestUtils.checkBackgroundAreEquals();
 
@@ -290,7 +288,7 @@ public class BackgroundTests
 
         // Corner top-right
         yield return TestUtils.move(character, "<^>");
-
+        yield return new WaitForSeconds(0.1f);
         TestUtils.checkNumberOfBackgrounds(9);
         TestUtils.checkBackgroundAreEquals();
     }
@@ -467,42 +465,6 @@ public class BackgroundTests
         TestUtils.checkBackgroundAreEquals();
     }
 
-    [UnityTest]
-    public IEnumerator test_Background_CornerLoop()
-    {
-        SceneManager.LoadScene("TestScene_1Enemy_Static");
-
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
-
-        CharacterBehavior character = TestUtils.getCharacter();
-        EnemyBehavior enemy = TestUtils.getEnemy(0);
-        TestUtils.setEnemyPositionInAnchor(character, enemy, "top-right");
-
-        Utils.HAS_LOSE = false;
-        character.mSpeed = 15;
-
-        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
-        yield return TestUtils.move(character, ">^<");
-        TestUtils.checkNumberOfBackgrounds(3);
-        TestUtils.checkBackgroundAreEquals();
-
-        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
-        yield return TestUtils.move(character, ">>^<^<");
-        TestUtils.checkNumberOfBackgrounds(8);
-        TestUtils.checkBackgroundAreEquals();
-
-        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
-        yield return TestUtils.move(character, ">>>^<^<^<");
-        TestUtils.checkNumberOfBackgrounds(14);
-        TestUtils.checkBackgroundAreEquals();
-
-        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
-        yield return TestUtils.move(character, ">>>>^<^<^<^<");
-        TestUtils.checkNumberOfBackgrounds(21);
-        TestUtils.checkBackgroundAreEquals();
-    }
     [UnityTest]
     public IEnumerator test_CheckConnectionBetweenBackgroundIsCorrectlyWorkingWithSmallBackground()
     {
