@@ -132,12 +132,13 @@ public class BorderTests
         yield return TestUtils.move(character, ">", 15);
         yield return TestUtils.moveUntilBorder(character, '^', 35);
 
+        Border border = TestUtils.getBorder(5);
+
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
-        yield return TestUtils.move(character, ">", 15);
-        yield return TestUtils.move(character, ">", 3);
+        yield return TestUtils.moveUntilReachingPoint(character, '>', border, 15, -1);
         yield return TestUtils.moveUntilBorder(character, '^', 3);
 
-        Border border = character.mBorders[character.mBorders.Count - 1];
+        border = character.mBorders[character.mBorders.Count - 1];
         Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
     }
 

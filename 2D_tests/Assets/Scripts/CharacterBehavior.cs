@@ -127,7 +127,7 @@ public class CharacterBehavior : MonoBehaviour
         {
             if(mTrails.Count > 0)
             {
-                setOnBorderOppositeDirection();
+                setOnBorderOppositeDirection(false);
             }
             deleteLine();
         }
@@ -535,19 +535,19 @@ public class CharacterBehavior : MonoBehaviour
         transform.position = closest_point;
     }
 
-    void setOnBorderOppositeDirection()
+    void setOnBorderOppositeDirection(bool check_previous_direction = true)
     {
         List<Vector3> border_points = new List<Vector3>();
         foreach (Border border in mBorders)
         {
             if (border.onSmallFuzzyBorder(transform.position))
             {
-                if (border.isHorizontal() && (Direction.isVertical(mCurrentDirection) || Direction.isVertical(mPreviousDirection)))
+                if (border.isHorizontal() && (Direction.isVertical(mCurrentDirection) || (check_previous_direction && Direction.isVertical(mPreviousDirection))))
                 {
                     Vector3 point = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
                     border_points.Add(point);
                 }
-                else if (border.isVertical() && (Direction.isHorizontal(mCurrentDirection) || Direction.isHorizontal(mPreviousDirection)))
+                else if (border.isVertical() && (Direction.isHorizontal(mCurrentDirection) || (check_previous_direction && Direction.isHorizontal(mPreviousDirection))))
                 {
                     Vector3 point = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
                     border_points.Add(point);
