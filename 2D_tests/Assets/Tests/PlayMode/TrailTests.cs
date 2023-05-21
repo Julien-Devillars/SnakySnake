@@ -188,4 +188,5 @@ public class TrailTests
         Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
         Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
     }
+
 }

@@ -140,4 +140,22 @@ public class BorderTests
         Border border = character.mBorders[character.mBorders.Count - 1];
         Assert.AreEqual(border.mEndPoint.x, border.mStartPoint.x);
     }
+
+    [UnityTest]
+    public IEnumerator test_CheckTrailIsNotCreatedOverBorder()
+    {
+        SceneManager.LoadScene("TestScene_2Enemies_Static");
+        yield return null;
+
+        Utils.HAS_LOSE = false;
+        CharacterBehavior character = TestUtils.getCharacter();
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+
+        yield return TestUtils.moveUntilBorder(character, '^', 35);
+        yield return TestUtils.move(character, "v");
+        yield return TestUtils.moveUntilBorder(character, '>', 15);
+
+        Assert.AreEqual(6, character.mBorders.Count);
+
+    }
 }

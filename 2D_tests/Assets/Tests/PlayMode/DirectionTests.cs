@@ -201,4 +201,22 @@ public class DirectionTests
         Assert.IsTrue(character.updateDirection(Direction.Left));
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
     }
+
+    [UnityTest]
+    public IEnumerator test_DirectionIsWorkingOnBothWays()
+    {
+        SceneManager.LoadScene("TestScene_2Enemies_Static");
+        yield return null;
+
+        Utils.HAS_LOSE = false;
+        CharacterBehavior character = TestUtils.getCharacter();
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+
+        yield return TestUtils.moveUntilBorder(character, '^', 30);
+        Assert.AreEqual(character.mMaxBorderPos.y, character.transform.position.y);
+        yield return TestUtils.moveUntilBorder(character, 'v', 30);
+        Assert.AreEqual(character.mMinBorderPos.y, character.transform.position.y);
+        yield return TestUtils.moveUntilBorder(character, '^', 30);
+        Assert.AreEqual(character.mMaxBorderPos.y, character.transform.position.y);
+    }
 }

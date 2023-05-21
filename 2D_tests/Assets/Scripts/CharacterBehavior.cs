@@ -127,7 +127,7 @@ public class CharacterBehavior : MonoBehaviour
         }
         else
         {
-            if (mDirectionUpdated && (current_bg == null || current_bg.hasEnemies())) // Leave border to create trail inside BG
+            if (mDirectionUpdated && (current_bg == null || current_bg.hasEnemies()) && next_border == null) // Leave border to create trail inside BG
             {
                 addLine();
             }
