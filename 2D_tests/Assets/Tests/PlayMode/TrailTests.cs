@@ -189,4 +189,26 @@ public class TrailTests
         Assert.AreEqual(character.mMaxBorderPos.y, border.mEndPoint.y);
     }
 
+    [UnityTest]
+    public IEnumerator test_TrailIsCorrectlyDeletedAfterTurningOnCreatedBorder()
+    {
+        SceneManager.LoadScene("TestScene_2Enemies_Static");
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+        yield return TestUtils.moveUntilBorder(character, '^');
+        
+        Border left_border = TestUtils.getBorder(3);
+        yield return TestUtils.moveUntilReachingPoint(character, '<', left_border, -1, 6);
+
+        yield return TestUtils.move(character, "v");
+        Border middle_border = TestUtils.getBorder(4);
+        yield return TestUtils.moveUntilReachingPoint(character, '>', middle_border, 8, 0);
+        yield return TestUtils.move(character, "v");
+
+        Assert.AreEqual(7, character.mBorders.Count);
+    }
+
 }
