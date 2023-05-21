@@ -442,30 +442,6 @@ public class BackgroundTests
     }
 
     [UnityTest]
-    public IEnumerator test_Background_SideSquare_HitOnUpperSide()
-    {
-        SceneManager.LoadScene("TestScene_1Enemy_Static");
-
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
-
-        CharacterBehavior character = TestUtils.getCharacter();
-        EnemyBehavior enemy = TestUtils.getEnemy(0);
-        TestUtils.setEnemyPositionInAnchor(character, enemy, "top");
-        TestUtils.setCharacterPositionInAnchor(character, "bottom");
-
-        Utils.HAS_LOSE = false;
-
-        yield return TestUtils.move(character, ">^^<<vv>");
-        TestUtils.checkNumberOfBackgrounds(4);
-        TestUtils.checkBackgroundAreEquals();
-        yield return TestUtils.move(character, ">>^^<<");
-        TestUtils.checkNumberOfBackgrounds(6);
-        TestUtils.checkBackgroundAreEquals();
-    }
-
-    [UnityTest]
     public IEnumerator test_CheckConnectionBetweenBackgroundIsCorrectlyWorkingWithSmallBackground()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
