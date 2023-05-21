@@ -127,7 +127,7 @@ public class CharacterBehavior : MonoBehaviour
         {
             if(mTrails.Count > 0)
             {
-                setOnBorder();
+                setOnBorderOppositeDirection();
             }
             deleteLine();
         }
@@ -497,42 +497,6 @@ public class CharacterBehavior : MonoBehaviour
         }
     }
 
-    bool onBorder(Vector3 pos)
-    {
-        foreach (Border border in mBorders)
-        {
-            if(border.onFuzzyBorder(pos))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    void setOnBorder()
-    {
-        Vector3 pos = transform.position;
-        foreach (Border border in mBorders)
-        {
-            if (border.onFuzzyBorder(transform.position))
-            {
-                if (border == null || border.mBorder == null)
-                {
-                    continue;
-                }
-
-                if (border.mBorder.tag == "VerticalBorder")
-                {
-                    pos = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
-                }
-                else if (border.mBorder.tag == "HorizontalBorder")
-                {
-                    pos = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
-                }
-            }
-        }
-        transform.position = pos;
-    }
     void setOnBorderSameDirection()
     {
         List<Vector3> border_points = new List<Vector3>();
