@@ -190,7 +190,7 @@ public class TrailTests
     }
 
     [UnityTest]
-    public IEnumerator test_TrailIsCorrectlyDeletedAfterTurningOnCreatedBorder()
+    public IEnumerator test_TrailIsCorrectlyDeletedAfterTurningOnCreatedBorderWith1Trail()
     {
         SceneManager.LoadScene("TestScene_2Enemies_Static");
         yield return null;
@@ -199,7 +199,30 @@ public class TrailTests
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
         yield return TestUtils.moveUntilBorder(character, '^');
-        
+
+        TestUtils.setCharacterPositionInAnchor(character, "left");
+
+        yield return TestUtils.move(character, "^");
+
+        Border middle_border = TestUtils.getBorder(4);
+        yield return TestUtils.moveUntilReachingPoint(character, '>', middle_border, 8, 0);
+        yield return TestUtils.move(character, "v");
+
+        Assert.AreEqual(6, character.mBorders.Count);
+        Assert.AreEqual(0, character.mTrails.Count);
+    }
+
+    [UnityTest]
+    public IEnumerator test_TrailIsCorrectlyDeletedAfterTurningOnCreatedBorderWith2Trails()
+    {
+        SceneManager.LoadScene("TestScene_2Enemies_Static");
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+        yield return TestUtils.moveUntilBorder(character, '^');
+
         Border left_border = TestUtils.getBorder(3);
         yield return TestUtils.moveUntilReachingPoint(character, '<', left_border, -1, 6);
 
@@ -208,7 +231,7 @@ public class TrailTests
         yield return TestUtils.moveUntilReachingPoint(character, '>', middle_border, 8, 0);
         yield return TestUtils.move(character, "v");
 
-        Assert.AreEqual(7, character.mBorders.Count);
+        Assert.AreEqual(7, character.mBorders.Count); 
+        Assert.AreEqual(0, character.mTrails.Count);
     }
-
 }

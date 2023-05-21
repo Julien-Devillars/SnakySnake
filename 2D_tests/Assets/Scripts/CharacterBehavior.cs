@@ -10,6 +10,7 @@ public class CharacterBehavior : MonoBehaviour
 
     private Dictionary<Direction.direction, Vector3> mDirections;
     public Direction.direction mCurrentDirection;
+    public Direction.direction mPreviousDirection;
     private bool mDirectionUpdated;
     private bool mCanMove;
     private bool mCanAddLine;
@@ -24,7 +25,7 @@ public class CharacterBehavior : MonoBehaviour
 
     private List<GameObject> mTrailPoints;
     private GameObject mTrailPointsGO;
-    private List<GameObject> mTrails;
+    public List<GameObject> mTrails;
     private GameObject mTrailGO;
     private GameObject mLastPosition_go;
 
@@ -33,6 +34,7 @@ public class CharacterBehavior : MonoBehaviour
     {
         mDirections = Direction.directions;
         mCurrentDirection = Direction.direction.None;
+        mPreviousDirection = Direction.direction.None;
         mCanMove = true;
         mCanAddLine = true;
 
@@ -129,6 +131,16 @@ public class CharacterBehavior : MonoBehaviour
             }
             deleteLine();
         }
+        else if (mTrails.Count > 0 && lastTrailIntersectBorder())
+        {
+            setOnBorderOppositeDirection();
+            deleteLine();
+            Background new_next_bg = getNextBackground(); // We update the position
+            if (new_next_bg != null && new_next_bg.hasEnemies())/* && GetBorder(next_pos) == null*/
+            {
+                addLine();
+            }
+        }
         else
         {
             if (mDirectionUpdated && (current_bg == null || current_bg.hasEnemies()) && next_border == null) // Leave border to create trail inside BG
@@ -184,6 +196,18 @@ public class CharacterBehavior : MonoBehaviour
     private Vector3 getNextPosition()
     {
         return transform.position + Direction.directions[mCurrentDirection] * transform.localScale.x;
+    }
+    private Vector3 getPreviousPosition()
+    {
+        return transform.position - Direction.directions[mCurrentDirection] * transform.localScale.x;
+    }
+    private Vector3 getNextPositionWithPreviousDirection()
+    {
+        return transform.position + Direction.directions[mCurrentDirection] * transform.localScale.x;
+    }
+    private Vector3 getPreviousPositionWithPreviousDirection()
+    {
+        return transform.position - Direction.directions[mPreviousDirection] * transform.localScale.x;
     }
     private Background getNextBackground()
     {
@@ -381,24 +405,28 @@ public class CharacterBehavior : MonoBehaviour
         if ((new_direction == Direction.Left && mCurrentDirection != Direction.Left)  && (can_move_backward || mCurrentDirection != Direction.Right))
         {
             StartCoroutine(waiter());
+            mPreviousDirection = mCurrentDirection;
             mCurrentDirection = Direction.Left;
             return true;
         }
         else if ((new_direction == Direction.Up && mCurrentDirection != Direction.Up) && (can_move_backward || mCurrentDirection != Direction.Down))
         {
             StartCoroutine(waiter());
+            mPreviousDirection = mCurrentDirection;
             mCurrentDirection = Direction.Up;
             return true;
         }
         else if ((new_direction == Direction.Right && mCurrentDirection != Direction.Right) && (can_move_backward || mCurrentDirection != Direction.Left))
         {
             StartCoroutine(waiter());
+            mPreviousDirection = mCurrentDirection;
             mCurrentDirection = Direction.Right;
             return true;
         }
         else if ((new_direction == Direction.Down && mCurrentDirection != Direction.Down) && (can_move_backward || mCurrentDirection != Direction.Up))
         {
             StartCoroutine(waiter());
+            mPreviousDirection = mCurrentDirection;
             mCurrentDirection = Direction.Down;
             return true;
         }
@@ -550,12 +578,12 @@ public class CharacterBehavior : MonoBehaviour
         {
             if (border.onSmallFuzzyBorder(transform.position))
             {
-                if (Direction.isVertical(mCurrentDirection) && border.isHorizontal())
+                if (border.isHorizontal() && (Direction.isVertical(mCurrentDirection) || Direction.isVertical(mPreviousDirection)))
                 {
                     Vector3 point = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
                     border_points.Add(point);
                 }
-                else if (Direction.isHorizontal(mCurrentDirection) && border.isVertical())
+                else if (border.isVertical() && (Direction.isHorizontal(mCurrentDirection) || Direction.isHorizontal(mPreviousDirection)))
                 {
                     Vector3 point = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
                     border_points.Add(point);
@@ -625,7 +653,7 @@ public class CharacterBehavior : MonoBehaviour
 
         foreach (Border border in borders)
         {
-            if (border.isHorizontal() && Direction.isVertical(mCurrentDirection))
+            if (border.isHorizontal() && (Direction.isVertical(mCurrentDirection) || Direction.isVertical(mPreviousDirection)))
             {
                 Vector3 point_on_border = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
                 if (border.contains(point_on_border) && Vector3.Distance(transform.position, point_on_border) < Vector3.Distance(transform.position, closest_point))
@@ -633,7 +661,7 @@ public class CharacterBehavior : MonoBehaviour
                     closest_point = point_on_border;
                 }
             }
-            else if (border.isVertical() && Direction.isHorizontal(mCurrentDirection))
+            else if (border.isVertical() && (Direction.isHorizontal(mCurrentDirection) || Direction.isHorizontal(mPreviousDirection)))
             {
                 Vector3 point_on_border = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
                 if (border.contains(point_on_border) && Vector3.Distance(transform.position, point_on_border) < Vector3.Distance(transform.position, closest_point))
@@ -685,5 +713,37 @@ public class CharacterBehavior : MonoBehaviour
     private void setLastPosition(Vector3 pos)
     {
         mLastPosition_go.transform.position = pos;
+    }
+    private bool intersectBorderWithPreviousDirection()
+    {
+        Vector3 previous_pos = getPreviousPositionWithPreviousDirection();
+        Vector3 next_pos = getNextPositionWithPreviousDirection();
+        foreach(Border border in mBorders)
+        {
+            if(Utils.intersect(previous_pos, next_pos, border.mStartPoint, border.mEndPoint))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    private bool lastTrailIntersectBorder()
+    {
+        GameObject trail_go = mTrails[mTrails.Count - 1];
+        LineRenderer line_renderer = trail_go.GetComponent<LineRenderer>();
+
+        foreach (Border border in mBorders)
+        {
+            if(border.contains(line_renderer.GetPosition(0)))
+            {
+                continue;
+            }
+
+            if (Utils.intersect(line_renderer.GetPosition(0), line_renderer.GetPosition(1), border.mStartPoint, border.mEndPoint))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
