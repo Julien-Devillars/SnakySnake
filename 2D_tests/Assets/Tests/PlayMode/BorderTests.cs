@@ -156,6 +156,33 @@ public class BorderTests
         yield return TestUtils.moveUntilBorder(character, '>', 15);
 
         Assert.AreEqual(6, character.mBorders.Count);
+    }
 
+    [UnityTest]
+    public IEnumerator test_SlidingBetween2BordersSlightlyShifted()
+    {
+        SceneManager.LoadScene("TestScene_2Enemies_Static");
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        TestUtils.setCharacterPositionInAnchor(character, "top-left");
+        
+        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
+        TestUtils.setEnemyPositionInAnchor(character , enemy_1, "bottom-right");
+        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        TestUtils.setEnemyPositionInAnchor(character, enemy_2, "top-right");
+
+        yield return TestUtils.move(character, "v>", 15);
+        yield return TestUtils.moveUntilBorder(character, 'v', 25);
+        yield return TestUtils.moveUntilBorder(character, '^', 25);
+
+        TestUtils.setCharacterPositionInAnchor(character, "top-right");
+        yield return TestUtils.move(character, "v", 13);
+        yield return TestUtils.moveUntilBorder(character, '<', 25);
+
+        yield return TestUtils.moveUntilBorder(character, '>', 25);
+        yield return TestUtils.moveUntilBorder(character, '<', 25);
+
+        TestUtils.bordersAreValid(character.mBorders);
     }
 }
