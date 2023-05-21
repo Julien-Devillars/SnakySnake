@@ -121,8 +121,12 @@ public class CharacterBehavior : MonoBehaviour
                 addLine();
             }
         }
-        else if (!isInScreen(next_pos) || (next_bg != null && next_bg != current_bg && !next_bg.hasEnemies()))//onBorder() && !should_create_line)
-        { 
+        else if ((!isInScreen(next_pos) && !mDirectionUpdated) || (next_bg != null && next_bg != current_bg && !next_bg.hasEnemies()))//onBorder() && !should_create_line)
+        {
+            if(mTrails.Count > 0)
+            {
+                setOnBorder();
+            }
             deleteLine();
         }
         else
@@ -234,6 +238,11 @@ public class CharacterBehavior : MonoBehaviour
         List<Background> deleted_bgs = new List<Background>();
         foreach (GameObject trail in mTrails)
         {
+            Trail trail_script = trail.GetComponent<Trail>();
+            if(!trail_script.mHasBeenUpdated)
+            {
+                trail_script.forceUpdateTrailPoint();
+            }
             // Transform line to border
             LineRenderer lineRenderer = trail.GetComponent<LineRenderer>();
             //Utils.fixGivenPointsIfNeeded(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));

@@ -185,4 +185,23 @@ public class BorderTests
 
         TestUtils.bordersAreValid(character.mBorders);
     }
+
+    [UnityTest]
+    public IEnumerator test_TurningCloseToABorderShouldNotCreateInvalidBorder()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+
+        Border top_border = TestUtils.getBorder(0);
+
+        yield return TestUtils.move(character, ">", 15);
+        yield return TestUtils.moveUntilReachingPoint(character, '^', top_border, 15, 2);
+        yield return TestUtils.move(character, ">>^", 15);
+
+        Assert.AreEqual(7, character.mBorders.Count, "4 + 3 borders created \"^>^\" ");
+        TestUtils.bordersAreValid(character.mBorders);
+    }
 }

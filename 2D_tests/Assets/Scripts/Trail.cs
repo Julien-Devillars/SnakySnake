@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Trail : MonoBehaviour
 {
+    public bool mHasBeenUpdated;
     void Start()
     {
         //gameObject.name = "Trail";
@@ -39,9 +40,20 @@ public class Trail : MonoBehaviour
         Material red_mat = new Material(Shader.Find("Sprites/Default"));
         red_mat.SetColor("_Color", line_color);
         lineRenderer.material = red_mat;
+        mHasBeenUpdated = false;
     }
 
     void Update()
+    {
+        updateTrailPoint();
+    }
+
+    public void forceUpdateTrailPoint()
+    {
+        updateTrailPoint();
+    }
+
+    private void updateTrailPoint()
     {
         LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
         //For drawing line in the world space, provide the x,y,z values
@@ -52,7 +64,7 @@ public class Trail : MonoBehaviour
         int nb_points = points.transform.childCount;
 
         string[] trail_name_splitted = gameObject.transform.name.Split(' ');
-        if(trail_name_splitted.Length != 2)
+        if (trail_name_splitted.Length != 2)
         {
             Debug.Log("Trail name is wrong : " + gameObject.transform.name);
             return;
@@ -75,7 +87,7 @@ public class Trail : MonoBehaviour
 
         lineRenderer.SetPosition(0, position_start); //x,y and z position of the starting point of the line
         lineRenderer.SetPosition(1, position_end); //x,y and z position of the end point of the line
-        lineRenderer.enabled = true ;
+        lineRenderer.enabled = true;
 
         Vector3 middle_point = (position_start + position_end) / 2f;
         // Update Box collider
@@ -99,6 +111,7 @@ public class Trail : MonoBehaviour
         {
             collider.size = new Vector2((position_end.x - middle_point.x) * 2f, collider.size.y);
         }
+        mHasBeenUpdated = true;
     }
 
     private void OnDestroy()
