@@ -11,4 +11,5 @@ public class LevelSettings
     public bool random_position;
     public List<Vector2> enemies_direction;
     public List<Vector2> enemies_position;
+    public Vector2 scale;
 }

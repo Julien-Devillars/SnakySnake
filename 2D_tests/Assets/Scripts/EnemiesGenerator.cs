@@ -16,6 +16,7 @@ public class EnemiesGenerator : MonoBehaviour
         bool random_position = settingsForLevel.random_position;
         List<Vector2> enemies_direction = settingsForLevel.enemies_direction;
         List<Vector2> enemies_position = settingsForLevel.enemies_position;
+        Vector2 scale = settingsForLevel.scale;
 
         enemies = new List<GameObject>();
 
@@ -25,14 +26,14 @@ public class EnemiesGenerator : MonoBehaviour
             enemy_go.name = "Enemy_" + i.ToString();
             enemy_go.tag = "Enemy";
             enemy_go.layer = 7; // Enemy Layer
-            enemy_go.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            enemy_go.transform.localScale = new Vector3(scale.x, scale.y, 0.5f);
             enemy_go.transform.parent = gameObject.transform;
 
             // Add Sprite Renderer
             SpriteRenderer sprite_renderer = enemy_go.AddComponent<SpriteRenderer>();
             sprite_renderer.material = new Material(Shader.Find("Sprites/Default"));
-            sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Circle");
-            sprite_renderer.material.color = Color.black;
+            sprite_renderer.sprite = Resources.Load<Sprite>("Photoshop/enemy");
+            sprite_renderer.material.color = Color.white;
             sprite_renderer.sortingOrder = 1;
 
             // Add Circle Collider 2D
