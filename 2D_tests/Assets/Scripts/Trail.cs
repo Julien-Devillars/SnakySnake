@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 public class Trail : MonoBehaviour
 {
     public bool mHasBeenUpdated;
+    // https://i.redd.it/3fwmgurggi4a1.png
+    Color mStartColor = new Color(2/255f, 55f/255f, 136/255f);
+    Color mEndColor = new Color(212/255f, 0/255f, 120/255f);
     void Start()
     {
         //gameObject.name = "Trail";
@@ -17,7 +20,7 @@ public class Trail : MonoBehaviour
         GameObject ball = GameObject.Find(Utils.CHARACTER);
         Transform transform = ball.transform;
 
-        // Line color
+        // Line color65
         Color line_color = Color.red;
         lineRenderer.startColor = line_color;
         lineRenderer.endColor = line_color;
@@ -37,9 +40,9 @@ public class Trail : MonoBehaviour
         collider.offset = new Vector2(transform.position.x, transform.position.y);
 
         // Set Material
-        Material red_mat = new Material(Shader.Find("Sprites/Default"));
-        red_mat.SetColor("_Color", line_color);
-        lineRenderer.material = red_mat;
+        //Material red_mat = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.material = (Material)Resources.Load("Materials/Trail", typeof(Material)); ;
+        //red_mat.SetColor("_Color", line_color);
         mHasBeenUpdated = false;
     }
 
@@ -84,6 +87,46 @@ public class Trail : MonoBehaviour
             position_start = points.transform.GetChild(trail_number).position;
             position_end = points.transform.GetChild(trail_number + 1).position;
         }
+
+        // Change the line color with a gradient, unfortunately we have to make it smart because we have multiple line renderer
+        float color_gradient_total_size = 0f;
+        float color_gradient_start = 0f;
+        float color_gradient_end = 0f;
+        for (int i = 0; i < nb_points; ++i)
+        {
+            Vector3 point_1 = points.transform.GetChild(i).position;
+            Vector3 point_2;
+            if (i != nb_points -1)
+            {
+                point_2 = points.transform.GetChild(i + 1).position;
+            }
+            else
+            {
+                point_2 = end_point_go.transform.position;
+            }
+            if (trail_number == i)
+            {
+                color_gradient_start = color_gradient_total_size;
+            }
+            color_gradient_total_size += Vector3.Distance(point_1, point_2);
+            if (trail_number == i)
+            {
+                color_gradient_end = color_gradient_total_size;
+            }
+        }
+
+        float scale_color_gradient_start = color_gradient_start / color_gradient_total_size;
+        float scale_color_gradient_end = color_gradient_end / color_gradient_total_size;
+
+        //Debug.Log("Trail Number : " + trail_number + " -> " + color_gradient_start + " ("+ scale_color_gradient_start +") - " + color_gradient_end + " (" + scale_color_gradient_end + ") / " + color_gradient_total_size);
+        Gradient gradient = new Gradient();
+        Color start_color = Color.Lerp(mStartColor, mEndColor, scale_color_gradient_start);
+        Color end_color = Color.Lerp(mStartColor, mEndColor, scale_color_gradient_end);
+        gradient.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(start_color, 0.0f), new GradientColorKey(end_color, 1.0f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) }
+        );
+        lineRenderer.colorGradient = gradient;
 
         lineRenderer.SetPosition(0, position_start); //x,y and z position of the starting point of the line
         lineRenderer.SetPosition(1, position_end); //x,y and z position of the end point of the line
