@@ -1059,6 +1059,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5543440327425599751, guid: 699fc54758c067547a00645b75ba5386, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543440327425599751, guid: 699fc54758c067547a00645b75ba5386, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543440327425599751, guid: 699fc54758c067547a00645b75ba5386, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 11526a514a5c38444a297c15bf1d71cc, type: 2}

@@ -56,15 +56,16 @@ public class Background
         SpriteRenderer render = mBackground.GetComponent<SpriteRenderer>();
         if (hasEnemies())
         {
+            render.material = new Material(Shader.Find("Sprites/Default"));
             render.color = new Color(0f, 0f, 0f, 0f);
             //render.color = new Color(0f, 1f, 0f);
         }
         else
         {
-            render.color = new Color(1f,  0f, 1f, 0.7f);
+            render.material = (Material)Resources.Load("Shaders/CoverBackground", typeof(Material));
+            render.color = new Color(1f,  1f, 1f, 1f);
             //render.color = new Color(0f, 1f, 1f);
         }
-        render.material = new Material(Shader.Find("Sprites/Default"));
         render.material.color = render.color;
     }
 
