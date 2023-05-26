@@ -51,8 +51,10 @@ public class Border
 
         lineRenderer.SetPosition(0, mStartPoint);
         lineRenderer.SetPosition(1, mEndPoint);
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.white;
 
-        lineRenderer.material = (Material)Resources.Load("Materials/Border", typeof(Material));
+        lineRenderer.material = (Material)Resources.Load("Shaders/GlowBorder", typeof(Material));
         lineRenderer.material.color = Color.white;
     }
 
