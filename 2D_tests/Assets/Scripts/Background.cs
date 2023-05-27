@@ -62,9 +62,16 @@ public class Background
         }
         else
         {
-            render.material = (Material)Resources.Load("Shaders/CoverBackground", typeof(Material));
-            render.color = new Color(1f,  1f, 1f, 1f);
-            //render.color = new Color(0f, 1f, 1f);
+            if(Utils.SHADER_ON)
+            {
+                render.material = (Material)Resources.Load("Shaders/CoverBackground", typeof(Material));
+                render.color = new Color(1f, 1f, 1f, 1f);
+            }
+            else
+            {
+                render.material = new Material(Shader.Find("Sprites/Default"));
+                render.color = new Color(1f, 1f, 1f, 0.7f);
+            }
         }
         render.material.color = render.color;
     }

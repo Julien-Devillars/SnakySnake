@@ -19,6 +19,19 @@ public class BackgroundView : MonoBehaviour
         float scale_x = max_pos.x - min_pos.x;
         float scale_y = max_pos.y - min_pos.y;
         transform.localScale = new Vector3(scale_x, scale_y, 1);
+
+        SpriteRenderer sprite_renderer = gameObject.GetComponent<SpriteRenderer>();
+        if(Utils.SHADER_ON)
+        {
+            sprite_renderer.material = (Material)Resources.Load("Shaders/GlowBackground", typeof(Material));
+        }
+        else
+        {
+            sprite_renderer.material = Resources.Load<Material>("Photoshop/Materials/Background");
+            sprite_renderer.sprite = Resources.Load<Sprite>("Photoshop/Background");
+        }
+        sprite_renderer.material.color = Color.white;
+
     }
 
 }

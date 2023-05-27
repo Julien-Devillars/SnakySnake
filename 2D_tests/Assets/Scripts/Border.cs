@@ -54,8 +54,16 @@ public class Border
         lineRenderer.startColor = Color.white;
         lineRenderer.endColor = Color.white;
 
-        lineRenderer.material = (Material)Resources.Load("Shaders/GlowBorder", typeof(Material));
-        lineRenderer.material.color = Color.white;
+        if(Utils.SHADER_ON)
+        {
+            lineRenderer.material = (Material)Resources.Load("Shaders/GlowBorder", typeof(Material));
+            lineRenderer.material.color = Color.white;
+        }
+        else
+        {
+            lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+            lineRenderer.material.color = Color.black;
+        }
     }
 
     public bool checkColliderAlreadyExist()
