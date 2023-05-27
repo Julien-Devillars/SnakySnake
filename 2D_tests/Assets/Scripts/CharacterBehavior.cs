@@ -28,6 +28,7 @@ public class CharacterBehavior : MonoBehaviour
     public List<GameObject> mTrails;
     private GameObject mTrailGO;
     private GameObject mLastPosition_go;
+    private Border mLastBorder;
 
     // Start is called before the first frame update
     void Start()
@@ -92,6 +93,7 @@ public class CharacterBehavior : MonoBehaviour
         Border right = new Border(top_right, bot_right);
         Border bot = new Border(bot_right, bot_left);
         Border left = new Border(bot_left, top_left);
+        mLastBorder = bot;
         addBorder(top);
         addBorder(right);
         addBorder(bot);
@@ -497,22 +499,43 @@ public class CharacterBehavior : MonoBehaviour
         }
     }
 
+    Vector3 getClosestPoint(Dictionary<Border, Vector3> border_points)
+    {
+        Vector3 closest_point = mMaxBorderPos*2f;
+        foreach (Border border_key in border_points.Keys)
+        {
+            Vector3 border_point = border_points[border_key];
+            if (Vector3.Distance(transform.position, border_point) < Vector3.Distance(transform.position, closest_point))
+            {
+                closest_point = border_point;
+                mLastBorder = border_key;
+            }
+
+        }
+        return closest_point;
+    }
+
     void setOnBorderSameDirection()
     {
-        List<Vector3> border_points = new List<Vector3>();
+        Dictionary<Border, Vector3> border_points = new Dictionary<Border, Vector3>();
         foreach (Border border in mBorders)
         {
+            if(border == mLastBorder && mTrailPoints.Count < 2)
+            {
+                continue;
+            }
+
             if (border.onSmallFuzzyBorder(transform.position))
             {
                 if(Direction.isVertical(mCurrentDirection) && border.isVertical())
                 {
                     Vector3 point = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
-                    border_points.Add(point);
+                    border_points.Add(border, point);
                 }
                 else if (Direction.isHorizontal(mCurrentDirection) && border.isHorizontal())
                 {
                     Vector3 point = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
-                    border_points.Add(point);
+                    border_points.Add(border, point);
                 }
             }
         }
@@ -522,35 +545,30 @@ public class CharacterBehavior : MonoBehaviour
             return;
         }
 
-        Vector3 closest_point = border_points[0];
-        foreach (Vector3 border_point in border_points)
-        {
-            if(Vector3.Distance(transform.position, border_point) < Vector3.Distance(transform.position, closest_point))
-            {
-                closest_point = border_point;
-            }
 
-        }
-
-        transform.position = closest_point;
+        transform.position = getClosestPoint(border_points);
     }
 
     void setOnBorderOppositeDirection(bool check_previous_direction = true)
     {
-        List<Vector3> border_points = new List<Vector3>();
+        Dictionary<Border, Vector3> border_points = new Dictionary<Border, Vector3>();
         foreach (Border border in mBorders)
         {
+            if (border == mLastBorder && mTrailPoints.Count < 2)
+            {
+                continue;
+            }
             if (border.onSmallFuzzyBorder(transform.position))
             {
                 if (border.isHorizontal() && (Direction.isVertical(mCurrentDirection) || (check_previous_direction && Direction.isVertical(mPreviousDirection))))
                 {
                     Vector3 point = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
-                    border_points.Add(point);
+                    border_points.Add(border, point);
                 }
                 else if (border.isVertical() && (Direction.isHorizontal(mCurrentDirection) || (check_previous_direction && Direction.isHorizontal(mPreviousDirection))))
                 {
                     Vector3 point = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
-                    border_points.Add(point);
+                    border_points.Add(border, point);
                 }
             }
         }
@@ -560,47 +578,18 @@ public class CharacterBehavior : MonoBehaviour
             return;
         }
 
-        Vector3 closest_point = border_points[0];
-        foreach (Vector3 border_point in border_points)
-        {
-            if (Vector3.Distance(transform.position, border_point) < Vector3.Distance(transform.position, closest_point))
-            {
-                closest_point = border_point;
-            }
-
-        }
-        transform.position = closest_point;
+        transform.position = getClosestPoint(border_points);
     }
 
-    Vector3 getOnBorder(Vector3 old_pos)
-    {
-        Vector3 pos = new Vector3();
-        foreach (Border border in mBorders)
-        {
-            if (border.onFuzzyBorder(old_pos))
-            {
-                if (border == null || border.mBorder == null)
-                {
-                    continue;
-                }
-
-                if (border.isVertical())
-                {
-                    pos = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
-                }
-                else if (border.isHorizontal())
-                {
-                    pos = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
-                }
-            }
-        }
-        return pos;
-    }
     Vector3 getOnClosestBorder(Vector3 old_pos, List<Border> _borders)
     {
         List<Border> borders = new List<Border>();
         foreach (Border border in _borders)
         {
+            //if (border == mLastBorder && mTrailPoints.Count < 2)
+            //{
+            //    continue;
+            //}
             if (border.onSmallFuzzyBorder(transform.position) && !border.mNewBorderOnDelete)
             {
                 borders.Add(border);
@@ -623,6 +612,7 @@ public class CharacterBehavior : MonoBehaviour
                 if (border.contains(point_on_border) && Vector3.Distance(transform.position, point_on_border) < Vector3.Distance(transform.position, closest_point))
                 {
                     closest_point = point_on_border;
+                    //mLastBorder = border;
                 }
             }
             else if (border.isVertical() && (Direction.isHorizontal(mCurrentDirection) || Direction.isHorizontal(mPreviousDirection)))
@@ -631,6 +621,7 @@ public class CharacterBehavior : MonoBehaviour
                 if (border.contains(point_on_border) && Vector3.Distance(transform.position, point_on_border) < Vector3.Distance(transform.position, closest_point))
                 {
                     closest_point = point_on_border;
+                    //mLastBorder = border;
                 }
             }
 
