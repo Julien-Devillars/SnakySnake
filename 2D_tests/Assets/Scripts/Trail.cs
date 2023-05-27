@@ -33,6 +33,7 @@ public class Trail : MonoBehaviour
         lineRenderer.numCapVertices = 8;
         // Hide linerenderer until update
         lineRenderer.enabled = false;
+        lineRenderer.sortingLayerName = "Trail";
 
         // Create Box collider
         BoxCollider2D collider = gameObject.AddComponent<BoxCollider2D>();
