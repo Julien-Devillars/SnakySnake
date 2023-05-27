@@ -185,11 +185,6 @@ public class CharacterBehavior : MonoBehaviour
         }
 
         countScore();
-
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit();
-        }
     }
     bool isInScreen(Vector3 point)
     {
