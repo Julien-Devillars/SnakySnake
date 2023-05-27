@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_22b15e02e82f429e9c7852f1e445a38f:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -35,6 +39,7 @@ Material:
     - _LineSize: 0.05
     m_Colors:
     - _BackgroundColor: {r: 0.28870445, g: 0.3018868, b: 0.11534355, a: 0}
-    - _LineColor: {r: 3.6603773, g: 1.898666, b: 0, a: 0}
+    - _LineColor: {r: 18.62768, g: 0.15331425, b: 7.435741, a: 0}
+    - _SecondLineColor: {r: 0.764151, g: 0.6114038, b: 0.1766198, a: 0}
     - _Tiling: {r: 4, g: 3, b: 0, a: 0}
   m_BuildTextureStacks: []
