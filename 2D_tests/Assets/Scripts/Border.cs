@@ -9,7 +9,7 @@ public class Border : MonoBehaviour
     public Border mDuplicateBorder;
     public bool mHasError;
     public bool mNewBorderOnDelete = false;
-    public bool mIsDeletable;
+    public bool mIsEditable;
     private LineRenderer mLineRenderer;
 
     public void Awake()
@@ -21,13 +21,29 @@ public class Border : MonoBehaviour
 
     public void Update()
     {
-        if(borderIsInBackgroundWithoutEnemies() && mIsDeletable)
+        bool start_point_can_be_moved = borderIsInBackgroundWithoutEnemies(mStartPoint);
+        bool end_point_can_be_moved = borderIsInBackgroundWithoutEnemies(mEndPoint);
+        if(mIsEditable)
         {
-            destroy();
+
+            if (start_point_can_be_moved && end_point_can_be_moved)
+            {
+                destroy();
+            }
+            else if (start_point_can_be_moved)
+            {
+                Vector3 new_point = getClosestPointOnBorder(mStartPoint);
+                mLineRenderer.SetPosition(0, new_point);
+            }
+            else if(end_point_can_be_moved)
+            {
+                Vector3 new_point = getClosestPointOnBorder(mEndPoint);
+                mLineRenderer.SetPosition(1, new_point);
+            }
         }
     }
 
-    public void init(Vector3 start_point, Vector3 end_point, bool is_deletable = true)
+    public void init(Vector3 start_point, Vector3 end_point, bool is_editable = true)
     {
         mStartPoint = start_point;
         mEndPoint = end_point;
@@ -39,7 +55,7 @@ public class Border : MonoBehaviour
         
         mDuplicateBorder = null;
         mHasError = false;
-        mIsDeletable = is_deletable;
+        mIsEditable = is_editable;
     }
     public void setName(string new_name)
     {
@@ -213,25 +229,23 @@ public class Border : MonoBehaviour
         }
         return false;
     }
-    public static Border create(Vector3 start_point, Vector3 end_point, bool is_deletable = true)
+    public static Border create(Vector3 start_point, Vector3 end_point, bool is_editable = true)
     {
         GameObject new_border = new GameObject();
         Border border = new_border.AddComponent<Border>();
-        border.init(start_point, end_point, is_deletable);
+        border.init(start_point, end_point, is_editable);
 
         return border;
     }
 
-    private bool borderIsInBackgroundWithoutEnemies()
+    private bool borderIsInBackgroundWithoutEnemies(Vector3 point)
     {
         List<Background> backgrounds = Utils.getBackgrounds();
-        Dictionary<string, Vector3> start_point_offset = Utils.getOffsetPoints(mStartPoint);
-        Dictionary<string, Vector3> end_point_offset = Utils.getOffsetPoints(mEndPoint);
 
         List<Background> backgrounds_to_check = new List<Background>();
         foreach (Background background in backgrounds)
         {
-            if(background.containsEquals(mStartPoint) || background.containsEquals(mEndPoint))
+            if(background.containsEquals(point))
             {
                 backgrounds_to_check.Add(background);
             }
@@ -246,5 +260,35 @@ public class Border : MonoBehaviour
         }
 
         return true;
+    }
+    private Vector3 getClosestPointOnBorder(Vector3 point)
+    {
+        List<Border> borders = Utils.getBorders();
+
+        List<Vector3> possible_points = new List<Vector3>();
+        foreach (Border border in borders)
+        {
+            if (border == this) continue;
+
+            if (contains(border.mStartPoint))
+            {
+                possible_points.Add(border.mStartPoint);
+            }
+            if (contains(border.mEndPoint))
+            {
+                possible_points.Add(border.mEndPoint);
+            }
+        }
+
+        Vector3 closest_point = possible_points[0];
+        foreach (Vector3 possible_point in possible_points)
+        {
+            if (Vector3.Distance(possible_point, point) < Vector3.Distance(closest_point, point))
+            {
+                closest_point = possible_point;
+            }
+        }
+
+        return closest_point;
     }
 }
