@@ -146,6 +146,12 @@ public class Background : MonoBehaviour
         {
             connected_bg.mConnectedBackground.Remove(this);
         }
+
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
+        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        character.mBackgrounds.Remove(this);
+        character.mBackgroundGameObjects.Remove(gameObject);
+
         GameObject.DestroyImmediate(gameObject);
     }
 

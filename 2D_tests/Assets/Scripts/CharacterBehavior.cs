@@ -483,9 +483,6 @@ public class CharacterBehavior : MonoBehaviour
 
     void splitBackground(Background current_bg, Vector3 start_point, Vector3 end_point)
     {
-        mBackgroundGameObjects.Remove(current_bg.gameObject);
-        mBackgrounds.Remove(current_bg);
-
         List<GameObject> background_splitten = current_bg.split(start_point, end_point);
 
         if (background_splitten == null || background_splitten.Count != 2) return;

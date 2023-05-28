@@ -6,6 +6,7 @@ public class Utils
 {
     public static string CHARACTER = "Ball";
     public static string BACKGROUND_STR = "Backgrounds";
+    public static string BORDER_STR = "Borders";
     public static string ENEMIES_STR = "Enemies";
     public static string TRAILS_STR = "Trails";
     public static float EPSILON() => GameObject.Find(CHARACTER).transform.localScale.x / 2f;
@@ -106,6 +107,33 @@ public class Utils
             Debug.Log("Fix Line Point y");
             position_end.y = position_start.y;
         }
+    }
+    public static List<Border> getBorders()
+    {
+        GameObject borders_go = GameObject.Find(Utils.BORDER_STR);
+        List<Border> borders = new List<Border>();
+
+        for(int i = 0; i < borders_go.transform.childCount; ++i)
+        {
+            Border border = borders_go.transform.GetChild(i).GetComponent<Border>();
+            borders.Add(border);
+        }
+
+        return borders;
+    }
+
+    public static List<Background> getBackgrounds()
+    {
+        GameObject backgrounds_go = GameObject.Find(Utils.BACKGROUND_STR);
+        List<Background> backgrounds = new List<Background>();
+
+        for (int i = 0; i < backgrounds_go.transform.childCount; ++i)
+        {
+            Background background = backgrounds_go.transform.GetChild(i).GetComponent<Background>();
+            backgrounds.Add(background);
+        }
+
+        return backgrounds;
     }
 
 }

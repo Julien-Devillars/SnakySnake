@@ -122,12 +122,11 @@ public class Border : MonoBehaviour
 
     public void destroy()
     {
-        if(gameObject == null) // Already deleted somewhere else
-        {
-            return;
-        }
-        BoxCollider2D border_child_collider = gameObject.GetComponent<BoxCollider2D>();
-        border_child_collider.enabled = false;
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
+        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+        character.mBorders.Remove(this);
+        character.mBorderGameObjects.Remove(gameObject);
+
         GameObject.DestroyImmediate(gameObject);
     }
     public bool equals(Border other_border)
