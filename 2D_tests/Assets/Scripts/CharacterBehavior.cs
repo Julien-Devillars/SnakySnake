@@ -18,6 +18,7 @@ public class CharacterBehavior : MonoBehaviour
     public List<GameObject> mBackgroundGameObjects;
     public List<Background> mBackgrounds;
 
+    public List<GameObject> mBorderGameObjects;
     public List<Border> mBorders;
     [HideInInspector] public Vector3 mMinBorderPos;
     [HideInInspector] public Vector3 mMaxBorderPos;
@@ -50,6 +51,7 @@ public class CharacterBehavior : MonoBehaviour
 
         transform.position = new Vector3(mMinBorderPos.x, mMinBorderPos.y, 0);
         mBorders = new List<Border>();
+        mBorderGameObjects = new List<GameObject>();
         makeBorders();
 
         mBackgrounds = new List<Background>();
@@ -88,6 +90,7 @@ public class CharacterBehavior : MonoBehaviour
     void addBorder(Border border)
     {
         border.setName("Border_" + mBorders.Count);
+        mBorderGameObjects.Add(border.gameObject);
         mBorders.Add(border);
     }
 
@@ -98,11 +101,13 @@ public class CharacterBehavior : MonoBehaviour
         Vector3 bot_left = new Vector3(mMinBorderPos.x, mMinBorderPos.y, mMinBorderPos.z);
         Vector3 bot_right = new Vector3(mMaxBorderPos.x, mMinBorderPos.y, mMinBorderPos.z);
 
-        Border top = new Border(top_left, top_right);
-        Border right = new Border(top_right, bot_right);
-        Border bot = new Border(bot_right, bot_left);
-        Border left = new Border(bot_left, top_left);
+        Border top = Border.create(top_left, top_right);
+        Border right = Border.create(top_right, bot_right);
+        Border bot = Border.create(bot_right, bot_left);
+        Border left = Border.create(bot_left, top_left);
+
         mLastBorder = bot;
+
         addBorder(top);
         addBorder(right);
         addBorder(bot);
@@ -281,7 +286,7 @@ public class CharacterBehavior : MonoBehaviour
                 Vector3 pos_on_border = getOnClosestBorder(lineRenderer.GetPosition(1));
                 lineRenderer.SetPosition(1, pos_on_border);
             }
-            Border line_to_border = new Border(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
+            Border line_to_border = Border.create(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
             line_to_border.mNewBorderOnDelete = true;
             addBorder(line_to_border);
 

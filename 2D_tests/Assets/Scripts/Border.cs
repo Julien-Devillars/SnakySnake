@@ -2,67 +2,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Border
+public class Border : MonoBehaviour
 {
-    public Background mBackground;
-    public GameObject mBorder;
     public Vector3 mStartPoint;
     public Vector3 mEndPoint;
     public Border mDuplicateBorder;
     public bool mHasError;
     public bool mNewBorderOnDelete = false;
-    
-    public Border(Vector3 start_point, Vector3 end_point)
+    private LineRenderer mLineRenderer;
+
+    public void Awake()
     {
-        //mBackground = _background;
+        gameObject.name = "Border";
+        gameObject.name = gameObject.name.Replace("(Clone)", "");
+        gameObject.transform.parent = GameObject.Find("Borders").transform;
+    }
+
+    public void init(Vector3 start_point, Vector3 end_point)
+    {
         mStartPoint = start_point;
         mEndPoint = end_point;
-        mBorder = new GameObject("Border");
 
         addLineRenderer();
         addTag();
 
         addCollider2D();
         
-        mBorder.transform.parent = GameObject.Find("Borders").transform;
-
-        mBorder.name = mBorder.name.Replace("(Clone)", "");
         mDuplicateBorder = null;
         mHasError = false;
     }
     public void setName(string new_name)
     {
-        mBorder.name = new_name;
+        gameObject.name = new_name;
     }
     private void addLineRenderer()
     {
         //For creating line renderer object
-        mBorder.AddComponent<LineRenderer>();
-        LineRenderer lineRenderer = mBorder.GetComponent<LineRenderer>();
-        lineRenderer.startColor = Color.blue;
-        lineRenderer.endColor = Color.blue;
-        lineRenderer.positionCount = 2;
-        lineRenderer.useWorldSpace = true;
-        lineRenderer.numCapVertices = 8;
+        gameObject.AddComponent<LineRenderer>();
+        mLineRenderer = gameObject.GetComponent<LineRenderer>();
+        mLineRenderer.startColor = Color.blue;
+        mLineRenderer.endColor = Color.blue;
+        mLineRenderer.positionCount = 2;
+        mLineRenderer.useWorldSpace = true;
+        mLineRenderer.numCapVertices = 8;
 
         GameObject ball = GameObject.Find(Utils.CHARACTER);
-        lineRenderer.startWidth = ball.transform.localScale.x;
-        lineRenderer.endWidth = ball.transform.localScale.x;
+        mLineRenderer.startWidth = ball.transform.localScale.x;
+        mLineRenderer.endWidth = ball.transform.localScale.x;
 
-        lineRenderer.SetPosition(0, mStartPoint);
-        lineRenderer.SetPosition(1, mEndPoint);
-        lineRenderer.startColor = Color.white;
-        lineRenderer.endColor = Color.white;
+        mLineRenderer.SetPosition(0, mStartPoint);
+        mLineRenderer.SetPosition(1, mEndPoint);
+        mLineRenderer.startColor = Color.white;
+        mLineRenderer.endColor = Color.white;
 
         if(Utils.SHADER_ON)
         {
-            lineRenderer.material = (Material)Resources.Load("Shaders/GlowBorder", typeof(Material));
-            lineRenderer.material.color = Color.white;
+            mLineRenderer.material = (Material)Resources.Load("Shaders/GlowBorder", typeof(Material));
+            mLineRenderer.material.color = Color.white;
         }
         else
         {
-            lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-            lineRenderer.material.color = Color.black;
+            mLineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+            mLineRenderer.material.color = Color.black;
         }
     }
 
@@ -76,7 +77,7 @@ public class Border
             BoxCollider2D border_child_collider = border_child.GetComponent<BoxCollider2D>();
             Vector3 line_start_point = border_child_line.GetPosition(0);
             Vector3 line_end_point = border_child_line.GetPosition(1);
-            if(border_child == mBorder)
+            if(border_child == gameObject)
             {
                 continue;
             }
@@ -90,16 +91,15 @@ public class Border
 
     private void addCollider2D()
     {
-        BoxCollider2D box_collider = mBorder.AddComponent<BoxCollider2D>();
-        LineRenderer lineRenderer = mBorder.GetComponent<LineRenderer>();
+        BoxCollider2D box_collider = gameObject.AddComponent<BoxCollider2D>();
 
         if(isVertical())
         {
-            box_collider.size = new Vector2(lineRenderer.startWidth, Mathf.Abs(mEndPoint.y - mStartPoint.y));
+            box_collider.size = new Vector2(mLineRenderer.startWidth, Mathf.Abs(mEndPoint.y - mStartPoint.y));
         }
         else if (isHorizontal())
         {
-            box_collider.size = new Vector2(Mathf.Abs(mEndPoint.x - mStartPoint.x) , lineRenderer.startWidth);
+            box_collider.size = new Vector2(Mathf.Abs(mEndPoint.x - mStartPoint.x) , mLineRenderer.startWidth);
         }
     }
 
@@ -107,11 +107,11 @@ public class Border
     {
         if (mStartPoint.x == mEndPoint.x)
         {
-            mBorder.tag = "VerticalBorder";
+            gameObject.tag = "VerticalBorder";
         }
         else if (mStartPoint.y == mEndPoint.y)
         {
-            mBorder.tag = "HorizontalBorder";
+            gameObject.tag = "HorizontalBorder";
         }
         else
         {
@@ -120,15 +120,15 @@ public class Border
         }
     }
 
-    public void Destroy()
+    public void destroy()
     {
-        if(mBorder == null) // Already deleted somewhere else
+        if(gameObject == null) // Already deleted somewhere else
         {
             return;
         }
-        BoxCollider2D border_child_collider = mBorder.GetComponent<BoxCollider2D>();
+        BoxCollider2D border_child_collider = gameObject.GetComponent<BoxCollider2D>();
         border_child_collider.enabled = false;
-        GameObject.DestroyImmediate(mBorder);
+        GameObject.DestroyImmediate(gameObject);
     }
     public bool equals(Border other_border)
     {
@@ -157,35 +157,32 @@ public class Border
     }
     public void hideColliderBorder()
     {
-        BoxCollider2D box_collider = mBorder.GetComponent<BoxCollider2D>();
-        LineRenderer lineRenderer = mBorder.GetComponent<LineRenderer>();
+        BoxCollider2D box_collider = gameObject.GetComponent<BoxCollider2D>();
         if (isVertical())
         {
-            box_collider.size = new Vector2(lineRenderer.startWidth, box_collider.size.y);
+            box_collider.size = new Vector2(mLineRenderer.startWidth, box_collider.size.y);
         }
         else if (isHorizontal())
         {
-            box_collider.size = new Vector2(box_collider.size.x, lineRenderer.startWidth);
+            box_collider.size = new Vector2(box_collider.size.x, mLineRenderer.startWidth);
         }
         box_collider.enabled = false;
     }
     public Vector3 getStartPoint()
     {
-        LineRenderer lineRenderer = mBorder.GetComponent<LineRenderer>();
-        return lineRenderer.GetPosition(0);
+        return mStartPoint;
     }
     public Vector3 getLastPoint()
     {
-        LineRenderer lineRenderer = mBorder.GetComponent<LineRenderer>();
-        return lineRenderer.GetPosition(1);
+        return mEndPoint;
     }
     public bool isVertical()
     {
-        return mBorder.tag == "VerticalBorder";
+        return gameObject.tag == "VerticalBorder";
     }
     public bool isHorizontal()
     {
-        return mBorder.tag == "HorizontalBorder";
+        return gameObject.tag == "HorizontalBorder";
     }
     public bool contains(Vector3 pos)
     {
@@ -198,5 +195,13 @@ public class Border
             return (mStartPoint.x <= pos.x && pos.x <= mEndPoint.x) || (mStartPoint.x >= pos.x && pos.x >= mEndPoint.x);
         }
         return false;
+    }
+    public static Border create(Vector3 start_point, Vector3 end_point)
+    {
+        GameObject new_border = new GameObject();
+        Border border = new_border.AddComponent<Border>();
+        border.init(start_point, end_point);
+
+        return border;
     }
 }
