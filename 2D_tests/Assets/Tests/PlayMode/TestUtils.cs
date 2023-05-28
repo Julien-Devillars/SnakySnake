@@ -73,7 +73,7 @@ public class TestUtils
         for (int i = 0; i < character.mBackgrounds.Count; ++i)
         {
             Background character_bg = character.mBackgrounds[i];
-            GameObject character_bg_go = character_bg.mBackground;
+            GameObject character_bg_go = character_bg.gameObject;
             GameObject bg_go = bgs_go[i];
 
             Assert.AreEqual(bg_go, character_bg_go);

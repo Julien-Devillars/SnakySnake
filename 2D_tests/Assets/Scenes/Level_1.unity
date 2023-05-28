@@ -418,6 +418,8 @@ MonoBehaviour:
   mSpeed: 25
   mCurrentDirection: 0
   mPreviousDirection: 0
+  mBackgroundGameObjects: []
+  mBackgrounds: []
   mMinBorderPos: {x: 0, y: 0, z: 0}
   mMaxBorderPos: {x: 0, y: 0, z: 0}
   mTrails: []
@@ -591,6 +593,10 @@ PrefabInstance:
     - target: {fileID: 3940208386353359812, guid: cb3d94f8c58113845b7ba11f663ebdde, type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 3940208386353359815, guid: cb3d94f8c58113845b7ba11f663ebdde, type: 3}
+      propertyPath: orthographic size
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb3d94f8c58113845b7ba11f663ebdde, type: 3}

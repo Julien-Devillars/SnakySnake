@@ -15,6 +15,7 @@ public class CharacterBehavior : MonoBehaviour
     private bool mCanMove;
     private bool mCanAddLine;
 
+    public List<GameObject> mBackgroundGameObjects;
     public List<Background> mBackgrounds;
 
     public List<Border> mBorders;
@@ -52,7 +53,15 @@ public class CharacterBehavior : MonoBehaviour
         makeBorders();
 
         mBackgrounds = new List<Background>();
-        mBackgrounds.Add(new Background(mMinBorderPos, mMaxBorderPos, "0"));
+        mBackgroundGameObjects = new List<GameObject>();
+
+        GameObject background_go = new GameObject();
+        mBackgroundGameObjects.Add(background_go);
+
+        Background background = background_go.AddComponent<Background>();
+        background.init(mMinBorderPos, mMaxBorderPos, "0");
+
+        mBackgrounds.Add(background);
 
         mEnemies = new List<GameObject>();
         GameObject enemies_go = GameObject.Find("Enemies"); 
@@ -295,7 +304,7 @@ public class CharacterBehavior : MonoBehaviour
 
                 Vector3 bg_start_point = bg.getPointFromBackground(start_point, middle_point);
                 Vector3 bg_end_point = bg.getPointFromBackground(middle_point, start_point);
-                splitBackground(bg, bg_start_point, bg_end_point);// bg.split(start_point, middle_point);
+                splitBackground(bg, bg_start_point, bg_end_point);
                 deleted_bgs.Add(bg);
             }
 
@@ -469,17 +478,24 @@ public class CharacterBehavior : MonoBehaviour
 
     void splitBackground(Background current_bg, Vector3 start_point, Vector3 end_point)
     {
-        List<Background> background_splitten = current_bg.split(start_point, end_point);
-        if (background_splitten == null || background_splitten.Count != 2)
-        {
-            return;
-        }
-        Background bg_1 = background_splitten[0];
-        Background bg_2 = background_splitten[1];
-
+        mBackgroundGameObjects.Remove(current_bg.gameObject);
         mBackgrounds.Remove(current_bg);
-        mBackgrounds.Add(bg_1);
-        mBackgrounds.Add(bg_2);
+
+        List<GameObject> background_splitten = current_bg.split(start_point, end_point);
+
+        if (background_splitten == null || background_splitten.Count != 2) return;
+        
+        GameObject bg_1 = background_splitten[0];
+        GameObject bg_2 = background_splitten[1];
+
+        Background background_1 = bg_1.GetComponent<Background>();
+        Background background_2 = bg_2.GetComponent<Background>();
+
+        mBackgroundGameObjects.Add(bg_1);
+        mBackgroundGameObjects.Add(bg_2);
+
+        mBackgrounds.Add(background_1);
+        mBackgrounds.Add(background_2);
     }
 
     void countScore()

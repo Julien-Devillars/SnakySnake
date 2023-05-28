@@ -3,57 +3,65 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Background
+public class Background : MonoBehaviour
 {
-    public GameObject mBackground;
     private string mId;
     public Vector3 mMinBorderPos;
     public Vector3 mMaxBorderPos;
     public List<GameObject> mEnemyList;
-    public GameObject mCharacter;
     public List<Background> mConnectedBackground;
 
-    public Background(Vector3 min_border_pos, Vector3 max_border_pos, string _id)
+    public void Awake()
     {
         mEnemyList = new List<GameObject>();
-        mBackground = new GameObject();
 
-        mId = _id;
-        mMinBorderPos = min_border_pos;
-        mMaxBorderPos = max_border_pos;
-        mBackground.transform.position = (max_border_pos + min_border_pos) / 2;
-        float scale_x = max_border_pos.x - min_border_pos.x;
-        float scale_y = max_border_pos.y - min_border_pos.y;
-        mBackground.transform.localScale = new Vector3(scale_x, scale_y, 1);
-        mBackground.transform.parent = GameObject.Find("Backgrounds").transform;
+        transform.parent = GameObject.Find("Backgrounds").transform;
 
-        SpriteRenderer renderer = mBackground.AddComponent<SpriteRenderer>();
-        //renderer.sprite = Sprite.
+        SpriteRenderer renderer = gameObject.AddComponent<SpriteRenderer>();
         renderer.color = new Color(1f, 1f, 1f);
-
-        mBackground.name = "Background" + "_" + mId;
-
         renderer.material = new Material(Shader.Find("Sprites/Default"));
-        //renderer.material = (Material)Resources.Load("Materials/BackgroundTransparent", typeof(Material));
+
         renderer.material.color = renderer.color;
         renderer.sprite = Resources.Load<Sprite>("Sprites/Square");
 
         renderer.sortingLayerName = "Background";
         mConnectedBackground = new List<Background>();
     }
+
+    public void init(Vector3 min_border_pos, Vector3 max_border_pos, string _id)
+    {
+        mId = _id;
+        mMinBorderPos = min_border_pos;
+        mMaxBorderPos = max_border_pos;
+        transform.position = (max_border_pos + min_border_pos) / 2;
+        float scale_x = max_border_pos.x - min_border_pos.x;
+        float scale_y = max_border_pos.y - min_border_pos.y;
+        transform.localScale = new Vector3(scale_x, scale_y, 1);
+        gameObject.name = "Background" + "_" + mId;
+    }
+    public void initWithXScaleDivideBy2(Vector3 min_border_pos, Vector3 max_border_pos, string _id)
+    {
+        mId = _id;
+        mMinBorderPos = min_border_pos;
+        mMaxBorderPos = max_border_pos;
+        transform.position = (max_border_pos + min_border_pos) / 2;
+        float scale_x = max_border_pos.x - min_border_pos.x;
+        float scale_y = max_border_pos.y - min_border_pos.y;
+        transform.localScale = new Vector3(scale_x/2f, scale_y, 1);
+        gameObject.name = "Background" + "_" + mId;
+    }
+
     public void Clone(Background target)
     {
-        target.mBackground = mBackground;
         target.mId = mId;
         target.mMinBorderPos = mMinBorderPos;
         target.mMaxBorderPos = mMaxBorderPos;
         target.mEnemyList = mEnemyList;
-        target.mCharacter = mCharacter;
         target.mConnectedBackground = mConnectedBackground;
 }
     public void changeBackgroundColor()
     {
-        SpriteRenderer render = mBackground.GetComponent<SpriteRenderer>();
+        SpriteRenderer render = gameObject.GetComponent<SpriteRenderer>();
         if (hasEnemies())
         {
             render.material = new Material(Shader.Find("Sprites/Default"));
@@ -138,22 +146,32 @@ public class Background
         {
             connected_bg.mConnectedBackground.Remove(this);
         }
-        GameObject.DestroyImmediate(mBackground);
+        GameObject.DestroyImmediate(gameObject);
     }
 
-    public List<Background> split(Vector3 start_point, Vector3 end_point)
+    public List<GameObject> split(Vector3 start_point, Vector3 end_point)
     {
-        Background bg_1 = null;
-        Background bg_2 = null;
+        GameObject bg_1 = null;
+        GameObject bg_2 = null;
         if (start_point.x == end_point.x)
         {
-            bg_1 = new Background(mMinBorderPos, (fuzzyCompare(start_point.y, mMinBorderPos.y)) ? end_point : start_point, mId + "_1");
-            bg_2 = new Background((fuzzyCompare(start_point.y, mMaxBorderPos.y)) ? end_point : start_point, mMaxBorderPos, mId + "_2");
+            bg_1 = new GameObject();
+            Background background_1 = bg_1.AddComponent<Background>();
+            background_1.initWithXScaleDivideBy2(mMinBorderPos, (fuzzyCompare(start_point.y, mMinBorderPos.y)) ? end_point : start_point, mId + "_1");
+
+            bg_2 = new GameObject();
+            Background background_2 = bg_2.AddComponent<Background>();
+            background_2.initWithXScaleDivideBy2((fuzzyCompare(start_point.y, mMaxBorderPos.y)) ? end_point : start_point, mMaxBorderPos, mId + "_2");
         }
         else if (start_point.y == end_point.y)
         {
-            bg_1 = new Background(mMinBorderPos, (fuzzyCompare(start_point.x, mMinBorderPos.x)) ? end_point : start_point, mId + "_1");
-            bg_2 = new Background((fuzzyCompare(start_point.x, mMaxBorderPos.x)) ? end_point : start_point, mMaxBorderPos, mId + "_2");
+            bg_1 = new GameObject();
+            Background background_1 = bg_1.AddComponent<Background>();
+            background_1.initWithXScaleDivideBy2(mMinBorderPos, (fuzzyCompare(start_point.x, mMinBorderPos.x)) ? end_point : start_point, mId + "_1");
+
+            bg_2 = new GameObject();
+            Background background_2 = bg_2.AddComponent<Background>();
+            background_2.initWithXScaleDivideBy2((fuzzyCompare(start_point.x, mMaxBorderPos.x)) ? end_point : start_point, mMaxBorderPos, mId + "_2");
         }
 
         if (bg_1 == null || bg_2 == null)
@@ -162,26 +180,7 @@ public class Background
             return null;
         }
 
-        //foreach (GameObject enemy in getEnemies())
-        //{
-        //    if (bg_1.contains(enemy))
-        //    {
-        //        bg_1.addEnemy(enemy);
-        //    }
-        //    else if (bg_2.contains(enemy))
-        //    {
-        //        bg_2.addEnemy(enemy);
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("Issue, enemy not set in new background");
-        //    }
-        //}
-
-        //bg_1.changeBackgroundColor();
-        //bg_2.changeBackgroundColor();
-
-        List<Background> backgrounds = new List<Background>();
+        List<GameObject> backgrounds = new List<GameObject>();
 
         backgrounds.Add(bg_1);
         backgrounds.Add(bg_2);
