@@ -9,6 +9,7 @@ public class Border : MonoBehaviour
     public Border mDuplicateBorder;
     public bool mHasError;
     public bool mNewBorderOnDelete = false;
+    public bool mIsDeletable;
     private LineRenderer mLineRenderer;
 
     public void Awake()
@@ -18,7 +19,15 @@ public class Border : MonoBehaviour
         gameObject.transform.parent = GameObject.Find("Borders").transform;
     }
 
-    public void init(Vector3 start_point, Vector3 end_point)
+    public void Update()
+    {
+        if(borderIsInBackgroundWithoutEnemies() && mIsDeletable)
+        {
+            destroy();
+        }
+    }
+
+    public void init(Vector3 start_point, Vector3 end_point, bool is_deletable = true)
     {
         mStartPoint = start_point;
         mEndPoint = end_point;
@@ -30,6 +39,7 @@ public class Border : MonoBehaviour
         
         mDuplicateBorder = null;
         mHasError = false;
+        mIsDeletable = is_deletable;
     }
     public void setName(string new_name)
     {
@@ -175,6 +185,14 @@ public class Border : MonoBehaviour
     {
         return mEndPoint;
     }
+    public bool isLeftToRight()
+    {
+        return mStartPoint.x < mEndPoint.x;
+    }
+    public bool isBottomToTop()
+    {
+        return mStartPoint.y < mEndPoint.y;
+    }
     public bool isVertical()
     {
         return gameObject.tag == "VerticalBorder";
@@ -195,12 +213,38 @@ public class Border : MonoBehaviour
         }
         return false;
     }
-    public static Border create(Vector3 start_point, Vector3 end_point)
+    public static Border create(Vector3 start_point, Vector3 end_point, bool is_deletable = true)
     {
         GameObject new_border = new GameObject();
         Border border = new_border.AddComponent<Border>();
-        border.init(start_point, end_point);
+        border.init(start_point, end_point, is_deletable);
 
         return border;
+    }
+
+    private bool borderIsInBackgroundWithoutEnemies()
+    {
+        List<Background> backgrounds = Utils.getBackgrounds();
+        Dictionary<string, Vector3> start_point_offset = Utils.getOffsetPoints(mStartPoint);
+        Dictionary<string, Vector3> end_point_offset = Utils.getOffsetPoints(mEndPoint);
+
+        List<Background> backgrounds_to_check = new List<Background>();
+        foreach (Background background in backgrounds)
+        {
+            if(background.containsEquals(mStartPoint) || background.containsEquals(mEndPoint))
+            {
+                backgrounds_to_check.Add(background);
+            }
+        }
+
+        foreach (Background background in backgrounds_to_check)
+        {
+            if (background.hasEnemies())
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

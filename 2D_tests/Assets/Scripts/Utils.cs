@@ -10,6 +10,7 @@ public class Utils
     public static string ENEMIES_STR = "Enemies";
     public static string TRAILS_STR = "Trails";
     public static float EPSILON() => GameObject.Find(CHARACTER).transform.localScale.x / 2f;
+    public static float OFFSET => 0.01f;
     public static float DIRECTION_UPDATE_TIME = 0.1f;
     public static float ADD_LINE_UPDATE_TIME = 0.05f;
     public static float ENNEMY_COLLIDER_UPDATE_TIME = Time.deltaTime * 2f;
@@ -134,6 +135,46 @@ public class Utils
         }
 
         return backgrounds;
+    }
+
+    public static Dictionary<string, Vector3> getOffsetPoints(Vector3 point)
+    {
+        return new Dictionary<string, Vector3>()
+        {
+            { "left", new Vector3(point.x - OFFSET, point.y, 0) },
+            { "up", new Vector3(point.x, point.y + OFFSET, 0) },
+            { "right", new Vector3(point.x + OFFSET, point.y, 0) },
+            { "down", new Vector3(point.x, point.y - OFFSET, 0) },
+            { "up-left", new Vector3(point.x - OFFSET, point.y + OFFSET, 0) },
+            { "up-right", new Vector3(point.x + OFFSET, point.y + OFFSET, 0) },
+            { "down-left", new Vector3(point.x - OFFSET, point.y - OFFSET, 0) },
+            { "down-right", new Vector3(point.x + OFFSET, point.y - OFFSET, 0) }
+        };
+    }
+
+    public static bool borderIsBetweenBackgrounds(Border border, Background bg_1, Background bg_2)
+    {
+        if (!backgroundAreConnected(bg_1, bg_2)) return false;
+
+        Vector3 border_start_point = border.mStartPoint;
+        Vector3 border_end_point = border.mEndPoint;
+
+        Dictionary<string, Vector3> start_point_offsets = getOffsetPoints(border_start_point);
+        Dictionary<string, Vector3> end_point_offsets = getOffsetPoints(border_end_point);
+
+        if (bg_1.isHorizontalConnected(bg_2))
+        {
+            return (bg_1.containsEquals(start_point_offsets["up"]) && bg_2.containsEquals(start_point_offsets["down"]) || bg_1.containsEquals(start_point_offsets["down"]) && bg_2.containsEquals(start_point_offsets["up"]))
+                || (bg_1.containsEquals(end_point_offsets["up"]) && bg_2.containsEquals(end_point_offsets["down"]) || bg_1.containsEquals(end_point_offsets["down"]) && bg_2.containsEquals(end_point_offsets["up"]));
+        }
+
+        if (bg_1.isVerticalConnected(bg_2))
+        {
+            return (bg_1.containsEquals(start_point_offsets["left"]) && bg_2.containsEquals(start_point_offsets["right"]) || bg_1.containsEquals(start_point_offsets["right"]) && bg_2.containsEquals(start_point_offsets["left"]))
+                || (bg_1.containsEquals(end_point_offsets["left"]) && bg_2.containsEquals(end_point_offsets["right"]) || bg_1.containsEquals(end_point_offsets["right"]) && bg_2.containsEquals(end_point_offsets["left"]));
+        }
+
+        return true;
     }
 
 }

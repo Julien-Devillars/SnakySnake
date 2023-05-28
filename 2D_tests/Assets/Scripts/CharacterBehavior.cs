@@ -101,10 +101,10 @@ public class CharacterBehavior : MonoBehaviour
         Vector3 bot_left = new Vector3(mMinBorderPos.x, mMinBorderPos.y, mMinBorderPos.z);
         Vector3 bot_right = new Vector3(mMaxBorderPos.x, mMinBorderPos.y, mMinBorderPos.z);
 
-        Border top = Border.create(top_left, top_right);
-        Border right = Border.create(top_right, bot_right);
-        Border bot = Border.create(bot_right, bot_left);
-        Border left = Border.create(bot_left, top_left);
+        Border top = Border.create(top_left, top_right, false);
+        Border right = Border.create(top_right, bot_right, false);
+        Border bot = Border.create(bot_right, bot_left, false);
+        Border left = Border.create(bot_left, top_left, false);
 
         mLastBorder = bot;
 

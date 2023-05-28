@@ -233,5 +233,13 @@ public class Background : MonoBehaviour
         }
         return false;
     }
+    public bool isHorizontalConnected(Background bg)
+    {
+        return mMinBorderPos.y == bg.mMaxBorderPos.y || mMaxBorderPos.y == bg.mMinBorderPos.y;
+    }
 
+    public bool isVerticalConnected(Background bg)
+    {
+        return mMinBorderPos.x == bg.mMaxBorderPos.x || mMaxBorderPos.x == bg.mMinBorderPos.x;
+    }
 }
