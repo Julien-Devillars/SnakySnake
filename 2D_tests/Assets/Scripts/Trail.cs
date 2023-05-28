@@ -42,7 +42,14 @@ public class Trail : MonoBehaviour
 
         // Set Material
         //Material red_mat = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.material = (Material)Resources.Load("Materials/Trail", typeof(Material)); ;
+        if(Utils.SHADER_ON)
+        {
+            lineRenderer.material = (Material)Resources.Load("Shaders/Trail", typeof(Material));
+        }
+        else
+        {
+            lineRenderer.material = (Material)Resources.Load("Materials/Trail", typeof(Material));
+        }
         //red_mat.SetColor("_Color", line_color);
         mHasBeenUpdated = false;
     }
