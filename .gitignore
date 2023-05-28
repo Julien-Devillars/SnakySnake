@@ -81,3 +81,4 @@ crashlytics-build.properties
 .vsconfig
 InitTestScene*
 AllIn1SpriteShader/
+/2D_tests/Build.zip
