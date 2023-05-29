@@ -5,6 +5,7 @@ using UnityEngine;
 public class BackgroundView : MonoBehaviour
 {
     // Start is called before the first frame update
+    private Color mLineColorAtStart;
     void Start()
     {
         Camera cam = Camera.main;
@@ -24,6 +25,7 @@ public class BackgroundView : MonoBehaviour
         if(Utils.SHADER_ON)
         {
             sprite_renderer.material = (Material)Resources.Load("Shaders/GlowBackground", typeof(Material));
+            mLineColorAtStart = sprite_renderer.material.GetColor("_LineColor");
         }
         else
         {
@@ -36,7 +38,21 @@ public class BackgroundView : MonoBehaviour
 
     void Update()
     {
+        if (Utils.SHADER_ON)
+        {
+            Material material = GetComponent<SpriteRenderer>().material;
+            
+            // Set Line size between 0.02 & 0.05
+            material.SetFloat("_LineSize", Mathf.PingPong(Time.time, 3f) / 100f + 0.02f);
 
+
+            // Set Line color intensity between 1 and 3
+            float intensity = Mathf.PingPong(Time.time, 3f) + 1f;
+            Color new_color = new Color(mLineColorAtStart.r * intensity, mLineColorAtStart.g * intensity, mLineColorAtStart.b * intensity);
+            material.SetColor("_LineColor", new_color);
+        }
+
+            
     }
 
 }
