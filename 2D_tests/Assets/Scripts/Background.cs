@@ -28,6 +28,10 @@ public class Background : MonoBehaviour
         mConnectedBackground = new List<Background>();
     }
 
+    public void Update()
+    {
+        fuseBackgroundIfNeeded();
+    }
     public void init(Vector3 min_border_pos, Vector3 max_border_pos, string _id)
     {
         mId = _id;
@@ -50,6 +54,13 @@ public class Background : MonoBehaviour
         transform.localScale = new Vector3(scale_x/2f, scale_y, 1);
         gameObject.name = "Background" + "_" + mId;
     }
+    public void update()
+    {
+        transform.position = (mMaxBorderPos + mMinBorderPos) / 2;
+        float scale_x = mMaxBorderPos.x - mMinBorderPos.x;
+        float scale_y = mMaxBorderPos.y - mMinBorderPos.y;
+        transform.localScale = new Vector3(scale_x/2f, scale_y, 1);
+    }
 
     public void Clone(Background target)
     {
@@ -58,7 +69,50 @@ public class Background : MonoBehaviour
         target.mMaxBorderPos = mMaxBorderPos;
         target.mEnemyList = mEnemyList;
         target.mConnectedBackground = mConnectedBackground;
-}
+    }
+    public void fuseBackgroundIfNeeded()
+    {
+        List<Background> backgrounds = Utils.getBackgrounds();
+        Background background_found = null;
+        if (hasEnemies()) return;
+
+        foreach(Background background in backgrounds)
+        {
+            if (background == this) continue;
+            if (string.Compare(background.gameObject.name, gameObject.name) != -1) continue;
+            if (background.hasEnemies()) continue;
+
+            if (mMaxBorderPos.x == background.mMinBorderPos.x && mMinBorderPos.y == background.mMinBorderPos.y && mMaxBorderPos.y == background.mMaxBorderPos.y)
+            {
+                mMaxBorderPos.x = background.mMaxBorderPos.x;
+                background_found = background;
+                break;
+            }
+            else if (mMinBorderPos.x == background.mMaxBorderPos.x && mMinBorderPos.y == background.mMinBorderPos.y && mMaxBorderPos.y == background.mMaxBorderPos.y)
+            {
+                mMinBorderPos.x = background.mMinBorderPos.x;
+                background_found = background;
+                break;
+            }
+            else if (mMaxBorderPos.y == background.mMinBorderPos.y && mMinBorderPos.x == background.mMinBorderPos.x && mMaxBorderPos.x == background.mMaxBorderPos.x)
+            {
+                mMaxBorderPos.y = background.mMaxBorderPos.y;
+                background_found = background;
+                break;
+            }
+            else if (mMinBorderPos.y == background.mMaxBorderPos.y && mMinBorderPos.x == background.mMinBorderPos.x && mMaxBorderPos.x == background.mMaxBorderPos.x)
+            {
+                mMinBorderPos.y = background.mMinBorderPos.y;
+                background_found = background;
+                break;
+            }
+        }
+        if(background_found != null)
+        {
+            background_found.destroy();
+            update();
+        }
+    }
     public void changeBackgroundColor()
     {
         SpriteRenderer render = gameObject.GetComponent<SpriteRenderer>();
