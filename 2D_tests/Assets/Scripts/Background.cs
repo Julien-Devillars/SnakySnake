@@ -23,6 +23,7 @@ public class Background : MonoBehaviour
 
         renderer.material.color = renderer.color;
         renderer.sprite = Resources.Load<Sprite>("Sprites/Square");
+        renderer.enabled = false;
 
         renderer.sortingLayerName = "Background";
         mConnectedBackground = new List<Background>();

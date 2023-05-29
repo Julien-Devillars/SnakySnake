@@ -34,4 +34,9 @@ public class BackgroundView : MonoBehaviour
 
     }
 
+    void Update()
+    {
+
+    }
+
 }
