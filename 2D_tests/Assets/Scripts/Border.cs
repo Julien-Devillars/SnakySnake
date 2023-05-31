@@ -33,11 +33,13 @@ public class Border : MonoBehaviour
             else if (start_point_can_be_moved)
             {
                 Vector3 new_point = getClosestPointOnBorder(mStartPoint);
+                if (new_point == Vector3.zero) return;
                 mLineRenderer.SetPosition(0, new_point);
             }
             else if(end_point_can_be_moved)
             {
                 Vector3 new_point = getClosestPointOnBorder(mEndPoint);
+                if (new_point == Vector3.zero) return;
                 mLineRenderer.SetPosition(1, new_point);
             }
         }
@@ -279,6 +281,8 @@ public class Border : MonoBehaviour
                 possible_points.Add(border.mEndPoint);
             }
         }
+
+        if (possible_points.Count == 0) return Vector3.zero;
 
         Vector3 closest_point = possible_points[0];
         foreach (Vector3 possible_point in possible_points)
