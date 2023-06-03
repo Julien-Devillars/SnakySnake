@@ -47,8 +47,8 @@ public class Score : MonoBehaviour
         float area_percentage = mCurrentScore / mTotalArea;
         area_percentage = area_percentage * 100 * mMultiplier;
         int area_percentage_int = (int)area_percentage;
+        area_percentage_int = (int) updateScore(area_percentage_int);
         checkWinCondition(area_percentage_int);
-        updateScore(area_percentage_int);
     }
 
     void checkWinCondition(float area_percentage)
@@ -71,7 +71,7 @@ public class Score : MonoBehaviour
             SceneManager.LoadScene(scene_split[0] + "_" + scene_number.ToString());
         }
     }
-    void updateScore(int area_percentage_int)
+    float updateScore(int area_percentage_int)
     {
         TextMeshProUGUI text_ui = gameObject.GetComponent<TextMeshProUGUI>();
         if(mPreviousScore != area_percentage_int && mToUpdate)
@@ -79,9 +79,9 @@ public class Score : MonoBehaviour
             mStartTime = Time.time;
             mToUpdate = false;
         }
-
         // Slow start & slow end
         float animT = (Time.time - mStartTime) / mDuration;
+        Debug.Log(animT);
         float a = Mathf.Round(animT);
         animT = 4 * Mathf.Pow(animT, 3) * (1 - a) + (1 - 4 * Mathf.Pow(1 - animT, 3)) * a; 
         animT = Mathf.Clamp01(animT);
@@ -95,6 +95,7 @@ public class Score : MonoBehaviour
             mPreviousScore = area_percentage_int;
             mToUpdate = true;
         }
+        return animScore;
     }
 
 }
