@@ -31,8 +31,15 @@ public class EnemiesGenerator : MonoBehaviour
 
             // Add Sprite Renderer
             SpriteRenderer sprite_renderer = enemy_go.AddComponent<SpriteRenderer>();
-            sprite_renderer.material = new Material(Shader.Find("Sprites/Default"));
-            sprite_renderer.sprite = Resources.Load<Sprite>("Photoshop/enemy");
+            sprite_renderer.sprite = Resources.Load<Sprite>("Photoshop/EnemySprite");
+            if(Utils.SHADER_ON)
+            {
+                sprite_renderer.material = Resources.Load<Material>("Materials/EnemyMaterial");
+            }
+            else
+            {
+                sprite_renderer.material = new Material(Shader.Find("Sprites/Default"));
+            }
             sprite_renderer.material.color = Color.white;
             sprite_renderer.sortingOrder = 1;
 

@@ -18,7 +18,7 @@ public class Utils
     public static bool HAS_LOSE = true;
     public static bool HAS_WIN = true;
 
-    public static bool SHADER_ON = false;
+    public static bool SHADER_ON = true;
 
     public static List<Vector3> getIntermediatePointFromTrail(Border border)
     {
