@@ -81,7 +81,6 @@ public class Score : MonoBehaviour
         }
         // Slow start & slow end
         float animT = (Time.time - mStartTime) / mDuration;
-        Debug.Log(animT);
         float a = Mathf.Round(animT);
         animT = 4 * Mathf.Pow(animT, 3) * (1 - a) + (1 - 4 * Mathf.Pow(1 - animT, 3)) * a; 
         animT = Mathf.Clamp01(animT);
