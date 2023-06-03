@@ -41,13 +41,16 @@ public class BackgroundView : MonoBehaviour
         if (Utils.SHADER_ON)
         {
             Material material = GetComponent<SpriteRenderer>().material;
-            
+
             // Set Line size between 0.02 & 0.05
-            material.SetFloat("_LineSize", Mathf.PingPong(Time.time, 3f) / 100f + 0.02f);
+            //material.SetFloat("_LineSize", Mathf.PingPong(Time.time, 3f) / 100f + 0.02f);
 
 
-            // Set Line color intensity between 1 and 3
-            float intensity = Mathf.PingPong(Time.time, 3f) + 1f;
+            // Set Line color intensity between 1 and 2
+            float min = 0.1f;
+            float max = 0.5f;
+            float duration = 2f;
+            float intensity = Mathf.PingPong(Time.time / duration, max - min) + min;
             Color new_color = new Color(mLineColorAtStart.r * intensity, mLineColorAtStart.g * intensity, mLineColorAtStart.b * intensity);
             material.SetColor("_LineColor", new_color);
         }
