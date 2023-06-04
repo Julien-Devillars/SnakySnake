@@ -9,6 +9,7 @@ public class MusicHandler : MonoBehaviour
     [SerializeField]
     private List<AudioClip> mMusics;
 
+    BeatHandler mBeatHandler;
     private void Awake()
     {
         if (instance == null)
@@ -20,6 +21,7 @@ public class MusicHandler : MonoBehaviour
             mAudioSource.clip = mMusics[idx_music];
             Debug.Log("Music playing : " + mAudioSource.clip.name);
             mAudioSource.Play();
+            //mBeatHandler = new BeatHandler();
             return;
         }
         mAudioSource = GetComponent<AudioSource>();
@@ -36,5 +38,84 @@ public class MusicHandler : MonoBehaviour
     public void StopMusic()
     {
         mAudioSource.Stop();
+    }
+    int cpt = 0;
+
+    void Update()
+    {
+
+        float[] spectrum = new float[1024];
+
+        AudioListener.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
+
+        //mBeatHandler.addSpectrum(spectrum);
+        //Debug.Log(mBeatHandler.isBeat(spectrum));
+        //
+        //float avg = 0f;
+        //for(int i = 0; i < 1024; ++i)
+        //{
+        //    avg += spectrum[i];
+        //}
+    }
+}
+
+class Spectrum
+{
+    int nbData = 1024;
+    public float mAverage;
+    public Spectrum(float[] spectrum_data)
+    {
+        mAverage = 0f;
+        for (int i = 0; i < nbData; ++i)
+        {
+            mAverage += spectrum_data[i];
+        }
+        mAverage /= nbData;
+    }
+}
+
+class BeatHandler
+{
+    int mNbSamples = 15;
+    float mThreshold = 0.0001f;
+    List<Spectrum> mSpectrums;
+    public BeatHandler()
+    {
+        mSpectrums = new List<Spectrum>();
+    }
+    public void addSpectrum(float[] spectrum_data)
+    {
+        Spectrum spectrum = new Spectrum(spectrum_data);
+        mSpectrums.Add(spectrum);
+    }
+    public float getAverageSpectrum()
+    {
+        float average = 0f;
+        for(int i = mSpectrums.Count - mNbSamples; i < mSpectrums.Count; ++i)
+        {
+            Spectrum spectrum = mSpectrums[i];
+            average += spectrum.mAverage;
+        }
+
+        return average / mNbSamples;
+    }
+    public bool isBeat(Spectrum spectrum)
+    {
+        if(mSpectrums.Count > mNbSamples)
+        {
+            float average = getAverageSpectrum();
+            //Debug.Log("All Average : " + average);
+            //Debug.Log("Current Average : " + spectrum.mAverage);
+            if (spectrum.mAverage > average + mThreshold)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool isBeat(float[] spectrum_data)
+    {
+        Spectrum spectrum = new Spectrum(spectrum_data);
+        return isBeat(spectrum);
     }
 }
