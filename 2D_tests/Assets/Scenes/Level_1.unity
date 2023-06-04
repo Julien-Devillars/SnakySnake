@@ -239,7 +239,7 @@ AudioSource:
   m_Volume: 0.607
   m_Pitch: 1
   Loop: 0
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -866,6 +866,18 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &3940208386048447422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3940208386048447417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec1e2e50ed5f8143bdec235196fd1e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8766251492865890377
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -873,6 +885,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 364558784195882081, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.0000076
+      objectReference: {fileID: 0}
     - target: {fileID: 1210947548747085778, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -912,6 +928,10 @@ PrefabInstance:
     - target: {fileID: 2751874912900140263, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3355018106347564615, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.0000076
       objectReference: {fileID: 0}
     - target: {fileID: 5137519272150274914, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_fontSize
