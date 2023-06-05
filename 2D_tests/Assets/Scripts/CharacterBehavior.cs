@@ -418,6 +418,7 @@ public class CharacterBehavior : MonoBehaviour
             StartCoroutine(waiter());
             mPreviousDirection = mCurrentDirection;
             mCurrentDirection = Direction.Left;
+            GetComponent<SpriteRenderer>().flipX = true;
             return true;
         }
         else if ((new_direction == Direction.Up && mCurrentDirection != Direction.Up) && (can_move_backward || mCurrentDirection != Direction.Down))
@@ -432,6 +433,7 @@ public class CharacterBehavior : MonoBehaviour
             StartCoroutine(waiter());
             mPreviousDirection = mCurrentDirection;
             mCurrentDirection = Direction.Right;
+            GetComponent<SpriteRenderer>().flipX = false;
             return true;
         }
         else if ((new_direction == Direction.Down && mCurrentDirection != Direction.Down) && (can_move_backward || mCurrentDirection != Direction.Up))
