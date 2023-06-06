@@ -87,7 +87,7 @@ public class CharacterBehavior : MonoBehaviour
         mTrails = new List<GameObject>();
     }
 
-    void addBorder(Border border)
+    public void addBorder(Border border)
     {
         border.setName("Border_" + mBorders.Count);
         mBorderGameObjects.Add(border.gameObject);
@@ -319,6 +319,7 @@ public class CharacterBehavior : MonoBehaviour
 
         foreach(Border border in mBorders)
         {
+            border.mHasToUpdateBorder = true;
             border.mNewBorderOnDelete = false;
         }
 

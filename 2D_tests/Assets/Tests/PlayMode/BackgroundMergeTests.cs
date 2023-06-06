@@ -151,7 +151,7 @@ public class BackgroundMergeTests : MonoBehaviour
         Assert.AreEqual(border_vertical_original.mStartPoint, border_horizontal_corner_2.mEndPoint);
     }
     [UnityTest]
-    public IEnumerator test_CheckBorderIsCorrectlyRemoveWhenCreatingASquareInTheBorderContinuity()
+    public IEnumerator test_CheckBorderIsCorrectlyRemoveWhenCreatingASquareInTheBorderContinuity_StartPointChanged()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
 
@@ -178,15 +178,45 @@ public class BackgroundMergeTests : MonoBehaviour
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
         yield return TestUtils.move(character, ">^^^>vvv", 30);
 
-        Border border_horizontal_original = TestUtils.getBorder(4);
-        Border border_vertical_original = TestUtils.getBorder(5);
-
-        Border border_vertical_corner_1 = TestUtils.getBorder(6);
-        Border border_horizontal_corner_2 = TestUtils.getBorder(9);
+        Border border_horizontal_original = TestUtils.getBorder(5);
+        Border border_vertical_corner_2 = TestUtils.getBorder(9);
 
         yield return null;
-        Assert.AreEqual(border_horizontal_original.mEndPoint, border_vertical_corner_1.mStartPoint);
-        Assert.AreEqual(border_vertical_original.mStartPoint, border_horizontal_corner_2.mEndPoint);
+        Assert.AreEqual(border_horizontal_original.mStartPoint, border_vertical_corner_2.mEndPoint);
+    }
+    [UnityTest]
+    public IEnumerator test_CheckBorderIsCorrectlyRemoveWhenCreatingASquareInTheBorderContinuity_EndPointChanged()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        //  _________
+        // |         |
+        // |  ___    |
+        // | |   |   |
+        // |_|___|___|
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">^^>>>vv", 30);
+
+        //  _________
+        // |    _    |
+        // |  _| |   |
+        // | |   |   |
+        // |_|___|___|
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">>>>^^^<vvv", 30);
+
+        Border border_horizontal_original = TestUtils.getBorder(5);
+        Border border_vertical_corner_2 = TestUtils.getBorder(9);
+
+        yield return null;
+        Assert.AreEqual(border_horizontal_original.mEndPoint, border_vertical_corner_2.mEndPoint);
     }
 
     [UnityTest]
@@ -215,16 +245,43 @@ public class BackgroundMergeTests : MonoBehaviour
         // |_|_____|_|
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
-        yield return TestUtils.move(character, ">^>^^>vvv", 30);
+        yield return TestUtils.move(character, ">>^^^>vvv", 30);
 
-        Border border_horizontal_original = TestUtils.getBorder(4);
-        Border border_vertical_original = TestUtils.getBorder(5);
+        Border border_vertical_original_1 = TestUtils.getBorder(4);
+        Border border_vertical_original_2 = TestUtils.getBorder(5);
 
         Border border_vertical_corner_1 = TestUtils.getBorder(6);
-        Border border_horizontal_corner_2 = TestUtils.getBorder(9);
+        Border border_vertical_corner_2 = TestUtils.getBorder(8);
+
+        Border new_border_after_split_1 = TestUtils.getBorder(9);
+        Border new_border_after_split_2 = TestUtils.getBorder(10);
 
         yield return null;
-        Assert.AreEqual(border_horizontal_original.mEndPoint, border_vertical_corner_1.mStartPoint);
-        Assert.AreEqual(border_vertical_original.mStartPoint, border_horizontal_corner_2.mEndPoint);
+
+        Assert.AreEqual(border_vertical_original_1.mEndPoint, new_border_after_split_1.mStartPoint);
+        Assert.AreEqual(border_vertical_corner_1.mStartPoint, new_border_after_split_1.mEndPoint);
+
+        Assert.AreEqual(border_vertical_original_2.mStartPoint, new_border_after_split_2.mEndPoint);
+        Assert.AreEqual(border_vertical_corner_2.mEndPoint, new_border_after_split_2.mStartPoint);
+    }
+
+    [UnityTest]
+    public IEnumerator test_showTest()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        //  _________
+        // |         |
+        // |  _____  |
+        // | |     | |
+        // |_|_____|_|
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+        yield return TestUtils.move(character, "<<^^>>>>vv", 30);
     }
 }

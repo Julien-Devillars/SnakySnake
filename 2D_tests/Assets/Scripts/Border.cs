@@ -8,19 +8,28 @@ public class Border : MonoBehaviour
     public Vector3 mEndPoint;
     public Border mDuplicateBorder;
     public bool mHasError;
-    public bool mNewBorderOnDelete = false;
     public bool mIsEditable;
+    public bool mNewBorderOnDelete = false;
     private LineRenderer mLineRenderer;
+    public Dictionary<Border, Vector3> mOtherBorderOnBorder;
+    public bool mHasToUpdateBorder = true;
 
     public void Awake()
     {
         gameObject.name = "Border";
         gameObject.name = gameObject.name.Replace("(Clone)", "");
         gameObject.transform.parent = GameObject.Find("Borders").transform;
+        mOtherBorderOnBorder = new Dictionary<Border, Vector3>();
     }
 
     public void Update()
     {
+        if(mHasToUpdateBorder)
+        {
+            mOtherBorderOnBorder.Clear();
+            updateBorderConnection();
+            mHasToUpdateBorder = false;
+        }
         bool start_point_can_be_moved = borderIsInBackgroundWithoutEnemies(mStartPoint);
         bool end_point_can_be_moved = borderIsInBackgroundWithoutEnemies(mEndPoint);
         if(mIsEditable)
@@ -35,17 +44,16 @@ public class Border : MonoBehaviour
                 Debug.Log("Move Start Point : " + name);
                 Vector3 new_point = getClosestPointOnBorder(mStartPoint);
                 if (new_point == Vector3.zero) return;
-                mLineRenderer.SetPosition(0, new_point);
-                mStartPoint = new_point;
+                replaceStartPoint(new_point);
             }
             else if(end_point_can_be_moved)
             {
                 Debug.Log("Move End Point : " + name);
                 Vector3 new_point = getClosestPointOnBorder(mEndPoint);
                 if (new_point == Vector3.zero) return;
-                mLineRenderer.SetPosition(1, new_point);
-                mEndPoint = new_point;
+                replaceEndPoint(new_point);
             }
+            checkIfBorderShouldBeSplit();
         }
     }
 
@@ -199,6 +207,16 @@ public class Border : MonoBehaviour
         }
         box_collider.enabled = false;
     }
+    private void replaceStartPoint(Vector3 new_start_point)
+    {
+        mStartPoint = new_start_point;
+        mLineRenderer.SetPosition(0, new_start_point);
+    }
+    private void replaceEndPoint(Vector3 new_end_point)
+    {
+        mEndPoint = new_end_point;
+        mLineRenderer.SetPosition(1, new_end_point);
+    }
     public Vector3 getStartPoint()
     {
         return mStartPoint;
@@ -267,6 +285,96 @@ public class Border : MonoBehaviour
 
         return true;
     }
+    private void splitBorder(Vector3 end_point_1,Vector3 start_point_2)
+    {
+        Border new_border_1;
+        Border new_border_2;
+        GameObject character_go = GameObject.Find(Utils.CHARACTER);
+        CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
+
+        if(isBottomToTop() || isLeftToRight())
+        {
+            new_border_1 = Border.create(mStartPoint, end_point_1);
+            new_border_2 = Border.create(start_point_2, mEndPoint);
+            character.addBorder(new_border_1);
+            character.addBorder(new_border_2);
+        }
+        else
+        {
+            new_border_1 = Border.create(mEndPoint, end_point_1);
+            new_border_2 = Border.create(start_point_2, mStartPoint);
+            character.addBorder(new_border_1);
+            character.addBorder(new_border_2);
+        }
+        destroy();
+    }
+    private bool splitOrReplaceBorder(Vector3 point_1, Vector3 point_2)
+    {
+        if(point_1 == mStartPoint)
+        {
+            replaceStartPoint(point_2);
+            return false;
+        }
+        else if (point_1 == mEndPoint)
+        {
+            replaceEndPoint(point_2);
+            return false;
+        }
+        else if (point_2 == mStartPoint)
+        {
+            replaceStartPoint(point_1);
+            return false;
+        }
+        else if (point_2 == mEndPoint)
+        {
+            replaceEndPoint(point_1);
+            return false;
+        }
+        else
+        {
+            splitBorder(point_1, point_2);
+            return true;
+        }
+    }
+    private bool checkIfBorderShouldBeSplit()
+    {
+        List<Vector3> possible_points = new List<Vector3>();
+        foreach(Vector3 point in mOtherBorderOnBorder.Values)
+        {
+            possible_points.Add(point);
+        }
+
+        if(isVertical())
+        {
+            possible_points.Sort((p1, p2) => p1.y.CompareTo(p2.y));
+        }
+        if(isHorizontal())
+        {
+            possible_points.Sort((p1, p2) => p1.x.CompareTo(p2.x));
+        }
+
+        for(int i = 0; i < possible_points.Count - 1; ++i)
+        {
+            Vector3 p1 = possible_points[i];
+            Vector3 p2 = possible_points[i + 1];
+
+            Vector3 center = (p1 + p2) / 2f;
+            bool should_split = borderIsInBackgroundWithoutEnemies(center);
+            if(should_split)
+            {
+                bool is_split = splitOrReplaceBorder(p1, p2);
+                if(!is_split)
+                {
+                    mOtherBorderOnBorder.Clear();
+                    updateBorderConnection();
+                }
+                break;
+            }
+
+        }
+
+        return true;
+    }
     private Vector3 getClosestPointOnBorder(Vector3 point)
     {
         List<Border> borders = Utils.getBorders();
@@ -300,5 +408,28 @@ public class Border : MonoBehaviour
         }
 
         return closest_point;
+    }
+    void updateBorderConnection()
+    {
+        foreach (Border border in Utils.getBorders())
+        {
+            if (border == this) continue;
+
+            if(contains(border.mStartPoint))
+            {
+                if (!GameObject.Find(border.name)) continue;
+                if (mOtherBorderOnBorder.ContainsKey(border)) Debug.Log("Key " + border.name + " is already present in " + name);
+                mOtherBorderOnBorder.Add(border, border.mStartPoint);
+                //Debug.Log(name + " has " + border.name + " start point linked");
+            }
+            if (contains(border.mEndPoint))
+            {
+                if (!GameObject.Find(border.name)) continue;
+                if (mOtherBorderOnBorder.ContainsKey(border)) Debug.Log("Key " + border.name + " is already present in " + name);
+                mOtherBorderOnBorder.Add(border, border.mEndPoint);
+                //Debug.Log(name + " has " + border.name + " end point linked");
+            }
+        }
+        
     }
 }

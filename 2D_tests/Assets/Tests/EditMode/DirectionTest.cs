@@ -55,4 +55,28 @@ public class DirectionTest
         Assert.AreEqual(direction, Direction.None);
     }
 
+
+    [Test]
+    public void checkSorting()
+    {
+
+        List<Vector3> points = new List<Vector3>();
+        points.Add(new Vector3(5, 0, 0));
+        points.Add(new Vector3(6, 0, 0));
+        points.Add(new Vector3(1, 0, 0));
+        points.Add(new Vector3(3, 0, 0));
+        points.Add(new Vector3(-1, 0, 0));
+
+        foreach (Vector3 point in points)
+        {
+            Debug.Log(point);
+        }
+        Debug.Log("SORT");
+        points.Sort((p1, p2) => p1.x.CompareTo(p2.x));
+        foreach(Vector3 point in points)
+        {
+            Debug.Log(point);
+        }
+    }
+
 }
