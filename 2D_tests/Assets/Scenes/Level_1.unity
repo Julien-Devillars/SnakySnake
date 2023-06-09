@@ -239,7 +239,7 @@ AudioSource:
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -887,7 +887,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 364558784195882081, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.0000076
+      value: -1.0000153
       objectReference: {fileID: 0}
     - target: {fileID: 1210947548747085778, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -931,7 +931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3355018106347564615, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.0000076
+      value: -1.0000153
       objectReference: {fileID: 0}
     - target: {fileID: 5137519272150274914, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_fontSize

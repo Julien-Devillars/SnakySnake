@@ -264,6 +264,84 @@ public class BackgroundMergeTests : MonoBehaviour
         Assert.AreEqual(border_vertical_original_2.mStartPoint, new_border_after_split_2.mEndPoint);
         Assert.AreEqual(border_vertical_corner_2.mEndPoint, new_border_after_split_2.mStartPoint);
     }
+    [UnityTest]
+    public IEnumerator test_CheckBorderIsNotMissingAfterCrossing()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        //  _________
+        // |  ____   |
+        // | |    |  |
+        // | |  __|  |
+        // |_|_|_____|
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">^^^>>>>vv<<v", 30);
+
+        //  _________
+        // |  ____  |
+        // | |    | |
+        // | |   _| |
+        // |_|__|___|
+
+
+        yield return TestUtils.move(character, ">^^<vv", 30);
+
+        yield return null;
+
+        Border border_vertical_original = TestUtils.getBorder(6);
+        Border border_horizontal_original = TestUtils.getBorder(7);
+        Border border_vertical_split = TestUtils.getBorder(8);
+
+
+        Assert.AreEqual(border_vertical_original.mEndPoint, border_horizontal_original.mStartPoint);
+        Assert.AreEqual(border_horizontal_original.mEndPoint, border_vertical_split.mEndPoint);
+    }
+    [UnityTest]
+    public IEnumerator test_CheckBorderIsNotMissingAfterCrossingFromAbove()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        //  _________
+        // |         |
+        // |   __    |
+        // |__|  |   |
+        // |_____|___|
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+        yield return TestUtils.move(character, ">>>>^^<<v<<", 30);
+
+        //  _________
+        // |  ___     |
+        // | |  _|_   |
+        // |_|_|  |   |
+        // |______|___|
+
+
+        yield return TestUtils.move(character, "v>^^^>>", 30);
+        yield return TestUtils.move(character, ">", 15);
+        yield return TestUtils.move(character, "vvv", 30);
+
+        yield return null;
+
+        yield return new WaitForSeconds(5);
+        Border border_vertical_original = TestUtils.getBorder(4);
+        Border border_horitontal_original = TestUtils.getBorder(5);
+        Border border_vertical_split = TestUtils.getBorder(10);
+
+        Assert.AreEqual(border_horitontal_original.mStartPoint, border_vertical_original.mEndPoint);
+        Assert.AreEqual(border_horitontal_original.mEndPoint, border_vertical_split.mEndPoint);
+    }
 
     [UnityTest]
     public IEnumerator test_showTest()

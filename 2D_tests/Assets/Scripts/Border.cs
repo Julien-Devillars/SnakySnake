@@ -2,6 +2,96 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class BorderPointsConnection
+{
+    public BorderPointsConnection(Border _border, Vector3 _point)
+    {
+        border = _border;
+        point = _point;
+    }
+    public Border border;
+    public Vector3 point;
+}
+
+
+public class BorderPointsConnections : IEnumerator, IEnumerable
+{
+    public List<BorderPointsConnection> mBorderPointsConnections = new List<BorderPointsConnection>();
+    private int position = -1;
+    public void SortX()
+    {
+        mBorderPointsConnections.Sort((bp1, bp2) => bp1.point.x.CompareTo(bp2.point.x));
+    }
+    public void SortY()
+    {
+        mBorderPointsConnections.Sort((bp1, bp2) => bp1.point.y.CompareTo(bp2.point.y));
+    }
+    public void Clear()
+    {
+        mBorderPointsConnections.Clear();
+    }
+    public void Add(Border border , Vector3 point)
+    {
+        mBorderPointsConnections.Add(new BorderPointsConnection(border, point));
+    }
+    public int Count()
+    {
+        return mBorderPointsConnections.Count;
+    }
+    public BorderPointsConnection At(int index)
+    {
+        return mBorderPointsConnections[index];
+    }
+    public Border BorderAt(int index)
+    {
+        return mBorderPointsConnections[index].border;
+    }
+    public Vector3 PointAt(int index)
+    {
+        return mBorderPointsConnections[index].point;
+    }
+    public bool Contains(Border border)
+    {
+        foreach(BorderPointsConnection bp in mBorderPointsConnections)
+        {
+            if (bp.border == border)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool Contains(Vector3 point)
+    {
+        foreach (BorderPointsConnection bp in mBorderPointsConnections)
+        {
+            if (bp.point == point)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    //IEnumerator and IEnumerable require these methods.
+    public IEnumerator GetEnumerator()
+    {
+        return (IEnumerator)this;
+    }
+    public bool MoveNext()
+    {
+        position++;
+        return (position < mBorderPointsConnections.Count);
+    }
+    public void Reset()
+    {
+        position = -1;
+    }
+    public object Current
+    {
+        get { return mBorderPointsConnections[position]; }
+    }
+}
+
 public class Border : MonoBehaviour
 {
     public Vector3 mStartPoint;
@@ -11,22 +101,29 @@ public class Border : MonoBehaviour
     public bool mIsEditable;
     public bool mNewBorderOnDelete = false;
     private LineRenderer mLineRenderer;
-    public Dictionary<Border, Vector3> mOtherBorderOnBorder;
+    public BorderPointsConnections mOtherBorderOnBorders;
     public bool mHasToUpdateBorder = true;
+    public bool mToDelete = false;
+    public Direction.direction direction = Direction.direction.None;
 
     public void Awake()
     {
         gameObject.name = "Border";
         gameObject.name = gameObject.name.Replace("(Clone)", "");
         gameObject.transform.parent = GameObject.Find("Borders").transform;
-        mOtherBorderOnBorder = new Dictionary<Border, Vector3>();
+        mOtherBorderOnBorders = new BorderPointsConnections();
     }
 
     public void Update()
     {
+        if(mToDelete || mStartPoint == mEndPoint)
+        {
+            destroy();
+            return;
+        }
         if(mHasToUpdateBorder)
         {
-            mOtherBorderOnBorder.Clear();
+            mOtherBorderOnBorders.Clear();
             updateBorderConnection();
             mHasToUpdateBorder = false;
         }
@@ -42,23 +139,53 @@ public class Border : MonoBehaviour
             else if (start_point_can_be_moved)
             {
                 Debug.Log("Move Start Point : " + name);
+                if(name == "Border_5")
+                {
+                    Debug.Log("Stop");
+                }
+                borderIsInBackgroundWithoutEnemies(mStartPoint, true);
                 Vector3 new_point = getClosestPointOnBorder(mStartPoint);
-                if (new_point == Vector3.zero) return;
+                Debug.Log("Closest Point : " + new_point);
+                if (new_point == mEndPoint)
+                {
+                    Debug.Log("end point = start point");
+                    destroy();
+                    return;
+                }
+                if (new_point == Vector3.positiveInfinity) return;
                 replaceStartPoint(new_point);
             }
             else if(end_point_can_be_moved)
             {
+                if (name == "Border_5")
+                {
+                    Debug.Log("Stop");
+                }
                 Debug.Log("Move End Point : " + name);
                 Vector3 new_point = getClosestPointOnBorder(mEndPoint);
-                if (new_point == Vector3.zero) return;
+                Debug.Log("Closest Point : " + new_point);
+                if (new_point == mStartPoint)
+                {
+                    Debug.Log("start point = end point");
+                    destroy();
+                    return;
+                }
+                if (new_point == Vector3.positiveInfinity) return;
                 replaceEndPoint(new_point);
             }
-            checkIfBorderShouldBeSplit();
+            else
+            {
+                checkIfBorderShouldBeSplit();
+            }
         }
     }
 
     public void init(Vector3 start_point, Vector3 end_point, bool is_editable = true)
     {
+        if (name == "Border_5")
+        {
+            Debug.Log("Stop");
+        }
         mStartPoint = start_point;
         mEndPoint = end_point;
 
@@ -70,6 +197,29 @@ public class Border : MonoBehaviour
         mDuplicateBorder = null;
         mHasError = false;
         mIsEditable = is_editable;
+
+        if(isHorizontal())
+        {
+            if(isLeftToRight())
+            {
+                direction = Direction.direction.Right;
+            }
+            else
+            {
+                direction = Direction.direction.Left;
+            }
+        }
+        else
+        {
+            if (isBottomToTop())
+            {
+                direction = Direction.direction.Up;
+            }
+            else
+            {
+                direction = Direction.direction.Down;
+            }
+        }
     }
     public void setName(string new_name)
     {
@@ -209,13 +359,17 @@ public class Border : MonoBehaviour
     }
     private void replaceStartPoint(Vector3 new_start_point)
     {
-        mStartPoint = new_start_point;
-        mLineRenderer.SetPosition(0, new_start_point);
+        Vector3 new_point = new Vector3(new_start_point.x, new_start_point.y, new_start_point.z);
+        mStartPoint = new_point;
+        mLineRenderer.SetPosition(0, new_point);
+        mHasToUpdateBorder = true;
     }
     private void replaceEndPoint(Vector3 new_end_point)
     {
-        mEndPoint = new_end_point;
-        mLineRenderer.SetPosition(1, new_end_point);
+        Vector3 new_point = new Vector3(new_end_point.x, new_end_point.y, new_end_point.z);
+        mEndPoint = new_point;
+        mLineRenderer.SetPosition(1, new_point);
+        mHasToUpdateBorder = true;
     }
     public Vector3 getStartPoint()
     {
@@ -262,14 +416,19 @@ public class Border : MonoBehaviour
         return border;
     }
 
-    private bool borderIsInBackgroundWithoutEnemies(Vector3 point)
+    private bool borderIsInBackgroundWithoutEnemies(Vector3 point, bool debug_on = false)
     {
         List<Background> backgrounds = Utils.getBackgrounds();
 
         List<Background> backgrounds_to_check = new List<Background>();
         foreach (Background background in backgrounds)
         {
-            if(background.containsEquals(point))
+            if (debug_on)
+            {
+                Debug.Log(background.name);
+                Debug.Log(background.mMinBorderPos + " < " + point + " < " + background.mMaxBorderPos);
+            }
+            if (background.containsEquals(point))
             {
                 backgrounds_to_check.Add(background);
             }
@@ -277,6 +436,10 @@ public class Border : MonoBehaviour
 
         foreach (Background background in backgrounds_to_check)
         {
+            if (debug_on)
+            {
+                Debug.Log("Found BG : " + background.name);
+            }
             if (background.hasEnemies())
             {
                 return false;
@@ -287,6 +450,7 @@ public class Border : MonoBehaviour
     }
     private void splitBorder(Vector3 end_point_1,Vector3 start_point_2)
     {
+        Debug.Log("Split border " + name);
         Border new_border_1;
         Border new_border_2;
         GameObject character_go = GameObject.Find(Utils.CHARACTER);
@@ -308,66 +472,59 @@ public class Border : MonoBehaviour
         }
         destroy();
     }
-    private bool splitOrReplaceBorder(Vector3 point_1, Vector3 point_2)
+    private void splitOrReplaceBorder(Vector3 point_1, Vector3 point_2)
     {
         if(point_1 == mStartPoint)
         {
             replaceStartPoint(point_2);
-            return false;
         }
         else if (point_1 == mEndPoint)
         {
             replaceEndPoint(point_2);
-            return false;
         }
         else if (point_2 == mStartPoint)
         {
             replaceStartPoint(point_1);
-            return false;
         }
         else if (point_2 == mEndPoint)
         {
             replaceEndPoint(point_1);
-            return false;
         }
         else
         {
             splitBorder(point_1, point_2);
-            return true;
+            mToDelete = true;
         }
     }
+
     private bool checkIfBorderShouldBeSplit()
     {
-        List<Vector3> possible_points = new List<Vector3>();
-        foreach(Vector3 point in mOtherBorderOnBorder.Values)
+        if(this == null)
         {
-            possible_points.Add(point);
+            return false;
         }
 
         if(isVertical())
         {
-            possible_points.Sort((p1, p2) => p1.y.CompareTo(p2.y));
+            mOtherBorderOnBorders.SortX();
         }
         if(isHorizontal())
         {
-            possible_points.Sort((p1, p2) => p1.x.CompareTo(p2.x));
+            mOtherBorderOnBorders.SortY();
         }
 
-        for(int i = 0; i < possible_points.Count - 1; ++i)
+        for(int i = 0; i < mOtherBorderOnBorders.Count() - 1; ++i)
         {
-            Vector3 p1 = possible_points[i];
-            Vector3 p2 = possible_points[i + 1];
+            Vector3 p1 = mOtherBorderOnBorders.PointAt(i);
+            Vector3 p2 = mOtherBorderOnBorders.PointAt(i + 1);
 
             Vector3 center = (p1 + p2) / 2f;
             bool should_split = borderIsInBackgroundWithoutEnemies(center);
             if(should_split)
             {
-                bool is_split = splitOrReplaceBorder(p1, p2);
-                if(!is_split)
-                {
-                    mOtherBorderOnBorder.Clear();
-                    updateBorderConnection();
-                }
+                splitOrReplaceBorder(p1, p2);
+                mOtherBorderOnBorders.Clear();
+                updateBorderConnection();
                 break;
             }
 
@@ -383,12 +540,13 @@ public class Border : MonoBehaviour
         foreach (Border border in borders)
         {
             if (border == this) continue;
+            if (point == border.mStartPoint || point == border.mEndPoint) continue;
 
-            if (contains(border.mStartPoint))
+            if (contains(border.mStartPoint) && (border.mStartPoint != mStartPoint || border.mStartPoint != mEndPoint))
             {
                 possible_points.Add(border.mStartPoint);
             }
-            if (contains(border.mEndPoint))
+            if (contains(border.mEndPoint) && (border.mEndPoint != mStartPoint || border.mEndPoint != mEndPoint))
             {
                 possible_points.Add(border.mEndPoint);
             }
@@ -400,6 +558,7 @@ public class Border : MonoBehaviour
         foreach (Vector3 possible_point in possible_points)
         {
             if (borderIsInBackgroundWithoutEnemies(possible_point)) continue;
+            //if (possible_point == mStartPoint || possible_point == mEndPoint) continue;
 
             if (Vector3.Distance(possible_point, point) < Vector3.Distance(closest_point, point))
             {
@@ -417,17 +576,25 @@ public class Border : MonoBehaviour
 
             if(contains(border.mStartPoint))
             {
-                if (!GameObject.Find(border.name)) continue;
-                if (mOtherBorderOnBorder.ContainsKey(border)) Debug.Log("Key " + border.name + " is already present in " + name);
-                mOtherBorderOnBorder.Add(border, border.mStartPoint);
-                //Debug.Log(name + " has " + border.name + " start point linked");
+                if (!GameObject.Find(border.name) || border == null || border.mToDelete) continue;
+                if (mOtherBorderOnBorders.Contains(border))
+                {
+                    //Debug.Log("Key " + border.name + " is already present in " + name);
+                    continue;
+                }
+
+                mOtherBorderOnBorders.Add(border, border.mStartPoint);
             }
             if (contains(border.mEndPoint))
             {
-                if (!GameObject.Find(border.name)) continue;
-                if (mOtherBorderOnBorder.ContainsKey(border)) Debug.Log("Key " + border.name + " is already present in " + name);
-                mOtherBorderOnBorder.Add(border, border.mEndPoint);
-                //Debug.Log(name + " has " + border.name + " end point linked");
+                if (!GameObject.Find(border.name) || border == null || border.mToDelete) continue;
+
+                if (mOtherBorderOnBorders.Contains(border))
+                {
+                    //Debug.Log("Key " + border.name + " is already present in " + name);
+                    continue;
+                }
+                mOtherBorderOnBorders.Add(border, border.mEndPoint);
             }
         }
         
