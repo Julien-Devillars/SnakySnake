@@ -205,4 +205,23 @@ public class BorderTests
         Assert.AreEqual(7, character.mBorders.Count, "4 + 3 borders created \"^>^\" ");
         TestUtils.bordersAreValid(character.mBorders);
     }
+
+    [UnityTest]
+    public IEnumerator test_BorderShouldNotHaveInvalidPointsWhenCrossingTheLatestBorderAndNoTrailIsCreated()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
+
+        Border left_border = TestUtils.getBorder(3);
+        yield return TestUtils.move(character, ">>", 30);
+        yield return TestUtils.moveUntilBorder(character, '^');
+
+        yield return TestUtils.move(character, "v<>^", 30);
+
+        Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
+    }
 }

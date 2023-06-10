@@ -283,7 +283,7 @@ public class TestUtils
     {
         foreach (Border border in borders)
         {
-            if (border.mStartPoint.x == border.mEndPoint.x && border.mStartPoint.y == border.mEndPoint.y)
+            if (border.mStartPoint.x != border.mEndPoint.x && border.mStartPoint.y != border.mEndPoint.y)
             {
                 return false;
             }

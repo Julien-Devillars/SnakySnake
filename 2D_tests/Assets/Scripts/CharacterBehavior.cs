@@ -31,6 +31,7 @@ public class CharacterBehavior : MonoBehaviour
     private GameObject mTrailGO;
     private GameObject mLastPosition_go;
     private Border mLastBorder;
+    private Border mLastBorderWhichCreateTrail;
 
     // Start is called before the first frame update
     void Start()
@@ -243,7 +244,12 @@ public class CharacterBehavior : MonoBehaviour
     {
         if (!mCanAddLine)
             return;
-
+        if(mLastBorder.name == "Border_6")
+        {
+            Debug.Log("test");
+        }
+        mLastBorderWhichCreateTrail = mLastBorder;
+        Debug.Log(mLastBorderWhichCreateTrail.name);
         GameObject current_point = new GameObject();
         current_point.gameObject.transform.parent = mTrailPointsGO.gameObject.transform;
         current_point.name = "Trail Points " + mTrailPoints.Count.ToString();
@@ -574,7 +580,7 @@ public class CharacterBehavior : MonoBehaviour
         Dictionary<Border, Vector3> border_points = new Dictionary<Border, Vector3>();
         foreach (Border border in mBorders)
         {
-            if(border == mLastBorder && mTrailPoints.Count < 2)
+            if(border == mLastBorderWhichCreateTrail && mTrailPoints.Count < 2)
             {
                 continue;
             }
@@ -608,20 +614,20 @@ public class CharacterBehavior : MonoBehaviour
         Dictionary<Border, Vector3> border_points = new Dictionary<Border, Vector3>();
         foreach (Border border in mBorders)
         {
-            if (border == mLastBorder && mTrailPoints.Count < 2)
-            {
-                continue;
-            }
+            if (border == mLastBorderWhichCreateTrail && mTrailPoints.Count < 2) continue;
+            
             if (border.onSmallFuzzyBorder(transform.position))
             {
                 if (border.isHorizontal() && (Direction.isVertical(mCurrentDirection) || (check_previous_direction && Direction.isVertical(mPreviousDirection))))
                 {
                     Vector3 point = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
+                    if (point == transform.position) continue;
                     border_points.Add(border, point);
                 }
                 else if (border.isVertical() && (Direction.isHorizontal(mCurrentDirection) || (check_previous_direction && Direction.isHorizontal(mPreviousDirection))))
                 {
                     Vector3 point = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
+                    if (point == transform.position) continue;
                     border_points.Add(border, point);
                 }
             }
