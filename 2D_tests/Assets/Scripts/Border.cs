@@ -138,17 +138,10 @@ public class Border : MonoBehaviour
             }
             else if (start_point_can_be_moved)
             {
-                Debug.Log("Move Start Point : " + name);
-                if(name == "Border_5")
-                {
-                    Debug.Log("Stop");
-                }
-                borderIsInBackgroundWithoutEnemies(mStartPoint, true);
+                //Debug.Log("Move Start Point : " + name);
                 Vector3 new_point = getClosestPointOnBorder(mStartPoint);
-                Debug.Log("Closest Point : " + new_point);
                 if (new_point == mEndPoint)
                 {
-                    Debug.Log("end point = start point");
                     destroy();
                     return;
                 }
@@ -157,12 +150,10 @@ public class Border : MonoBehaviour
             }
             else if(end_point_can_be_moved)
             {
-                Debug.Log("Move End Point : " + name);
+                //Debug.Log("Move End Point : " + name);
                 Vector3 new_point = getClosestPointOnBorder(mEndPoint);
-                Debug.Log("Closest Point : " + new_point);
                 if (new_point == mStartPoint)
                 {
-                    Debug.Log("start point = end point");
                     destroy();
                     return;
                 }
@@ -442,7 +433,6 @@ public class Border : MonoBehaviour
     }
     private void splitBorder(Vector3 end_point_1,Vector3 start_point_2)
     {
-        Debug.Log("Split border " + name);
         Border new_border_1;
         Border new_border_2;
         GameObject character_go = GameObject.Find(Utils.CHARACTER);

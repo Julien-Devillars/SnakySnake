@@ -10,7 +10,7 @@ public class Trail : MonoBehaviour
     // https://i.redd.it/3fwmgurggi4a1.png
     Color mStartColor = new Color(2/255f, 55f/255f, 136/255f);
     Color mEndColor = new Color(212/255f, 0/255f, 120/255f);
-    void Start()
+    void Awake()
     {
         //gameObject.name = "Trail";
         gameObject.tag = "Trail";

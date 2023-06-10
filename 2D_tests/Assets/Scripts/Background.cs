@@ -112,6 +112,7 @@ public class Background : MonoBehaviour
         {
             background_found.destroy();
             update();
+            
         }
     }
     public void changeBackgroundColor()

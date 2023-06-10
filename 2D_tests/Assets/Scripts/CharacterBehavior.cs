@@ -259,10 +259,44 @@ public class CharacterBehavior : MonoBehaviour
                 
     }
 
+    void fixLastTrailIfNeeded()
+    {
+
+        Vector3 last_point = transform.position;
+        Vector3 before_last_point = mTrailPoints[mTrailPoints.Count - 1].transform.position;
+        if (last_point.x == before_last_point.x || last_point.y == before_last_point.y) return; // OK
+
+        Vector3 new_point = new Vector3();
+        if (Direction.isVertical(mCurrentDirection))
+        {
+            new_point = new Vector3(last_point.x, before_last_point.y);
+        }
+        if (Direction.isHorizontal(mCurrentDirection))
+        {
+            new_point = new Vector3(before_last_point.x, last_point.y);
+        }
+        GameObject new_in_between_trail_point = new GameObject();
+        new_in_between_trail_point.gameObject.transform.parent = mTrailPointsGO.gameObject.transform;
+        new_in_between_trail_point.name = "Trail Points " + mTrailPoints.Count.ToString();
+        new_in_between_trail_point.transform.position = new_point;
+        mTrailPoints.Add(new_in_between_trail_point);
+
+        GameObject new_in_between_trail = new GameObject();
+        new_in_between_trail.gameObject.transform.parent = mTrailGO.gameObject.transform;
+        new_in_between_trail.name = "Trail " + mTrails.Count.ToString();
+        Trail trail = new_in_between_trail.AddComponent<Trail>();
+        mTrails.Add(new_in_between_trail);
+        trail.forceUpdateTrailPoint();
+        mTrails[mTrails.Count - 2].GetComponent<Trail>().forceUpdateTrailPoint();
+        Debug.Log("split trail");
+    }
+
     void deleteLine()
     {
         if (mTrailPoints.Count == 0)
             return;
+
+        fixLastTrailIfNeeded();
 
         foreach (GameObject trail_point in mTrailPoints)
         {
@@ -287,6 +321,10 @@ public class CharacterBehavior : MonoBehaviour
                 lineRenderer.SetPosition(1, pos_on_border);
             }
             Border line_to_border = Border.create(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
+            if(line_to_border.mStartPoint == Vector3.zero || line_to_border.mEndPoint == Vector3.zero)
+            {
+                Debug.Log("TOTO");
+            }
             line_to_border.mNewBorderOnDelete = true;
             addBorder(line_to_border);
 
@@ -606,7 +644,7 @@ public class CharacterBehavior : MonoBehaviour
             //{
             //    continue;
             //}
-            if (border.onSmallFuzzyBorder(transform.position) && !border.mNewBorderOnDelete)
+            if (border.onSmallFuzzyBorder(transform.position)&& !border.mNewBorderOnDelete)
             {
                 borders.Add(border);
             }
@@ -618,7 +656,7 @@ public class CharacterBehavior : MonoBehaviour
             return old_pos;
         }
 
-        Vector3 closest_point = borders[0].mEndPoint;
+        Vector3 closest_point = Vector3.positiveInfinity;
 
         foreach (Border border in borders)
         {

@@ -16,6 +16,8 @@ public class BackgroundMesh : MonoBehaviour
     public int[] triangles;
 
     private int mLastNbBackgrounds;
+    private List<Background> mLastBackgrounds;
+    public bool mForceUpdate;
 
     void Start()
     {
@@ -31,6 +33,7 @@ public class BackgroundMesh : MonoBehaviour
         transform.position = Vector3.zero;
 
         mLastNbBackgrounds = 0;
+        mLastBackgrounds = new List<Background>();
     }
 
     private void Update()
@@ -40,7 +43,7 @@ public class BackgroundMesh : MonoBehaviour
         List<Background> backgrounds = Utils.getBackgrounds();
 
         List<Background> backgrounds_to_draw = new List<Background>();
-
+        //
         foreach (Background background in backgrounds)
         {
             if(!background.hasEnemies())
@@ -49,8 +52,10 @@ public class BackgroundMesh : MonoBehaviour
             }
         }
 
-        if (mLastNbBackgrounds == backgrounds_to_draw.Count) return;
-        
+        if (mLastBackgrounds == backgrounds_to_draw) return;
+        mLastBackgrounds = backgrounds_to_draw;
+        //if (mLastNbBackgrounds == backgrounds_to_draw.Count) return;
+
         mLastNbBackgrounds = backgrounds_to_draw.Count;
         
         Mesh mesh = new Mesh();

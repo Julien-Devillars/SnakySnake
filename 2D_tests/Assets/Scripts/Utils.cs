@@ -6,6 +6,7 @@ public class Utils
 {
     public static string CHARACTER = "Ball";
     public static string BACKGROUND_STR = "Backgrounds";
+    public static string BACKGROUND_MESH_STR = "BackgroundMesh";
     public static string BORDER_STR = "Borders";
     public static string ENEMIES_STR = "Enemies";
     public static string TRAILS_STR = "Trails";
@@ -175,6 +176,12 @@ public class Utils
         }
 
         return true;
+    }
+    public void updateBackgroundMesh()
+    {
+        GameObject bg_mesh_go = GameObject.Find(BACKGROUND_MESH_STR);
+        BackgroundMesh bg_mesh = bg_mesh_go.GetComponent<BackgroundMesh>();
+        bg_mesh.mForceUpdate = true;
     }
 
 }
