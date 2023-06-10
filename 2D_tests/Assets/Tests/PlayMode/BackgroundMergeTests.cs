@@ -336,7 +336,7 @@ public class BackgroundMergeTests : MonoBehaviour
 
         Border border_vertical_original = TestUtils.getBorder(4);
         Border border_horitontal_original = TestUtils.getBorder(5);
-        Border border_vertical_split = TestUtils.getBorder(10);
+        Border border_vertical_split = TestUtils.getBorder(9);
 
         Assert.AreEqual(border_horitontal_original.mStartPoint, border_vertical_original.mEndPoint);
         Assert.AreEqual(border_horitontal_original.mEndPoint, border_vertical_split.mEndPoint);

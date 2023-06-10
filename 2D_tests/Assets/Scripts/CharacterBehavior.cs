@@ -244,10 +244,7 @@ public class CharacterBehavior : MonoBehaviour
     {
         if (!mCanAddLine)
             return;
-        if(mLastBorder.name == "Border_6")
-        {
-            Debug.Log("test");
-        }
+
         mLastBorderWhichCreateTrail = mLastBorder;
         Debug.Log(mLastBorderWhichCreateTrail.name);
         GameObject current_point = new GameObject();
@@ -296,8 +293,7 @@ public class CharacterBehavior : MonoBehaviour
         mTrails[mTrails.Count - 2].GetComponent<Trail>().forceUpdateTrailPoint();
         Debug.Log("split trail");
     }
-
-    void deleteLine()
+void deleteLine()
     {
         if (mTrailPoints.Count == 0)
             return;
@@ -424,7 +420,7 @@ public class CharacterBehavior : MonoBehaviour
             bg.addConnectedEnemy();
             bg.changeBackgroundColor();
         }
-        
+        mLastBorderWhichCreateTrail = null;
         // Draw bg
     }
 
