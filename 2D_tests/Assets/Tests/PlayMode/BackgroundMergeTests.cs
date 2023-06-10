@@ -342,6 +342,43 @@ public class BackgroundMergeTests : MonoBehaviour
         Assert.AreEqual(border_horitontal_original.mStartPoint, border_vertical_original.mEndPoint);
         Assert.AreEqual(border_horitontal_original.mEndPoint, border_vertical_split.mEndPoint);
     }
+    [UnityTest]
+    public IEnumerator test_CheckBorderOnSideIsNotDEletingThe2Borders()
+    {
+        SceneManager.LoadScene("TestScene_1Enemy_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        //  _________
+        // |__       |
+        // |  |      |
+        // |__|      |
+        // |_________|
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        TestUtils.setCharacterPositionInAnchor(character, "left");
+        yield return TestUtils.move(character, "^^>vvvv<", 30);
+
+        //  _________
+        // |         |
+        // |  _____  |
+        // | |     | |
+        // |_|_____|_|
+
+        TestUtils.setCharacterPositionInAnchor(character, "left");
+        yield return TestUtils.move(character, "^>>vv<<", 30);
+
+        //yield return new WaitForSeconds(5);
+        Border border_horitontal_original_side_1 = TestUtils.getBorder(6);
+        Border border_horitontal_original_side_2 = TestUtils.getBorder(8);
+        Border border_vertical_vertical_1 = TestUtils.getBorder(9);
+        Border border_vertical_vertical_2 = TestUtils.getBorder(10);
+        
+        //Assert.AreEqual(border_horitontal_original.mStartPoint, border_vertical_original.mEndPoint);
+        //Assert.AreEqual(border_horitontal_original.mEndPoint, border_vertical_split.mEndPoint);
+    }
 
     [UnityTest]
     public IEnumerator test_showTest()

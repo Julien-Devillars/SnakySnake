@@ -157,10 +157,6 @@ public class Border : MonoBehaviour
             }
             else if(end_point_can_be_moved)
             {
-                if (name == "Border_5")
-                {
-                    Debug.Log("Stop");
-                }
                 Debug.Log("Move End Point : " + name);
                 Vector3 new_point = getClosestPointOnBorder(mEndPoint);
                 Debug.Log("Closest Point : " + new_point);
@@ -182,10 +178,6 @@ public class Border : MonoBehaviour
 
     public void init(Vector3 start_point, Vector3 end_point, bool is_editable = true)
     {
-        if (name == "Border_5")
-        {
-            Debug.Log("Stop");
-        }
         mStartPoint = start_point;
         mEndPoint = end_point;
 
@@ -474,19 +466,19 @@ public class Border : MonoBehaviour
     }
     private void splitOrReplaceBorder(Vector3 point_1, Vector3 point_2)
     {
-        if(point_1 == mStartPoint)
+        if(point_1 == mStartPoint && point_2 != mEndPoint)
         {
             replaceStartPoint(point_2);
         }
-        else if (point_1 == mEndPoint)
+        else if (point_1 == mEndPoint && point_2 != mStartPoint)
         {
             replaceEndPoint(point_2);
         }
-        else if (point_2 == mStartPoint)
+        else if (point_2 == mStartPoint && point_1 != mEndPoint)
         {
             replaceStartPoint(point_1);
         }
-        else if (point_2 == mEndPoint)
+        else if (point_2 == mEndPoint && point_1 != mStartPoint)
         {
             replaceEndPoint(point_1);
         }
@@ -506,11 +498,11 @@ public class Border : MonoBehaviour
 
         if(isVertical())
         {
-            mOtherBorderOnBorders.SortX();
+            mOtherBorderOnBorders.SortY();
         }
         if(isHorizontal())
         {
-            mOtherBorderOnBorders.SortY();
+            mOtherBorderOnBorders.SortX();
         }
 
         for(int i = 0; i < mOtherBorderOnBorders.Count() - 1; ++i)
