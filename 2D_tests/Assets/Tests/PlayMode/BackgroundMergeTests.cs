@@ -334,7 +334,6 @@ public class BackgroundMergeTests : MonoBehaviour
 
         yield return null;
 
-        yield return new WaitForSeconds(5);
         Border border_vertical_original = TestUtils.getBorder(4);
         Border border_horitontal_original = TestUtils.getBorder(5);
         Border border_vertical_split = TestUtils.getBorder(10);
@@ -342,42 +341,128 @@ public class BackgroundMergeTests : MonoBehaviour
         Assert.AreEqual(border_horitontal_original.mStartPoint, border_vertical_original.mEndPoint);
         Assert.AreEqual(border_horitontal_original.mEndPoint, border_vertical_split.mEndPoint);
     }
+
     [UnityTest]
-    public IEnumerator test_CheckBorderOnSideIsNotDEletingThe2Borders()
+    public IEnumerator test_CheckMergingBordersAreNotSetAtTheMiddleWithSplittedBorder()
     {
-        SceneManager.LoadScene("TestScene_1Enemy_Static");
+        SceneManager.LoadScene("TestScene_2Enemies_Static");
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
         yield return null;
 
+        CharacterBehavior character = TestUtils.getCharacter();
+        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
+        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        TestUtils.setEnemyPositionInAnchor(character, enemy_1, "left");
+        TestUtils.setEnemyPositionInAnchor(character, enemy_2, "right");
+
+
         //  _________
-        // |__       |
-        // |  |      |
-        // |__|      |
-        // |_________|
+        // |    |    |
+        // |    |    |
+        // |    |    |
+        // |____|____|
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+        yield return TestUtils.move(character, "<", 15);
+        yield return TestUtils.moveUntilBorder(character, '^', 50);
+
+        //  _________
+        // |  |_|    |
+        // |    |    |
+        // |    |    |
+        // |____|____|
+
+        yield return TestUtils.move(character, "v<^", 30);
+
+        //  _________
+        // | ||_|    |
+        // | |__|____|
+        // |    |    |
+        // |____|____|
+        yield return TestUtils.move(character, "<vv>", 30);
+        yield return TestUtils.moveUntilBorder(character, '>', 50);
+
+        Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
+    }
+    [UnityTest]
+    public IEnumerator test_CheckMergingBordersAreNotSetAtTheMiddleWithSplittedBorder_Reverse()
+    {
+        SceneManager.LoadScene("TestScene_2Enemies_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
+        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
+        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        TestUtils.setEnemyPositionInAnchor(character, enemy_1, "left");
+        TestUtils.setEnemyPositionInAnchor(character, enemy_2, "right");
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+        yield return TestUtils.move(character, ">", 15);
+        yield return TestUtils.moveUntilBorder(character, '^', 50);
+
+        yield return TestUtils.move(character, "v>^", 30);
+
+        yield return TestUtils.move(character, ">vv<", 30);
+        yield return TestUtils.moveUntilBorder(character, '<', 50);
+
+        Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
+    }
+    [UnityTest]
+    public IEnumerator test_CheckMergingBordersAreNotSetAtTheMiddleWithSplittedBorder_UpDown()
+    {
+        SceneManager.LoadScene("TestScene_2Enemies_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
+        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        TestUtils.setEnemyPositionInAnchor(character, enemy_1, "top");
+        TestUtils.setEnemyPositionInAnchor(character, enemy_2, "bottom");
+
         TestUtils.setCharacterPositionInAnchor(character, "left");
-        yield return TestUtils.move(character, "^^>vvvv<", 30);
+        yield return TestUtils.move(character, "v", 15);
+        yield return TestUtils.moveUntilBorder(character, '>', 50);
 
-        //  _________
-        // |         |
-        // |  _____  |
-        // | |     | |
-        // |_|_____|_|
+        yield return TestUtils.move(character, "<v>", 30);
+
+        yield return TestUtils.move(character, "v<<^", 30);
+        yield return TestUtils.moveUntilBorder(character, '^', 50);
+
+        Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
+    }
+    [UnityTest]
+    public IEnumerator test_CheckMergingBordersAreNotSetAtTheMiddleWithSplittedBorder_UpDownReverse()
+    {
+        SceneManager.LoadScene("TestScene_2Enemies_Static");
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
+        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        TestUtils.setEnemyPositionInAnchor(character, enemy_1, "top");
+        TestUtils.setEnemyPositionInAnchor(character, enemy_2, "bottom");
 
         TestUtils.setCharacterPositionInAnchor(character, "left");
-        yield return TestUtils.move(character, "^>>vv<<", 30);
+        yield return TestUtils.move(character, "^", 15);
+        yield return TestUtils.moveUntilBorder(character, '>', 50);
 
-        //yield return new WaitForSeconds(5);
-        Border border_horitontal_original_side_1 = TestUtils.getBorder(6);
-        Border border_horitontal_original_side_2 = TestUtils.getBorder(8);
-        Border border_vertical_vertical_1 = TestUtils.getBorder(9);
-        Border border_vertical_vertical_2 = TestUtils.getBorder(10);
-        
-        //Assert.AreEqual(border_horitontal_original.mStartPoint, border_vertical_original.mEndPoint);
-        //Assert.AreEqual(border_horitontal_original.mEndPoint, border_vertical_split.mEndPoint);
+        yield return TestUtils.move(character, "<^>", 30);
+
+        yield return TestUtils.move(character, "^<<v", 30);
+        yield return TestUtils.moveUntilBorder(character, 'v', 50);
+
+        Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
     }
 
     [UnityTest]

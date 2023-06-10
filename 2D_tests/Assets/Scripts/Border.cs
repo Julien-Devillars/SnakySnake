@@ -138,26 +138,26 @@ public class Border : MonoBehaviour
             }
             else if (start_point_can_be_moved)
             {
-                //Debug.Log("Move Start Point : " + name);
+                Debug.Log("Move Start Point : " + name);
                 Vector3 new_point = getClosestPointOnBorder(mStartPoint);
                 if (new_point == mEndPoint)
                 {
                     destroy();
                     return;
                 }
-                if (new_point == Vector3.positiveInfinity) return;
+                if (new_point.x == Mathf.Infinity) return;
                 replaceStartPoint(new_point);
             }
             else if(end_point_can_be_moved)
             {
-                //Debug.Log("Move End Point : " + name);
+                Debug.Log("Move End Point : " + name);
                 Vector3 new_point = getClosestPointOnBorder(mEndPoint);
                 if (new_point == mStartPoint)
                 {
                     destroy();
                     return;
                 }
-                if (new_point == Vector3.positiveInfinity) return;
+                if (new_point.x == Mathf.Infinity) return;
                 replaceEndPoint(new_point);
             }
             else
@@ -524,22 +524,31 @@ public class Border : MonoBehaviour
             if (border == this) continue;
             if (point == border.mStartPoint || point == border.mEndPoint) continue;
 
-            if (contains(border.mStartPoint) && (border.mStartPoint != mStartPoint || border.mStartPoint != mEndPoint))
+            if (contains(border.mStartPoint))
             {
                 possible_points.Add(border.mStartPoint);
             }
-            if (contains(border.mEndPoint) && (border.mEndPoint != mStartPoint || border.mEndPoint != mEndPoint))
+            if (contains(border.mEndPoint))
             {
                 possible_points.Add(border.mEndPoint);
             }
+            if (border.contains(mStartPoint))
+            {
+                possible_points.Add(mStartPoint);
+            }
+            if (border.contains(mEndPoint))
+            {
+                possible_points.Add(mEndPoint);
+            }
         }
 
-        if (possible_points.Count == 0) return Vector3.zero;
+        if (possible_points.Count == 0) return Vector3.positiveInfinity;
 
         Vector3 closest_point = Vector3.positiveInfinity;
         foreach (Vector3 possible_point in possible_points)
         {
-            if (borderIsInBackgroundWithoutEnemies(possible_point)) continue;
+            if (possible_point == point) continue;
+            //if (borderIsInBackgroundWithoutEnemies(possible_point)) continue;
             //if (possible_point == mStartPoint || possible_point == mEndPoint) continue;
 
             if (Vector3.Distance(possible_point, point) < Vector3.Distance(closest_point, point))
