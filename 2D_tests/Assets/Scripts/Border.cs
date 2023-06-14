@@ -127,11 +127,17 @@ public class Border : MonoBehaviour
             updateBorderConnection();
             mHasToUpdateBorder = false;
         }
+
+        Border connected_border_with_same_direction = getConnectedBorderWithSameDirection();
+        if(connected_border_with_same_direction != null && isTheLongestBorder(connected_border_with_same_direction))
+        {
+            mergeBorder(connected_border_with_same_direction);
+        }
+
         bool start_point_can_be_moved = borderIsInBackgroundWithoutEnemies(getShiftPlusPoint(mStartPoint));
         bool end_point_can_be_moved = borderIsInBackgroundWithoutEnemies(getShiftMinusPoint(mEndPoint));
         if(mIsEditable)
         {
-
             if (start_point_can_be_moved && end_point_can_be_moved)
             {
                 destroy();
@@ -166,6 +172,46 @@ public class Border : MonoBehaviour
             }
         }
     }
+    public void mergeBorder(Border border_to_merge)
+    {
+        if (mStartPoint == border_to_merge.mEndPoint)
+        {
+            replaceStartPoint(border_to_merge.mStartPoint);
+        }
+        else if (mStartPoint == border_to_merge.mStartPoint)
+        {
+            replaceStartPoint(border_to_merge.mEndPoint);
+        }
+        else if (mEndPoint == border_to_merge.mStartPoint)
+        {
+            replaceEndPoint(border_to_merge.mEndPoint);
+        }
+        else if (mEndPoint == border_to_merge.mEndPoint)
+        {
+            replaceEndPoint(border_to_merge.mStartPoint);
+        }
+        border_to_merge.mToDelete = true;
+        replaceCollider2D();
+    }
+
+    public bool isTheLongestBorder(Border border)
+    {
+        return Vector3.Distance(border.mStartPoint, border.mEndPoint) > Vector3.Distance(mStartPoint, mEndPoint);
+    }
+
+    public Border getConnectedBorderWithSameDirection()
+    {
+        for (int i = 0; i < mOtherBorderOnBorders.Count(); ++i)
+        {
+            Border border = mOtherBorderOnBorders.BorderAt(i);
+            if (border != null && (border.isVertical() == isVertical() || border.isHorizontal() == isHorizontal()))
+            {
+                return border;
+            }
+        }
+        return null;
+    }
+
     public Vector3 getShiftPlusPoint(Vector3 point)
     {
         if(isVertical())
@@ -191,6 +237,7 @@ public class Border : MonoBehaviour
             }
         }
     }
+
     public Vector3 getShiftMinusPoint(Vector3 point)
     {
         if (isVertical())
@@ -311,7 +358,12 @@ public class Border : MonoBehaviour
         }
         return false;
     }
-
+    private void replaceCollider2D()
+    {
+        BoxCollider2D box_collider = gameObject.GetComponent<BoxCollider2D>();
+        Destroy(box_collider);
+        addCollider2D();
+    }
     private void addCollider2D()
     {
         BoxCollider2D box_collider = gameObject.AddComponent<BoxCollider2D>();
