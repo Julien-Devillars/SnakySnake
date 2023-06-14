@@ -246,7 +246,6 @@ public class CharacterBehavior : MonoBehaviour
             return;
 
         mLastBorderWhichCreateTrail = mLastBorder;
-        Debug.Log(mLastBorderWhichCreateTrail.name);
         GameObject current_point = new GameObject();
         current_point.gameObject.transform.parent = mTrailPointsGO.gameObject.transform;
         current_point.name = "Trail Points " + mTrailPoints.Count.ToString();

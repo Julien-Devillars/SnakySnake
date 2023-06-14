@@ -473,7 +473,7 @@ public class BackgroundMergeTests : MonoBehaviour
         Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
     }
     [UnityTest]
-    public IEnumerator test_middleLineShoumldBeDeleted()
+    public IEnumerator test_middleLineShouldBeDeleted()
     {
         SceneManager.LoadScene("TestScene_2Enemies_Static");
         Utils.HAS_LOSE = false;
@@ -514,8 +514,9 @@ public class BackgroundMergeTests : MonoBehaviour
         // |___|_|___|
 
         yield return TestUtils.moveUntilBorder(character, '^', 30);
+        yield return null; yield return null; // Wait 2 frames to delete the border
 
-        Assert.AreEqual(character.mBorders.Count, 7);
+        Assert.AreEqual(6, character.mBorders.Count);
     }
 
     [UnityTest]
