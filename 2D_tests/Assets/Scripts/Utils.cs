@@ -10,6 +10,8 @@ public class Utils
     public static string BORDER_STR = "Borders";
     public static string ENEMIES_STR = "Enemies";
     public static string TRAILS_STR = "Trails";
+    public static string LEVEL_STR = "LevelController";
+    public static string STAR_STR = "Star";
     public static float EPSILON() => GameObject.Find(CHARACTER).transform.localScale.x / 2f;
     public static float OFFSET => 0.01f;
     public static float DIRECTION_UPDATE_TIME = 0.1f;

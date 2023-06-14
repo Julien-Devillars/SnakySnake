@@ -9,6 +9,7 @@ public class Score : MonoBehaviour
     public float mPreviousScore;
     public float mCurrentScore;
     public float mStep = 250f;
+    public int mGoalPercent;
     public int mGoalScore;
     public GameObject mScoreGoalGameObject;
     public static Score Instance { get; private set; }
@@ -23,13 +24,16 @@ public class Score : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        GameObject level_controller = GameObject.Find(Utils.LEVEL_STR);
+        LevelSettings level_settings = level_controller.GetComponent<LevelSettings>();
+        mGoalPercent = level_settings.score;
     }
 
     void Start()
     {
         mCurrentScore = 0f;
         mPreviousScore = 0f;
-        mGoalScore = 70 *  mMultiplier;
+        mGoalScore = mGoalPercent *  mMultiplier;
 
         Camera cam = Camera.main;
 

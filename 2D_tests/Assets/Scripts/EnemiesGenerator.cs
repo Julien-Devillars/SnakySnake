@@ -5,18 +5,19 @@ using UnityEngine;
 public class EnemiesGenerator : MonoBehaviour
 {
     private List<GameObject> enemies;
-    
-    [SerializeField] public LevelSettings settingsForLevel;
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        int number_enemies = settingsForLevel.number_enemies;
-        bool random_direction = settingsForLevel.random_direction;
-        bool random_position = settingsForLevel.random_position;
-        List<Vector2> enemies_direction = settingsForLevel.enemies_direction;
-        List<Vector2> enemies_position = settingsForLevel.enemies_position;
-        Vector2 scale = settingsForLevel.scale;
+        GameObject level_controller_go = GameObject.Find(Utils.LEVEL_STR);
+        LevelSettings settings = level_controller_go.GetComponent<LevelSettings>();
+
+        int number_enemies = settings.number_enemies;
+        bool random_direction = settings.random_direction;
+        bool random_position = settings.random_position;
+        List<Vector2> enemies_direction = settings.enemies_direction;
+        List<Vector2> enemies_position = settings.enemies_position;
+        Vector2 scale = settings.scale;
 
         enemies = new List<GameObject>();
 
@@ -32,7 +33,7 @@ public class EnemiesGenerator : MonoBehaviour
             // Add Sprite Renderer
             SpriteRenderer sprite_renderer = enemy_go.AddComponent<SpriteRenderer>();
             sprite_renderer.sprite = Resources.Load<Sprite>("Photoshop/EnemySprite");
-            if(Utils.SHADER_ON)
+            if (Utils.SHADER_ON)
             {
                 sprite_renderer.material = Resources.Load<Material>("Materials/EnemyMaterial");
             }
@@ -53,7 +54,7 @@ public class EnemiesGenerator : MonoBehaviour
             enemies.Add(enemy_go);
 
             // Set enemy direction
-            if(random_direction)
+            if (random_direction)
             {
                 enemy_behavior.setRandomDirection();
             }
@@ -72,13 +73,6 @@ public class EnemiesGenerator : MonoBehaviour
                 enemy_behavior.setPosition(enemies_position[i]);
             }
         }
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
 

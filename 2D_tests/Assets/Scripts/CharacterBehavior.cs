@@ -258,7 +258,6 @@ public class CharacterBehavior : MonoBehaviour
         current_trail.AddComponent<Trail>();
         mTrails.Add(current_trail);
         StartCoroutine(waiterAddLine());
-                
     }
 
     void fixLastTrailIfNeeded()

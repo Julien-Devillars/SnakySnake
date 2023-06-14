@@ -123,6 +123,62 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &17966348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 17966350}
+  - component: {fileID: 17966349}
+  m_Layer: 0
+  m_Name: LevelController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &17966349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17966348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8185f1afd57cc340a8753d70f56832a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  number_enemies: 2
+  random_direction: 0
+  random_position: 0
+  enemies_direction:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  enemies_position:
+  - {x: 2, y: 0}
+  - {x: -2, y: 0}
+  scale: {x: 1, y: 1}
+  star_positions:
+  - {x: 0, y: 0}
+  score: 70
+--- !u!4 &17966350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17966348}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.0091515, y: -1.3871772, z: 1.4801006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &100488386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -223,17 +279,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1701cca2cbcd28844bcfc699c2751c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingsForLevel:
-    number_enemies: 2
-    random_direction: 0
-    random_position: 0
-    enemies_direction:
-    - {x: 0, y: 0}
-    - {x: 0, y: 0}
-    enemies_position:
-    - {x: -1, y: 0}
-    - {x: 1, y: 0}
-    scale: {x: 2, y: 2}
+--- !u!1 &637426486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 637426488}
+  - component: {fileID: 637426487}
+  m_Layer: 0
+  m_Name: Stars
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &637426487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637426486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83bc4499dc5508a428016d312c48265c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &637426488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637426486}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.0091515, y: -1.3871772, z: 1.4801006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &727324699
 GameObject:
   m_ObjectHideFlags: 0
