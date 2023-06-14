@@ -81,7 +81,7 @@ public class Background : MonoBehaviour
         {
             if (background == this) continue;
             if (string.Compare(background.gameObject.name, gameObject.name) != -1) continue;
-            if (background.hasEnemies()) continue;
+            if (background.hasEnemies() != hasEnemies()) continue;
 
             if (mMaxBorderPos.x == background.mMinBorderPos.x && mMinBorderPos.y == background.mMinBorderPos.y && mMaxBorderPos.y == background.mMaxBorderPos.y)
             {
