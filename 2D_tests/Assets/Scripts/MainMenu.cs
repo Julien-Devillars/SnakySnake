@@ -6,7 +6,9 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync("Level_1");
+        Debug.Log("Click Button");
+        SceneManager.LoadScene("Level_1");
+        Debug.Log("After Async");
     }
     public void QuitGame()
     {

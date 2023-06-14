@@ -127,8 +127,8 @@ public class Border : MonoBehaviour
             updateBorderConnection();
             mHasToUpdateBorder = false;
         }
-        bool start_point_can_be_moved = borderIsInBackgroundWithoutEnemies(mStartPoint);
-        bool end_point_can_be_moved = borderIsInBackgroundWithoutEnemies(mEndPoint);
+        bool start_point_can_be_moved = borderIsInBackgroundWithoutEnemies(getShiftPlusPoint(mStartPoint));
+        bool end_point_can_be_moved = borderIsInBackgroundWithoutEnemies(getShiftMinusPoint(mEndPoint));
         if(mIsEditable)
         {
 
@@ -163,6 +163,56 @@ public class Border : MonoBehaviour
             else
             {
                 checkIfBorderShouldBeSplit();
+            }
+        }
+    }
+    public Vector3 getShiftPlusPoint(Vector3 point)
+    {
+        if(isVertical())
+        {
+            if(isBottomToTop())
+            {
+                return new Vector3(point.x, point.y + Utils.OFFSET);
+            }
+            else
+            {
+                return new Vector3(point.x, point.y - Utils.OFFSET);
+            }
+        }
+        else
+        {
+            if (isLeftToRight())
+            {
+                return new Vector3(point.x + Utils.OFFSET, point.y);
+            }
+            else
+            {
+                return new Vector3(point.x - Utils.OFFSET, point.y);
+            }
+        }
+    }
+    public Vector3 getShiftMinusPoint(Vector3 point)
+    {
+        if (isVertical())
+        {
+            if (isBottomToTop())
+            {
+                return new Vector3(point.x, point.y - Utils.OFFSET);
+            }
+            else
+            {
+                return new Vector3(point.x, point.y + Utils.OFFSET);
+            }
+        }
+        else
+        {
+            if (isLeftToRight())
+            {
+                return new Vector3(point.x - Utils.OFFSET, point.y);
+            }
+            else
+            {
+                return new Vector3(point.x + Utils.OFFSET, point.y);
             }
         }
     }

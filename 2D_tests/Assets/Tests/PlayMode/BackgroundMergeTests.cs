@@ -11,6 +11,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckBorderIsCorrectlyMovedWith4Backgrounds()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -78,6 +79,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckBorderIsCorrectlyRemoveWhenCreatingACorner()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -116,6 +118,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckBorderIsCorrectlyRemoveWhenCreatingACornerSquareOnTheCorner()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -154,6 +157,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckBorderIsCorrectlyRemoveWhenCreatingASquareInTheBorderContinuity_StartPointChanged()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -188,6 +192,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckBorderIsCorrectlyRemoveWhenCreatingASquareInTheBorderContinuity_EndPointChanged()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -223,6 +228,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckBorderIsCorrectlyRemoveWhenCreatingASquareOnASquareSide()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -268,6 +274,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckBorderIsNotMissingAfterCrossing()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -291,13 +298,11 @@ public class BackgroundMergeTests : MonoBehaviour
 
 
         yield return TestUtils.move(character, ">^^<vv", 30);
-
         yield return null;
 
         Border border_vertical_original = TestUtils.getBorder(6);
         Border border_horizontal_original = TestUtils.getBorder(7);
         Border border_vertical_split = TestUtils.getBorder(8);
-
 
         Assert.AreEqual(border_vertical_original.mEndPoint, border_horizontal_original.mStartPoint);
         Assert.AreEqual(border_horizontal_original.mEndPoint, border_vertical_split.mEndPoint);
@@ -306,6 +311,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckBorderIsNotMissingAfterCrossingFromAbove()
     {
         SceneManager.LoadScene("TestScene_1Enemy_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -327,7 +333,6 @@ public class BackgroundMergeTests : MonoBehaviour
         // |_|_|  |   |
         // |______|___|
 
-
         yield return TestUtils.move(character, "v>^^^>>", 30);
         yield return TestUtils.move(character, ">", 15);
         yield return TestUtils.move(character, "vvv", 30);
@@ -346,6 +351,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckMergingBordersAreNotSetAtTheMiddleWithSplittedBorder()
     {
         SceneManager.LoadScene("TestScene_2Enemies_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -356,7 +362,6 @@ public class BackgroundMergeTests : MonoBehaviour
         EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
         TestUtils.setEnemyPositionInAnchor(character, enemy_1, "left");
         TestUtils.setEnemyPositionInAnchor(character, enemy_2, "right");
-
 
         //  _________
         // |    |    |
@@ -390,6 +395,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckMergingBordersAreNotSetAtTheMiddleWithSplittedBorder_Reverse()
     {
         SceneManager.LoadScene("TestScene_2Enemies_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -416,6 +422,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckMergingBordersAreNotSetAtTheMiddleWithSplittedBorder_UpDown()
     {
         SceneManager.LoadScene("TestScene_2Enemies_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -442,6 +449,7 @@ public class BackgroundMergeTests : MonoBehaviour
     public IEnumerator test_CheckMergingBordersAreNotSetAtTheMiddleWithSplittedBorder_UpDownReverse()
     {
         SceneManager.LoadScene("TestScene_2Enemies_Static");
+        Utils.HAS_LOSE = false;
 
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
@@ -463,6 +471,51 @@ public class BackgroundMergeTests : MonoBehaviour
         yield return TestUtils.moveUntilBorder(character, 'v', 50);
 
         Assert.IsTrue(TestUtils.bordersAreValid(character.mBorders));
+    }
+    [UnityTest]
+    public IEnumerator test_middleLineShoumldBeDeleted()
+    {
+        SceneManager.LoadScene("TestScene_2Enemies_Static");
+        Utils.HAS_LOSE = false;
+
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+
+        //  _________
+        // |   |     |
+        // |   |     |
+        // |   |     |
+        // |___|_____|
+
+        CharacterBehavior character = TestUtils.getCharacter();
+        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
+        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        TestUtils.setEnemyPositionInAnchor(character, enemy_1, "left");
+        TestUtils.setEnemyPositionInAnchor(character, enemy_2, "right");
+
+        TestUtils.setCharacterPositionInAnchor(character, "bottom");
+        yield return TestUtils.move(character, "<", 30);
+        yield return TestUtils.moveUntilBorder(character, '^', 30);
+
+        //  _________
+        // |   |     |
+        // |   |_    |
+        // |   | |   |
+        // |___|_|___|
+
+        yield return TestUtils.move(character, "vv>v", 30);
+        yield return TestUtils.moveUntilBorder(character, 'v', 30);
+
+        //  _________
+        // |   | |   |
+        // |   | |   |
+        // |   | |   |
+        // |___|_|___|
+
+        yield return TestUtils.moveUntilBorder(character, '^', 30);
+
+        Assert.AreEqual(character.mBorders.Count, 7);
     }
 
     [UnityTest]
