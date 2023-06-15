@@ -9,6 +9,10 @@ public class MusicHandler : MonoBehaviour
     [SerializeField]
     private List<AudioClip> mMusics;
 
+    public float max_volume = 0.6f;
+    public float stop_volume = 0.05f;
+    public float smooth_time_on_stop = 0.15f;
+
     BeatHandler mBeatHandler;
     private void Awake()
     {
@@ -21,6 +25,7 @@ public class MusicHandler : MonoBehaviour
             mAudioSource.clip = mMusics[idx_music];
             Debug.Log("Music playing : " + mAudioSource.clip.name);
             mAudioSource.Play();
+            mAudioSource.volume = max_volume;
             //mBeatHandler = new BeatHandler();
             return;
         }
@@ -47,6 +52,18 @@ public class MusicHandler : MonoBehaviour
         float[] spectrum = new float[1024];
 
         AudioListener.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
+
+        float shift = 0f;
+        float new_volume;
+        if (Utils.GAME_STOPPED)
+        {
+            new_volume = Mathf.SmoothDamp(mAudioSource.volume, stop_volume, ref shift, smooth_time_on_stop);
+        }
+        else
+        {
+            new_volume = Mathf.SmoothDamp(mAudioSource.volume, max_volume, ref shift, smooth_time_on_stop);
+        }
+        mAudioSource.volume = new_volume;
 
         //mBeatHandler.addSpectrum(spectrum);
         //Debug.Log(mBeatHandler.isBeat(spectrum));

@@ -20,6 +20,7 @@ public class Utils
 
     public static bool HAS_LOSE = true;
     public static bool HAS_WIN = true;
+    public static bool GAME_STOPPED = false;
 
     public static bool SHADER_ON = true;
 
@@ -184,6 +185,12 @@ public class Utils
         GameObject bg_mesh_go = GameObject.Find(BACKGROUND_MESH_STR);
         BackgroundMesh bg_mesh = bg_mesh_go.GetComponent<BackgroundMesh>();
         bg_mesh.mForceUpdate = true;
+    }
+
+    public float fade(float t)
+    {
+        float a = Mathf.Round(t);
+        return Mathf.Pow((4 * t), 3) * (1 - a) + (1 - 4 * Mathf.Pow((1 - t), 3)) * a; // 4t^(3)(1-a)+(1-4(1-t)^(3))a
     }
 
 }

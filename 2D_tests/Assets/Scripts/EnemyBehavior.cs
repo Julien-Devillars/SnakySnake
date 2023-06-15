@@ -28,6 +28,7 @@ public class EnemyBehavior : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (Utils.GAME_STOPPED) return;
         gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
     }
 

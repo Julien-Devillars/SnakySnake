@@ -118,6 +118,7 @@ public class CharacterBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Utils.GAME_STOPPED) return;
         Background current_bg = GetBackground(transform.position);
         Border current_border = GetBorder(transform.position);
 
