@@ -81,10 +81,12 @@ public class EnemyBehavior : MonoBehaviour
 
     public bool checkPositionIsValid(Vector2 pos)
     {
-        return pos.x > mMinPos.x
-            && pos.x < mMaxPos.x
-            && pos.y > mMinPos.x
-            && pos.y < mMaxPos.y;
+        float scale = transform.localScale.x;
+
+        return pos.x > mMinPos.x + scale
+            && pos.x < mMaxPos.x - scale
+            && pos.y > mMinPos.x + scale
+            && pos.y < mMaxPos.y - scale;
     }
 
     public void setDefaultPosition()
