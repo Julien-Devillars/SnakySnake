@@ -24,8 +24,8 @@ public class BackgroundMesh : MonoBehaviour
 
         Camera cam = Camera.main;
 
-        float width = cam.aspect * cam.orthographicSize;
-        float height = cam.orthographicSize;
+        float width = cam.aspect * cam.orthographicSize - Utils.EPSILON();
+        float height = cam.orthographicSize - Utils.EPSILON();
 
         mMinBorderPos = new Vector3(-width, -height, 0);
         mMaxBorderPos = new Vector3(width, height, 0);

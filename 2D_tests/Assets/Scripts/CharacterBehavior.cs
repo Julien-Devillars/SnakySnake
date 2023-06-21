@@ -44,8 +44,8 @@ public class CharacterBehavior : MonoBehaviour
 
         Camera cam = Camera.main;
 
-        float width = cam.aspect * cam.orthographicSize;
-        float height = cam.orthographicSize;
+        float width = cam.aspect * cam.orthographicSize - Utils.EPSILON();
+        float height = cam.orthographicSize - Utils.EPSILON();
 
         mMinBorderPos = new Vector3(-width, -height, 0);
         mMaxBorderPos = new Vector3(width, height, 0);
@@ -441,6 +441,53 @@ void deleteLine()
         {
             return Direction.Down;
         }
+
+        if(Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            Vector3 touch_position = Camera.main.ScreenToWorldPoint(touch.position);
+            touch_position.z = 0f;
+            Vector3 touch_by_character = touch_position - transform.position;
+            if(Mathf.Abs(touch_by_character.x) > Mathf.Abs(touch_by_character.y)) // Handle horizontal
+            {
+                if(touch_by_character.x < 0)
+                {
+                    return Direction.Left;
+                }
+                else
+                {
+                    return Direction.Right;
+                }
+            }
+            else
+            {
+                if (touch_by_character.y < 0)
+                {
+                    return Direction.Down;
+                }
+                else
+                {
+                    return Direction.Up;
+                }
+            }
+            //if (touch_position.x > (mMaxBorderPos.x * 2 + mMinBorderPos.x)/2f )
+            //{
+            //    return Direction.Right;
+            //}
+            //if (touch_position.x < (mMaxBorderPos.x + mMinBorderPos.x * 2f) / 2f)
+            //{
+            //    return Direction.Left;
+            //}
+            //if (touch_position.y > (mMaxBorderPos.y * 2 + mMinBorderPos.y) / 2f)
+            //{
+            //    return Direction.Up;
+            //}
+            //if (touch_position.y < (mMaxBorderPos.y + mMinBorderPos.y * 2f) / 2f)
+            //{
+            //    return Direction.Down;
+            //}
+        }
+
         return Direction.None;
     }
 
