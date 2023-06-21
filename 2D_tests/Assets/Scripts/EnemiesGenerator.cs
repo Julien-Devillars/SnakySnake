@@ -53,6 +53,9 @@ public class EnemiesGenerator : MonoBehaviour
             EnemyBehavior enemy_behavior = enemy_go.AddComponent<EnemyBehavior>();
             enemies.Add(enemy_go);
 
+            GameObject particle_go = Instantiate(Resources.Load<GameObject>("Particles/EnemyParticle"));
+            particle_go.transform.parent = enemy_go.transform;
+
             // Set enemy direction
             if (random_direction)
             {
