@@ -328,6 +328,7 @@ public class Border : MonoBehaviour
         if(Utils.SHADER_ON)
         {
             mLineRenderer.material = (Material)Resources.Load("Shaders/GlowBorder", typeof(Material));
+            //mLineRenderer.material = (Material)Resources.Load("Materials/Border", typeof(Material));
             mLineRenderer.material.color = Color.white;
         }
         else
