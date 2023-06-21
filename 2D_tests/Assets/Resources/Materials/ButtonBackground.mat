@@ -133,11 +133,11 @@ Material:
     - _HandDrawnSpeed: 5
     - _HitEffectBlend: 1
     - _HitEffectGlow: 53.9
-    - _HologramBlend: 1
+    - _HologramBlend: 0.522
     - _HologramMaxAlpha: 0.75
     - _HologramMinAlpha: 0.1
-    - _HologramStripesAmount: 0.1
-    - _HologramStripesSpeed: 4.5
+    - _HologramStripesAmount: 0.365
+    - _HologramStripesSpeed: 9.9
     - _HologramUnmodAmount: 0
     - _HsvBright: 1
     - _HsvSaturation: 1
@@ -153,7 +153,7 @@ Material:
     - _MotionBlurDist: 1.25
     - _MyDstMode: 10
     - _MySrcMode: 5
-    - _NegativeAmount: 0.843
+    - _NegativeAmount: 0.868
     - _OffsetUvX: 0
     - _OffsetUvY: 0
     - _OnlyInnerOutline: 0
@@ -205,7 +205,7 @@ Material:
     - _ZoomUvAmount: 0.5
     m_Colors:
     - _AlphaOutlineColor: {r: 0.227, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.5660378, g: 0.49928805, b: 0.49928805, a: 1}
+    - _Color: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
     - _ColorChangeNewCol: {r: 1, g: 1, b: 0, a: 1}
     - _ColorChangeNewCol2: {r: 1, g: 1, b: 0, a: 1}
     - _ColorChangeNewCol3: {r: 1, g: 1, b: 0, a: 1}
@@ -223,7 +223,7 @@ Material:
     - _GradTopRightCol: {r: 0.34750322, g: 0.15917587, b: 0.46226418, a: 1}
     - _GreyscaleTintColor: {r: 1, g: 1, b: 1, a: 1}
     - _HitEffectColor: {r: 0.9528302, g: 0.18427375, b: 0.18427375, a: 1}
-    - _HologramStripeColor: {r: 0, g: 1, b: 1, a: 1}
+    - _HologramStripeColor: {r: 0.043137226, g: 0.98039216, b: 0.93002295, a: 1}
     - _InnerOutlineColor: {r: 1, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _OverlayColor: {r: 1, g: 1, b: 1, a: 1}

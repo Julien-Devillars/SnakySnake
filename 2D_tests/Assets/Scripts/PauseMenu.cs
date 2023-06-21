@@ -53,9 +53,16 @@ public class PauseMenu : MonoBehaviour
 
     public void Back()
     {
-        Time.timeScale = 1f;
+        mIsPaused = false;
+        Utils.GAME_STOPPED = false;
         SceneManager.LoadSceneAsync("MainMenu");
     }
+    public void BackOptions()
+    {
+        mMainMenu.SetActive(true);
+        mOptionMenu.SetActive(false);
+    }
+
     public void Option()
     {
         mMainMenu.SetActive(false);
@@ -63,7 +70,8 @@ public class PauseMenu : MonoBehaviour
     }
     public void Quit()
     {
-        Time.timeScale = 1f;
+        mIsPaused = false;
+        Utils.GAME_STOPPED = false;
         Application.Quit();
     }
 }
