@@ -33,6 +33,9 @@ public class CharacterBehavior : MonoBehaviour
     private Border mLastBorder;
     private Border mLastBorderWhichCreateTrail;
 
+    private bool mFingerDown;
+    Vector3 mStartPositionFingerDown;
+    Vector3 mLastPositionFingerUp;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +44,7 @@ public class CharacterBehavior : MonoBehaviour
         mPreviousDirection = Direction.direction.None;
         mCanMove = true;
         mCanAddLine = true;
+        mFingerDown = false;
 
         Camera cam = Camera.main;
 
@@ -444,32 +448,44 @@ void deleteLine()
 
         if(Input.touchCount > 0)
         {
+
             Touch touch = Input.GetTouch(0);
             Vector3 touch_position = Camera.main.ScreenToWorldPoint(touch.position);
             touch_position.z = 0f;
-            Vector3 touch_by_character = touch_position - transform.position;
-            if(Mathf.Abs(touch_by_character.x) > Mathf.Abs(touch_by_character.y)) // Handle horizontal
+
+            if (!mFingerDown)
             {
-                if(touch_by_character.x < 0)
-                {
-                    return Direction.Left;
-                }
-                else
-                {
-                    return Direction.Right;
-                }
+                mFingerDown = true;
+                mStartPositionFingerDown = touch_position;
             }
             else
             {
-                if (touch_by_character.y < 0)
-                {
-                    return Direction.Down;
-                }
-                else
-                {
-                    return Direction.Up;
-                }
+                mLastPositionFingerUp = touch_position;
             }
+
+            //Vector3 touch_by_character = touch_position - transform.position;
+            //if(Mathf.Abs(touch_by_character.x) > Mathf.Abs(touch_by_character.y)) // Handle horizontal
+            //{
+            //    if(touch_by_character.x < 0)
+            //    {
+            //        return Direction.Left;
+            //    }
+            //    else
+            //    {
+            //        return Direction.Right;
+            //    }
+            //}
+            //else
+            //{
+            //    if (touch_by_character.y < 0)
+            //    {
+            //        return Direction.Down;
+            //    }
+            //    else
+            //    {
+            //        return Direction.Up;
+            //    }
+            //}
             //if (touch_position.x > (mMaxBorderPos.x * 2 + mMinBorderPos.x)/2f )
             //{
             //    return Direction.Right;
@@ -486,6 +502,35 @@ void deleteLine()
             //{
             //    return Direction.Down;
             //}
+        }
+        else
+        {
+            mFingerDown = false;
+            Vector3 swap = mLastPositionFingerUp - mStartPositionFingerDown;
+            if(swap == Vector3.zero) return Direction.None;
+
+            if (Mathf.Abs(swap.x) > Mathf.Abs(swap.y)) // Handle horizontal
+            {
+                if (swap.x < 0)
+                {
+                    return Direction.Left;
+                }
+                else
+                {
+                    return Direction.Right;
+                }
+            }
+            else
+            {
+                if (swap.y < 0)
+                {
+                    return Direction.Down;
+                }
+                else
+                {
+                    return Direction.Up;
+                }
+            }
         }
 
         return Direction.None;
