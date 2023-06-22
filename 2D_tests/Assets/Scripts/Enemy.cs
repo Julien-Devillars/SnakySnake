@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EnemyBehavior : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public Vector2 speed;
     private Vector3 mMinPos;

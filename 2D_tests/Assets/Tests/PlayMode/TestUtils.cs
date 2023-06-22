@@ -113,7 +113,7 @@ public class TestUtils
                 break;
         }
     }
-    public static void setEnemyPositionInAnchor(CharacterBehavior character, EnemyBehavior enemy, string anchor_position)
+    public static void setEnemyPositionInAnchor(CharacterBehavior character, Enemy enemy, string anchor_position)
     {
         float epsilon = Utils.EPSILON() * 2f;
         switch (anchor_position)
@@ -294,11 +294,11 @@ public class TestUtils
     {
         return GameObject.Find(Utils.CHARACTER).GetComponent<CharacterBehavior>();
     }
-    public static EnemyBehavior getEnemy(int i)
+    public static Enemy getEnemy(int i)
     {
         GameObject enemies_go = GameObject.Find(Utils.ENEMIES_STR);
         GameObject enemy_go = enemies_go.transform.GetChild(i).gameObject;
-        return enemy_go.GetComponent<EnemyBehavior>();
+        return enemy_go.GetComponent<Enemy>();
     }
     public static Border getBorder(int i)
     {

@@ -167,10 +167,10 @@ public class BorderTests
 
         CharacterBehavior character = TestUtils.getCharacter();
         TestUtils.setCharacterPositionInAnchor(character, "top-left");
-        
-        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
+
+        Enemy enemy_1 = TestUtils.getEnemy(0);
         TestUtils.setEnemyPositionInAnchor(character , enemy_1, "bottom-right");
-        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        Enemy enemy_2 = TestUtils.getEnemy(1);
         TestUtils.setEnemyPositionInAnchor(character, enemy_2, "top-right");
 
         yield return TestUtils.move(character, "v>", 15);

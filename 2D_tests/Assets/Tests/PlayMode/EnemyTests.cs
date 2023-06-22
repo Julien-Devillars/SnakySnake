@@ -16,8 +16,8 @@ public class EnemyTests
         // Use yield to skip a frame.
         yield return null;
 
-        EnemyBehavior enemy_1 = TestUtils.getEnemy(1);
-        EnemyBehavior enemy_2 = TestUtils.getEnemy(0);
+        Enemy enemy_1 = TestUtils.getEnemy(1);
+        Enemy enemy_2 = TestUtils.getEnemy(0);
         Vector3 previous_pos_1 = new Vector3();
         Vector3 previous_pos_2 = new Vector3();
         Vector3 first_pos_1 = enemy_1.transform.position;
@@ -46,8 +46,8 @@ public class EnemyTests
         yield return null;
 
         Utils.HAS_LOSE = false;
-        
-        EnemyBehavior enemy = TestUtils.getEnemy(0);
+
+        Enemy enemy = TestUtils.getEnemy(0);
         enemy.setDirection(new Vector2(-7, 0));
 
         GameObject character_go = GameObject.Find(Utils.CHARACTER);
@@ -71,7 +71,7 @@ public class EnemyTests
 
         Utils.HAS_LOSE = false;
 
-        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        Enemy enemy = TestUtils.getEnemy(0);
 
         GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
@@ -100,7 +100,7 @@ public class EnemyTests
 
         Utils.HAS_LOSE = false;
 
-        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        Enemy enemy = TestUtils.getEnemy(0);
 
         GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
@@ -127,7 +127,7 @@ public class EnemyTests
 
         Utils.HAS_LOSE = false;
 
-        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        Enemy enemy = TestUtils.getEnemy(0);
         TestUtils.setEnemyPositionInAnchor(TestUtils.getCharacter(), enemy, "top-right");
         Vector3 expected_pos = enemy.transform.position;
 
@@ -151,7 +151,7 @@ public class EnemyTests
 
         Utils.HAS_LOSE = false;
 
-        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        Enemy enemy = TestUtils.getEnemy(0);
         CharacterBehavior character = TestUtils.getCharacter();
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");

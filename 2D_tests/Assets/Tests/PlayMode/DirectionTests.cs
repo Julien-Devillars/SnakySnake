@@ -117,7 +117,7 @@ public class DirectionTests
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
-        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        Enemy enemy = TestUtils.getEnemy(0);
 
 
         TestUtils.setCharacterPositionInAnchor(character, "bottom");

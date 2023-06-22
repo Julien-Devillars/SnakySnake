@@ -102,7 +102,7 @@ public class TrailTests
 
         CharacterBehavior character = TestUtils.getCharacter();
         TestUtils.setCharacterPositionInAnchor(character, "bottom-left");
-        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        Enemy enemy = TestUtils.getEnemy(0);
         TestUtils.setEnemyPositionInAnchor(character, enemy, "bottom");
 
         yield return TestUtils.move(character, ">");

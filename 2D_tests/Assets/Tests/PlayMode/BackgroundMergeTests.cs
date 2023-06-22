@@ -358,8 +358,8 @@ public class BackgroundMergeTests : MonoBehaviour
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
-        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
-        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        Enemy enemy_1 = TestUtils.getEnemy(0);
+        Enemy enemy_2 = TestUtils.getEnemy(1);
         TestUtils.setEnemyPositionInAnchor(character, enemy_1, "left");
         TestUtils.setEnemyPositionInAnchor(character, enemy_2, "right");
 
@@ -402,8 +402,8 @@ public class BackgroundMergeTests : MonoBehaviour
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
-        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
-        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        Enemy enemy_1 = TestUtils.getEnemy(0);
+        Enemy enemy_2 = TestUtils.getEnemy(1);
         TestUtils.setEnemyPositionInAnchor(character, enemy_1, "left");
         TestUtils.setEnemyPositionInAnchor(character, enemy_2, "right");
 
@@ -429,8 +429,8 @@ public class BackgroundMergeTests : MonoBehaviour
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
-        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
-        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        Enemy enemy_1 = TestUtils.getEnemy(0);
+        Enemy enemy_2 = TestUtils.getEnemy(1);
         TestUtils.setEnemyPositionInAnchor(character, enemy_1, "top");
         TestUtils.setEnemyPositionInAnchor(character, enemy_2, "bottom");
 
@@ -456,8 +456,8 @@ public class BackgroundMergeTests : MonoBehaviour
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
-        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
-        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        Enemy enemy_1 = TestUtils.getEnemy(0);
+        Enemy enemy_2 = TestUtils.getEnemy(1);
         TestUtils.setEnemyPositionInAnchor(character, enemy_1, "top");
         TestUtils.setEnemyPositionInAnchor(character, enemy_2, "bottom");
 
@@ -489,8 +489,8 @@ public class BackgroundMergeTests : MonoBehaviour
         // |___|_____|
 
         CharacterBehavior character = TestUtils.getCharacter();
-        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
-        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        Enemy enemy_1 = TestUtils.getEnemy(0);
+        Enemy enemy_2 = TestUtils.getEnemy(1);
         TestUtils.setEnemyPositionInAnchor(character, enemy_1, "left");
         TestUtils.setEnemyPositionInAnchor(character, enemy_2, "right");
 

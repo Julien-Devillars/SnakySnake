@@ -337,7 +337,7 @@ public class BackgroundTests
         yield return null;
 
         CharacterBehavior character = TestUtils.getCharacter();
-        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        Enemy enemy = TestUtils.getEnemy(0);
         TestUtils.setEnemyPositionInAnchor(character, enemy, "top");
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
 
@@ -390,7 +390,7 @@ public class BackgroundTests
         CharacterBehavior character = TestUtils.getCharacter();
         TestUtils.setCharacterPositionInAnchor(character, "left");
 
-        EnemyBehavior enemy = TestUtils.getEnemy(0);
+        Enemy enemy = TestUtils.getEnemy(0);
         TestUtils.setEnemyPositionInAnchor(character, enemy, "right");
 
         yield return TestUtils.move(character, ">", 15);
@@ -411,9 +411,9 @@ public class BackgroundTests
         CharacterBehavior character = TestUtils.getCharacter();
         TestUtils.setCharacterPositionInAnchor(character, "bottom");
 
-        EnemyBehavior enemy_1 = TestUtils.getEnemy(0);
+        Enemy enemy_1 = TestUtils.getEnemy(0);
         TestUtils.setEnemyPositionInAnchor(character, enemy_1, "right");
-        EnemyBehavior enemy_2 = TestUtils.getEnemy(1);
+        Enemy enemy_2 = TestUtils.getEnemy(1);
         TestUtils.setEnemyPositionInAnchor(character, enemy_2, "left");
 
         yield return TestUtils.moveUntilBorder(character, '^', 35);
