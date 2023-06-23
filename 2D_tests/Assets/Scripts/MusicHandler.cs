@@ -21,8 +21,10 @@ public class MusicHandler : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
             mAudioSource = GetComponent<AudioSource>();
-            int idx_music = Random.Range(0, mMusics.Count);
-            mAudioSource.clip = mMusics[idx_music];
+            AudioClip music = Resources.Load<AudioClip>("Musics/Synthwave/20 - Galaxy");
+
+            //int idx_music = Random.Range(0, musics.Length);
+            mAudioSource.clip = music;// musics[idx_music];
             Debug.Log("Music playing : " + mAudioSource.clip.name);
             mAudioSource.Play();
             mAudioSource.volume = max_volume;
