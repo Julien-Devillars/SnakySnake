@@ -10,6 +10,7 @@ public class Background : MonoBehaviour
     public Vector3 mMaxBorderPos;
     public List<GameObject> mEnemyList;
     public List<Background> mConnectedBackground;
+    public bool mIsClosed;
 
     public void Awake()
     {
@@ -24,6 +25,7 @@ public class Background : MonoBehaviour
         renderer.material.color = renderer.color;
         renderer.sprite = Resources.Load<Sprite>("Sprites/Square");
         renderer.enabled = false;
+        mIsClosed = false;
 
         renderer.sortingLayerName = "Background";
         mConnectedBackground = new List<Background>();
@@ -126,7 +128,8 @@ public class Background : MonoBehaviour
         }
         else
         {
-            if(Utils.SHADER_ON)
+            mIsClosed = true;
+            if (Utils.SHADER_ON)
             {
                 render.material = (Material)Resources.Load("Shaders/CoverBackground", typeof(Material));
                 render.color = new Color(1f, 1f, 1f, 1f);
@@ -194,7 +197,7 @@ public class Background : MonoBehaviour
     }
     public bool hasEnemies()
     {
-        return mEnemyList.Count != 0;
+        return mEnemyList.Count != 0 && !mIsClosed;
     }
     public void destroy()
     {
