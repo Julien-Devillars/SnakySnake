@@ -5,7 +5,7 @@ using UnityEngine;
 public class MusicHandler : MonoBehaviour
 {
     private AudioSource mAudioSource;
-    private static MusicHandler instance = null;
+    public static MusicHandler instance = null;
     [SerializeField]
     private List<AudioClip> mMusics;
 

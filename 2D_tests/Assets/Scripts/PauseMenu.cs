@@ -53,8 +53,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Back()
     {
-        mIsPaused = false;
-        Utils.GAME_STOPPED = false;
+        DestroyImmediate(MusicHandler.instance.gameObject);
         SceneManager.LoadSceneAsync("MainMenu");
     }
     public void BackOptions()

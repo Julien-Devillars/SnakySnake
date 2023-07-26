@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
     {
         GameControler.GameVolume = 0.5f;
         Back();
+        Utils.GAME_STOPPED = false;
     }
     public void Update()
     {
