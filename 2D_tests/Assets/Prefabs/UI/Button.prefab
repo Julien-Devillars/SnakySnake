@@ -157,6 +157,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4560769499874639320}
     m_Modifications:
+    - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
+      propertyPath: m_fontSize
+      value: 108.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
+      propertyPath: m_margin.w
+      value: 15.346279
+      objectReference: {fileID: 0}
+    - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
+      propertyPath: m_margin.x
+      value: 46.97061
+      objectReference: {fileID: 0}
+    - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
+      propertyPath: m_margin.y
+      value: -5.0921936
+      objectReference: {fileID: 0}
+    - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
+      propertyPath: m_margin.z
+      value: 47.454727
+      objectReference: {fileID: 0}
     - target: {fileID: 7273492636290626938, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

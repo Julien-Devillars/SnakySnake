@@ -26,7 +26,14 @@ public class Score : MonoBehaviour
         Instance = this;
         GameObject level_controller = GameObject.Find(Utils.LEVEL_STR);
         LevelSettings level_settings = level_controller.GetComponent<LevelSettings>();
-        mGoalPercent = level_settings.score;
+        if(level_settings.score == -1)
+        {
+            mGoalPercent = GameControler.ScoreFixedForLevels;
+        }
+        else
+        {
+            mGoalPercent = level_settings.score;
+        }
     }
 
     void Start()

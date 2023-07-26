@@ -4,15 +4,36 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
-    public GameObject mMainMenu;
-    public GameObject mOptionsMenu;
-    public GameObject mCreditsMenu;
+    //public GameObject mMainMenu; // 0
+    //public GameObject mPlayMenu; // 1
+    //public GameObject mLevelsMenu; // 2
+    //public GameObject mInfinityMenu; //3
+    //public GameObject mOptionsMenu; // 4
+    //public GameObject mCreditsMenu; // 5
+
+    public List<GameObject> mMenus = new List<GameObject>();
+
+    public int mPreviousIndexMenu = 0;
     public void Start()
     {
         GameControler.GameVolume = 0.5f;
-        Back();
+        foreach(GameObject menu in mMenus)
+        {
+            menu.SetActive(false);
+        }
+        mMenus[0].SetActive(true);
+
         Utils.GAME_STOPPED = false;
+        mPreviousIndexMenu = 0;
     }
+
+    public void switchMenu(int index)
+    {
+        mMenus[mPreviousIndexMenu].SetActive(false);
+        mMenus[index].SetActive(true);
+        mPreviousIndexMenu = index;
+    }
+
     public void Update()
     {
         GetComponent<AudioSource>().volume = GameControler.GameVolume;
@@ -28,20 +49,9 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
-    public void Options()
+    public void LaunchInfinityLevel(int difficulty)
     {
-        mMainMenu.SetActive(false);
-        mOptionsMenu.SetActive(true);
-    }
-    public void Back()
-    {
-        mMainMenu.SetActive(true);
-        mOptionsMenu.SetActive(false);
-        mCreditsMenu.SetActive(false);
-    }
-    public void Credits()
-    {
-        mMainMenu.SetActive(false);
-        mCreditsMenu.SetActive(true);
+        GameControler.ScoreFixedForLevels = 25 * difficulty;
+        SceneManager.LoadScene("InfinityLevel");
     }
 }
