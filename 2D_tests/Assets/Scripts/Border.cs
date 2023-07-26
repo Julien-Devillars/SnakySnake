@@ -277,14 +277,7 @@ public class Border : MonoBehaviour
         mDuplicateBorder = null;
         mHasError = false;
         mIsEditable = is_editable;
-        if(mIsEditable)
-        {
-            gameObject.layer = LayerMask.NameToLayer("Border/Editable");
-        }
-        else
-        {
-            gameObject.layer = LayerMask.NameToLayer("Border/NotEditable");
-        }
+
         if(isHorizontal())
         {
             if(isLeftToRight())

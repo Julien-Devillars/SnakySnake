@@ -12,49 +12,35 @@ public class EnemiesGenerator : MonoBehaviour
         GameObject level_controller_go = GameObject.Find(Utils.LEVEL_STR);
         LevelSettings settings = level_controller_go.GetComponent<LevelSettings>();
 
-        //int number_enemies = settings.number_enemies;
-        //bool random_direction = settings.random_direction;
-        //bool random_position = settings.random_position;
-        //List<Vector2> enemies_direction = settings.enemies_direction;
-        //List<Vector2> enemies_position = settings.enemies_position;
-        //Vector2 scale = settings.scale;
-        List<EnemySettings> enemy_settings = settings.enemy_settings;
+        int number_enemies = settings.number_enemies;
+        bool random_direction = settings.random_direction;
+        bool random_position = settings.random_position;
+        List<Vector2> enemies_direction = settings.enemies_direction;
+        List<Vector2> enemies_position = settings.enemies_position;
+        Vector2 scale = settings.scale;
 
         enemies = new List<GameObject>();
 
-        for (int i = 0; i < enemy_settings.Count; ++i)
+        for (int i = 0; i < number_enemies; ++i)
         {
-            EnemySettings enemy_setting = enemy_settings[i];
             GameObject enemy_go = new GameObject();
             enemy_go.name = "Enemy_" + i.ToString();
             enemy_go.tag = "Enemy";
-            enemy_go.transform.localScale = new Vector3(enemy_setting.scale, enemy_setting.scale, 0.5f);
+            enemy_go.layer = 7; // Enemy Layer
+            enemy_go.transform.localScale = new Vector3(scale.x, scale.y, 0.5f);
             enemy_go.transform.parent = gameObject.transform;
-
-            Enemy enemy_behavior;
-            switch(enemy_setting.type)
-            {
-                case EnemyType.Kevin:
-                    enemy_behavior = enemy_go.AddComponent<EnemyKevin>();
-                    break;
-                case EnemyType.Bob:
-                    enemy_behavior = enemy_go.AddComponent<EnemyBob>();
-                    break;
-                default:
-                    enemy_behavior = enemy_go.AddComponent<EnemyKevin>();
-                    break;
-            }
 
             // Add Sprite Renderer
             SpriteRenderer sprite_renderer = enemy_go.AddComponent<SpriteRenderer>();
-            sprite_renderer.sprite = Resources.Load<Sprite>(enemy_behavior.mSprite);
-            sprite_renderer.material = Resources.Load<Material>(enemy_behavior.mMaterial);
-
-            if (!Utils.SHADER_ON)
+            sprite_renderer.sprite = Resources.Load<Sprite>("Photoshop/EnemySprite");
+            if (Utils.SHADER_ON)
+            {
+                sprite_renderer.material = Resources.Load<Material>("Materials/EnemyMaterial");
+            }
+            else
             {
                 sprite_renderer.material = new Material(Shader.Find("Sprites/Default"));
             }
-
             sprite_renderer.material.color = Color.white;
             sprite_renderer.sortingOrder = 1;
 
@@ -64,29 +50,30 @@ public class EnemiesGenerator : MonoBehaviour
             Rigidbody2D rigidbody_2D = enemy_go.AddComponent<Rigidbody2D>();
             rigidbody_2D.gravityScale = 0;
 
+            Enemy enemy_behavior = enemy_go.AddComponent<Enemy>();
             enemies.Add(enemy_go);
 
             GameObject particle_go = Instantiate(Resources.Load<GameObject>("Particles/EnemyParticle"));
             particle_go.transform.parent = enemy_go.transform;
 
             // Set enemy direction
-            if (enemy_setting.random_direction)
+            if (random_direction)
             {
                 enemy_behavior.setRandomDirection();
             }
             else
             {
-                enemy_behavior.setDirection(enemy_setting.direction);
+                enemy_behavior.setDirection(enemies_direction[i]);
             }
 
             // Set enemy position
-            if (enemy_setting.random_position)
+            if (random_position)
             {
                 enemy_behavior.setRandomPosition();
             }
             else
             {
-                enemy_behavior.setPosition(enemy_setting.position);
+                enemy_behavior.setPosition(enemies_position[i]);
             }
         }
     }

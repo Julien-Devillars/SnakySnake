@@ -45,9 +45,6 @@ public class CharacterBehavior : MonoBehaviour
         mCanMove = true;
         mCanAddLine = true;
         mFingerDown = false;
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy/Kevin"), true);
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy/Bob"), true);
-
 
         Camera cam = Camera.main;
 
