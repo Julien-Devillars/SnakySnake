@@ -52,7 +52,19 @@ public class Enemy : MonoBehaviour
             GameControler.status = GameControler.GameStatus.Lose;
             if (Utils.HAS_LOSE)
             {
-                SceneManager.LoadScene("Level_1");
+                if(InfinityControler.mIsInfinity)
+                {
+                    if(InfinityControler.mCurrentLevel > 1)
+                    {
+                        InfinityControler.mCurrentLevel--;
+                    }
+                    SceneManager.LoadScene("InfinityLevel");
+                    
+                }
+                else
+                {
+                    SceneManager.LoadScene("Level_1");
+                }
             }
         }
     }

@@ -26,20 +26,18 @@ public class Score : MonoBehaviour
         Instance = this;
         GameObject level_controller = GameObject.Find(Utils.LEVEL_STR);
         LevelSettings level_settings = level_controller.GetComponent<LevelSettings>();
-        if(level_settings.score == -1)
-        {
-            mGoalPercent = GameControler.ScoreFixedForLevels;
-        }
-        else
-        {
-            mGoalPercent = level_settings.score;
-        }
+        mGoalPercent = level_settings.score;
+        
     }
 
     void Start()
     {
         mCurrentScore = 0f;
         mPreviousScore = 0f;
+        if (InfinityControler.mIsInfinity)
+        {
+            mGoalPercent = InfinityControler.mScore;
+        }
         mGoalScore = mGoalPercent *  mMultiplier;
 
         Camera cam = Camera.main;
@@ -47,7 +45,9 @@ public class Score : MonoBehaviour
         float width = cam.aspect * cam.orthographicSize;
         float height = cam.orthographicSize;
 
-        mTotalArea = 2 * width * 2 *height;
+        float offset = Utils.EPSILON();
+
+        mTotalArea = 2 * (width - offset) * 2 * (height - offset);
 
         TextMeshProUGUI goal_text = mScoreGoalGameObject.GetComponent<TextMeshProUGUI>();
         goal_text.text = mGoalScore.ToString();
@@ -67,19 +67,27 @@ public class Score : MonoBehaviour
         if (Utils.HAS_WIN && area_percentage >= mGoalScore)
         {
             GameControler.status = GameControler.GameStatus.Win;
-            Scene scene = SceneManager.GetActiveScene();
-            string scene_name = scene.name;
-            string[] scene_split = scene_name.Split('_');
 
-            if(scene_split.Length != 2)
+            if (InfinityControler.mIsInfinity)
             {
-                return;
+                InfinityControler.mCurrentLevel++;
+                SceneManager.LoadScene("InfinityLevel");
             }
+            else
+            {
+                Scene scene = SceneManager.GetActiveScene();
+                string scene_name = scene.name;
+                string[] scene_split = scene_name.Split('_');
 
-            int scene_number = int.Parse(scene_split[1]);
-            scene_number += 1;
+                if (scene_split.Length != 2)
+                {
+                    return;
+                }
 
-            SceneManager.LoadScene(scene_split[0] + "_" + scene_number.ToString());
+                int scene_number = int.Parse(scene_split[1]);
+                scene_number += 1;
+                SceneManager.LoadScene(scene_split[0] + "_" + scene_number.ToString());
+            }
         }
     }
     float updateScore(int area_percentage_int)

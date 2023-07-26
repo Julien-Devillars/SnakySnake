@@ -25,6 +25,7 @@ public class MainMenu : MonoBehaviour
 
         Utils.GAME_STOPPED = false;
         mPreviousIndexMenu = 0;
+        InfinityControler.mIsInfinity = false;
     }
 
     public void switchMenu(int index)
@@ -51,7 +52,9 @@ public class MainMenu : MonoBehaviour
     }
     public void LaunchInfinityLevel(int difficulty)
     {
-        GameControler.ScoreFixedForLevels = 25 * difficulty;
+        InfinityControler.mIsInfinity = true;
+        InfinityControler.mScore= 25 * difficulty;
+        InfinityControler.mCurrentLevel = 1;
         SceneManager.LoadScene("InfinityLevel");
     }
 }

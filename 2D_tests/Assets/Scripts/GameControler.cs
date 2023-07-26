@@ -13,5 +13,4 @@ public static class GameControler
     }
     public static GameStatus status = GameStatus.InProgress;
     public static float GameVolume = 0.5f;
-    public static int ScoreFixedForLevels = 50;
 }
