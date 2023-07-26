@@ -5,15 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
-    public Vector3 speed;
-    protected Vector3 mMinPos;
-    protected Vector3 mMaxPos;
-    protected bool mHasCollideVertical;
-    protected bool mHasCollideHorizontal;
-    public string mSprite = "";
-    public string mMaterial = "";
-    public Rigidbody2D mRigidBody;
-    protected void Awake()
+    public Vector2 speed;
+    private Vector3 mMinPos;
+    private Vector3 mMaxPos;
+    private bool mHasCollideVertical;
+    private bool mHasCollideHorizontal;
+    void Awake()
     {
         Camera cam = Camera.main;
 
@@ -24,34 +21,48 @@ public class Enemy : MonoBehaviour
         mMaxPos = new Vector3(width - Utils.EPSILON() * 2f, height - Utils.EPSILON() * 2f, 0);
         mHasCollideVertical = false;
         mHasCollideHorizontal = false;
-
-        // Add Circle Collider 2D
-        gameObject.AddComponent<CircleCollider2D>();
-        // Add Rigidbody 2D
-        mRigidBody = gameObject.AddComponent<Rigidbody2D>();
-        mRigidBody.gravityScale = 0;
-        speed = Vector3.zero;
-
     }
-    protected void Start()
+    private void Start()
     {
-        Physics2D.IgnoreLayerCollision(gameObject.layer, gameObject.layer, true);
+        Physics2D.IgnoreLayerCollision(7, 7, true);
     }
-    protected void FixedUpdate()
+    private void FixedUpdate()
     {
         if (Utils.GAME_STOPPED) return;
-
-        mRigidBody.MovePosition(gameObject.transform.position + speed * Time.fixedDeltaTime);
-        //gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
+        gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
     }
 
-    protected IEnumerator waiterColliderVertical()
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Contains("Border"))
+        {
+            if (!mHasCollideVertical && collision.gameObject.tag == "VerticalBorder")
+            {
+                StartCoroutine(waiterColliderVertical());
+                speed.x = -speed.x;
+            }
+            if (!mHasCollideHorizontal && collision.gameObject.tag == "HorizontalBorder")
+            {
+                StartCoroutine(waiterColliderHorizontal());
+                speed.y = -speed.y;
+            }
+        }
+        if (collision.gameObject.tag.Contains("Trail"))
+        {
+            GameControler.status = GameControler.GameStatus.Lose;
+            if (Utils.HAS_LOSE)
+            {
+                SceneManager.LoadScene("Level_1");
+            }
+        }
+    }
+    IEnumerator waiterColliderVertical()
     {
         mHasCollideVertical = true;
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
         mHasCollideVertical = false;
     }
-    protected IEnumerator waiterColliderHorizontal()
+    IEnumerator waiterColliderHorizontal()
     {
         mHasCollideHorizontal = true;
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
