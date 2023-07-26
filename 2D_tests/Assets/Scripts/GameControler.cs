@@ -12,4 +12,5 @@ public static class GameControler
         Waiting
     }
     public static GameStatus status = GameStatus.InProgress;
+    public static float GameVolume = 0.5f;
 }

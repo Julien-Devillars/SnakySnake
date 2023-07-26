@@ -9,7 +9,6 @@ public class MusicHandler : MonoBehaviour
     [SerializeField]
     private List<AudioClip> mMusics;
 
-    public static float max_volume = 0.6f;
     public float stop_volume = 0.05f;
     public float smooth_time_on_stop = 0.15f;
 
@@ -27,7 +26,7 @@ public class MusicHandler : MonoBehaviour
             mAudioSource.clip = music;// musics[idx_music];
             Debug.Log("Music playing : " + mAudioSource.clip.name);
             mAudioSource.Play();
-            mAudioSource.volume = max_volume;
+            mAudioSource.volume = GameControler.GameVolume;
             //mBeatHandler = new BeatHandler();
             return;
         }
@@ -62,23 +61,23 @@ public class MusicHandler : MonoBehaviour
             GameObject option_menu = GameObject.Find("Options Menu");
             if (option_menu != null && option_menu.activeSelf)
             {
-                new_volume = max_volume;
+                new_volume = GameControler.GameVolume;
             }
             else
             {
-                if (max_volume > stop_volume)
+                if (GameControler.GameVolume > stop_volume)
                 {
                     new_volume = Mathf.SmoothDamp(mAudioSource.volume, stop_volume, ref shift, smooth_time_on_stop);
                 }
                 else
                 {
-                    new_volume = Mathf.SmoothDamp(mAudioSource.volume, max_volume, ref shift, smooth_time_on_stop);
+                    new_volume = Mathf.SmoothDamp(mAudioSource.volume, GameControler.GameVolume, ref shift, smooth_time_on_stop);
                 }
             }
         }
         else
         {
-            new_volume = Mathf.SmoothDamp(mAudioSource.volume, max_volume, ref shift, smooth_time_on_stop);
+            new_volume = Mathf.SmoothDamp(mAudioSource.volume, GameControler.GameVolume, ref shift, smooth_time_on_stop);
         }
         mAudioSource.volume = new_volume;
 

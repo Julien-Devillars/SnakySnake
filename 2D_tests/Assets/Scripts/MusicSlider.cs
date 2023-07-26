@@ -6,6 +6,6 @@ public class MusicSlider : MonoBehaviour
 {
     public void setVolume(float volume)
     {
-        MusicHandler.max_volume = volume;
+        GameControler.GameVolume = volume;
     }
 }
