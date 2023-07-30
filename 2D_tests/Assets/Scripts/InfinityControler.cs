@@ -6,6 +6,6 @@ public static class InfinityControler
 {
     public static bool mIsInfinity = false;
     public static int mScore = 50;
-    public static int mDifficulty = 50;
+    public static int mDifficulty = 1;
     public static int mCurrentLevel = 1;
 }

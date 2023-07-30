@@ -56,7 +56,9 @@ public class Enemy : MonoBehaviour
                 {
                     if(InfinityControler.mCurrentLevel > 1)
                     {
-                        InfinityControler.mCurrentLevel--;
+                        ES3.Save("Infinity_HighScore_" + InfinityControler.mDifficulty.ToString(), InfinityControler.mCurrentLevel);
+                        
+                        InfinityControler.mCurrentLevel = 1;
                     }
                     SceneManager.LoadScene("InfinityLevel");
                     
