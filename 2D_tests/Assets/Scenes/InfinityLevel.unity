@@ -488,7 +488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 511625914058314812, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_fontSize
-      value: 50.85
+      value: 43.5
       objectReference: {fileID: 0}
     - target: {fileID: 684998019278372246, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -698,18 +698,6 @@ PrefabInstance:
       propertyPath: m_ChildControlWidth
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3510629323219121227, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3510629323219121227, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 450
-      objectReference: {fileID: 0}
-    - target: {fileID: 3510629323219121227, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 450
-      objectReference: {fileID: 0}
     - target: {fileID: 3571226353870983015, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -800,7 +788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5137519272150274914, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_fontSize
-      value: 46.75
+      value: 39.65
       objectReference: {fileID: 0}
     - target: {fileID: 5345326727913656723, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_Color.a
@@ -1109,22 +1097,6 @@ PrefabInstance:
     - target: {fileID: 8892806667978461495, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -13.050001
-      objectReference: {fileID: 0}
-    - target: {fileID: 9008793895546658635, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
-      propertyPath: m_CellSize.x
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 9008793895546658635, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
-      propertyPath: m_CellSize.y
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 9008793895546658635, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
-      propertyPath: m_Constraint
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9008793895546658635, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
-      propertyPath: m_ConstraintCount
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8766251492881339160, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
