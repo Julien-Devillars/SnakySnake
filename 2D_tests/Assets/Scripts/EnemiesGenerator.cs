@@ -37,7 +37,7 @@ public class EnemiesGenerator : MonoBehaviour
 
             // Add Sprite Renderer
             SpriteRenderer sprite_renderer = enemy_go.AddComponent<SpriteRenderer>();
-            sprite_renderer.sprite = Resources.Load<Sprite>("Photoshop/EnemySprite");
+            sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/Enemy1");
             if (Utils.SHADER_ON)
             {
                 sprite_renderer.material = Resources.Load<Material>("Materials/EnemyMaterial");
@@ -60,6 +60,7 @@ public class EnemiesGenerator : MonoBehaviour
 
             GameObject particle_go = Instantiate(Resources.Load<GameObject>("Particles/EnemyParticle"));
             particle_go.transform.parent = enemy_go.transform;
+            particle_go.transform.localScale = new Vector3(scale.x / 2f, scale.y / 2f, particle_go.transform.localScale.z);
 
             // Set enemy direction
             if (random_direction)
