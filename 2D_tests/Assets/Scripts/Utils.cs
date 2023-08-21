@@ -16,6 +16,7 @@ public class Utils
     public static float OFFSET => 0.01f;
     public static float DIRECTION_UPDATE_TIME = 0.1f;
     public static float ADD_LINE_UPDATE_TIME = 0.05f;
+    public static float OUTLINE_BORDER_THICKNESS = 0.1f;
     public static float ENNEMY_COLLIDER_UPDATE_TIME = Time.deltaTime * 2f;
 
     public static bool HAS_LOSE = true;

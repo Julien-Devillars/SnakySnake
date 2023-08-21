@@ -101,6 +101,7 @@ public class Border : MonoBehaviour
     public bool mIsEditable;
     public bool mNewBorderOnDelete = false;
     private LineRenderer mLineRenderer;
+    private LineRenderer mOutlineRenderer;
     public BorderPointsConnections mOtherBorderOnBorders;
     public bool mHasToUpdateBorder = true;
     public bool mToDelete = false;
@@ -270,6 +271,7 @@ public class Border : MonoBehaviour
         mEndPoint = end_point;
 
         addLineRenderer();
+        addOutline();
         addTag();
 
         addCollider2D();
@@ -278,7 +280,7 @@ public class Border : MonoBehaviour
         mHasError = false;
         mIsEditable = is_editable;
 
-        if(isHorizontal())
+        if (isHorizontal())
         {
             if(isLeftToRight())
             {
@@ -317,25 +319,50 @@ public class Border : MonoBehaviour
         mLineRenderer.numCapVertices = 8;
 
         GameObject ball = GameObject.Find(Utils.CHARACTER);
-        mLineRenderer.startWidth = ball.transform.localScale.x;
-        mLineRenderer.endWidth = ball.transform.localScale.x;
+        mLineRenderer.startWidth = ball.transform.localScale.x - Utils.OUTLINE_BORDER_THICKNESS;
+        mLineRenderer.endWidth = ball.transform.localScale.x - Utils.OUTLINE_BORDER_THICKNESS;
 
         mLineRenderer.SetPosition(0, mStartPoint);
         mLineRenderer.SetPosition(1, mEndPoint);
-        mLineRenderer.startColor = Color.white;
-        mLineRenderer.endColor = Color.white;
+        mLineRenderer.startColor = Color.black;
+        mLineRenderer.endColor = Color.black;
 
         if(Utils.SHADER_ON)
         {
-            mLineRenderer.material = (Material)Resources.Load("Shaders/GlowBorder", typeof(Material));
+            //mLineRenderer.material = (Material)Resources.Load("Shaders/GlowBorder", typeof(Material));
             //mLineRenderer.material = (Material)Resources.Load("Materials/Border", typeof(Material));
-            mLineRenderer.material.color = Color.white;
+            mLineRenderer.material = (Material)Resources.Load("Materials/Border", typeof(Material));
+            mLineRenderer.material.color = Color.black;
         }
         else
         {
             mLineRenderer.material = new Material(Shader.Find("Sprites/Default"));
             mLineRenderer.material.color = Color.black;
         }
+    }
+
+    private void addOutline()
+    {
+        GameObject outline = new GameObject();
+        outline.name = "Border Outline";
+        outline.transform.parent = transform;
+        mOutlineRenderer = outline.AddComponent<LineRenderer>();
+
+        mOutlineRenderer.positionCount = mLineRenderer.positionCount;
+        mOutlineRenderer.useWorldSpace = mLineRenderer.useWorldSpace;
+        mOutlineRenderer.numCapVertices = mLineRenderer.numCapVertices;
+
+        mOutlineRenderer.startWidth = mLineRenderer.startWidth + Utils.OUTLINE_BORDER_THICKNESS;
+        mOutlineRenderer.endWidth = mLineRenderer.endWidth + Utils.OUTLINE_BORDER_THICKNESS;
+
+        Vector3 pos_0 = mLineRenderer.GetPosition(0);
+        Vector3 pos_1 = mLineRenderer.GetPosition(1);
+        mOutlineRenderer.SetPosition(0, new Vector3(pos_0.x, pos_0.y, pos_0.z + 1));
+        mOutlineRenderer.SetPosition(1, new Vector3(pos_1.x, pos_1.y, pos_1.z + 1));
+        mOutlineRenderer.startColor = Color.white;
+        mOutlineRenderer.endColor = Color.white;
+        mOutlineRenderer.material = (Material)Resources.Load("Materials/BorderOutline", typeof(Material));
+
     }
 
     public bool checkColliderAlreadyExist()
@@ -448,6 +475,7 @@ public class Border : MonoBehaviour
         Vector3 new_point = new Vector3(new_start_point.x, new_start_point.y, new_start_point.z);
         mStartPoint = new_point;
         mLineRenderer.SetPosition(0, new_point);
+        mOutlineRenderer.SetPosition(0, new Vector3(mStartPoint.x, mStartPoint.y, mStartPoint.z + 1));
         mHasToUpdateBorder = true;
     }
     private void replaceEndPoint(Vector3 new_end_point)
@@ -455,6 +483,7 @@ public class Border : MonoBehaviour
         Vector3 new_point = new Vector3(new_end_point.x, new_end_point.y, new_end_point.z);
         mEndPoint = new_point;
         mLineRenderer.SetPosition(1, new_point);
+        mOutlineRenderer.SetPosition(1, new Vector3(mEndPoint.x, mEndPoint.y, mEndPoint.z + 1));
         mHasToUpdateBorder = true;
     }
     public Vector3 getStartPoint()
