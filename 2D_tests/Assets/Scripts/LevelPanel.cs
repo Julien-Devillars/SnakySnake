@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 
 public class LevelPanel : MonoBehaviour
 {
@@ -69,5 +69,12 @@ public class LevelPanel : MonoBehaviour
             mDisplayIndex++;
         }
         display();
+    }
+
+    public void Play()
+    {
+        GameControler.currentLevel = mDisplayIndex;
+        GameControler.type = GameControler.GameType.Play;
+        SceneManager.LoadScene("PlayLevel");
     }
 }

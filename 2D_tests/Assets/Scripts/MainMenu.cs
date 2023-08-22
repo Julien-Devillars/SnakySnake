@@ -27,7 +27,7 @@ public class MainMenu : MonoBehaviour
 
         Utils.GAME_STOPPED = false;
         mPreviousIndexMenu = 0;
-        InfinityControler.mIsInfinity = false;
+        GameControler.type= GameControler.GameType.None;
         mInfinityBestScoreText[0].text = "Easy - Best : " + ES3.Load<int>("Infinity_HighScore_1", 0).ToString();
         mInfinityBestScoreText[1].text = "Medium - Best : " + ES3.Load<int>("Infinity_HighScore_2", 0).ToString();
         mInfinityBestScoreText[2].text = "Hard - Best : " + ES3.Load<int>("Infinity_HighScore_3", 0).ToString();
@@ -61,7 +61,7 @@ public class MainMenu : MonoBehaviour
     }
     public void LaunchInfinityLevel(int difficulty)
     {
-        InfinityControler.mIsInfinity = true;
+        GameControler.type = GameControler.GameType.Infinity;
         InfinityControler.mDifficulty = difficulty;
         InfinityControler.mScore = 25 * difficulty;
         InfinityControler.mCurrentLevel = 1;

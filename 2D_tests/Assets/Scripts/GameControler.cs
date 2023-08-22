@@ -11,6 +11,15 @@ public static class GameControler
         InProgress,
         Waiting
     }
+    public enum GameType
+    {
+
+        None,
+        Play,
+        Infinity
+    }
     public static GameStatus status = GameStatus.InProgress;
+    public static GameType type = GameType.None;
     public static float GameVolume = 0.5f;
+    public static int currentLevel = 0;
 }

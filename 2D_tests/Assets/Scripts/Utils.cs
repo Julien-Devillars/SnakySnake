@@ -11,6 +11,7 @@ public class Utils
     public static string ENEMIES_STR = "Enemies";
     public static string TRAILS_STR = "Trails";
     public static string LEVEL_STR = "LevelController";
+    public static string STARS_STR = "Stars";
     public static string STAR_STR = "Star";
     public static float EPSILON() => GameObject.Find(CHARACTER).transform.localScale.x / 2f;
     public static float OFFSET => 0.01f;
@@ -24,6 +25,9 @@ public class Utils
     public static bool GAME_STOPPED = false;
 
     public static bool SHADER_ON = true;
+
+    public static float ENEMY_DEFAULT_SCALE = 4f;
+    public static float STAR_DEFAULT_SCALE = 2f;
 
     public static List<Vector3> getIntermediatePointFromTrail(Border border)
     {

@@ -8,6 +8,7 @@ public class Score : MonoBehaviour
     // Start is called before the first frame update
     public float mPreviousScore;
     public float mCurrentScore;
+    public int mCurrentPercentScore;
     public float mStep = 250f;
     public int mGoalPercent;
     public int mGoalScore;
@@ -24,9 +25,9 @@ public class Score : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        GameObject level_controller = GameObject.Find(Utils.LEVEL_STR);
-        LevelSettings level_settings = level_controller.GetComponent<LevelSettings>();
-        mGoalPercent = level_settings.score;
+        //GameObject level_controller = GameObject.Find(Utils.LEVEL_STR);
+        //LevelSettings level_settings = level_controller.GetComponent<LevelSettings>();
+        //mGoalPercent = level_settings.score;
         
     }
 
@@ -34,9 +35,13 @@ public class Score : MonoBehaviour
     {
         mCurrentScore = 0f;
         mPreviousScore = 0f;
-        if (InfinityControler.mIsInfinity)
+        if (GameControler.type == GameControler.GameType.Infinity)
         {
             mGoalPercent = InfinityControler.mScore;
+        }
+        else
+        {
+            mGoalPercent = Levels.levels[GameControler.currentLevel].mGoalScore;
         }
         mGoalScore = mGoalPercent *  mMultiplier;
 
@@ -58,6 +63,7 @@ public class Score : MonoBehaviour
         float area_percentage = mCurrentScore / mTotalArea;
         area_percentage = area_percentage * 100 * mMultiplier;
         int area_percentage_int = (int)area_percentage;
+        mCurrentPercentScore = area_percentage_int / mMultiplier;
         area_percentage_int = (int) updateScore(area_percentage_int);
         checkWinCondition(area_percentage_int);
     }
@@ -68,25 +74,38 @@ public class Score : MonoBehaviour
         {
             GameControler.status = GameControler.GameStatus.Win;
 
-            if (InfinityControler.mIsInfinity)
+            if (GameControler.type == GameControler.GameType.Infinity)
             {
                 InfinityControler.mCurrentLevel++;
                 SceneManager.LoadScene("InfinityLevel");
             }
-            else
+
+            if (GameControler.type == GameControler.GameType.Play)
             {
-                Scene scene = SceneManager.GetActiveScene();
-                string scene_name = scene.name;
-                string[] scene_split = scene_name.Split('_');
-
-                if (scene_split.Length != 2)
+                GameObject stars = GameObject.Find(Utils.STARS_STR);
+                int cpt = 0;
+                foreach(Transform star in stars.transform)
                 {
-                    return;
+                    if(!star.gameObject.activeSelf)
+                    {
+                        cpt++;
+                    }
                 }
+                for(int i = 0; i < cpt; ++i)
+                {
+                    ES3.Save<bool>($"Play_Level_{GameControler.currentLevel}_Star_{i}", true);
+                }
+                ES3.Save<int>($"Play_Level_{GameControler.currentLevel}_HighScore", 100);
 
-                int scene_number = int.Parse(scene_split[1]);
-                scene_number += 1;
-                SceneManager.LoadScene(scene_split[0] + "_" + scene_number.ToString());
+                if (GameControler.currentLevel < Levels.levels.Count - 1)
+                {
+                    GameControler.currentLevel++;
+                    SceneManager.LoadScene("PlayLevel");
+                }
+                else
+                {
+                    SceneManager.LoadScene("MainMenu");
+                }
             }
         }
     }

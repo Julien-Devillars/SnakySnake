@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
             GameControler.status = GameControler.GameStatus.Lose;
             if (Utils.HAS_LOSE)
             {
-                if(InfinityControler.mIsInfinity)
+                if(GameControler.type == GameControler.GameType.Infinity)
                 {
                     if(InfinityControler.mCurrentLevel > 1)
                     {
@@ -63,9 +63,12 @@ public class Enemy : MonoBehaviour
                     SceneManager.LoadScene("InfinityLevel");
                     
                 }
-                else
+
+                
+                if(GameControler.type == GameControler.GameType.Play)
                 {
-                    SceneManager.LoadScene("Level_1");
+                    ES3.Save<int>($"Play_Level_{GameControler.currentLevel}_HighScore", (int)Score.Instance.mCurrentPercentScore);
+                    SceneManager.LoadScene("PlayLevel");
                 }
             }
         }
@@ -91,6 +94,18 @@ public class Enemy : MonoBehaviour
     public void setDirection(Vector2 direction)
     {
         speed = direction;
+    }
+    public void setScale(float scale)
+    {
+        transform.localScale = new Vector3(scale / 2f, scale / 2f, transform.localScale.z);
+
+        Camera cam = Camera.main;
+
+        float width = cam.aspect * cam.orthographicSize;
+        float height = cam.orthographicSize;
+
+        mMinPos = new Vector3(-width + scale * 2f, -height + scale * 2f, 0);
+        mMaxPos = new Vector3(width - scale * 2f, height - scale * 2f, 0);
     }
 
     public bool checkPositionIsValid(Vector2 pos)
@@ -133,8 +148,16 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            Debug.Log($"Ennemy position not valid : {pos}");
             setDefaultPosition();
         }
+    }
+    public void setRelativePosition(Vector2 relative_pos)
+    {
+        float x = mMinPos.x * (1 - relative_pos.x) + mMaxPos.x * relative_pos.x;
+        float y = mMinPos.y * (1 - relative_pos.y) + mMaxPos.y * relative_pos.y;
+        Vector2 absolute_pos = new Vector2(x, y);
+        setPosition(absolute_pos);
     }
     public void setPosition(float x, float y)
     {
