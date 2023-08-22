@@ -15,7 +15,7 @@ public class Score : MonoBehaviour
     public static Score Instance { get; private set; }
 
     private float mTotalArea;
-    public int mMultiplier = 1000;
+    static public int mMultiplier = 1000;
 
     private float mStartTime;
     public float mDuration = 0.3f;
