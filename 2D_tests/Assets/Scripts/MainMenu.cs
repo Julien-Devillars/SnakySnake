@@ -19,7 +19,6 @@ public class MainMenu : MonoBehaviour
     public int mPreviousIndexMenu = 0;
     public void Start()
     {
-        GameControler.GameVolume = 0.5f;
         foreach(GameObject menu in mMenus)
         {
             menu.SetActive(false);
@@ -32,6 +31,10 @@ public class MainMenu : MonoBehaviour
         mInfinityBestScoreText[0].text = "Easy - Best : " + ES3.Load<int>("Infinity_HighScore_1", 0).ToString();
         mInfinityBestScoreText[1].text = "Medium - Best : " + ES3.Load<int>("Infinity_HighScore_2", 0).ToString();
         mInfinityBestScoreText[2].text = "Hard - Best : " + ES3.Load<int>("Infinity_HighScore_3", 0).ToString();
+
+        Levels.createLevels();
+        float volume = ES3.Load<float>("Game_Volume", 0.5f);
+        GameControler.GameVolume = volume;
     }
 
     public void switchMenu(int index)
