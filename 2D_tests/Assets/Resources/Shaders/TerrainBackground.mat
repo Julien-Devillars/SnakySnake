@@ -38,10 +38,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _LineSize: 0.01
+    - _LineSize: 0.03
     m_Colors:
-    - _BackgroundColor: {r: 0.108, g: 0, b: 0.128, a: 0.14117648}
-    - _LineColor: {r: 4.7686276, g: 1.0039216, b: 23.968628, a: 0}
+    - _BackgroundColor: {r: 0.09136528, g: 0.026477395, b: 0.16037738, a: 0.30980393}
+    - _LineColor: {r: 5.427451, g: 1.0352942, b: 5.992157, a: 0}
     - _SecondLineColor: {r: 0.6886792, g: 0.53749466, b: 0.10720008, a: 0}
     - _Tiling: {r: 40, g: 40, b: 0, a: 0}
   m_BuildTextureStacks: []
