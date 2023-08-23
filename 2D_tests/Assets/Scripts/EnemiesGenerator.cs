@@ -19,7 +19,7 @@ public class EnemiesGenerator : MonoBehaviour
         List<Vector2> enemies_position = settings.enemies_position;
         Vector2 scale = settings.scale;
 
-        if(InfinityControler.mIsInfinity)
+        if(GameControler.type == GameControler.GameType.Infinity)
         {
             number_enemies = InfinityControler.mCurrentLevel;
         }
