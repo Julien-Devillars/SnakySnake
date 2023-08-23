@@ -15,6 +15,8 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
         if(Levels.levels.Count == 0)
         {
             Levels.createLevels();
+            GameControler.currentLevel = 1;
+            GameControler.type = GameControler.GameType.Play;
         }
 
         foreach (EnemyInfo enemy in Levels.levels[level_index].mEnemies)
