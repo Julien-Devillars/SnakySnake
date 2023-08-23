@@ -5,18 +5,24 @@ using UnityEngine;
 public class EnemiesGeneratorPlayMode : MonoBehaviour
 {
     private List<GameObject> enemies;
+    public bool test_level = true;
     public int mLevel = -1;
     // Start is called before the first frame update
     void Start()
     {
         enemies = new List<GameObject>();
 
-        int level_index = mLevel < 0 ? GameControler.currentLevel : mLevel;
-        if(Levels.levels.Count == 0)
+        int level_index = 0;
+        if (test_level)
         {
+            level_index = mLevel;
             Levels.createLevels();
-            GameControler.currentLevel = 1;
+            GameControler.currentLevel = mLevel;
             GameControler.type = GameControler.GameType.Play;
+        }
+        else
+        {
+            level_index = GameControler.currentLevel;
         }
 
         foreach (EnemyInfo enemy in Levels.levels[level_index].mEnemies)
