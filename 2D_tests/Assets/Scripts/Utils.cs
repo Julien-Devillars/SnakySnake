@@ -7,6 +7,7 @@ public class Utils
     public static string CHARACTER = "Ball";
     public static string BACKGROUND_STR = "Backgrounds";
     public static string BACKGROUND_MESH_STR = "BackgroundMesh";
+    public static string BACKGROUND_VIEW_STR = "BackgroundView";
     public static string BORDER_STR = "Borders";
     public static string ENEMIES_STR = "Enemies";
     public static string TRAILS_STR = "Trails";

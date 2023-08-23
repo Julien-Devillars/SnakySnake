@@ -26,6 +26,7 @@ public class MusicHandler : MonoBehaviour
             mAudioSource.clip = music;// musics[idx_music];
             Debug.Log("Music playing : " + mAudioSource.clip.name);
             mAudioSource.Play();
+            GameControler.GameVolume = ES3.Load<float>("Game_Volume", 0.5f);
             mAudioSource.volume = GameControler.GameVolume;
             //mBeatHandler = new BeatHandler();
             return;
