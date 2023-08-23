@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class Enemy : MonoBehaviour
 {
     public Vector2 speed;
-    private Vector3 mMinPos;
-    private Vector3 mMaxPos;
-    private bool mHasCollideVertical;
-    private bool mHasCollideHorizontal;
-    void Awake()
+    protected Vector3 mMinPos;
+    protected Vector3 mMaxPos;
+    protected bool mHasCollideVertical;
+    protected bool mHasCollideHorizontal;
+    protected void Awake()
     {
         Camera cam = Camera.main;
 
@@ -22,17 +22,17 @@ public class Enemy : MonoBehaviour
         mHasCollideVertical = false;
         mHasCollideHorizontal = false;
     }
-    private void Start()
+    protected void Start()
     {
         Physics2D.IgnoreLayerCollision(7, 7, true);
     }
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         if (Utils.GAME_STOPPED) return;
         gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name.Contains("Border"))
         {

@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   test_level: 1
-  mLevel: 1
+  mLevel: 3
 --- !u!1001 &395846935
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -19,7 +19,8 @@ public class ObjectInfo
 
 public enum EnemyType
 {
-    Basic
+    Basic,
+    Circle
 }
 
 public class EnemyInfo : ObjectInfo 
@@ -118,6 +119,23 @@ public class Levels
         level.addStar(star_3);
         return level;
     }
+    private static Level level_4()
+    {
+        // Level 1
+        Level level = new Level("Circle", 50);
+
+        level.addEnemy(new EnemyInfo(EnemyType.Circle, new Vector2(0.25f, 0.25f), new Vector2(5f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Circle, new Vector2(0.5f, 0.25f), new Vector2(4f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Circle, new Vector2(0.75f, 0.25f), new Vector2(2f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+
+        StarInfo star_1 = new StarInfo(new Vector2(0.25f, 0.5f), Utils.STAR_DEFAULT_SCALE);
+        StarInfo star_2 = new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE);
+        StarInfo star_3 = new StarInfo(new Vector2(0.75f, 0.5f), Utils.STAR_DEFAULT_SCALE);
+        level.addStar(star_1);
+        level.addStar(star_2);
+        level.addStar(star_3);
+        return level;
+    }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     public static void createLevels()
@@ -127,6 +145,7 @@ public class Levels
         levels.Add(level_1());
         levels.Add(level_2());
         levels.Add(level_3());
+        levels.Add(level_4());
     }
 }
 

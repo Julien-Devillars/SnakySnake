@@ -54,7 +54,16 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
             Rigidbody2D rigidbody_2D = enemy_go.AddComponent<Rigidbody2D>();
             rigidbody_2D.gravityScale = 0;
 
-            Enemy enemy_behavior = enemy_go.AddComponent<Enemy>();
+
+            Enemy enemy_behavior;
+            if (enemy.type == EnemyType.Circle)
+            {
+                enemy_behavior = enemy_go.AddComponent<EnemyCircle>();
+            }
+            else
+            {
+                enemy_behavior = enemy_go.AddComponent<Enemy>();
+            }
             enemies.Add(enemy_go);
 
             GameObject particle_go = Instantiate(Resources.Load<GameObject>("Particles/EnemyParticle"));
