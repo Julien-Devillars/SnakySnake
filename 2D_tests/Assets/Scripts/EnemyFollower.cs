@@ -12,10 +12,11 @@ public class EnemyFollower : Enemy
     private void Start()
     {
         base.Start();
+        type = EnemyType.Follower;
 
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
         sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/EnemyFollower");
-        sprite_renderer.material = Resources.Load<Material>("Materials/EnemyFollowerMaterial");
+        sprite_renderer.material = Resources.Load<Material>("Materials/Enemies/EnemyFollowerMaterial");
         name = "Follower";
 
         mExcalamationMark = new GameObject();

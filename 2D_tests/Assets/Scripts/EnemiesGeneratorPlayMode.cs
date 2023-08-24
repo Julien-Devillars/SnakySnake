@@ -39,7 +39,7 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
             sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/Enemy1");
             if (Utils.SHADER_ON)
             {
-                sprite_renderer.material = Resources.Load<Material>("Materials/EnemyMaterial");
+                sprite_renderer.material = Resources.Load<Material>("Materials/Enemies/EnemyMaterial");
             }
             else
             {
@@ -71,6 +71,9 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
                     break;
                 case EnemyType.Follower:
                     enemy_behavior = enemy_go.AddComponent<EnemyFollower>();
+                    break;
+                case EnemyType.Flyer:
+                    enemy_behavior = enemy_go.AddComponent<EnemyFlyer>();
                     break;
                 default:
                     enemy_behavior = new Enemy();

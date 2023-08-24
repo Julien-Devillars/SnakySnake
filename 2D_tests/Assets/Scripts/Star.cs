@@ -48,7 +48,7 @@ public class Star : MonoBehaviour
         GameObject character = GameObject.Find(Utils.CHARACTER);
         SpriteRenderer character_sprite_renderer = character.GetComponent<SpriteRenderer>();
         SpriteRenderer flag_sprite_renderer = GetComponent<SpriteRenderer>();
-        if (flag_sprite_renderer.bounds.Intersects(character_sprite_renderer.bounds) || allPointsAreInBackgroundsWithoutEnemies(points_to_check))
+        if (flag_sprite_renderer.bounds.Intersects(character_sprite_renderer.bounds) || Utils.allPointsAreInBackgroundsWithoutEnemies(points_to_check))
         {
             gameObject.SetActive(false);
             //flag = true;
@@ -56,29 +56,6 @@ public class Star : MonoBehaviour
             //sprite_renderer.material.color = Color.red;
         }
     }
-    
-    bool allPointsAreInBackgroundsWithoutEnemies(List<Vector3> points)
-    {
-        foreach (Vector3 point in points)
-        {
-            bool found = false;
-            foreach (Background bg in Utils.getBackgrounds())
-            {
-                if (bg.contains(point) && !bg.hasEnemies())
-                {
-                    found = true;
-                    break;
-                }
-            }
-            if(!found)
-            {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-
 
     public void setRelativePosition(Vector2 relative_pos)
     {

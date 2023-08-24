@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     protected Vector3 mMaxPos;
     protected bool mHasCollideVertical;
     protected bool mHasCollideHorizontal;
+    public EnemyType type;
     protected void Awake()
     {
         Camera cam = Camera.main;
@@ -25,11 +26,38 @@ public class Enemy : MonoBehaviour
     protected void Start()
     {
         Physics2D.IgnoreLayerCollision(7, 7, true);
+        type = EnemyType.Basic;
     }
     protected void FixedUpdate()
     {
         if (Utils.GAME_STOPPED) return;
         gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
+    }
+
+    protected void Lose()
+    {
+        GameControler.status = GameControler.GameStatus.Lose;
+        if (Utils.HAS_LOSE)
+        {
+            if (GameControler.type == GameControler.GameType.Infinity)
+            {
+                if (InfinityControler.mCurrentLevel > 1)
+                {
+                    ES3.Save("Infinity_HighScore_" + InfinityControler.mDifficulty.ToString(), InfinityControler.mCurrentLevel);
+
+                    InfinityControler.mCurrentLevel = 1;
+                }
+                SceneManager.LoadScene("InfinityLevel");
+
+            }
+
+
+            if (GameControler.type == GameControler.GameType.Play)
+            {
+                ES3.Save<int>($"Play_Level_{GameControler.currentLevel}_HighScore", (int)Score.Instance.mCurrentPercentScore);
+                SceneManager.LoadScene("PlayLevel");
+            }
+        }
     }
 
     protected void OnCollisionEnter2D(Collision2D collision)
@@ -49,28 +77,7 @@ public class Enemy : MonoBehaviour
         }
         if (collision.gameObject.tag.Contains("Trail"))
         {
-            GameControler.status = GameControler.GameStatus.Lose;
-            if (Utils.HAS_LOSE)
-            {
-                if(GameControler.type == GameControler.GameType.Infinity)
-                {
-                    if(InfinityControler.mCurrentLevel > 1)
-                    {
-                        ES3.Save("Infinity_HighScore_" + InfinityControler.mDifficulty.ToString(), InfinityControler.mCurrentLevel);
-                        
-                        InfinityControler.mCurrentLevel = 1;
-                    }
-                    SceneManager.LoadScene("InfinityLevel");
-                    
-                }
-
-                
-                if(GameControler.type == GameControler.GameType.Play)
-                {
-                    ES3.Save<int>($"Play_Level_{GameControler.currentLevel}_HighScore", (int)Score.Instance.mCurrentPercentScore);
-                    SceneManager.LoadScene("PlayLevel");
-                }
-            }
+            Lose();
         }
     }
     IEnumerator waiterColliderVertical()

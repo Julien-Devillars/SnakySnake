@@ -40,7 +40,7 @@ public class EnemiesGenerator : MonoBehaviour
             sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/Enemy1");
             if (Utils.SHADER_ON)
             {
-                sprite_renderer.material = Resources.Load<Material>("Materials/EnemyMaterial");
+                sprite_renderer.material = Resources.Load<Material>("Materials/Enemies/EnemyMaterial");
             }
             else
             {

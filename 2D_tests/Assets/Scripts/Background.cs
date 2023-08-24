@@ -185,6 +185,8 @@ public class Background : MonoBehaviour
     }
     public bool addEnemy(GameObject enemy)
     {
+        if (enemy.GetComponent<Enemy>().type == EnemyType.Flyer) return false;
+
         if (!mEnemyList.Contains(enemy))
         {
             mEnemyList.Add(enemy);

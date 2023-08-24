@@ -199,4 +199,42 @@ public class Utils
         return Mathf.Pow((4 * t), 3) * (1 - a) + (1 - 4 * Mathf.Pow((1 - t), 3)) * a; // 4t^(3)(1-a)+(1-4(1-t)^(3))a
     }
 
+    public static bool PointIsInBackgroundWithoutEnnemies(Vector3 point)
+    {
+        foreach (Background bg in getBackgrounds())
+        {
+            if (bg.contains(point) && !bg.hasEnemies())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static bool OnePointsAreInBackgroundsWithoutEnemies(List<Vector3> points)
+    {
+        foreach (Vector3 point in points)
+        {
+            bool found = PointIsInBackgroundWithoutEnnemies(point);
+            if (found)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    public static bool allPointsAreInBackgroundsWithoutEnemies(List<Vector3> points)
+    {
+        foreach (Vector3 point in points)
+        {
+            bool found = PointIsInBackgroundWithoutEnnemies(point);
+            if (!found)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
