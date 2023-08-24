@@ -58,7 +58,12 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
             Enemy enemy_behavior;
             if (enemy.type == EnemyType.Circle)
             {
-                enemy_behavior = enemy_go.AddComponent<EnemyCircle>();
+                EnemyCircleInfo enemy_circle_info = (EnemyCircleInfo)enemy;
+                EnemyCircle enemy_circle = enemy_go.AddComponent<EnemyCircle>();
+                enemy_circle.mRotateSpeed = enemy_circle_info.mRotateSpeed;
+                enemy_circle.mStartRotation = enemy_circle_info.mStartRotation;
+                enemy_circle.mAttackSpeed = enemy_circle_info.mAttackSpeed;
+                enemy_behavior = enemy_circle;
             }
             else
             {

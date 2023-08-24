@@ -32,6 +32,18 @@ public class EnemyInfo : ObjectInfo
         type = _type;
     }
 }
+public class EnemyCircleInfo : EnemyInfo
+{
+    public float mRotateSpeed;
+    public float mAttackSpeed;
+    public float mStartRotation;
+    public EnemyCircleInfo(Vector2 _position, Vector2 _direction, float _scale, float _rotation_speed, float _rotation_position, float _attack_speed) : base(EnemyType.Circle, _position, _direction, _scale)
+    {
+        mRotateSpeed = _rotation_speed;
+        mAttackSpeed = _attack_speed;
+        mStartRotation = _rotation_position;
+    }
+}
 public class StarInfo : ObjectInfo
 {
     public StarInfo(Vector2 _position, float _scale = 1f) : base(_position, new Vector2(0, 0), _scale)
@@ -124,9 +136,9 @@ public class Levels
         // Level 1
         Level level = new Level("Circle", 50);
 
-        level.addEnemy(new EnemyInfo(EnemyType.Circle, new Vector2(0.25f, 0.25f), new Vector2(5f, 0f), Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Circle, new Vector2(0.5f, 0.25f), new Vector2(4f, 0f), Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Circle, new Vector2(0.75f, 0.25f), new Vector2(2f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyCircleInfo(new Vector2(0.25f, 0.25f), new Vector2(5f, 0f), Utils.ENEMY_DEFAULT_SCALE, 150, 0, 1));
+        level.addEnemy(new EnemyCircleInfo(new Vector2(0.5f, 0.25f), new Vector2(-4f, 0f), Utils.ENEMY_DEFAULT_SCALE, 40, 180, 5));
+        level.addEnemy(new EnemyCircleInfo(new Vector2(0.75f, 0.25f), new Vector2(3f, 3f), Utils.ENEMY_DEFAULT_SCALE, 90, 225, 10));
 
         StarInfo star_1 = new StarInfo(new Vector2(0.25f, 0.5f), Utils.STAR_DEFAULT_SCALE);
         StarInfo star_2 = new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE);
