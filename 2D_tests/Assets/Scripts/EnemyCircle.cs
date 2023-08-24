@@ -30,6 +30,7 @@ public class EnemyCircle : Enemy
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
         sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/EnemyCircle");
         sprite_renderer.material = Resources.Load<Material>("Materials/EnemyCircleMaterial");
+        name = "Circle";
 
         mRotateCircle = new GameObject();
         mRotateCircle.transform.position = transform.position;

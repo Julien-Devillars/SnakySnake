@@ -1,0 +1,65 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class EnemyFollower : Enemy
+{
+
+    CharacterBehavior character;
+    GameObject mExcalamationMark;
+
+    private void Start()
+    {
+        base.Start();
+
+        SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
+        sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/EnemyFollower");
+        sprite_renderer.material = Resources.Load<Material>("Materials/EnemyFollowerMaterial");
+        name = "Follower";
+
+        mExcalamationMark = new GameObject();
+        mExcalamationMark.transform.parent = transform;
+        mExcalamationMark.name = "ExclamationMark";
+
+        SpriteRenderer excalmation_mark_sprite_renderer = mExcalamationMark.AddComponent<SpriteRenderer>();
+        excalmation_mark_sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/Utils/ExclamationMark");
+        excalmation_mark_sprite_renderer.material = new Material(Resources.Load<Material>("Materials/ExclamationMark"));
+
+        float distance = Vector3.Distance(sprite_renderer.bounds.min, sprite_renderer.bounds.max) / 2f;
+        distance = distance + excalmation_mark_sprite_renderer.sprite.bounds.size.x / 2f;
+
+        mExcalamationMark.transform.position = new Vector3(transform.position.x, transform.position.y + distance, transform.position.z);
+        mExcalamationMark.SetActive(false);
+
+        character = GameObject.Find(Utils.CHARACTER).GetComponent<CharacterBehavior>();
+    }
+    private void FixedUpdate()
+    {
+        if (Utils.GAME_STOPPED) return;
+
+        SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
+        if (character.mTrails.Count > 0)
+        {
+            Vector3 character_pos = character.transform.position;
+            Vector3 enemy_pos = transform.position;
+            Vector3 new_direction = character_pos - enemy_pos;
+
+            Quaternion rotation = Quaternion.FromToRotation(speed, new_direction);
+
+            speed = rotation * speed;
+            mExcalamationMark.SetActive(true);
+            sprite_renderer.material.SetColor("_GlowColor", Color.magenta);
+
+        }
+        else
+        {
+            mExcalamationMark.SetActive(false);
+            sprite_renderer.material.SetColor("_GlowColor", Color.cyan);
+        }
+
+        gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
+
+    }
+
+}
