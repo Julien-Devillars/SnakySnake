@@ -22,12 +22,12 @@ public class EnemyFollower : Enemy
         mExcalamationMark.transform.parent = transform;
         mExcalamationMark.name = "ExclamationMark";
 
-        SpriteRenderer excalmation_mark_sprite_renderer = mExcalamationMark.AddComponent<SpriteRenderer>();
-        excalmation_mark_sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/Utils/ExclamationMark");
-        excalmation_mark_sprite_renderer.material = new Material(Resources.Load<Material>("Materials/ExclamationMark"));
+        SpriteRenderer exclamation_mark_sprite_renderer = mExcalamationMark.AddComponent<SpriteRenderer>();
+        exclamation_mark_sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/Utils/ExclamationMark");
+        exclamation_mark_sprite_renderer.material = new Material(Resources.Load<Material>("Materials/ExclamationMark"));
 
         float distance = Vector3.Distance(sprite_renderer.bounds.min, sprite_renderer.bounds.max) / 2f;
-        distance = distance + excalmation_mark_sprite_renderer.sprite.bounds.size.x / 2f;
+        distance = distance + exclamation_mark_sprite_renderer.sprite.bounds.size.x / 2f;
 
         mExcalamationMark.transform.position = new Vector3(transform.position.x, transform.position.y + distance, transform.position.z);
         mExcalamationMark.SetActive(false);
