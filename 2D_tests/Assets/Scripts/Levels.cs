@@ -81,6 +81,7 @@ public class Level
 
 public class Levels
 {
+    public string levels_name;
     public List<Level> levels;
 
     public static Level level_1()
@@ -225,6 +226,7 @@ public class Worlds
     {
         Levels levels = new Levels();
 
+        levels.levels_name = "World 1";
         levels.addLevel(Levels.level_1());
         levels.addLevel(Levels.level_2());
         levels.addLevel(Levels.level_3());
@@ -240,6 +242,7 @@ public class Worlds
     {
         Levels levels = new Levels();
 
+        levels.levels_name = "World 2";
         levels.addLevel(Levels.level_7());
         levels.addLevel(Levels.level_6());
         levels.addLevel(Levels.level_5());

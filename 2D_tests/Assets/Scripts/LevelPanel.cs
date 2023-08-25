@@ -24,7 +24,7 @@ public class LevelPanel : MonoBehaviour
         //Level current_level = Levels.levels[mDisplayIndex];
         //mLevelName.text = current_level.mLevelName;
 
-        mWorldName.text = "The World Name";
+        mWorldName.text = Worlds.worlds[GameControler.currentWorld].levels_name;
         int cpt = 0;
         foreach(Transform level in mLevels.transform)
         {
@@ -32,6 +32,17 @@ public class LevelPanel : MonoBehaviour
             level.GetChild(0).GetComponent<TextMeshProUGUI>().text = cpt.ToString();
             int level_idx = cpt - 1;
             level.GetComponent<Button>().onClick.AddListener(delegate { Play(level_idx); });
+            bool level_done = ES3.Load<bool>($"PlayMode_World{GameControler.currentWorld}_Level{level_idx}_status", false);
+            if (level_done)
+            {
+                level.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.blue;
+                level.GetComponent<Image>().color = Color.blue;
+            }
+            else
+            {
+                level.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
+                level.GetComponent<Image>().color = new Color(1f, 0.5f, 0f);
+            }
         }
 
     }
