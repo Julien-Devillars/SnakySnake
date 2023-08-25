@@ -64,13 +64,13 @@ public class EnemyFlyer : Enemy
         List<Vector3> points_to_check = new List<Vector3> { center };
         if(Utils.allPointsAreInBackgroundsWithoutEnemies(points_to_check))
         {
-            sprite_renderer.material.SetColor("_GlowColor", Color.magenta);
-            sprite_renderer.material.SetFloat("_GhostBlend", 0f);
+            sprite_renderer.material.SetColor("_GlowColor", Color.cyan);
+            sprite_renderer.material.SetFloat("_GhostBlend", 1f);
         }
         else
         {
-            sprite_renderer.material.SetColor("_GlowColor", Color.cyan);
-            sprite_renderer.material.SetFloat("_GhostBlend", 1f);
+            sprite_renderer.material.SetColor("_GlowColor", Color.magenta);
+            sprite_renderer.material.SetFloat("_GhostBlend", 0f);
         }
     }
 
