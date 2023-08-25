@@ -167,8 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b00b350d6138934e8337a32bb998005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test_level: 1
-  mLevel: 7
+  test_level: 0
+  mLevel: -1
 --- !u!1001 &395846935
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -235,7 +235,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 444184013}
-  - component: {fileID: 444184012}
   m_Layer: 0
   m_Name: Stars
   m_TagString: Untagged
@@ -243,18 +242,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &444184012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444184011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83bc4499dc5508a428016d312c48265c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &444184013
 Transform:
   m_ObjectHideFlags: 0
@@ -855,6 +842,10 @@ PrefabInstance:
       propertyPath: mOptionMenu
       value: 
       objectReference: {fileID: 1131501414}
+    - target: {fileID: 6797423254769230271, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7038694027305648304, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

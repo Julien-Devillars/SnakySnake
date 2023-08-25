@@ -9,7 +9,7 @@ public class EnemyFollower : Enemy
     CharacterBehavior character;
     GameObject mExcalamationMark;
 
-    private void Start()
+    new private void Start()
     {
         base.Start();
         type = EnemyType.Follower;
@@ -35,7 +35,7 @@ public class EnemyFollower : Enemy
 
         character = GameObject.Find(Utils.CHARACTER).GetComponent<CharacterBehavior>();
     }
-    private void FixedUpdate()
+    new private void FixedUpdate()
     {
         if (Utils.GAME_STOPPED) return;
 

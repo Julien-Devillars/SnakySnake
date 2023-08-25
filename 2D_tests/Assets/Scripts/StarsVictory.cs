@@ -5,11 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class StarsVictory : MonoBehaviour
 {
+
+    CharacterBehavior character;
+    private void Start()
+    {
+        character = GameObject.Find(Utils.CHARACTER).GetComponent<CharacterBehavior>();
+    }
+
     // Update is called once per frame
     void Update()
     {
 
         if (!Utils.HAS_WIN) return;
+        if (character.mTrails.Count > 0) return; // Cannot win if any trail currently
 
         foreach(Transform star_child in transform)
         {
