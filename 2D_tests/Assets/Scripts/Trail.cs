@@ -185,7 +185,7 @@ public class Trail : MonoBehaviour
                 GameControler.status = GameControler.GameStatus.Lose;
                 if (Utils.HAS_LOSE)
                 {
-                    SceneManager.LoadScene("Level_1");
+                    SceneManager.LoadScene("PlayLevel");
                 }
             }
         }

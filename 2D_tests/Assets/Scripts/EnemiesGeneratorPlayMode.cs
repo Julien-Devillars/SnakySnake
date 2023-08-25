@@ -13,12 +13,12 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
         enemies = new List<GameObject>();
 
         int level_index;
+        GameControler.type = GameControler.GameType.Play;
         if (test_level)
         {
             level_index = mLevel - 1;
             Levels.createLevels();
             GameControler.currentLevel = mLevel;
-            GameControler.type = GameControler.GameType.Play;
         }
         else
         {
