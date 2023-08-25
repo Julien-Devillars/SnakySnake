@@ -22,7 +22,8 @@ public enum EnemyType
     Basic,
     Circle,
     Follower,
-    Flyer
+    Flyer,
+    Driller
 }
 
 public class EnemyInfo : ObjectInfo 
@@ -173,8 +174,26 @@ public class Levels
         Level level = new Level("Flyer", 80);
 
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, new Vector2(0.25f, 0.25f), new Vector2(10f, 0f), Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Flyer, new Vector2(0.25f, 0.25f), new Vector2(0f, 10f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, new Vector2(0.25f, 0.25f), new Vector2(30f, 30f), Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, new Vector2(0.25f, 0.25f), new Vector2(20f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+
+        StarInfo star_1 = new StarInfo(new Vector2(0.25f, 0.5f), Utils.STAR_DEFAULT_SCALE);
+        StarInfo star_2 = new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE);
+        StarInfo star_3 = new StarInfo(new Vector2(0.75f, 0.5f), Utils.STAR_DEFAULT_SCALE);
+        level.addStar(star_1);
+        level.addStar(star_2);
+        level.addStar(star_3);
+        return level;
+    }
+    private static Level level_7()
+    {
+        // Level 1
+        Level level = new Level("Driller", 80);
+
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.25f, 0.25f), new Vector2(10f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.25f, 0.25f), new Vector2(-10f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.25f, 0.25f), new Vector2(0f, 10f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.25f, 0.25f), new Vector2(0f, -10f), Utils.ENEMY_DEFAULT_SCALE));
 
         StarInfo star_1 = new StarInfo(new Vector2(0.25f, 0.5f), Utils.STAR_DEFAULT_SCALE);
         StarInfo star_2 = new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE);
@@ -196,6 +215,7 @@ public class Levels
         levels.Add(level_4());
         levels.Add(level_5());
         levels.Add(level_6());
+        levels.Add(level_7());
     }
 }
 

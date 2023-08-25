@@ -15,7 +15,7 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
         int level_index = 0;
         if (test_level)
         {
-            level_index = mLevel;
+            level_index = mLevel - 1;
             Levels.createLevels();
             GameControler.currentLevel = mLevel;
             GameControler.type = GameControler.GameType.Play;
@@ -74,6 +74,9 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
                     break;
                 case EnemyType.Flyer:
                     enemy_behavior = enemy_go.AddComponent<EnemyFlyer>();
+                    break;
+                case EnemyType.Driller:
+                    enemy_behavior = enemy_go.AddComponent<EnemyDriller>();
                     break;
                 default:
                     enemy_behavior = new Enemy();

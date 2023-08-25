@@ -11,6 +11,7 @@ public class EnemyFlyer : Enemy
     private void Start()
     {
         base.Start();
+        mCanCrossBorder = true;
         type = EnemyType.Flyer;
 
         Camera cam = Camera.main;

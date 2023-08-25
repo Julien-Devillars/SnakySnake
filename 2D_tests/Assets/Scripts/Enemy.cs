@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     protected bool mHasCollideVertical;
     protected bool mHasCollideHorizontal;
     public EnemyType type;
+    public bool mCanCrossBorder = false;
     protected void Awake()
     {
         Camera cam = Camera.main;
