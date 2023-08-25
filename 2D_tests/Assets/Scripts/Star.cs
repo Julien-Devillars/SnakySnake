@@ -48,7 +48,7 @@ public class Star : MonoBehaviour
         GameObject character = GameObject.Find(Utils.CHARACTER);
         SpriteRenderer character_sprite_renderer = character.GetComponent<SpriteRenderer>();
         SpriteRenderer flag_sprite_renderer = GetComponent<SpriteRenderer>();
-        if (flag_sprite_renderer.bounds.Intersects(character_sprite_renderer.bounds) || Utils.allPointsAreInBackgroundsWithoutEnemies(points_to_check))
+        if (flag_sprite_renderer.bounds.Intersects(character_sprite_renderer.bounds) )//|| Utils.allPointsAreInBackgroundsWithoutEnemies(points_to_check))
         {
             gameObject.SetActive(false);
             //flag = true;

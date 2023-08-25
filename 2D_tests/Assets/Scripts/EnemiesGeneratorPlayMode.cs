@@ -12,7 +12,7 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
     {
         enemies = new List<GameObject>();
 
-        int level_index = 0;
+        int level_index;
         if (test_level)
         {
             level_index = mLevel - 1;
@@ -96,6 +96,31 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
 
             // Set enemy position
             enemy_behavior.setRelativePosition(enemy.position);
+        }
+
+
+        List<GameObject> stars = new List<GameObject>();
+        GameObject stars_go = GameObject.Find(Utils.STARS_STR);
+        foreach (StarInfo star in Levels.levels[level_index].mStars)
+        {
+            GameObject star_go = new GameObject();
+            star_go.name = Utils.STAR_STR;
+            star_go.tag = Utils.STAR_STR;
+            star_go.layer = 13; // Star Layer
+            star_go.transform.localScale = new Vector3(star.scale, star.scale, 0.5f);
+            star_go.transform.parent = stars_go.transform;
+
+            // Add Sprite Renderer
+            SpriteRenderer sprite_renderer = star_go.AddComponent<SpriteRenderer>();
+
+            sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/UI/StarNOK");
+            sprite_renderer.material = new Material(Shader.Find("Sprites/Default"));
+            sprite_renderer.sortingOrder = 1;
+
+            Star star_script = star_go.AddComponent<Star>();
+            star_script.setRelativePosition(star.position);
+
+            stars.Add(star_go);
         }
     }
 }

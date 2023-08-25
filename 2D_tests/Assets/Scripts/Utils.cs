@@ -228,7 +228,7 @@ public class Utils
         foreach (Vector3 point in points)
         {
             bool found = PointIsInBackgroundWithoutEnnemies(point);
-            if (!found)
+            if (found)
             {
                 return false;
             }

@@ -46,9 +46,19 @@ public class GamePulseToBeat : MonoBehaviour
         returnToStartLineSize();
     }
 
+    void updateSpriteIfNeeded()
+    {
+        if (mSprite != null) return;
+
+        mBackground = GameObject.Find(Utils.BACKGROUND_VIEW_STR);
+        mSprite = mBackground.GetComponent<SpriteRenderer>();
+    }
+
     // Pulse for Line Color
     public void PulseColorIntensity()
     {
+        updateSpriteIfNeeded();
+        if (mSprite == null) return;
         Color color = mSprite.material.GetColor("_LineColor");
         mSprite.material.SetColor("_LineColor", color * mPulseSizeColorIntensity);
     }
@@ -71,6 +81,8 @@ public class GamePulseToBeat : MonoBehaviour
     // Pulse for Line Size
     public void PulseLineSize()
     {
+        updateSpriteIfNeeded();
+        if (mSprite == null) return;
         float line_size = mSprite.material.GetFloat("_LineSize");
         mSprite.material.SetFloat("_LineSize", line_size * mPulseSizeLineSize);
     }

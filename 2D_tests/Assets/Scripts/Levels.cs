@@ -190,10 +190,11 @@ public class Levels
         // Level 1
         Level level = new Level("Driller", 80);
 
-        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.25f, 0.25f), new Vector2(10f, 0f), Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.25f, 0.25f), new Vector2(-10f, 0f), Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.25f, 0.25f), new Vector2(0f, 10f), Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.25f, 0.25f), new Vector2(0f, -10f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.5f, 0.5f), new Vector2(10f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.5f, 0.5f), new Vector2(-10f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.5f, 0.5f), new Vector2(0f, 10f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector2(0.5f, 0.5f), new Vector2(0f, -10f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, new Vector2(0.5f, 0.5f), new Vector2(0f, 0f), Utils.ENEMY_DEFAULT_SCALE));
 
         StarInfo star_1 = new StarInfo(new Vector2(0.25f, 0.5f), Utils.STAR_DEFAULT_SCALE);
         StarInfo star_2 = new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE);
