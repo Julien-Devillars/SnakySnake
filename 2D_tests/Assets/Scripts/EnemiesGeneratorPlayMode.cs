@@ -101,6 +101,8 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
 
         List<GameObject> stars = new List<GameObject>();
         GameObject stars_go = GameObject.Find(Utils.STARS_STR);
+        stars_go.AddComponent<StarsVictory>();
+
         foreach (StarInfo star in Levels.levels[level_index].mStars)
         {
             GameObject star_go = new GameObject();

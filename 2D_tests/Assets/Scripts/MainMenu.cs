@@ -19,7 +19,8 @@ public class MainMenu : MonoBehaviour
     public int mPreviousIndexMenu = 0;
     public void Start()
     {
-        foreach(GameObject menu in mMenus)
+        DestroyImmediate(MusicHandler.instance.gameObject);
+        foreach (GameObject menu in mMenus)
         {
             menu.SetActive(false);
         }

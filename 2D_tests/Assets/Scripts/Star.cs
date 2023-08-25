@@ -6,7 +6,6 @@ public class Star : MonoBehaviour
 {
     private float width;
     private float height;
-    private bool flag;
 
     private Vector3 mMinPos;
     private Vector3 mMaxPos;
@@ -27,16 +26,11 @@ public class Star : MonoBehaviour
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
         width = sprite_renderer.bounds.size.x;
         height = sprite_renderer.bounds.size.y;
-        flag = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(flag)
-        {
-            return;
-        }
         Vector3 center = transform.position;
         Vector3 top_left = new Vector3(center.x - width / 2f, center.y + height/2f);
         Vector3 top_right = new Vector3(center.x + width / 2f, center.y + height/2f);

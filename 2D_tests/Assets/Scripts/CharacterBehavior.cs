@@ -204,7 +204,8 @@ public class CharacterBehavior : MonoBehaviour
             }
         }
 
-        countScore();
+        // Hide Score
+        //countScore();
     }
     bool isInScreen(Vector3 point)
     {
