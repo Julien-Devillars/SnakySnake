@@ -5,27 +5,32 @@ using UnityEngine;
 public class EnemiesGeneratorPlayMode : MonoBehaviour
 {
     private List<GameObject> enemies;
-    public bool test_level = true;
+    public static bool test_level = true;
     public int mLevel = -1;
+    public int mWorld = -1;
     // Start is called before the first frame update
     void Start()
     {
         enemies = new List<GameObject>();
 
         int level_index;
+        int world_index;
         GameControler.type = GameControler.GameType.Play;
         if (test_level)
         {
             level_index = mLevel - 1;
-            Levels.createLevels();
+            world_index = mWorld - 1;
+            Worlds.createWorlds();
             GameControler.currentLevel = mLevel;
+            GameControler.currentWorld = mWorld;
         }
         else
         {
             level_index = GameControler.currentLevel;
+            world_index = GameControler.currentWorld;
         }
 
-        foreach (EnemyInfo enemy in Levels.levels[level_index].mEnemies)
+        foreach (EnemyInfo enemy in Worlds.getLevel(world_index, level_index).mEnemies)
         {
             GameObject enemy_go = new GameObject();
             enemy_go.name = "Enemy";
@@ -103,7 +108,7 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
         GameObject stars_go = GameObject.Find(Utils.STARS_STR);
         stars_go.AddComponent<StarsVictory>();
 
-        foreach (StarInfo star in Levels.levels[level_index].mStars)
+        foreach (StarInfo star in Worlds.getLevel(world_index, level_index).mStars)
         {
             GameObject star_go = new GameObject();
             star_go.name = Utils.STAR_STR;

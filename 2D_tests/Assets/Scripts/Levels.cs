@@ -81,9 +81,9 @@ public class Level
 
 public class Levels
 {
-    public static List<Level> levels;
+    public List<Level> levels;
 
-    private static Level level_1()
+    public static Level level_1()
     {
         // Level 1
         Level level = new Level("Basic", 50);
@@ -98,7 +98,7 @@ public class Levels
         level.addStar(star_3);
         return level;
     }
-    private static Level level_2()
+    public static Level level_2()
     {
         // Level 1
         Level level = new Level("Plus", 45);
@@ -116,7 +116,7 @@ public class Levels
         level.addStar(star_3);
         return level;
     }
-    private static Level level_3()
+    public static Level level_3()
     {
         // Level 1
         Level level = new Level("Cross", 45);
@@ -134,7 +134,7 @@ public class Levels
         level.addStar(star_3);
         return level;
     }
-    private static Level level_4()
+    public static Level level_4()
     {
         // Level 1
         Level level = new Level("Circle", 50);
@@ -151,7 +151,7 @@ public class Levels
         level.addStar(star_3);
         return level;
     }
-    private static Level level_5()
+    public static Level level_5()
     {
         // Level 1
         Level level = new Level("Follower", 80);
@@ -168,7 +168,7 @@ public class Levels
         level.addStar(star_3);
         return level;
     }
-    private static Level level_6()
+    public static Level level_6()
     {
         // Level 1
         Level level = new Level("Flyer", 80);
@@ -185,7 +185,7 @@ public class Levels
         level.addStar(star_3);
         return level;
     }
-    private static Level level_7()
+    public static Level level_7()
     {
         // Level 1
         Level level = new Level("Driller", 80);
@@ -204,18 +204,64 @@ public class Levels
         return level;
     }
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    public static void createLevels()
+    public Levels()
     {
         levels = new List<Level>();
-
-        levels.Add(level_1());
-        levels.Add(level_2());
-        levels.Add(level_3());
-        levels.Add(level_4());
-        levels.Add(level_5());
-        levels.Add(level_6());
-        levels.Add(level_7());
     }
+
+    public void addLevel(Level level)
+    {
+        levels.Add(level);
+    }
+
 }
 
+
+public class Worlds
+{
+    public static List<Levels> worlds;
+
+    private static Levels world_1()
+    {
+        Levels levels = new Levels();
+
+        levels.addLevel(Levels.level_1());
+        levels.addLevel(Levels.level_2());
+        levels.addLevel(Levels.level_3());
+        levels.addLevel(Levels.level_4());
+        levels.addLevel(Levels.level_5());
+        levels.addLevel(Levels.level_6());
+        levels.addLevel(Levels.level_7());
+
+        return levels;
+    }
+
+    private static Levels world_2()
+    {
+        Levels levels = new Levels();
+
+        levels.addLevel(Levels.level_7());
+        levels.addLevel(Levels.level_6());
+        levels.addLevel(Levels.level_5());
+        levels.addLevel(Levels.level_4());
+        levels.addLevel(Levels.level_3());
+        levels.addLevel(Levels.level_2());
+        levels.addLevel(Levels.level_1());
+
+        return levels;
+    }
+
+    public static Level getLevel(int world, int level)
+    {
+        return worlds[world].levels[level];
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    public static void createWorlds()
+    {
+        worlds = new List<Levels>();
+
+        worlds.Add(world_1());
+        worlds.Add(world_2());
+    }
+}

@@ -7,74 +7,69 @@ using UnityEngine.SceneManagement;
 
 public class LevelPanel : MonoBehaviour
 {
-    public TextMeshProUGUI mLevelName;
-    public TextMeshProUGUI mGoalScore;
-    public TextMeshProUGUI mBestReach;
-    public Slider mSlider;
-    public GameObject mStars;
-    int mDisplayIndex = 0;
+    public TextMeshProUGUI mWorldName;
+    public GameObject mLevels;
 
     // Start is called before the first frame update
     void Start()
     {
-        mDisplayIndex = 0;
+        GameControler.currentWorld = 0;
+        GameControler.currentLevel = 0;
         display();
     }
 
 
     public void display()
     {
-        Level current_level = Levels.levels[mDisplayIndex];
-        mLevelName.text = current_level.mLevelName;
-        mGoalScore.text = (current_level.mGoalScore * Score.mMultiplier).ToString();
-        int best = ES3.Load<int>($"Play_Level_{mDisplayIndex}_HighScore", 0);
-        mBestReach.text = best.ToString() + "%";
-        mSlider.value = best;
+        //Level current_level = Levels.levels[mDisplayIndex];
+        //mLevelName.text = current_level.mLevelName;
 
-        for(int i = 0; i < mStars.transform.childCount; ++i)
+        mWorldName.text = "The World Name";
+        int cpt = 0;
+        foreach(Transform level in mLevels.transform)
         {
-            Transform star_child = mStars.transform.GetChild(i);
-            bool has_star = ES3.Load<bool>($"Play_Level_{mDisplayIndex}_Star_{i}", false);
-            if (has_star)
-            {
-                star_child.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/StarOK");
-            }
-            else
-            {
-                star_child.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/StarNOK");
-            }
+            cpt++;
+            level.GetChild(0).GetComponent<TextMeshProUGUI>().text = cpt.ToString();
+            int level_idx = cpt - 1;
+            level.GetComponent<Button>().onClick.AddListener(delegate { Play(level_idx); });
         }
+
     }
 
     public void onLeft()
     {
-        if(mDisplayIndex <= 0)
+        if(GameControler.currentWorld <= 0)
         {
-            mDisplayIndex = Levels.levels.Count - 1;
+            GameControler.currentWorld = Worlds.worlds.Count - 1;
         }
         else
         {
-            mDisplayIndex--;
+            GameControler.currentWorld--;
         }
         display();
     }
     public void onRight()
     {
-        if (mDisplayIndex >= Levels.levels.Count - 1)
+        if (GameControler.currentWorld >= Worlds.worlds.Count - 1)
         {
-            mDisplayIndex = 0;
+            GameControler.currentWorld = 0;
         }
         else
         {
-            mDisplayIndex++;
+            GameControler.currentWorld++;
         }
         display();
     }
 
-    public void Play()
+    public void Play(int level)
     {
-        GameControler.currentLevel = mDisplayIndex;
+        GameControler.currentLevel = level;
         GameControler.type = GameControler.GameType.Play;
+        if(Worlds.worlds.Count == 0)
+        {
+            Worlds.createWorlds();
+        }
+        EnemiesGeneratorPlayMode.test_level = false;
         SceneManager.LoadScene("PlayLevel");
     }
 }

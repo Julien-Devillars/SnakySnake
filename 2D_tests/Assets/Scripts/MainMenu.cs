@@ -18,8 +18,11 @@ public class MainMenu : MonoBehaviour
 
     public int mPreviousIndexMenu = 0;
     public void Start()
-    {
-        DestroyImmediate(MusicHandler.instance.gameObject);
+    { 
+        if(MusicHandler.instance != null)
+        {
+            DestroyImmediate(MusicHandler.instance.gameObject);
+        }
         foreach (GameObject menu in mMenus)
         {
             menu.SetActive(false);
@@ -33,7 +36,7 @@ public class MainMenu : MonoBehaviour
         mInfinityBestScoreText[1].text = "Medium - Best : " + ES3.Load<int>("Infinity_HighScore_2", 0).ToString();
         mInfinityBestScoreText[2].text = "Hard - Best : " + ES3.Load<int>("Infinity_HighScore_3", 0).ToString();
 
-        Levels.createLevels();
+        Worlds.createWorlds();
         float volume = ES3.Load<float>("Game_Volume", 0.5f);
         GameControler.GameVolume = volume;
     }

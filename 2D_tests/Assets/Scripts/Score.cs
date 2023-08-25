@@ -41,7 +41,7 @@ public class Score : MonoBehaviour
         }
         else
         {
-            mGoalPercent = Levels.levels[GameControler.currentLevel].mGoalScore;
+            //mGoalPercent = Levels.levels[GameControler.currentLevel].mGoalScore;
         }
         mGoalScore = mGoalPercent *  mMultiplier;
 
@@ -97,15 +97,15 @@ public class Score : MonoBehaviour
                 }
                 ES3.Save<int>($"Play_Level_{GameControler.currentLevel}_HighScore", 100);
 
-                if (GameControler.currentLevel < Levels.levels.Count - 1)
-                {
-                    GameControler.currentLevel++;
-                    SceneManager.LoadScene("PlayLevel");
-                }
-                else
-                {
-                    SceneManager.LoadScene("MainMenu");
-                }
+                //if (GameControler.currentLevel < Levels.levels.Count - 1)
+                //{
+                //    GameControler.currentLevel++;
+                //    SceneManager.LoadScene("PlayLevel");
+                //}
+                //else
+                //{
+                //    SceneManager.LoadScene("MainMenu");
+                //}
             }
         }
     }

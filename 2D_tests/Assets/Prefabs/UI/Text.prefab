@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -68,21 +69,21 @@ MonoBehaviour:
   m_text: PLAY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cd37e6355799cd54589e9c316e6c5202, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 62dde2981577e78468c24a6707175fd4, type: 2}
+  m_sharedMaterial: {fileID: 1754445655597924292, guid: cd37e6355799cd54589e9c316e6c5202, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 1
-  m_colorMode: 3
+    rgba: 4278223103
+  m_fontColor: {r: 1, g: 0.5, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 0
   m_fontColorGradient:
-    topLeft: {r: 1, g: 0.0141509175, b: 0.7980082, a: 1}
-    topRight: {r: 0.5, g: 0.1533019, b: 0.48459116, a: 1}
-    bottomLeft: {r: 0.16470589, g: 0.6917419, b: 0.90588236, a: 1}
-    bottomRight: {r: 0, g: 0.92939377, b: 1, a: 1}
+    topLeft: {r: 0.06407974, g: 0.9056604, b: 0.85867155, a: 1}
+    topRight: {r: 0.06407974, g: 0.9056604, b: 0.85867155, a: 1}
+    bottomLeft: {r: 0.06407974, g: 0.9056604, b: 0.85867155, a: 1}
+    bottomRight: {r: 0.06407974, g: 0.9056604, b: 0.85867155, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -92,17 +93,17 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 118.3
+  m_fontSize: 67.9
   m_fontSizeBase: 120
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 30
+  m_fontSizeMin: 30.51
   m_fontSizeMax: 350
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
-  m_characterSpacing: 20
+  m_characterSpacing: 10
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -128,7 +129,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -10.190674, z: 0, w: 9.240982}
+  m_margin: {x: 46.97061, y: -8.486797, z: 47.454727, w: 15.346279}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
