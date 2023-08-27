@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     public Vector2 speed;
     protected Vector3 mMinPos;
     protected Vector3 mMaxPos;
+    protected Vector3 mFullMinPos;
+    protected Vector3 mFullMaxPos;
     protected bool mHasCollideVertical;
     protected bool mHasCollideHorizontal;
     public EnemyType type;
@@ -21,6 +23,8 @@ public class Enemy : MonoBehaviour
 
         mMinPos = new Vector3(-width + Utils.EPSILON() * 2f, -height + Utils.EPSILON() * 2f, 0);
         mMaxPos = new Vector3(width - Utils.EPSILON() * 2f, height - Utils.EPSILON() * 2f, 0);
+        mFullMinPos = new Vector3(-width, -height, 0);
+        mFullMaxPos = new Vector3(width, height, 0);
         mHasCollideVertical = false;
         mHasCollideHorizontal = false;
     }
@@ -162,8 +166,8 @@ public class Enemy : MonoBehaviour
     }
     public void setRelativePosition(Vector2 relative_pos)
     {
-        float x = mMinPos.x * (1 - relative_pos.x) + mMaxPos.x * relative_pos.x;
-        float y = mMinPos.y * (1 - relative_pos.y) + mMaxPos.y * relative_pos.y;
+        float x = mFullMinPos.x * (1 - relative_pos.x) + mFullMaxPos.x * relative_pos.x;
+        float y = mFullMinPos.y * (1 - relative_pos.y) + mFullMaxPos.y * relative_pos.y;
         Vector2 absolute_pos = new Vector2(x, y);
         setPosition(absolute_pos);
     }
