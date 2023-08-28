@@ -10,13 +10,15 @@ public class EndLevel : MonoBehaviour
     public TextMeshProUGUI mTextLevel;
     public Button mNextLevelButton;
     public GameObject mMenu;
-
+    public Animator mTransitionAnimation;
+    public bool mFinish;
     void Start()
     {
         mMenu.SetActive(false);
         mNextLevelButton.interactable = false;
         Time.timeScale = 1f;
         GameControler.status = GameControler.GameStatus.InProgress;
+        mFinish = false;
     }
     // Update is called once per frame
     void Update()
@@ -30,8 +32,11 @@ public class EndLevel : MonoBehaviour
             mMenu.SetActive(false);
             return;
         }
-
-        Time.timeScale = 0f;
+        if(!mFinish)
+        {
+            Time.timeScale = 0f;
+            mFinish = true;
+        }
         if (GameControler.status == GameControler.GameStatus.Win)
         {
             mNextLevelButton.interactable = true;
@@ -45,7 +50,7 @@ public class EndLevel : MonoBehaviour
     }
     public void Replay()
     {
-        SceneManager.LoadScene("PlayLevel");
+        StartCoroutine(LoadLevel("PlayLevel"));
     }
 
     public void Next()
@@ -53,8 +58,7 @@ public class EndLevel : MonoBehaviour
         if (GameControler.currentLevel < Worlds.worlds[GameControler.currentWorld].levels.Count - 1)
         {
             GameControler.currentLevel++;
-            Time.timeScale = 1f;
-            SceneManager.LoadScene("PlayLevel");
+            StartCoroutine(LoadLevel("PlayLevel"));
         }
         else
         {
@@ -62,8 +66,7 @@ public class EndLevel : MonoBehaviour
             {
                 GameControler.currentWorld++;
                 GameControler.currentLevel = 0;
-                Time.timeScale = 1f;
-                SceneManager.LoadScene("PlayLevel");
+                StartCoroutine(LoadLevel("PlayLevel"));
             }
             else
             {
@@ -73,7 +76,14 @@ public class EndLevel : MonoBehaviour
     }
     public void Menu()
     {
+        StartCoroutine(LoadLevel("MainMenu"));
+    }
+
+    IEnumerator LoadLevel(string level_name)
+    {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        mTransitionAnimation.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(0.15f);
+        SceneManager.LoadSceneAsync(level_name);
     }
 }

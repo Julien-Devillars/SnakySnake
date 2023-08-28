@@ -9,7 +9,7 @@ public class LevelPanel : MonoBehaviour
 {
     public TextMeshProUGUI mWorldName;
     public GameObject mLevels;
-
+    public Animator mTransitionAnimation;
     // Start is called before the first frame update
     void Start()
     {
@@ -82,6 +82,14 @@ public class LevelPanel : MonoBehaviour
         }
         EnemiesGeneratorPlayMode.test_level = false;
         GameControler.status = GameControler.GameStatus.InProgress;
-        SceneManager.LoadScene("PlayLevel");
+        StartCoroutine(LoadLevel());
     }
+
+    IEnumerator LoadLevel()
+    {
+        mTransitionAnimation.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(0.15f);
+        SceneManager.LoadSceneAsync("PlayLevel");
+    }
+
 }

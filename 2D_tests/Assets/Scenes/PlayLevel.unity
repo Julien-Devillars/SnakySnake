@@ -862,6 +862,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4105529198901388952, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
+      propertyPath: mTransitionAnimation
+      value: 
+      objectReference: {fileID: 1131501415}
     - target: {fileID: 4384052300004586460, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_Color.a
       value: 0.4
@@ -1272,6 +1276,11 @@ PrefabInstance:
 --- !u!1 &1131501414 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8736308385106192292, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
+  m_PrefabInstance: {fileID: 1131501413}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1131501415 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6646949640707329441, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
   m_PrefabInstance: {fileID: 1131501413}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1399450673
