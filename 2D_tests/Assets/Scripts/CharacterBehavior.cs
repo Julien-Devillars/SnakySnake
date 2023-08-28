@@ -517,7 +517,7 @@ void deleteLine()
         {
             StartCoroutine(waiter());
             mPreviousDirection = mCurrentDirection;
-            mCurrentDirection = Direction.Left;
+            mCurrentDirection = mCurrentDirection == Direction.Right ? Direction.None : Direction.Left;
             GetComponent<SpriteRenderer>().flipX = true;
             return true;
         }
@@ -525,14 +525,14 @@ void deleteLine()
         {
             StartCoroutine(waiter());
             mPreviousDirection = mCurrentDirection;
-            mCurrentDirection = Direction.Up;
+            mCurrentDirection = mCurrentDirection == Direction.Down ? Direction.None : Direction.Up;
             return true;
         }
         else if ((new_direction == Direction.Right && mCurrentDirection != Direction.Right) && (can_move_backward || mCurrentDirection != Direction.Left))
         {
             StartCoroutine(waiter());
             mPreviousDirection = mCurrentDirection;
-            mCurrentDirection = Direction.Right;
+            mCurrentDirection = mCurrentDirection == Direction.Left ? Direction.None : Direction.Right;
             GetComponent<SpriteRenderer>().flipX = false;
             return true;
         }
@@ -540,7 +540,7 @@ void deleteLine()
         {
             StartCoroutine(waiter());
             mPreviousDirection = mCurrentDirection;
-            mCurrentDirection = Direction.Down;
+            mCurrentDirection = mCurrentDirection == Direction.Up ? Direction.None : Direction.Down;
             return true;
         }
         return false;
@@ -752,13 +752,25 @@ void deleteLine()
     Vector3 getPositionInBorder(Vector3 position)
     {
         if (position.x < mMinBorderPos.x)
+        {
+            mCurrentDirection = Direction.direction.None;
             return new Vector3(mMinBorderPos.x, position.y, position.z);
+        }
         if (position.x > mMaxBorderPos.x)
+        {
+            mCurrentDirection = Direction.direction.None;
             return new Vector3(mMaxBorderPos.x, position.y, position.z);
+        }
         if (position.y < mMinBorderPos.y)
+        {
+            mCurrentDirection = Direction.direction.None;
             return new Vector3(position.x, mMinBorderPos.y, position.z);
+        }
         if (position.y > mMaxBorderPos.y)
+        {
+            mCurrentDirection = Direction.direction.None;
             return new Vector3(position.x, mMaxBorderPos.y, position.z);
+        }
         return position;
     }
 
