@@ -172,7 +172,7 @@ public class CharacterBehavior : MonoBehaviour
             else if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies() && (current_bg  == null || current_bg != null && !current_bg.hasEnemies()))
             {
                 setOnBorderOppositeDirection();
-                addLine();
+                //addLine();
             }
         }
         moveBall();
@@ -693,6 +693,7 @@ void deleteLine()
             return;
         }
 
+        mCurrentDirection = Direction.direction.None;
         transform.position = getClosestPoint(border_points);
     }
 
@@ -721,7 +722,7 @@ void deleteLine()
 
         foreach (Border border in borders)
         {
-            if (border.isHorizontal() && (Direction.isVertical(mCurrentDirection) || Direction.isVertical(mPreviousDirection)))
+            if (border.isHorizontal() && (Direction.isVertical(mCurrentDirection) || Direction.isVertical(mPreviousDirection) || mCurrentDirection == Direction.direction.None))
             {
                 Vector3 point_on_border = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
                 if (border.contains(point_on_border) && Vector3.Distance(transform.position, point_on_border) < Vector3.Distance(transform.position, closest_point))
@@ -730,7 +731,7 @@ void deleteLine()
                     //mLastBorder = border;
                 }
             }
-            else if (border.isVertical() && (Direction.isHorizontal(mCurrentDirection) || Direction.isHorizontal(mPreviousDirection)))
+            else if (border.isVertical() && (Direction.isHorizontal(mCurrentDirection) || Direction.isHorizontal(mPreviousDirection) || mCurrentDirection == Direction.direction.None))
             {
                 Vector3 point_on_border = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
                 if (border.contains(point_on_border) && Vector3.Distance(transform.position, point_on_border) < Vector3.Distance(transform.position, closest_point))
