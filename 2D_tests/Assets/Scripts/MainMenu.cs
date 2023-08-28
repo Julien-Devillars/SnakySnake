@@ -18,8 +18,9 @@ public class MainMenu : MonoBehaviour
 
     public int mPreviousIndexMenu = 0;
     public void Start()
-    { 
-        if(MusicHandler.instance != null)
+    {
+        Time.timeScale = 1f;
+        if (MusicHandler.instance != null)
         {
             DestroyImmediate(MusicHandler.instance.gameObject);
         }

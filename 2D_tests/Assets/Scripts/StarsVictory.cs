@@ -27,15 +27,6 @@ public class StarsVictory : MonoBehaviour
         GameControler.status = GameControler.GameStatus.Win;
         ES3.Save<bool>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_status", true);
 
-        if (GameControler.currentLevel < Worlds.worlds[GameControler.currentWorld].levels.Count - 1)
-        {
-            GameControler.currentLevel++;
-            SceneManager.LoadScene("PlayLevel");
-        }
-        else
-        {
-            SceneManager.LoadScene("MainMenu");
-        }
         
     }
 }

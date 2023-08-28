@@ -104,10 +104,10 @@ public class Levels
         // Level 1
         Level level = new Level("Plus", 45);
 
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, new Vector2(0.5f, 0.5f), new Vector2(1f, 0f), Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, new Vector2(0.5f, 0.5f), new Vector2(-1f, 0f), Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, new Vector2(0.5f, 0.5f), new Vector2(0f, 1f), Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, new Vector2(0.5f, 0.5f), new Vector2(0f, -1f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, new Vector2(0.25f, 0.25f), new Vector2(0f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, new Vector2(0.25f, 0.75f), new Vector2(0f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, new Vector2(0.75f, 0.25f), new Vector2(0f, 0f), Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, new Vector2(0.75f, 0.75f), new Vector2(0f, 0f), Utils.ENEMY_DEFAULT_SCALE));
 
         StarInfo star_1 = new StarInfo(new Vector2(0.5f, 0.25f), Utils.STAR_DEFAULT_SCALE);
         StarInfo star_2 = new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE);

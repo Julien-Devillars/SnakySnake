@@ -60,7 +60,8 @@ public class Enemy : MonoBehaviour
             if (GameControler.type == GameControler.GameType.Play)
             {
                 //ES3.Save<int>($"Play_Level_{GameControler.currentLevel}_HighScore", (int)Score.Instance.mCurrentPercentScore);
-                SceneManager.LoadScene("PlayLevel");
+                //SceneManager.LoadScene("PlayLevel");
+                GameControler.status = GameControler.GameStatus.Lose;
             }
         }
     }

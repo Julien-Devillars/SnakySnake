@@ -57,6 +57,7 @@ public class GamePulseToBeat : MonoBehaviour
     // Pulse for Line Color
     public void PulseColorIntensity()
     {
+        if (GameControler.status != GameControler.GameStatus.InProgress) return;
         updateSpriteIfNeeded();
         if (mSprite == null) return;
         Color color = mSprite.material.GetColor("_LineColor");
@@ -81,6 +82,7 @@ public class GamePulseToBeat : MonoBehaviour
     // Pulse for Line Size
     public void PulseLineSize()
     {
+        if (GameControler.status != GameControler.GameStatus.InProgress) return;
         updateSpriteIfNeeded();
         if (mSprite == null) return;
         float line_size = mSprite.material.GetFloat("_LineSize");

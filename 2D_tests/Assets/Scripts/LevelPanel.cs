@@ -81,6 +81,7 @@ public class LevelPanel : MonoBehaviour
             Worlds.createWorlds();
         }
         EnemiesGeneratorPlayMode.test_level = false;
+        GameControler.status = GameControler.GameStatus.InProgress;
         SceneManager.LoadScene("PlayLevel");
     }
 }
