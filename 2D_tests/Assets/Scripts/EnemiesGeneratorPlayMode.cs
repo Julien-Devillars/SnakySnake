@@ -93,6 +93,7 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
 
             GameObject particle_go = Instantiate(Resources.Load<GameObject>("Particles/EnemyParticle"));
             particle_go.transform.parent = enemy_go.transform;
+            particle_go.transform.localScale = new Vector3(enemy.scale, enemy.scale, enemy.scale) / Utils.ENEMY_DEFAULT_SCALE;
 
             // Set enemy direction
             enemy_behavior.setDirection(enemy.direction);

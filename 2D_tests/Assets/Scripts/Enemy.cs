@@ -125,10 +125,10 @@ public class Enemy : MonoBehaviour
     {
         float scale = transform.localScale.x;
 
-        return pos.x > mMinPos.x + scale
-            && pos.x < mMaxPos.x - scale
-            && pos.y > mMinPos.x + scale
-            && pos.y < mMaxPos.y - scale;
+        return pos.x > mFullMinPos.x + scale
+            && pos.x < mFullMaxPos.x - scale
+            && pos.y > mFullMinPos.x + scale
+            && pos.y < mFullMaxPos.y - scale;
     }
 
     public void setDefaultPosition()

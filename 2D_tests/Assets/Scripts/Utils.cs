@@ -237,4 +237,33 @@ public class Utils
         return true;
     }
 
+
+    public static Vector2 getRelativePositionFromPosition(int pos)
+    {
+        switch (pos)
+        {
+            case 1:
+                return new Vector2(0.25f, 0.25f);
+            case 2:
+                return new Vector2(0.5f, 0.25f);
+            case 3:
+                return new Vector2(0.75f, 0.25f);
+            case 4:
+                return new Vector2(0.25f, 0.5f);
+            case 5:
+                return new Vector2(0.5f, 0.5f);
+            case 6:
+                return new Vector2(0.75f, 0.5f);
+            case 7:
+                return new Vector2(0.25f, 0.75f);
+            case 8:
+                return new Vector2(0.5f, 0.75f);
+            case 9:
+                return new Vector2(0.75f, 0.75f);
+            case 0:
+            default:
+                return Vector2.zero;
+        }
+    }
+
 }
