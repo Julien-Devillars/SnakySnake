@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
+using UnityEngine.UIElements;
+using log4net.Util;
 
 public class CharacterBehavior : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class CharacterBehavior : MonoBehaviour
     private Dictionary<Direction.direction, Vector3> mDirections;
     public Direction.direction mCurrentDirection;
     public Direction.direction mPreviousDirection;
+    public Vector3 mPreviousPosition;
     private bool mDirectionUpdated;
     private bool mCanMove;
     private bool mCanAddLine;
@@ -25,12 +28,13 @@ public class CharacterBehavior : MonoBehaviour
 
     private List<GameObject> mEnemies;
 
-    private List<GameObject> mTrailPoints;
+    public List<GameObject> mTrailPoints;
     private GameObject mTrailPointsGO;
     public List<GameObject> mTrails;
     private GameObject mTrailGO;
     private GameObject mLastPosition_go;
     private Border mLastBorder;
+    private Border mLastLastBorder;
     private Border mLastBorderWhichCreateTrail;
 
     private bool mFingerDown;
@@ -42,6 +46,7 @@ public class CharacterBehavior : MonoBehaviour
         mDirections = Direction.directions;
         mCurrentDirection = Direction.direction.None;
         mPreviousDirection = Direction.direction.None;
+        mPreviousPosition = new Vector3();
         mCanMove = true;
         mCanAddLine = true;
         mFingerDown = false;
@@ -112,6 +117,7 @@ public class CharacterBehavior : MonoBehaviour
         Border left = Border.create(bot_left, top_left, false);
 
         mLastBorder = bot;
+        mLastLastBorder = left;
 
         addBorder(top);
         addBorder(right);
@@ -137,72 +143,125 @@ public class CharacterBehavior : MonoBehaviour
         Border next_border = GetBorder(getNextPosition());
         Vector3 next_pos = getNextPosition();
 
-        if (current_bg == null && next_bg == null && current_border != null && current_border != next_border && next_border == null)
+        List<Border> current_borders = GetBorders(transform.position);
+        List<Border> next_borders = GetBorders(next_pos);
+        //if (current_bg != null)
+        //{
+        //    Debug.Log("Current BG : " + current_bg.name);
+        //}
+        //if (next_bg != null)
+        //{
+        //    Debug.Log("Next BG : " + next_bg.name);
+        //}
+        //if (current_border != null)
+        //{
+        //    Debug.Log("Current Border : " + current_border.name);
+        //}
+        //if (next_border != null)
+        //{
+        //    Debug.Log("Next border : " + next_border.name);
+        //}
+
+        //if(mCurrentDirection != Direction.direction.None && current_border != null && !current_borders.Contains(mLastBorder) && !current_borders.Contains(mLastLastBorder))
+        //{
+        //    setOnBorderOppositeDirection();
+        //}
+
+        if(current_border == null && current_bg.hasEnemies())
         {
-            if(isInScreen(next_pos))
+            if(next_border == null && mTrails.Count == 0)
             {
-                setOnBorderOppositeDirection();
-                addLine();
+                addStartLine();
             }
-        }
-        else if ((!isInScreen(next_pos) && !mDirectionUpdated) || (next_bg != null && next_bg != current_bg && !next_bg.hasEnemies()))//onBorder() && !should_create_line)
-        {
-            if(mTrails.Count > 0)
-            {
-                setOnBorderOppositeDirection(false);
-            }
-            deleteLine();
-        }
-        else if (mTrails.Count > 0 && lastTrailIntersectBorder())
-        {
-            setOnBorderOppositeDirection();
-            deleteLine();
-            Background new_next_bg = getNextBackground(); // We update the position
-            if (new_next_bg != null && new_next_bg.hasEnemies())/* && GetBorder(next_pos) == null*/
+            if (mDirectionUpdated)
             {
                 addLine();
             }
         }
         else
         {
-            if (mDirectionUpdated && (current_bg == null || current_bg.hasEnemies()) && next_border == null) // Leave border to create trail inside BG
-            {
-                addLine();
-            }
-            else if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies() && (current_bg  == null || current_bg != null && !current_bg.hasEnemies()))
-            {
-                setOnBorderOppositeDirection();
-                //addLine();
-            }
+            deleteLine();
         }
+
+
+        //if (current_bg == null && next_bg == null && current_border != null && current_border != next_border && next_border == null)
+        //{
+        //    Debug.Log("1");
+        //    if(isInScreen(next_pos))
+        //    {
+        //        Debug.Log("1.1");
+        //        setOnBorderOppositeDirection();
+        //        if(new_direction != Direction.direction.None)
+        //        {
+        //            Debug.Log("1.2");
+        //            addLine();
+        //        }
+        //    }
+        //}
+        //else if ((!isInScreen(next_pos) && !mDirectionUpdated) || (next_bg != null && next_bg != current_bg && !next_bg.hasEnemies()))//onBorder() && !should_create_line)
+        //{
+        //    Debug.Log("2");
+        //    if (mTrails.Count > 0)
+        //    {
+        //        Debug.Log("2.1");
+        //        setOnBorderOppositeDirection(false);
+        //    }
+        //    deleteLine();
+        //}
+        //else if (mTrails.Count > 0 && lastTrailIntersectBorder())
+        //{
+        //    Debug.Log("3");
+        //    setOnBorderOppositeDirection();
+        //    deleteLine();
+        //    Background new_next_bg = getNextBackground(); // We update the position
+        //    if (new_next_bg != null && new_next_bg.hasEnemies())/* && GetBorder(next_pos) == null*/
+        //    {
+        //        Debug.Log("3.1");
+        //        addLine();
+        //    }
+        //}
+        //else
+        //{
+        //    if (mDirectionUpdated && (current_bg == null || current_bg.hasEnemies()) && next_border == null) // Leave border to create trail inside BG
+        //    {
+        //        Debug.Log("4");
+        //        addLine();
+        //    }
+        //    else if (next_bg != null && next_bg != current_bg && next_bg.hasEnemies() && (current_bg  == null || current_bg != null && !current_bg.hasEnemies()))
+        //    {
+        //        Debug.Log("5");
+        //        setOnBorderOppositeDirection();
+        //        //addLine();
+        //    }
+        //}
         moveBall();
 
         // Delete line if crossing a border.
-        if(mTrails.Count > 0)
-        {
-            GameObject trail_go = mTrails[mTrails.Count - 1];
-            LineRenderer trail = trail_go.GetComponent<LineRenderer>();
-            if(trail != null)
-            {
-                Vector3 trail_start_point = trail.GetPosition(0);
-                for (int i = 0; i < mBorders.Count; ++i) // Use for instead of foreach to avoid exception due to mBorders updates when deleting line
-                {
-                    Border border = mBorders[i];
-
-                    //if ( !(border.mStartPoint.x == trail_start_point.x && border.mEndPoint.x == trail_start_point.x || border.mStartPoint.y == trail_start_point.y && border.mEndPoint.y == trail_start_point.y)
-                    //    && Utils.intersect(trail.GetPosition(0), trail.GetPosition(1), border.mStartPoint, border.mEndPoint))
-                    //{
-                    if (!border.contains(trail.GetPosition(0))
-                        && Utils.intersect(trail.GetPosition(0), trail.GetPosition(1), border.mStartPoint, border.mEndPoint))
-                    {
-                        Debug.Log("Stop");
-                        deleteLine();
-                        addLine();
-                        break;
-                    }
-                }
-            }
-        }
+        //if(mTrails.Count > 0)
+        //{
+        //    GameObject trail_go = mTrails[mTrails.Count - 1];
+        //    LineRenderer trail = trail_go.GetComponent<LineRenderer>();
+        //    if(trail != null)
+        //    {
+        //        Vector3 trail_start_point = trail.GetPosition(0);
+        //        for (int i = 0; i < mBorders.Count; ++i) // Use for instead of foreach to avoid exception due to mBorders updates when deleting line
+        //        {
+        //            Border border = mBorders[i];
+        //
+        //            //if ( !(border.mStartPoint.x == trail_start_point.x && border.mEndPoint.x == trail_start_point.x || border.mStartPoint.y == trail_start_point.y && border.mEndPoint.y == trail_start_point.y)
+        //            //    && Utils.intersect(trail.GetPosition(0), trail.GetPosition(1), border.mStartPoint, border.mEndPoint))
+        //            //{
+        //            if (!border.contains(trail.GetPosition(0))
+        //                && Utils.intersect(trail.GetPosition(0), trail.GetPosition(1), border.mStartPoint, border.mEndPoint))
+        //            {
+        //                Debug.Log("Stop");
+        //                deleteLine();
+        //                addLine();
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
 
         // Hide Score
         //countScore();
@@ -246,6 +305,65 @@ public class CharacterBehavior : MonoBehaviour
         return true;
     }
 
+    void addTrail()
+    {
+        GameObject current_trail = new GameObject();
+        current_trail.gameObject.transform.parent = mTrailGO.gameObject.transform;
+        current_trail.name = "Trail " + mTrails.Count.ToString();
+        current_trail.AddComponent<Trail>();
+        mTrails.Add(current_trail);
+        StartCoroutine(waiterAddLine());
+    }
+    void addStartLine()
+    {
+        if (!mCanAddLine)
+            return;
+
+        mLastBorderWhichCreateTrail = mLastBorder;
+        GameObject current_point = new GameObject();
+        current_point.gameObject.transform.parent = mTrailPointsGO.gameObject.transform;
+        current_point.name = "Trail Points " + mTrailPoints.Count.ToString();
+
+        if(Direction.isVertical(mCurrentDirection))
+        {
+            if(mLastBorder.isHorizontal())
+            {
+                current_point.transform.position = new Vector3(transform.position.x, mLastBorder.mStartPoint.y, 0);
+            }
+            else
+            {
+                if(Vector3.Distance(transform.position, mLastBorder.mStartPoint) < Vector3.Distance(transform.position, mLastBorder.mEndPoint))
+                {
+                    current_point.transform.position = mLastBorder.mStartPoint;
+                }
+                else
+                {
+                    current_point.transform.position = mLastBorder.mEndPoint;
+                }
+            }
+        }
+        else if(Direction.isHorizontal(mCurrentDirection))
+        {
+            if (mLastBorder.isVertical())
+            {
+                current_point.transform.position = new Vector3(mLastBorder.mStartPoint.x, transform.position.y, 0);
+            }
+            else
+            {
+                if (Vector3.Distance(transform.position, mLastBorder.mStartPoint) < Vector3.Distance(transform.position, mLastBorder.mEndPoint))
+                {
+                    current_point.transform.position = mLastBorder.mStartPoint;
+                }
+                else
+                {
+                    current_point.transform.position = mLastBorder.mEndPoint;
+                }
+            }
+        }
+
+        mTrailPoints.Add(current_point);
+        addTrail();
+    }
     void addLine()
     {
         if (!mCanAddLine)
@@ -257,13 +375,7 @@ public class CharacterBehavior : MonoBehaviour
         current_point.name = "Trail Points " + mTrailPoints.Count.ToString();
         current_point.transform.position = transform.position;
         mTrailPoints.Add(current_point);
-
-        GameObject current_trail = new GameObject();
-        current_trail.gameObject.transform.parent = mTrailGO.gameObject.transform;
-        current_trail.name = "Trail " + mTrails.Count.ToString();
-        current_trail.AddComponent<Trail>();
-        mTrails.Add(current_trail);
-        StartCoroutine(waiterAddLine());
+        addTrail();
     }
 
     void fixLastTrailIfNeeded()
@@ -564,7 +676,7 @@ void deleteLine()
     {
         foreach (Background bg in mBackgrounds)
         {
-            if (bg.contains(pos))
+            if (bg.containsEquals(pos))
             {
                 return bg;
             }
@@ -575,12 +687,56 @@ void deleteLine()
     {
         foreach (Border border in mBorders)
         {
-            if (border.contains(pos))
+            if (border.onSmallFuzzyBorder(pos))
             {
                 return border;
             }
         }
         return null;
+    }
+    List<Border> GetBorders(Vector3 pos)
+    {
+        List<Border> borders = new List<Border>();
+        foreach (Border border in mBorders)
+        {
+            if (border.onSmallFuzzyBorder(pos))
+            {
+                borders.Add(border);
+            }
+        }
+        return borders;
+    }
+    Border GetBorderWithPreferredDirection(Vector3 pos, bool prefer_same_direction)
+    {
+        List<Border> borders = new List<Border>();
+        foreach (Border border in mBorders)
+        {
+            if (border.onSmallFuzzyBorder(pos))
+            {
+                borders.Add(border);
+                
+            }
+        }
+        if (borders.Count == 0) return null;
+        if (borders.Count == 1) return borders[0];
+        
+        List<Border> border_direction = new List<Border>();
+        foreach (Border border in mBorders)
+        {
+            if(prefer_same_direction 
+                && (border.isVertical() && Direction.isVertical(mCurrentDirection)
+                || border.isHorizontal() && Direction.isHorizontal(mCurrentDirection)))
+            {
+                return border;
+            }
+            else if(!prefer_same_direction 
+                && (border.isVertical() && Direction.isHorizontal(mCurrentDirection)
+                || border.isHorizontal() && Direction.isVertical(mCurrentDirection)))
+            {
+                return border;
+            }
+        }
+        return borders[0];
     }
 
     void splitBackground(Background current_bg, Vector3 start_point, Vector3 end_point)
@@ -623,6 +779,7 @@ void deleteLine()
             if (Vector3.Distance(transform.position, border_point) < Vector3.Distance(transform.position, closest_point))
             {
                 closest_point = border_point;
+                mLastLastBorder = mLastBorder;
                 mLastBorder = border_key;
             }
 
@@ -669,7 +826,7 @@ void deleteLine()
         Dictionary<Border, Vector3> border_points = new Dictionary<Border, Vector3>();
         foreach (Border border in mBorders)
         {
-            if (border == mLastBorderWhichCreateTrail && mTrailPoints.Count < 2) continue;
+            //if (border == mLastBorderWhichCreateTrail && mTrailPoints.Count < 2) continue;
             
             if (border.onSmallFuzzyBorder(transform.position))
             {
@@ -785,6 +942,7 @@ void deleteLine()
             }
         }
         Vector3 new_pos = transform.position + mDirections[mCurrentDirection] * mSpeed * Time.deltaTime;
+        mPreviousPosition = transform.position;
         transform.position = getPositionInBorder(new_pos);
         mDirectionUpdated = false;
     }
@@ -828,5 +986,14 @@ void deleteLine()
             }
         }
         return false;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(collision.name);
+        if(collision.CompareTag("VerticalBorder") || collision.CompareTag("HorizontalBorder"))
+        {
+            setOnBorderOppositeDirection();
+        }
+        
     }
 }
