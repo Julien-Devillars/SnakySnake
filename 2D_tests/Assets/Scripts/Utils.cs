@@ -30,6 +30,14 @@ public class Utils
     public static float ENEMY_DEFAULT_SCALE = 4f;
     public static float STAR_DEFAULT_SCALE = 2f;
 
+    public static Vector3 U = Vector3.up;
+    public static Vector3 UR = Vector3.up + Vector3.right;
+    public static Vector3 R = Vector3.right;
+    public static Vector3 DR = Vector3.down + Vector3.right;
+    public static Vector3 D = Vector3.down;
+    public static Vector3 DL = Vector3.down + Vector3.left;
+    public static Vector3 L = Vector3.left;
+    public static Vector3 UL = Vector3.up + Vector3.left;
     public static List<Vector3> getIntermediatePointFromTrail(Border border)
     {
         List<Vector3> points = new List<Vector3>();
@@ -264,6 +272,13 @@ public class Utils
             default:
                 return Vector2.zero;
         }
+    }
+    public static Vector3 getMidRelativePositionFromPosition(int pos_1, int pos_2)
+    {
+        Vector2 v1 = getRelativePositionFromPosition(pos_1);
+        Vector2 v2 = getRelativePositionFromPosition(pos_2);
+
+        return (v1 + v2) / 2f;
     }
 
 }
