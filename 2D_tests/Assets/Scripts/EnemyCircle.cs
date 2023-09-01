@@ -10,6 +10,7 @@ public class EnemyCircle : Enemy
     public float mRotateSpeed = 30f;
     public float mAttackSpeed = 5f;
     public float mStartRotation = 180f; // Between 0 & 360 0 is right
+    public bool mInverse = false; 
 
     private Color mStartColor = Color.cyan;
     private Color mEndColor = Color.magenta;
@@ -91,6 +92,21 @@ public class EnemyCircle : Enemy
 
             speed = rotation * speed;
             mTimer = 0f;
+            if(mInverse)
+            {
+                mRotateSpeed = -mRotateSpeed;
+            }
         }
     }
+
+
+    protected void OnCollisionEnter2D(Collision2D collision)
+    {
+        base.OnCollisionEnter2D(collision);
+        if (collision.gameObject.name.Contains("Border"))
+        {
+            mRotateCircle.transform.RotateAround(transform.position, Vector3.forward, 180f);
+        }
+    }
+
 }

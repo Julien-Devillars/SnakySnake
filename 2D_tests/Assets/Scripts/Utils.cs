@@ -38,6 +38,15 @@ public class Utils
     public static Vector3 DL = Vector3.down + Vector3.left;
     public static Vector3 L = Vector3.left;
     public static Vector3 UL = Vector3.up + Vector3.left;
+
+    public static float rR = 0;
+    public static float rUR = 45;
+    public static float rU = 90;
+    public static float rUL = 135;
+    public static float rL = 180;
+    public static float rDL = 225;
+    public static float rD = 270;
+    public static float rDR = 315;
     public static List<Vector3> getIntermediatePointFromTrail(Border border)
     {
         List<Vector3> points = new List<Vector3>();
@@ -273,12 +282,18 @@ public class Utils
                 return Vector2.zero;
         }
     }
-    public static Vector3 getMidRelativePositionFromPosition(int pos_1, int pos_2)
+    public static Vector3 getMidRelativePositionFromPosition(Vector3 v1, Vector3 v2, float interpolate = 0.5f)
+    {
+
+        return v1 * (1 - interpolate) + v2 * interpolate;
+    }
+
+    public static Vector3 getMidRelativePositionFromPosition(int pos_1, int pos_2, float interpolate = 0.5f)
     {
         Vector2 v1 = getRelativePositionFromPosition(pos_1);
         Vector2 v2 = getRelativePositionFromPosition(pos_2);
 
-        return (v1 + v2) / 2f;
+        return getMidRelativePositionFromPosition(v1, v2, interpolate);
     }
 
 }

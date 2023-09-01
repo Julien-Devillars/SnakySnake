@@ -72,6 +72,7 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
                     enemy_circle.mRotateSpeed = enemy_circle_info.mRotateSpeed;
                     enemy_circle.mStartRotation = enemy_circle_info.mStartRotation;
                     enemy_circle.mAttackSpeed = enemy_circle_info.mAttackSpeed;
+                    enemy_circle.mInverse = enemy_circle_info.mInverse;
                     enemy_behavior = enemy_circle;
                     break;
                 case EnemyType.Follower:
