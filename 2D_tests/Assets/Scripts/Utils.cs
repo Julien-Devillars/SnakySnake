@@ -1,6 +1,8 @@
+using log4net.Util;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Utils
 {
@@ -306,6 +308,27 @@ public class Utils
         Vector2 v1 = getRelativePositionFromPosition(pos_1);
 
         return getMidRelativePositionFromPosition(v1, v2, interpolate);
+    }
+    //This returns the angle in radians
+    public static float AngleInRad(Vector2 vec1, Vector2 vec2)
+    {
+        return Mathf.Atan2(vec2.y - vec1.y, vec2.x - vec1.x);
+    }
+
+    //This returns the angle in degrees
+    public static float AngleInDeg(Vector2 vec1, Vector2 vec2)
+    {
+        return AngleInRad(vec1, vec2) * 180 / Mathf.PI;
+    }
+    public static float getAngleFromPosition(int pos_origin, int pos_1, int pos_2)
+    {
+
+        float scale = 10f;
+        Vector2 v0 = getRelativePositionFromPosition(pos_origin) * scale;
+        Vector2 v1 = getRelativePositionFromPosition(pos_1) * scale;
+        Vector2 v2 = getRelativePositionFromPosition(pos_2) * scale;
+        return Vector2.Angle(v1 - v0, v2 - v0);
+        //return AngleInDeg(v1 - v0, v2 - v0);
     }
 
 }
