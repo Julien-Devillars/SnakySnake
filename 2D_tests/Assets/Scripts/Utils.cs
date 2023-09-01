@@ -282,16 +282,28 @@ public class Utils
                 return Vector2.zero;
         }
     }
-    public static Vector3 getMidRelativePositionFromPosition(Vector3 v1, Vector3 v2, float interpolate = 0.5f)
+    public static Vector2 getMidRelativePositionFromPosition(Vector2 v1, Vector2 v2, float interpolate = 0.5f)
     {
 
         return v1 * (1 - interpolate) + v2 * interpolate;
     }
 
-    public static Vector3 getMidRelativePositionFromPosition(int pos_1, int pos_2, float interpolate = 0.5f)
+    public static Vector2 getMidRelativePositionFromPosition(int pos_1, int pos_2, float interpolate = 0.5f)
     {
         Vector2 v1 = getRelativePositionFromPosition(pos_1);
         Vector2 v2 = getRelativePositionFromPosition(pos_2);
+
+        return getMidRelativePositionFromPosition(v1, v2, interpolate);
+    }
+    public static Vector2 getMidRelativePositionFromPosition(Vector2 v1, int pos_2, float interpolate = 0.5f)
+    {
+        Vector2 v2 = getRelativePositionFromPosition(pos_2);
+
+        return getMidRelativePositionFromPosition(v1, v2, interpolate);
+    }
+    public static Vector3 getMidRelativePositionFromPosition(int pos_1, Vector2 v2, float interpolate = 0.5f)
+    {
+        Vector2 v1 = getRelativePositionFromPosition(pos_1);
 
         return getMidRelativePositionFromPosition(v1, v2, interpolate);
     }
