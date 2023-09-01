@@ -538,6 +538,22 @@ public class Levels
         return level;
     }
 
+    public static Level level_2_1()
+    {
+        // Level 1
+        Level level = new Level("Basic", 50);
+
+
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, new Vector3(0.5f, 0.2f), (Vector2.left) * 2f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.3f), (Vector2.left) * 4f, Utils.ENEMY_DEFAULT_SCALE, 10f, 0f, 3f ));
+        level.addEnemy(new EnemyInfo(EnemyType.Follower, new Vector3(0.5f, 0.4f), (Vector2.left) * 6f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, new Vector3(0.5f, 0.5f), (Vector2.left) * 8f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, new Vector3(0.5f, 0.6f), (Vector2.left) * 6f, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+
     //
     //
     //public static Level level_1()
@@ -695,22 +711,16 @@ public class Worlds
 
         return levels;
     }
-    /*
+    
     private static Levels world_2()
     {
         Levels levels = new Levels();
 
         levels.levels_name = "World 2";
-        levels.addLevel(Levels.level_7());
-        levels.addLevel(Levels.level_6());
-        levels.addLevel(Levels.level_5());
-        levels.addLevel(Levels.level_4());
-        levels.addLevel(Levels.level_3());
-        levels.addLevel(Levels.level_2());
-        levels.addLevel(Levels.level_1());
+        levels.addLevel(Levels.level_2_1());
 
         return levels;
-    }*/
+    }
 
     public static Level getLevel(int world, int level)
     {
@@ -723,6 +733,6 @@ public class Worlds
         worlds = new List<Levels>();
 
         worlds.Add(world_1());
-        //worlds.Add(world_2());
+        worlds.Add(world_2());
     }
 }
