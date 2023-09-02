@@ -863,27 +863,34 @@ public class Levels
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
-    public static Level level_2_9()
+    public static Level level_2_line_going_to_the_center()
     {
         // Level 1
-        Level level = new Level("Basic", 50);
+        Level level = new Level("level_2_line_going_to_the_center", 50);
 
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.2f), (Vector2.left) * 1f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.3f), (Vector2.left) * 2f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.4f), (Vector2.left) * 3f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.5f), (Vector2.left) * 4f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.6f), (Vector2.left) * 5f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.7f), (Vector2.left) * 6f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.8f), (Vector2.left) * 7f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
+        float speed = 5f;
+        int nb = 3;
+        for (int i = 1; i <= nb; ++i)
+        {
+            float angle = 1f / nb;
+            float angle_rotation = 90 / nb;
+            level.addEnemy(new EnemyCircleInfo(4, new Vector2(1f, angle * i) * speed, Utils.ENEMY_DEFAULT_SCALE, angle_rotation * i, EnemyCircleInfo.Form.Line, 1f));
+            level.addEnemy(new EnemyCircleInfo(4, new Vector2(1f, -angle * i) * speed, Utils.ENEMY_DEFAULT_SCALE, -angle_rotation * i, EnemyCircleInfo.Form.iLine, 1f));
 
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.2f), (Vector2.right) * 1f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.3f), (Vector2.right) * 2f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.4f), (Vector2.right) * 3f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.5f), (Vector2.right) * 4f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.6f), (Vector2.right) * 5f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.7f), (Vector2.right) * 6f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(new Vector3(0.5f, 0.8f), (Vector2.right) * 7f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
+            level.addEnemy(new EnemyCircleInfo(2, new Vector2(angle * i, 1f) * speed, Utils.ENEMY_DEFAULT_SCALE, 90 - angle_rotation * i, EnemyCircleInfo.Form.Line, 1f));
+            level.addEnemy(new EnemyCircleInfo(2, new Vector2(-angle * i, 1f) * speed, Utils.ENEMY_DEFAULT_SCALE, 90 + angle_rotation * i, EnemyCircleInfo.Form.iLine, 1f));
 
+            level.addEnemy(new EnemyCircleInfo(6, new Vector2(-1f, angle * i) * speed, Utils.ENEMY_DEFAULT_SCALE, 180 - angle_rotation * i, EnemyCircleInfo.Form.Line, 1f));
+            level.addEnemy(new EnemyCircleInfo(6, new Vector2(-1f, -angle * i) * speed, Utils.ENEMY_DEFAULT_SCALE, 180 + angle_rotation * i, EnemyCircleInfo.Form.iLine, 1f));
+
+            level.addEnemy(new EnemyCircleInfo(8, new Vector2(angle * i, -1f) * speed, Utils.ENEMY_DEFAULT_SCALE, 270 + angle_rotation * i, EnemyCircleInfo.Form.Line, 1f));
+            level.addEnemy(new EnemyCircleInfo(8, new Vector2(-angle * i, -1f) * speed, Utils.ENEMY_DEFAULT_SCALE, 270 - angle_rotation * i, EnemyCircleInfo.Form.iLine, 1f));
+        }
+
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 2, 0.75f), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 4, 0.75f), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 6, 0.75f), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 8, 0.75f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(3, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
@@ -2582,7 +2589,7 @@ public class Worlds
         levels.addLevel(7, Levels.level_2_circle_enemy_hitting_the_border());
         levels.addLevel(8, Levels.level_2_four_square_enemy_turning());
         levels.addLevel(9, Levels.level_2_multi_triangle());
-        levels.addLevel(10, Levels.level_2_12());
+        levels.addLevel(10, Levels.level_2_line_going_to_the_center());
         levels.addLevel(11, Levels.level_2_12());
         levels.addLevel(12, Levels.level_2_12());
 
