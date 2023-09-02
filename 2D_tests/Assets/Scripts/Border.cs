@@ -339,6 +339,8 @@ public class Border : MonoBehaviour
             mLineRenderer.material = new Material(Shader.Find("Sprites/Default"));
             mLineRenderer.material.color = Color.black;
         }
+
+        mLineRenderer.sortingLayerName = mIsEditable ? "Border/Editable" : "Border/NotEditable";
     }
 
     private void addOutline()
@@ -362,6 +364,7 @@ public class Border : MonoBehaviour
         mOutlineRenderer.startColor = Color.white;
         mOutlineRenderer.endColor = Color.white;
         mOutlineRenderer.material = (Material)Resources.Load("Materials/BorderOutline", typeof(Material));
+        mOutlineRenderer.sortingLayerName = "Border/Outline";
 
     }
 

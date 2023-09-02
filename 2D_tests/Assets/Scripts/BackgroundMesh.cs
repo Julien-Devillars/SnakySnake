@@ -34,6 +34,7 @@ public class BackgroundMesh : MonoBehaviour
 
         mLastNbBackgrounds = 0;
         mLastBackgrounds = new List<Background>();
+        GetComponent<MeshRenderer>().sortingLayerName = "BackgroundMesh";
     }
 
     private void Update()

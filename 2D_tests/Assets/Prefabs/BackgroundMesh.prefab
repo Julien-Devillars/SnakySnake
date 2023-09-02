@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2611746027778378941}
   - component: {fileID: 2611746027778378938}
   - component: {fileID: 2611746027778378939}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: BackgroundMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.4376903, y: 4.3284626, z: -10.1602745}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -48,6 +49,7 @@ MonoBehaviour:
   vertices: []
   uv: []
   triangles: 
+  mForceUpdate: 0
 --- !u!33 &2611746027778378938
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -67,6 +69,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

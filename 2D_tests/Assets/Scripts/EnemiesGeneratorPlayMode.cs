@@ -42,6 +42,7 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
             // Add Sprite Renderer
             SpriteRenderer sprite_renderer = enemy_go.AddComponent<SpriteRenderer>();
             sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/Enemy1");
+            sprite_renderer.sortingLayerName = "Enemy";
             if (Utils.SHADER_ON)
             {
                 sprite_renderer.material = Resources.Load<Material>("Materials/Enemies/EnemyMaterial");
@@ -124,6 +125,7 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
 
             sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/UI/StarNOK");
             sprite_renderer.material = new Material(Shader.Find("Sprites/Default"));
+            sprite_renderer.sortingLayerName = "Star";
             sprite_renderer.sortingOrder = 1;
 
             Star star_script = star_go.AddComponent<Star>();
