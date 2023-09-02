@@ -818,20 +818,49 @@ public class Levels
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
-    public static Level level_2_8()
+    public static Level level_2_multi_triangle()
     {
         // Level 1
         Level level = new Level("Basic", 50);
 
-        level.addEnemy(new EnemyCircleInfo(5, (Vector2.right + Vector2.up) * 3f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(5, (Vector2.left + Vector2.up) * 3f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(5, (Vector2.right + Vector2.down) * 3f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(5, (Vector2.left + Vector2.down) * 3f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
+        float speed = 5.5f;
+        float speed_2 = 3f;
 
-        level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(3, Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Triangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rU, EnemyCircleInfo.Form.Triangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rL, EnemyCircleInfo.Form.Triangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rD, EnemyCircleInfo.Form.Triangle, 1f));
+
+        level.addEnemy(new EnemyCircleInfo(5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rL, EnemyCircleInfo.Form.iTriangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rD, EnemyCircleInfo.Form.iTriangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.iTriangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rU, EnemyCircleInfo.Form.iTriangle, 1f));
+
+        level.addEnemy(new EnemyCircleInfo(5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUR, EnemyCircleInfo.Form.Triangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUL, EnemyCircleInfo.Form.Triangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDL, EnemyCircleInfo.Form.Triangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUR, EnemyCircleInfo.Form.Triangle, 1f));
+
+        level.addEnemy(new EnemyCircleInfo(5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDL, EnemyCircleInfo.Form.iTriangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDR, EnemyCircleInfo.Form.iTriangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUR, EnemyCircleInfo.Form.iTriangle, 1f));
+        level.addEnemy(new EnemyCircleInfo(5, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUL, EnemyCircleInfo.Form.iTriangle, 1f));
+
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(4, 5), Utils.R * speed_2, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Triangle, 0.5f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(4, 5), Utils.U * speed_2, Utils.ENEMY_DEFAULT_SCALE, Utils.rU, EnemyCircleInfo.Form.Triangle, 0.5f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(4, 5), Utils.L * speed_2, Utils.ENEMY_DEFAULT_SCALE, Utils.rL, EnemyCircleInfo.Form.Triangle, 0.5f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(4, 5), Utils.D * speed_2, Utils.ENEMY_DEFAULT_SCALE, Utils.rD, EnemyCircleInfo.Form.Triangle, 0.5f));
+        
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(6, 5), Utils.R * speed_2, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Triangle, 0.5f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(6, 5), Utils.U * speed_2, Utils.ENEMY_DEFAULT_SCALE, Utils.rU, EnemyCircleInfo.Form.Triangle, 0.5f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(6, 5), Utils.L * speed_2, Utils.ENEMY_DEFAULT_SCALE, Utils.rL, EnemyCircleInfo.Form.Triangle, 0.5f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(6, 5), Utils.D * speed_2, Utils.ENEMY_DEFAULT_SCALE, Utils.rD, EnemyCircleInfo.Form.Triangle, 0.5f));
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
     public static Level level_2_9()
@@ -2552,7 +2581,7 @@ public class Worlds
         levels.addLevel(6, Levels.level_2_line_basic_with_cross_circle());
         levels.addLevel(7, Levels.level_2_circle_enemy_hitting_the_border());
         levels.addLevel(8, Levels.level_2_four_square_enemy_turning());
-        levels.addLevel(9, Levels.level_2_12());
+        levels.addLevel(9, Levels.level_2_multi_triangle());
         levels.addLevel(10, Levels.level_2_12());
         levels.addLevel(11, Levels.level_2_12());
         levels.addLevel(12, Levels.level_2_12());
