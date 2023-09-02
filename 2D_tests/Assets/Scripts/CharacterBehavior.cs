@@ -180,7 +180,10 @@ public class CharacterBehavior : MonoBehaviour
         }
         else
         {
-            deleteLine();
+            if (mCurrentDirection == Direction.direction.None)
+            {
+                deleteLine();
+            }
         }
 
 
@@ -821,9 +824,11 @@ void deleteLine()
         transform.position = getClosestPoint(border_points);
     }
 
-    void setOnBorderOppositeDirection(bool check_previous_direction = true)
+    void setOnBorderOppositeDirection(bool check_previous_direction = false)
     {
         Dictionary<Border, Vector3> border_points = new Dictionary<Border, Vector3>();
+        if (mCurrentDirection == Direction.None) return;
+
         foreach (Border border in mBorders)
         {
             //if (border == mLastBorderWhichCreateTrail && mTrailPoints.Count < 2) continue;
@@ -832,12 +837,18 @@ void deleteLine()
             {
                 if (border.isHorizontal() && (Direction.isVertical(mCurrentDirection) || (check_previous_direction && Direction.isVertical(mPreviousDirection))))
                 {
+                    if (border.isLeftToRight() && (transform.position.x < border.mStartPoint.x || border.mEndPoint.x < transform.position.x)) continue;
+                    if (!border.isLeftToRight() && (transform.position.x < border.mEndPoint.x || border.mStartPoint.x < transform.position.x)) continue;
+
                     Vector3 point = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
                     if (point == transform.position) continue;
                     border_points.Add(border, point);
                 }
                 else if (border.isVertical() && (Direction.isHorizontal(mCurrentDirection) || (check_previous_direction && Direction.isHorizontal(mPreviousDirection))))
                 {
+                    if (border.isBottomToTop() && (transform.position.y < border.mStartPoint.y || border.mEndPoint.y < transform.position.y)) continue;
+                    if (!border.isBottomToTop() && (transform.position.y < border.mEndPoint.y || border.mStartPoint.y < transform.position.y)) continue;
+
                     Vector3 point = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
                     if (point == transform.position) continue;
                     border_points.Add(border, point);
