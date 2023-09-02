@@ -41,11 +41,19 @@ public class EndLevel : MonoBehaviour
         {
             mNextLevelButton.interactable = true;
             mTextLevel.text = "LEVEL CLEARED";
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                Next();
+            }
         }
         if (GameControler.status == GameControler.GameStatus.Lose)
         {
             mNextLevelButton.interactable = false;
             mTextLevel.text = "LEVEL FAILED";
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Replay();
+            }
         }
     }
     public void Replay()
