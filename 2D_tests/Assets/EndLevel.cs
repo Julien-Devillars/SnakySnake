@@ -40,7 +40,7 @@ public class EndLevel : MonoBehaviour
         if (GameControler.status == GameControler.GameStatus.Win)
         {
             mNextLevelButton.interactable = true;
-            mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel}<br>CLEARED";
+            mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel - 1}<br>CLEARED";
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Next();
@@ -49,7 +49,7 @@ public class EndLevel : MonoBehaviour
         if (GameControler.status == GameControler.GameStatus.Lose)
         {
             mNextLevelButton.interactable = false;
-            mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel}<br>FAILED";
+            mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel - 1}<br>FAILED";
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Replay();
