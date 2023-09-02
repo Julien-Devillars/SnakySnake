@@ -712,7 +712,7 @@ public class Levels
 
         float speed = 3f;
 
-        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(4, 5), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 1f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0f, 0.5f), 4), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 1f));
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(4, 5), Utils.DR * speed * 2.5f, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 2.5f));
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(5, 6), Utils.DR * speed * 5f, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 5f));
 
@@ -743,24 +743,41 @@ public class Levels
         level.addEnemy(new EnemyCircleInfo(2, Utils.U * speed_circle, Utils.ENEMY_DEFAULT_SCALE, Utils.rU, EnemyCircleInfo.Form.Line, 0.5f));
         level.addEnemy(new EnemyCircleInfo(8, Utils.D * speed_circle, Utils.ENEMY_DEFAULT_SCALE, Utils.rD, EnemyCircleInfo.Form.Line, 0.5f));
 
-        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 4), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 8), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 6), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 2), Utils.STAR_DEFAULT_SCALE));
         return level;
     }
-    public static Level level_2_6()
+    public static Level level_2_circle_enemy_hitting_the_border()
     {
         // Level 1
-        Level level = new Level("Basic", 50);
+        Level level = new Level("level_2_circle_enemy_hitting_the_border", 50);
 
-        level.addEnemy(new EnemyCircleInfo(7, Vector2.up * 6f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(1, Vector2.down * 6f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(8, Vector2.up * 6f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(2, Vector2.down * 6f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(9, Vector2.up * 6f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
-        level.addEnemy(new EnemyCircleInfo(3, Vector2.down * 6f, Utils.ENEMY_DEFAULT_SCALE, Random.RandomRange(-360, 360f), Random.RandomRange(0, 360), Random.RandomRange(0.2f, 5f)));
+        float speed = 7f;
 
-        level.addStar(new StarInfo(new Vector2(0.25f, 0.5f), Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(new Vector2(0.75f, 0.5f), Utils.STAR_DEFAULT_SCALE));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0f, 0.25f), 1), Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUL, 100, 1f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0f, 0.5f), 4), Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUL, 100, 1f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0f, 0.75f), 7), Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUL, 100, 1f));
+
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0.25f, 1f), 7), Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUR, 100, 1f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0.5f, 1f), 8), Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUR, 100, 1f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0.75f, 1f), 9), Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUR, 100, 1f));
+
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(1f, 0.75f), 9), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDR, 100, 1f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(1f, 0.5f), 6), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDR, 100, 1f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(1f, 0.25f), 3), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDR, 100, 1f));
+
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0.75f, 0f), 3), Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDL, 100, 1f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0.5f, 0f), 2), Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDL, 100, 1f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0.25f, 0f), 1), Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDL, 100, 1f));
+
+
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 1), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 3), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 7), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 9), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
     public static Level level_2_7()
@@ -2443,6 +2460,14 @@ public class Levels
     }
 
 
+    public Levels(int nb_level)
+    {
+        levels = new List<Level>();
+        for (int i = 0; i < nb_level; ++i)
+        {
+            levels.Add(new Level("tmp", 0));
+        }
+    }
     public Levels()
     {
         levels = new List<Level>();
@@ -2451,6 +2476,10 @@ public class Levels
     public void addLevel(Level level)
     {
         levels.Add(level);
+    }
+    public void addLevel(int idx, Level level)
+    {
+        levels[idx - 1] = level;
     }
 
 }
@@ -2485,23 +2514,23 @@ public class Worlds
     }
     private static Levels world_2()
     {
-        Levels levels = new Levels();
+        Levels levels = new Levels(12);
 
         levels.levels_name = "World 2";
         //levels.addLevel(Levels.level_1_1());
         //levels.addLevel(Levels.level_1_2());
-        levels.addLevel(Levels.level_2_basic_line());
-        levels.addLevel(Levels.level_2_basic_line_with_inverse());
-        levels.addLevel(Levels.level_2_basic_square());
-        levels.addLevel(Levels.level_2_triple_triangle());
-        levels.addLevel(Levels.level_2_three_protection_with_diff_speed());
-        levels.addLevel(Levels.level_2_line_basic_with_cross_circle());
-        levels.addLevel(Levels.level_2_10());
-        levels.addLevel(Levels.level_2_11());
-        levels.addLevel(Levels.level_2_12());
-        levels.addLevel(Levels.level_2_13());
-        levels.addLevel(Levels.level_2_14());
-        levels.addLevel(Levels.level_2_15());
+        levels.addLevel(1, Levels.level_2_basic_line());
+        levels.addLevel(2, Levels.level_2_basic_line_with_inverse());
+        levels.addLevel(3, Levels.level_2_basic_square());
+        levels.addLevel(4, Levels.level_2_triple_triangle());
+        levels.addLevel(5, Levels.level_2_three_protection_with_diff_speed());
+        levels.addLevel(6, Levels.level_2_line_basic_with_cross_circle());
+        levels.addLevel(7, Levels.level_2_circle_enemy_hitting_the_border());
+        levels.addLevel(8, Levels.level_2_11());
+        levels.addLevel(9, Levels.level_2_12());
+        levels.addLevel(10, Levels.level_2_12());
+        levels.addLevel(11, Levels.level_2_12());
+        levels.addLevel(12, Levels.level_2_12());
 
         return levels;
     }
