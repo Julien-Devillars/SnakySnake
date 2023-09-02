@@ -129,6 +129,8 @@ public class CharacterBehavior : MonoBehaviour
     void Update()
     {
         if (Utils.GAME_STOPPED) return;
+        if (GameControler.status == GameControler.GameStatus.Waiting) return;
+
         Background current_bg = GetBackground(transform.position);
         Border current_border = GetBorder(transform.position);
 
