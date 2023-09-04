@@ -223,6 +223,47 @@ public class Levels
     public List<Level> levels;
 
 
+    public static Level level_1_only_star()
+    {
+        // Level 1
+        Level level = new Level("level_1_only_star", 50);
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE / 2f));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_1_one_slow_enemy()
+    {
+        // Level 1
+        Level level = new Level("level_1_only_star", 50);
+
+        float speed = 7f;
+
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 2, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+
+    public static Level level_1_2_medium_enemy_horizontal()
+    {
+        // Level 1
+        Level level = new Level("Basic", 50);
+
+        float speed = 8f;
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 4, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 8, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+
     public static Level level_1_3()
     {
         // Level 1
@@ -2543,24 +2584,23 @@ public class Worlds
 
     private static Levels world_1()
     {
-        Levels levels = new Levels();
+        Levels levels = new Levels(12);
 
         levels.levels_name = "A simple Start";
-        //levels.addLevel(Levels.level_1_1());
-        //levels.addLevel(Levels.level_1_2());
-        levels.addLevel(Levels.level_1_3());
-        levels.addLevel(Levels.level_1_4());
-        //levels.addLevel(Levels.level_1_5());
-        levels.addLevel(Levels.level_1_6());
-        levels.addLevel(Levels.level_1_7());
-        levels.addLevel(Levels.level_1_8());
-        levels.addLevel(Levels.level_1_9());
-        levels.addLevel(Levels.level_1_10());
-        levels.addLevel(Levels.level_1_11());
-        levels.addLevel(Levels.level_1_12());
-        levels.addLevel(Levels.level_1_13());
-        levels.addLevel(Levels.level_1_14());
-        levels.addLevel(Levels.level_1_15());
+        levels.addLevel(1, Levels.level_1_only_star());
+        levels.addLevel(2, Levels.level_1_one_slow_enemy());
+        levels.addLevel(3, Levels.level_1_3());
+        levels.addLevel(4, Levels.level_1_2_medium_enemy_horizontal());
+        //levels.addLevel(4, Levels.level_1_4());
+        levels.addLevel(5, Levels.level_1_6());
+        levels.addLevel(6, Levels.level_1_7());
+        levels.addLevel(7, Levels.level_1_8());
+        levels.addLevel(8, Levels.level_1_9());
+        levels.addLevel(9, Levels.level_1_10());
+        levels.addLevel(10, Levels.level_1_11());
+        levels.addLevel(11, Levels.level_1_12());
+        levels.addLevel(12, Levels.level_1_13());
+        //levels.addLevel(2, Levels.level_1_15());
 
         return levels;
     }
