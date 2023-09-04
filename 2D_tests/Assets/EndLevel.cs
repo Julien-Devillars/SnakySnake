@@ -34,7 +34,7 @@ public class EndLevel : MonoBehaviour
         }
         if(!mFinish)
         {
-            Time.timeScale = 0f;
+            Time.timeScale = 0f;    
             mFinish = true;
         }
         if (GameControler.status == GameControler.GameStatus.Win)

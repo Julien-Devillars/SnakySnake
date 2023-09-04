@@ -43,6 +43,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void Pause()
     {
+        if (GameControler.status != GameControler.GameStatus.InProgress) return;
         mPauseMenu.SetActive(true);
         mMainMenu.SetActive(true);
         mOptionMenu.SetActive(false);

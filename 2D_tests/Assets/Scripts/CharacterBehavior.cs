@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 using UnityEngine.UIElements;
-using log4net.Util;
 
 public class CharacterBehavior : MonoBehaviour
 {
