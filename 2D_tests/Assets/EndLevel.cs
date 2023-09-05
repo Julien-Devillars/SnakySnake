@@ -15,7 +15,7 @@ public class EndLevel : MonoBehaviour
     void Start()
     {
         mMenu.SetActive(false);
-        mNextLevelButton.interactable = false;
+        //mNextLevelButton.interactable = true;
         Time.timeScale = 1f;
         GameControler.status = GameControler.GameStatus.InProgress;
         mFinish = false;
@@ -39,7 +39,7 @@ public class EndLevel : MonoBehaviour
         }
         if (GameControler.status == GameControler.GameStatus.Win)
         {
-            mNextLevelButton.interactable = true;
+            //mNextLevelButton.interactable = true;
             mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel + 1}<br>CLEARED";
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -48,7 +48,8 @@ public class EndLevel : MonoBehaviour
         }
         if (GameControler.status == GameControler.GameStatus.Lose)
         {
-            mNextLevelButton.interactable = false;
+            //mNextLevelButton.interactable = false;
+            mNextLevelButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Skip Level";
             mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel + 1}<br>FAILED";
             if (Input.GetKeyDown(KeyCode.Space))
             {
