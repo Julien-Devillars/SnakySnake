@@ -28,5 +28,14 @@ public class LevelHelper : MonoBehaviour
             GetComponent<Image>().enabled = false;
         }
     }
+    void Update()
+    {
+
+        if (GameControler.status == GameControler.GameStatus.Lose || GameControler.status == GameControler.GameStatus.Win)
+        {
+            gameObject.SetActive(false);
+            GetComponent<Image>().enabled = false;
+        }
+    }
 
 }

@@ -167,8 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b00b350d6138934e8337a32bb998005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mLevel: 12
-  mWorld: 2
+  mLevel: 1
+  mWorld: 1
 --- !u!1001 &395846935
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -557,6 +557,10 @@ PrefabInstance:
     - target: {fileID: 954079895464811712, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_fontColor.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 954079895464811712, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 954079895464811712, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_fontColor32.rgba
