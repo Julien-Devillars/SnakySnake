@@ -55,7 +55,9 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
             sprite_renderer.sortingOrder = 1;
 
             // Add Circle Collider 2D
-            enemy_go.AddComponent<CircleCollider2D>();
+            CircleCollider2D collider = enemy_go.AddComponent<CircleCollider2D>();
+            collider.radius -= collider.radius/10f;
+
             // Add Rigidbody 2D
             Rigidbody2D rigidbody_2D = enemy_go.AddComponent<Rigidbody2D>();
             rigidbody_2D.gravityScale = 0;
