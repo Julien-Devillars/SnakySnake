@@ -38,8 +38,6 @@ public class MainMenu : MonoBehaviour
         mInfinityBestScoreText[2].text = "Hard - Best : " + ES3.Load<int>("Infinity_HighScore_3", 0).ToString();
 
         Worlds.createWorlds();
-        float volume = ES3.Load<float>("Game_Volume", 0.5f);
-        GameControler.GameVolume = volume;
     }
 
     public void switchMenu(int index)
@@ -51,7 +49,7 @@ public class MainMenu : MonoBehaviour
 
     public void Update()
     {
-        GetComponent<AudioSource>().volume = GameControler.GameVolume;
+        GetComponent<AudioSource>().volume = ES3.Load<float>("Settings_Volume", 0.5f); ;
     }
 
     public void PlayGame()

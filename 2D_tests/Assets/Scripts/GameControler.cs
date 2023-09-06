@@ -20,7 +20,6 @@ public static class GameControler
     }
     public static GameStatus status = GameStatus.InProgress;
     public static GameType type = GameType.None;
-    public static float GameVolume = 0.5f;
     public static int currentLevel = 0;
     public static int currentWorld = 0;
 }
