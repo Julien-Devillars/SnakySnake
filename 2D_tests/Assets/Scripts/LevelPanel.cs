@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Codice.Client.BaseCommands;
 
 public class LevelPanel : MonoBehaviour
 {
@@ -85,11 +86,17 @@ public class LevelPanel : MonoBehaviour
         StartCoroutine(LoadLevel());
     }
 
+    private bool mIsLoadingLevel = false;
     IEnumerator LoadLevel()
     {
         mTransitionAnimation.SetTrigger("FadeOut");
         yield return new WaitForSeconds(0.15f);
-        SceneManager.LoadSceneAsync("PlayLevel");
+
+        if (!mIsLoadingLevel)
+        {
+            mIsLoadingLevel = true;
+            SceneManager.LoadSceneAsync("PlayLevel");
+        }
     }
 
 }

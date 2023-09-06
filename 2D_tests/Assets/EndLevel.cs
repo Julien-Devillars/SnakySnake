@@ -87,13 +87,17 @@ public class EndLevel : MonoBehaviour
     {
         StartCoroutine(LoadLevel("MainMenu"));
     }
-
+    private bool mIsLoadingLevel = false;
     IEnumerator LoadLevel(string level_name)
     {
         GameControler.status = GameControler.GameStatus.Waiting;
         Time.timeScale = 1f;
         mTransitionAnimation.SetTrigger("FadeOut");
         yield return new WaitForSeconds(0.15f);
-        SceneManager.LoadSceneAsync(level_name);
+        if(!mIsLoadingLevel)
+        {
+            mIsLoadingLevel = true;
+            SceneManager.LoadSceneAsync(level_name);
+        }
     }
 }
