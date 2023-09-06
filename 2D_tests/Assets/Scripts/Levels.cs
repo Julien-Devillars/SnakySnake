@@ -194,6 +194,7 @@ public class StarInfo : ObjectInfo
 public class Level
 {
     public string mLevelName;
+    public string mLevelHelper = "";
     public int mGoalScore;
     public List<EnemyInfo> mEnemies;
     public List<StarInfo> mStars;
@@ -227,7 +228,7 @@ public class Levels
     {
         // Level 1
         Level level = new Level("level_1_one_star", 50);
-
+        level.mLevelHelper = "Move with ZQSD.";
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE * 2f));
         return level;
     }
@@ -236,6 +237,7 @@ public class Levels
         // Level 1
         Level level = new Level("level_1_only_stars", 50);
 
+        level.mLevelHelper = "Catch all the stars to end the level.";
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE / 2f));
@@ -252,6 +254,7 @@ public class Levels
 
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 2, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
 
+        level.mLevelHelper = "You lose if someone hit your trail !";
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
 
         return level;
@@ -282,6 +285,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 6, Utils.L * 11f, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 8, Utils.U * 8f, Utils.ENEMY_DEFAULT_SCALE));
 
+        level.mLevelHelper = "You can stop by going to the opposite direction on border.";
         level.addStar(new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE));
         return level;
     }
@@ -315,6 +319,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 9, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 3, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
 
+        level.mLevelHelper = "Your trail creates borders that will help you out !";
         level.addStar(new StarInfo(new Vector2(0.25f, 0.5f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(new Vector2(0.75f, 0.5f), Utils.STAR_DEFAULT_SCALE));
@@ -676,6 +681,36 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(9, 5), Utils.STAR_DEFAULT_SCALE));
         return level;
     }
+    public static Level level_2_basic_square_circle()
+    {
+        // Level 1
+        Level level = new Level("level_2_basic_square_circle", 50);
+
+        float speed = 10f;
+
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(1, 5), Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Square, 1f));
+
+        level.mLevelHelper = "New enemy : <br>Changes directions in cycles !";
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_2_circle_show_form()
+    {
+        // Level 1
+        Level level = new Level("level_2_circle_show_form", 50);
+
+        float speed = 4f;
+
+        level.addEnemy(new EnemyCircleInfo(7, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Line, 0.5f));
+        level.addEnemy(new EnemyCircleInfo(9, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Triangle, 0.5f));
+        level.addEnemy(new EnemyCircleInfo(1, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Square, 0.5f));
+        level.addEnemy(new EnemyCircleInfo(3, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Pentagone, 0.5f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(2, 5), (Vector2.right + Vector2.up) * speed, Utils.ENEMY_DEFAULT_SCALE, 60, EnemyCircleInfo.Form.Hexagone, 2f));
+
+        level.mLevelHelper = "Try to understand their pattern.";
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
     public static Level level_2_basic_line()
     {
         // Level 1
@@ -746,6 +781,7 @@ public class Levels
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(9, 5, 0.45f), Utils.L * speed * 2.3f, Utils.ENEMY_DEFAULT_SCALE, Utils.rL, EnemyCircleInfo.Form.Triangle, 1f));
         level.addEnemy(new EnemyCircleInfo(9, Utils.L * speed * 3.5f, Utils.ENEMY_DEFAULT_SCALE, Utils.rL, EnemyCircleInfo.Form.Triangle, 1f));
 
+        level.mLevelHelper = "Find a passage by breaking enemies' pattern.";
         level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(1, 5), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
@@ -2603,12 +2639,15 @@ public class Worlds
         //levels.addLevel(4, Levels.level_1_2_medium_enemy_horizontal());
         //levels.addLevel(4, Levels.level_1_4());
         levels.addLevel(6, Levels.level_1_7());
-        levels.addLevel(7, Levels.level_1_8());
+        levels.addLevel(7, Levels.level_1_8()); // Could be removed
         levels.addLevel(8, Levels.level_1_9());
         levels.addLevel(9, Levels.level_1_12());
-        levels.addLevel(10, Levels.level_1_10());
-        levels.addLevel(11, Levels.level_1_11());
-        levels.addLevel(12, Levels.level_1_13());
+        levels.addLevel(10, Levels.level_1_11());
+        levels.addLevel(11, Levels.level_2_basic_square_circle());
+        levels.addLevel(12, Levels.level_2_circle_show_form());
+
+        //levels.addLevel(11, Levels.level_1_11()); // Either level 10 or 11 can be removed
+        //levels.addLevel(12, Levels.level_1_13()); // COuld be remvoed too
         //levels.addLevel(2, Levels.level_1_15());
 
         return levels;
