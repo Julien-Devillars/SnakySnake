@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using Codice.Client.BaseCommands;
 
 public class LevelPanel : MonoBehaviour
 {
