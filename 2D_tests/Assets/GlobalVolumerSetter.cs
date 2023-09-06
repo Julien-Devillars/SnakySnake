@@ -18,8 +18,6 @@ public class GlobalVolumerSetter : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Bloom should be " + ES3.Load<float>("LuminositySlider", 0.5f));
         mBloom.intensity.value = ES3.Load<float>("LuminositySlider", 0.5f);
-        Debug.Log("It is " + mBloom.intensity.value);
     }
 }

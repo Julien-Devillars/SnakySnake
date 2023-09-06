@@ -49,7 +49,7 @@ public class MainMenu : MonoBehaviour
 
     public void Update()
     {
-        GetComponent<AudioSource>().volume = ES3.Load<float>("Settings_Volume", 0.5f); ;
+        GetComponent<AudioSource>().volume = ES3.Load<float>("VolumeSlider", 0.5f); ;
     }
 
     public void PlayGame()

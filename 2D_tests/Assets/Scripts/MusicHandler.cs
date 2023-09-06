@@ -26,7 +26,7 @@ public class MusicHandler : MonoBehaviour
             mAudioSource.clip = music;// musics[idx_music];
             Debug.Log("Music playing : " + mAudioSource.clip.name);
             mAudioSource.Play();
-            mAudioSource.volume = ES3.Load<float>("Settings_Volume", 0.5f); ;
+            mAudioSource.volume = ES3.Load<float>("VolumeSlider", 0.5f); ;
             //mBeatHandler = new BeatHandler();
             return;
         }
@@ -56,7 +56,7 @@ public class MusicHandler : MonoBehaviour
 
         float shift = 0f;
         float new_volume;
-        float current_volume = ES3.Load<float>("Settings_Volume", 0.5f);
+        float current_volume = ES3.Load<float>("VolumeSlider", 0.5f);
         if (Utils.GAME_STOPPED)
         {
             GameObject option_menu = GameObject.Find("Options Menu");

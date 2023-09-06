@@ -54,6 +54,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3110221303922806718, guid: 888cd96049c933b4481b48a582ca802a, type: 3}
+      propertyPath: m_Name
+      value: VolumeSlider
+      objectReference: {fileID: 0}
     - target: {fileID: 3110221305176677556, guid: 888cd96049c933b4481b48a582ca802a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -154,8 +158,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Music
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7298527410422922501, guid: 888cd96049c933b4481b48a582ca802a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 888cd96049c933b4481b48a582ca802a, type: 3}
 --- !u!224 &7568235030387850506 stripped
 RectTransform:
