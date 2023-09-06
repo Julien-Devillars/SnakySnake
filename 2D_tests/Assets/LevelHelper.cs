@@ -10,15 +10,21 @@ public class LevelHelper : MonoBehaviour
     
     void Start()
     {
-        if(GameControler.currentWorld == 0 && GameControler.currentLevel == 0)
+        int world = GameControler.currentWorld + 1;
+        int level = GameControler.currentLevel + 1;
+        if (world == 1 && level == 1)
         {
             mTextMeshPro.text = "Move with ZQSD and catch the stars to cleared the level.";
         }
-        else if (GameControler.currentWorld == 0 && GameControler.currentLevel == 1)
+        else if (world == 1 && level == 2)
         {
-            mTextMeshPro.text = "You lose when the enemy touch your line.";
+            mTextMeshPro.text = "You lose when the enemy touch your trail.";
         }
-        else if (GameControler.currentWorld == 0 && GameControler.currentLevel == 2)
+        else if (world == 1 && level == 3)
+        {
+            mTextMeshPro.text = "Your trail creates border that you can use !";
+        }
+        else if (world == 1 && level == 4)
         {
             mTextMeshPro.text = "You can stop by going to the opposite direction on border.";
         }
