@@ -223,10 +223,18 @@ public class Levels
     public List<Level> levels;
 
 
-    public static Level level_1_only_star()
+    public static Level level_1_one_star()
     {
         // Level 1
-        Level level = new Level("level_1_only_star", 50);
+        Level level = new Level("level_1_one_star", 50);
+
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE * 2f));
+        return level;
+    }
+    public static Level level_1_only_stars()
+    {
+        // Level 1
+        Level level = new Level("level_1_only_stars", 50);
 
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
@@ -293,12 +301,12 @@ public class Levels
         return level;
     }
 
-    public static Level level_1_6()
+    public static Level level_1_vertical_enemies()
     {
         // Level 1
         Level level = new Level("Basic", 50);
 
-        float speed = 10f;
+        float speed = 14f;
 
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 7, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 1, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
@@ -2587,18 +2595,19 @@ public class Worlds
         Levels levels = new Levels(12);
 
         levels.levels_name = "A simple Start";
-        levels.addLevel(1, Levels.level_1_only_star());
-        levels.addLevel(2, Levels.level_1_one_slow_enemy());
-        levels.addLevel(3, Levels.level_1_3());
-        levels.addLevel(4, Levels.level_1_2_medium_enemy_horizontal());
+        levels.addLevel(1, Levels.level_1_one_star());
+        levels.addLevel(2, Levels.level_1_only_stars());
+        levels.addLevel(3, Levels.level_1_one_slow_enemy());
+        levels.addLevel(4, Levels.level_1_vertical_enemies());
+        levels.addLevel(5, Levels.level_1_3());
+        //levels.addLevel(4, Levels.level_1_2_medium_enemy_horizontal());
         //levels.addLevel(4, Levels.level_1_4());
-        levels.addLevel(5, Levels.level_1_6());
         levels.addLevel(6, Levels.level_1_7());
         levels.addLevel(7, Levels.level_1_8());
         levels.addLevel(8, Levels.level_1_9());
-        levels.addLevel(9, Levels.level_1_10());
-        levels.addLevel(10, Levels.level_1_11());
-        levels.addLevel(11, Levels.level_1_12());
+        levels.addLevel(9, Levels.level_1_12());
+        levels.addLevel(10, Levels.level_1_10());
+        levels.addLevel(11, Levels.level_1_11());
         levels.addLevel(12, Levels.level_1_13());
         //levels.addLevel(2, Levels.level_1_15());
 

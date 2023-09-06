@@ -563,7 +563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 954079895464811712, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_fontSize
-      value: 38.65
+      value: 36.8
       objectReference: {fileID: 0}
     - target: {fileID: 954079895464811712, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_fontColor.a
@@ -607,7 +607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 954079895464811712, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_HorizontalAlignment
-      value: 8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 954079895464811715, guid: 57d6baba342ebcc4386889c82b85058c, type: 3}
       propertyPath: m_SizeDelta.x
