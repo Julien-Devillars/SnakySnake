@@ -8,8 +8,10 @@ public class Trail : MonoBehaviour
 {
     public bool mHasBeenUpdated;
     // https://i.redd.it/3fwmgurggi4a1.png
-    Color mStartColor = new Color(2/255f, 55f/255f, 136/255f);
-    Color mEndColor = new Color(212/255f, 0/255f, 120/255f);
+    //Color mStartColor = new Color(2/255f, 55f/255f, 136/255f);
+    //Color mEndColor = new Color(212/255f, 0/255f, 120/255f);
+    Color mStartColor = new Color(250 / 255f, 49f / 255f, 98 / 255f);
+    Color mEndColor = new Color(249 / 255f, 152 / 255f, 29 / 255f);
     void Awake()
     {
         //gameObject.name = "Trail";
