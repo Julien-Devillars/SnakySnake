@@ -134,6 +134,7 @@ public class CharacterBehavior : MonoBehaviour
         Border current_border = GetBorder(transform.position);
 
         Direction.direction new_direction = getInputDirection();
+
         updateDirection(new_direction);
         if(mTrailPoints.Count == 0)
         {
@@ -563,8 +564,12 @@ void deleteLine()
         {
             return Direction.Down;
         }
+        else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space)) && mTrailPoints.Count == 0)
+        {
+            return Direction.Stop;
+        }
 
-        if(MobileButtons.mButtonHasBeenPressed)
+        if (MobileButtons.mButtonHasBeenPressed)
         {
             MobileButtons.mButtonHasBeenPressed = false;
             return MobileButtons.mButtonDirectionPressed;
@@ -657,6 +662,12 @@ void deleteLine()
             StartCoroutine(waiter());
             mPreviousDirection = mCurrentDirection;
             mCurrentDirection = mCurrentDirection == Direction.Up ? Direction.None : Direction.Down;
+            return true;
+        }
+        else if (new_direction == Direction.Stop && mCurrentDirection != Direction.Stop)
+        {
+            //mPreviousDirection = mCurrentDirection;
+            mCurrentDirection = Direction.None;
             return true;
         }
         return false;
@@ -953,7 +964,12 @@ void deleteLine()
                 setLastPosition(transform.position);
             }
         }
-        Vector3 new_pos = transform.position + mDirections[mCurrentDirection] * mSpeed * Time.deltaTime;
+        float speed = mSpeed;
+        if (Input.GetKey(KeyCode.Space) && mTrailPoints.Count == 0)
+        {
+            speed = mSpeed/10f;
+        }
+        Vector3 new_pos = transform.position + mDirections[mCurrentDirection] * speed * Time.deltaTime;
         mPreviousPosition = transform.position;
         transform.position = getPositionInBorder(new_pos);
         mDirectionUpdated = false;

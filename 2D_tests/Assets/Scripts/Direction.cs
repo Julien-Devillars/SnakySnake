@@ -11,6 +11,7 @@ public class Direction
         Up,
         Right,
         Down,
+        Stop,
         None
     }
     public static Dictionary<direction, Vector3> directions = new Dictionary<direction, Vector3>() 
@@ -19,7 +20,8 @@ public class Direction
         { direction.Up, Vector3.up },
         { direction.Right, Vector3.right },
         { direction.Down, Vector3.down },
-        { direction.None, Vector3.zero }
+        { direction.None, Vector3.zero },
+        { direction.Stop, Vector3.zero }
     };
 
     public static direction Left   = direction.Left;
@@ -27,6 +29,7 @@ public class Direction
     public static direction Right  = direction.Right;
     public static direction Down   = direction.Down;
     public static direction None   = direction.None;
+    public static direction Stop   = direction.Stop;
 
     public static direction getDirectionFrom2Points(Vector3 start_point, Vector3 end_point)
     {
