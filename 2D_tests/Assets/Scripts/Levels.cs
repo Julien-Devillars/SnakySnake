@@ -2749,7 +2749,7 @@ public class Worlds
         Levels levels = new Levels(12);
 
         levels.levels_name = "A simple Start";
-        levels.mWorldMusic = "20 - Galaxy";
+        levels.mWorldMusic = "Synthwave/20 - Galaxy";
         levels.mWorldColorPrincipal_1 = Color.magenta;
         levels.mWorldColorPrincipal_2 = Color.cyan;
         levels.mWorldColorSecond_1 = Color.yellow;
@@ -2782,6 +2782,7 @@ public class Worlds
         Levels levels = new Levels(12);
 
         levels.levels_name = "Different way";
+        levels.mWorldMusic = "Synthwave/15 - Feel the Heat";
         //levels.addLevel(Levels.level_1_1());
         //levels.addLevel(Levels.level_1_2());
         levels.addLevel(1, Levels.level_2_basic_line());
@@ -2876,6 +2877,10 @@ public class Worlds
     public static Level getLevel(int world, int level)
     {
         return worlds[world].levels[level];
+    }
+    public static Levels getWorld(int world)
+    {
+        return worlds[world];
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
