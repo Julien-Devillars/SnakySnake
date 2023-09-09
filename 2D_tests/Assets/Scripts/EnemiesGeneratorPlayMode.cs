@@ -126,7 +126,7 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
             SpriteRenderer sprite_renderer = star_go.AddComponent<SpriteRenderer>();
 
             sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/UI/StarNOK");
-            sprite_renderer.material = new Material(Shader.Find("Sprites/Default"));
+            sprite_renderer.material = Resources.Load<Material>("Materials/Star"); //new Material(Shader.Find("Sprites/Default"));
             sprite_renderer.sortingLayerName = "Star";
             sprite_renderer.sortingOrder = 1;
 
