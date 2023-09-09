@@ -323,8 +323,55 @@ public class Levels
         level.addStar(new StarInfo(new Vector2(0.25f, 0.5f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(new Vector2(0.75f, 0.5f), Utils.STAR_DEFAULT_SCALE));
+
+        Vector2 v1 = Utils.getMidRelativePositionFromPosition(1, 2);
+        Vector2 v2 = Utils.getMidRelativePositionFromPosition(4, 5);
+        Vector2 v3 = Utils.getMidRelativePositionFromPosition(7, 8);
+        Vector2 v4 = Utils.getMidRelativePositionFromPosition(2, 3);
+        Vector2 v5 = Utils.getMidRelativePositionFromPosition(5, 6);
+        Vector2 v6 = Utils.getMidRelativePositionFromPosition(8, 9);
+        level.addStar(new StarInfo(v1, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(v2, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(v3, Utils.STAR_DEFAULT_SCALE * 0.75f));
+
+        level.addStar(new StarInfo(v4, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(v5, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(v6, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v1, v2), Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v2, v3), Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v4, v5), Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v5, v6), Utils.STAR_DEFAULT_SCALE * 0.75f));
+
         return level;
     }
+    public static Level level_1_vertical_enemies_harer()
+    {
+        // Level 1
+        Level level = new Level("Basic", 50);
+
+        float speed = 10f;
+
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 7, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 1, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 8, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 9, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 3, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.mLevelHelper = "Your trail creates borders that will help you out !";
+        level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(3, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+
     public static Level level_1_7()
     {
         // Level 1
@@ -341,10 +388,24 @@ public class Levels
         level.addStar(new StarInfo(new Vector3(0.66f, 0.66f), Utils.STAR_DEFAULT_SCALE));
         return level;
     }
-    public static Level level_1_8()
+    public static Level level_1_demon_line()
     {
         // Level 1
-        Level level = new Level("Basic", 50);
+        Level level = new Level("level_1_demon_line", 50);
+
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.U * 16f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.D * 16f, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_1_demon_square()
+    {
+        // Level 1
+        Level level = new Level("level_1_demon_square", 50);
 
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.L * 20f, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.R * 20f, Utils.ENEMY_DEFAULT_SCALE));
@@ -798,7 +859,7 @@ public class Levels
 
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0f, 0.5f), 4), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 1f));
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(4, 5), Utils.DR * speed * 2.5f, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 2.5f));
-        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(5, 6), Utils.DR * speed * 5f, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 5f));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(5, 6), Utils.DR * speed * 4f, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 5f));
 
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
@@ -838,7 +899,7 @@ public class Levels
         // Level 1
         Level level = new Level("level_2_circle_enemy_hitting_the_border", 50);
 
-        float speed = 7f;
+        float speed = 6f;
 
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0f, 0.25f), 1), Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUL, 100, 1f));
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0f, 0.5f), 4), Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUL, 100, 1f));
@@ -2635,11 +2696,12 @@ public class Worlds
         levels.addLevel(2, Levels.level_1_only_stars());
         levels.addLevel(3, Levels.level_1_one_slow_enemy());
         levels.addLevel(4, Levels.level_1_vertical_enemies());
+        levels.addLevel(6, Levels.level_1_7());
         levels.addLevel(5, Levels.level_1_3());
         //levels.addLevel(4, Levels.level_1_2_medium_enemy_horizontal());
         //levels.addLevel(4, Levels.level_1_4());
-        levels.addLevel(6, Levels.level_1_7());
-        levels.addLevel(7, Levels.level_1_8()); // Could be removed
+        //levels.addLevel(7, Levels.level_1_demon_square()); // Could be removed
+        levels.addLevel(7, Levels.level_1_demon_line()); // Could be removed
         levels.addLevel(8, Levels.level_1_9());
         levels.addLevel(9, Levels.level_1_12());
         levels.addLevel(10, Levels.level_1_11());
@@ -2661,16 +2723,18 @@ public class Worlds
         //levels.addLevel(Levels.level_1_2());
         levels.addLevel(1, Levels.level_2_basic_line());
         levels.addLevel(2, Levels.level_2_basic_line_with_inverse());
-        levels.addLevel(6, Levels.level_2_basic_square());
-        levels.addLevel(4, Levels.level_2_triple_triangle());
-        levels.addLevel(5, Levels.level_2_octogone_turning());
-        levels.addLevel(3, Levels.level_2_three_protection_with_diff_speed());
-        levels.addLevel(7, Levels.level_2_line_basic_with_cross_circle());
-        levels.addLevel(8, Levels.level_2_circle_enemy_hitting_the_border());
-        levels.addLevel(9, Levels.level_2_four_square_enemy_turning());
-        levels.addLevel(10, Levels.level_2_multi_triangle());
-        levels.addLevel(11, Levels.level_2_line_going_to_the_center());
-        levels.addLevel(12, Levels.level_2_lot_of_speed());
+        levels.addLevel(3, Levels.level_2_octogone_turning()); // OK
+        levels.addLevel(4, Levels.level_2_basic_square()); // OK - Medium
+        levels.addLevel(5, Levels.level_2_three_protection_with_diff_speed()); // MEDIUM
+        levels.addLevel(6, Levels.level_2_line_basic_with_cross_circle()); // Medium - hard
+        levels.addLevel(7, Levels.level_2_triple_triangle()); // HARD
+
+
+        //levels.addLevel(8, Levels.level_2_circle_enemy_hitting_the_border()); // TO remove
+        //levels.addLevel(9, Levels.level_2_four_square_enemy_turning()); // Slower - Hard ++ (remove ?)
+        //levels.addLevel(10, Levels.level_2_multi_triangle()); // Slower - Hard ++ (remove ?)
+        //levels.addLevel(11, Levels.level_2_line_going_to_the_center()); // Slower
+        //levels.addLevel(12, Levels.level_2_lot_of_speed()); // Bof
 
         return levels;
     }
