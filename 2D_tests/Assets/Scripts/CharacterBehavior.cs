@@ -843,7 +843,7 @@ void deleteLine()
 
         foreach (Border border in mBorders)
         {
-            //if (border == mLastBorderWhichCreateTrail && mTrailPoints.Count < 2) continue;
+            if ((border == mLastBorder || border == mLastLastBorder) && mTrailPoints.Count < 2) continue;
             
             if (border.onSmallFuzzyBorder(transform.position))
             {
