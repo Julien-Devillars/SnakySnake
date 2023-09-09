@@ -2748,11 +2748,13 @@ public class Worlds
     {
         Levels levels = new Levels(12);
 
-        levels.levels_name = "A simple Start";
-        levels.mWorldMusic = "Synthwave/20 - Galaxy";
+        levels.levels_name = "Journey";
+        levels.mWorldMusic = "Synthwave/Countach";
         levels.mWorldColorPrincipal_1 = Color.magenta;
         levels.mWorldColorPrincipal_2 = Color.cyan;
-        levels.mWorldColorSecond_1 = Color.yellow;
+        levels.mWorldColorSecond_1 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
+        levels.mWorldColorSecond_2 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
+
         levels.addLevel(1, Levels.level_1_one_star());
         levels.addLevel(2, Levels.level_1_only_stars());
         levels.addLevel(3, Levels.level_1_one_slow_enemy());
@@ -2781,8 +2783,12 @@ public class Worlds
     {
         Levels levels = new Levels(12);
 
-        levels.levels_name = "Different way";
-        levels.mWorldMusic = "Synthwave/15 - Feel the Heat";
+        levels.levels_name = "Translation";
+        levels.mWorldMusic = "Synthwave/20 - Galaxy";
+        levels.mWorldColorPrincipal_1 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
+        levels.mWorldColorPrincipal_2 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
+        levels.mWorldColorSecond_1 = Color.magenta;
+        levels.mWorldColorSecond_2 = Color.cyan;
         //levels.addLevel(Levels.level_1_1());
         //levels.addLevel(Levels.level_1_2());
         levels.addLevel(1, Levels.level_2_basic_line());
