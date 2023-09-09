@@ -222,6 +222,11 @@ public class Levels
 {
     public string levels_name;
     public List<Level> levels;
+    public string mWorldMusic;
+    public Color mWorldColorPrincipal_1;
+    public Color mWorldColorPrincipal_2;
+    public Color mWorldColorSecond_1;
+    public Color mWorldColorSecond_2;
 
 
     public static Level level_1_one_star()
@@ -1366,6 +1371,21 @@ public class Levels
         level.addEnemy(new EnemyCircleInfo(6, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUL, EnemyCircleInfo.Form.Square, 1f));
         level.addEnemy(new EnemyInfo(EnemyType.Follower, 5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Follower, 5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(2, 4), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(4, 8), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(8, 6), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(6, 2), Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_3_one_fast_follower()
+    {
+        // Level 1
+        Level level = new Level("level_3_one_fast_follower", 50);
+
+        float speed = 20f;
+
+        level.addEnemy(new EnemyInfo(EnemyType.Follower, 5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(2, 4), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(4, 8), Utils.STAR_DEFAULT_SCALE));
@@ -2729,6 +2749,10 @@ public class Worlds
         Levels levels = new Levels(12);
 
         levels.levels_name = "A simple Start";
+        levels.mWorldMusic = "20 - Galaxy";
+        levels.mWorldColorPrincipal_1 = Color.magenta;
+        levels.mWorldColorPrincipal_2 = Color.cyan;
+        levels.mWorldColorSecond_1 = Color.yellow;
         levels.addLevel(1, Levels.level_1_one_star());
         levels.addLevel(2, Levels.level_1_only_stars());
         levels.addLevel(3, Levels.level_1_one_slow_enemy());
@@ -2748,6 +2772,8 @@ public class Worlds
         //levels.addLevel(11, Levels.level_1_11()); // Either level 10 or 11 can be removed
         //levels.addLevel(12, Levels.level_1_13()); // COuld be remvoed too
         //levels.addLevel(2, Levels.level_1_15());
+
+
 
         return levels;
     }
@@ -2770,7 +2796,7 @@ public class Worlds
         levels.addLevel(9, Levels.level_2_triple_triangle()); // HARD
         levels.addLevel(10, Levels.level_3_basic_circle_square_with_follower());
         levels.addLevel(11, Levels.level_1_demon_square());
-        levels.addLevel(12, Levels.level_2_multi_triangle());
+        levels.addLevel(12, Levels.level_3_one_fast_follower());
 
 
         //levels.addLevel(8, Levels.level_2_circle_enemy_hitting_the_border()); // TO remove
