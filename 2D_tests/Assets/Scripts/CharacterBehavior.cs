@@ -843,7 +843,7 @@ void deleteLine()
 
         foreach (Border border in mBorders)
         {
-            //if ((border == mLastBorder || border == mLastLastBorder) && mTrailPoints.Count < 2) continue;
+            //if ((border == mLastBorder) && mTrailPoints.Count < 2) continue;
             
             if (border.onSmallFuzzyBorder(transform.position))
             {
@@ -851,6 +851,8 @@ void deleteLine()
                 {
                     if (border.isLeftToRight() && (transform.position.x < border.mStartPoint.x || border.mEndPoint.x < transform.position.x)) continue;
                     if (!border.isLeftToRight() && (transform.position.x < border.mEndPoint.x || border.mStartPoint.x < transform.position.x)) continue;
+                    if (mCurrentDirection == Direction.direction.Up && transform.position.y > border.mStartPoint.y) continue;
+                    if (mCurrentDirection == Direction.direction.Down && transform.position.y < border.mStartPoint.y) continue;
 
                     Vector3 point = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
                     if (point == transform.position) continue;
@@ -860,6 +862,8 @@ void deleteLine()
                 {
                     if (border.isBottomToTop() && (transform.position.y < border.mStartPoint.y || border.mEndPoint.y < transform.position.y)) continue;
                     if (!border.isBottomToTop() && (transform.position.y < border.mEndPoint.y || border.mStartPoint.y < transform.position.y)) continue;
+                    if (mCurrentDirection == Direction.direction.Left && transform.position.x < border.mStartPoint.x) continue;
+                    if (mCurrentDirection == Direction.direction.Right && transform.position.x > border.mStartPoint.x) continue;
 
                     Vector3 point = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
                     if (point == transform.position) continue;

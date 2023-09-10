@@ -27,6 +27,8 @@ public class Trail : MonoBehaviour
         lineRenderer.startColor = line_color;
         lineRenderer.endColor = line_color;
         // Line width
+        //lineRenderer.startWidth = transform.localScale.x - 0.1f;
+        //lineRenderer.endWidth = transform.localScale.x - 0.1f;
         lineRenderer.startWidth = transform.localScale.x;
         lineRenderer.endWidth = transform.localScale.x;
         // Set 2 points
