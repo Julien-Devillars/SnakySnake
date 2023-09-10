@@ -259,7 +259,7 @@ public class Levels
 
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 2, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.mLevelHelper = "You lose if someone hit your trail !";
+        level.mLevelHelper = "You lose if someone hits your trail !";
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
 
         return level;
@@ -290,7 +290,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 6, Utils.L * 11f, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 8, Utils.U * 8f, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.mLevelHelper = "Press Space to stop moving.<br>Keep it pressed to move slowly";
+        level.mLevelHelper = "Press Space bar to stop moving.<br>Keep pressing to move slowly";
         level.addStar(new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE));
         return level;
     }
@@ -324,7 +324,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 9, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 3, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.mLevelHelper = "Use the created borders to help you out !";
+        level.mLevelHelper = "The created borders will help you out !";
         level.addStar(new StarInfo(new Vector2(0.25f, 0.5f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(new Vector2(0.75f, 0.5f), Utils.STAR_DEFAULT_SCALE));
@@ -363,7 +363,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 9, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 3, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.mLevelHelper = "Your trail creates borders that will help you out !";
+        //level.mLevelHelper = "Your trail creates borders that will help you out !";
         level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(3, Utils.STAR_DEFAULT_SCALE));
@@ -400,6 +400,8 @@ public class Levels
 
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.U * 16f, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.D * 16f, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.mLevelHelper = "You can skip the level and come back later.";
 
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
@@ -1340,7 +1342,7 @@ public class Levels
         Level level = new Level("level_3_Basic_Follower", 50);
         float speed = 7f;
         level.addEnemy(new EnemyInfo(EnemyType.Follower, 5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.mLevelHelper = "New enemy : <br>It will follows you !";
+        level.mLevelHelper = "New enemy : <br>It will follow you !";
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
