@@ -16,6 +16,8 @@ public class CharacterBehavior : MonoBehaviour
     private bool mDirectionUpdated;
     private bool mCanMove;
     private bool mCanAddLine;
+    private bool mWaitOneFrame = false;
+    private Direction.direction mSavedDirection = Direction.None;
 
     public List<GameObject> mBackgroundGameObjects;
     public List<Background> mBackgrounds;
@@ -134,6 +136,19 @@ public class CharacterBehavior : MonoBehaviour
         Border current_border = GetBorder(transform.position);
 
         Direction.direction new_direction = getInputDirection();
+
+        // When moving on the exact fram just after being set on a border, we move when we should stop, save the movement and apply it at next frame
+        if(mSavedDirection != Direction.None)
+        {
+            new_direction = mSavedDirection;
+            mSavedDirection = Direction.direction.None;
+        }
+        if(mWaitOneFrame)
+        {
+            mSavedDirection = new_direction;
+            new_direction = Direction.direction.None;
+            mWaitOneFrame = false;
+        }
 
         updateDirection(new_direction);
         if(mTrailPoints.Count == 0)
@@ -702,6 +717,17 @@ void deleteLine()
     {
         foreach (Border border in mBorders)
         {
+            if (border.contains(pos))
+            {
+                return border;
+            }
+        }
+        return null;
+    }
+    Border GetFuzzyBorder(Vector3 pos)
+    {
+        foreach (Border border in mBorders)
+        {
             if (border.onSmallFuzzyBorder(pos))
             {
                 return border;
@@ -883,6 +909,7 @@ void deleteLine()
 
         mCurrentDirection = Direction.direction.None;
         transform.position = getClosestPoint(border_points);
+        mWaitOneFrame = true;
     }
 
     Vector3 getOnClosestBorder(Vector3 old_pos, List<Border> _borders)
