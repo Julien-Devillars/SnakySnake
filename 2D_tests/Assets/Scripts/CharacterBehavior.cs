@@ -528,6 +528,7 @@ void deleteLine()
                 if(c1_is_connected || c2_is_connected)
                 {
                     bg_1.addConnection(bg_2);
+                    Debug.Log(bg_1.name + " is connected with " + bg_2.name);
                 }
             }
         }
@@ -761,16 +762,20 @@ void deleteLine()
         if (background_splitten == null || background_splitten.Count != 2) return;
         
         GameObject bg_1 = background_splitten[0];
+        if(bg_1.transform.localScale.x != 0 && bg_1.transform.localScale.y != 0)
+        {
+            Background background_1 = bg_1.GetComponent<Background>();
+            mBackgroundGameObjects.Add(bg_1);
+            mBackgrounds.Add(background_1);
+        }
+
         GameObject bg_2 = background_splitten[1];
-
-        Background background_1 = bg_1.GetComponent<Background>();
-        Background background_2 = bg_2.GetComponent<Background>();
-
-        mBackgroundGameObjects.Add(bg_1);
-        mBackgroundGameObjects.Add(bg_2);
-
-        mBackgrounds.Add(background_1);
-        mBackgrounds.Add(background_2);
+        if (bg_2.transform.localScale.x != 0 && bg_2.transform.localScale.y != 0)
+        {
+            Background background_2 = bg_2.GetComponent<Background>();
+            mBackgroundGameObjects.Add(bg_2);
+            mBackgrounds.Add(background_2);
+        }
     }
 
     void countScore()
