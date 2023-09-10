@@ -35,6 +35,7 @@ public class MusicHandler : MonoBehaviour
         AudioClip music = Resources.Load<AudioClip>("Musics/" + music_name);
         current_world = world_index;
         mAudioSource.clip = music;
+        mAudioSource.Play();
     }
 
     private void Update()

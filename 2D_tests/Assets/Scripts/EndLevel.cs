@@ -37,31 +37,27 @@ public class EndLevel : MonoBehaviour
             Time.timeScale = 0f;    
             mFinish = true;
         }
+        else
+        {
+            return;
+        }
         if (GameControler.status == GameControler.GameStatus.Win)
         {
             //mNextLevelButton.interactable = true;
             //mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel + 1}<br>CLEARED";
             Next();
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Next();
-            }
         }
         if (GameControler.status == GameControler.GameStatus.Lose)
         {
             //mNextLevelButton.interactable = false;
             //mNextLevelButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Skip Level";
             // mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel + 1}<br>FAILED";
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                StartCoroutine(Replay());
-            }
             StartCoroutine(Replay());
         }
     }
     public IEnumerator Replay()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(0.5f);
         StartCoroutine(LoadLevel("PlayLevel"));
     }
 
@@ -96,7 +92,7 @@ public class EndLevel : MonoBehaviour
         GameControler.status = GameControler.GameStatus.Waiting;
         Time.timeScale = 1f;
         mTransitionAnimation.SetTrigger("FadeOut");
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSecondsRealtime(0.15f);
         if(!mIsLoadingLevel)
         {
             mIsLoadingLevel = true;

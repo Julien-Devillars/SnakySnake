@@ -39,7 +39,6 @@ public class CameraHandler : MonoBehaviour
             transform.position = new Vector3(new_pos.x, new_pos.y, transform.position.z);
 
             float screen_ratio = Mathf.InverseLerp(0f, mMaxPos.x, Mathf.Abs(target_pos.x));
-            Debug.Log("Ratio : " + screen_ratio);
             float target_rotation = (target_pos.x < 0) ? mRotationMax : -mRotationMax;
             target_rotation *= screen_ratio;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f,0f, target_rotation), Time.unscaledDeltaTime * mTime);
