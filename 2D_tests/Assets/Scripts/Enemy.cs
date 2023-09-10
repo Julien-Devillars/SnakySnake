@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
 
     protected void Lose()
     {
+        CameraHandler.mTargetPosition = transform.position;
         GameControler.status = GameControler.GameStatus.Lose;
         if (Utils.HAS_LOSE)
         {
@@ -62,6 +63,7 @@ public class Enemy : MonoBehaviour
             {
                 //ES3.Save<int>($"Play_Level_{GameControler.currentLevel}_HighScore", (int)Score.Instance.mCurrentPercentScore);
                 //SceneManager.LoadScene("PlayLevel");
+                CameraHandler.mTargetPosition = transform.position;
                 GameControler.status = GameControler.GameStatus.Lose;
             }
         }

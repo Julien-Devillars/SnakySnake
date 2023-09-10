@@ -185,6 +185,7 @@ public class Trail : MonoBehaviour
                 CharacterBehavior character = collider.gameObject.GetComponent<CharacterBehavior>();
 
                 GameControler.status = GameControler.GameStatus.Lose;
+                CameraHandler.mTargetPosition = character.transform.position;
             }
         }
     }

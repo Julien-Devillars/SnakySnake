@@ -25,11 +25,11 @@ public class EndLevel : MonoBehaviour
     {
         if (GameControler.status == GameControler.GameStatus.Win || GameControler.status == GameControler.GameStatus.Lose)
         {
-            mMenu.SetActive(true);
+            //mMenu.SetActive(true);
         }
         else
         {
-            mMenu.SetActive(false);
+            //mMenu.SetActive(false);
             return;
         }
         if(!mFinish)
@@ -40,7 +40,8 @@ public class EndLevel : MonoBehaviour
         if (GameControler.status == GameControler.GameStatus.Win)
         {
             //mNextLevelButton.interactable = true;
-            mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel + 1}<br>CLEARED";
+            //mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel + 1}<br>CLEARED";
+            Next();
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Next();
@@ -49,16 +50,18 @@ public class EndLevel : MonoBehaviour
         if (GameControler.status == GameControler.GameStatus.Lose)
         {
             //mNextLevelButton.interactable = false;
-            mNextLevelButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Skip Level";
-            mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel + 1}<br>FAILED";
+            //mNextLevelButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Skip Level";
+            // mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel + 1}<br>FAILED";
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Replay();
+                StartCoroutine(Replay());
             }
+            StartCoroutine(Replay());
         }
     }
-    public void Replay()
+    public IEnumerator Replay()
     {
+        yield return new WaitForSecondsRealtime(1f);
         StartCoroutine(LoadLevel("PlayLevel"));
     }
 

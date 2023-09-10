@@ -376,6 +376,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 3940208386353359815, guid: cb3d94f8c58113845b7ba11f663ebdde, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3940208386353359815, guid: cb3d94f8c58113845b7ba11f663ebdde, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.01886791
+      objectReference: {fileID: 0}
+    - target: {fileID: 3940208386353359815, guid: cb3d94f8c58113845b7ba11f663ebdde, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.0073375194
+      objectReference: {fileID: 0}
+    - target: {fileID: 3940208386353359815, guid: cb3d94f8c58113845b7ba11f663ebdde, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871869699794788170, guid: cb3d94f8c58113845b7ba11f663ebdde, type: 3}
+      propertyPath: mOffset
+      value: -0.035
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871869699794788170, guid: cb3d94f8c58113845b7ba11f663ebdde, type: 3}
+      propertyPath: mRotationMax
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb3d94f8c58113845b7ba11f663ebdde, type: 3}
 --- !u!1 &444184011
