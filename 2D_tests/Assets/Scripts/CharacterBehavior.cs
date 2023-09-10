@@ -528,7 +528,6 @@ void deleteLine()
                 if(c1_is_connected || c2_is_connected)
                 {
                     bg_1.addConnection(bg_2);
-                    Debug.Log(bg_1.name + " is connected with " + bg_2.name);
                 }
             }
         }
