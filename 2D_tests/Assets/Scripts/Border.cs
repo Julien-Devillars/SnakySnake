@@ -106,6 +106,7 @@ public class Border : MonoBehaviour
     public bool mHasToUpdateBorder = true;
     public bool mToDelete = false;
     public Direction.direction direction = Direction.direction.None;
+    static public bool mOnDeleteLine = false;
 
     public void Awake()
     {
@@ -128,6 +129,7 @@ public class Border : MonoBehaviour
             updateBorderConnection();
             mHasToUpdateBorder = false;
         }
+        if (mOnDeleteLine) return;
 
         Border connected_border_with_same_direction = getConnectedBorderWithSameDirection();
         if(connected_border_with_same_direction != null && isTheLongestBorder(connected_border_with_same_direction))

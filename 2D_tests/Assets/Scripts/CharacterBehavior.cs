@@ -433,7 +433,7 @@ void deleteLine()
     {
         if (mTrailPoints.Count == 0)
             return;
-
+        Border.mOnDeleteLine = true;
         fixLastTrailIfNeeded();
 
         foreach (GameObject trail_point in mTrailPoints)
@@ -466,7 +466,6 @@ void deleteLine()
             line_to_border.mNewBorderOnDelete = true;
             addBorder(line_to_border);
 
-            // Delete trail
             List<Vector3> points = Utils.getIntermediatePointFromTrail(line_to_border);
             List<Background> bgs = new List<Background>();
             foreach(Vector3 point in points)
@@ -515,7 +514,6 @@ void deleteLine()
                     bg_1.addEnemy(ennemy_to_reassign);
                 }
             }
-            
             Vector3 center_1 = bg_1.getCenterPoint();
             foreach (Background bg_2 in mBackgrounds)
             {
@@ -556,8 +554,18 @@ void deleteLine()
             bg.addConnectedEnemy();
             bg.changeBackgroundColor();
         }
+        for(int i = 0; i < mBackgrounds.Count; ++i)
+        {
+            Background bg = mBackgrounds[i];
+            bool fused = bg.fuseBackgroundIfNeeded();
+            if(fused)
+            {
+                i = 0;
+            }
+        }
         mLastBorderWhichCreateTrail = null;
         // Draw bg
+        Border.mOnDeleteLine = false;
     }
 
     Direction.direction getInputDirection()

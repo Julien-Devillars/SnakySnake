@@ -71,17 +71,18 @@ public class Background : MonoBehaviour
         target.mEnemyList = mEnemyList;
         target.mConnectedBackground = mConnectedBackground;
     }
-    public void fuseBackgroundIfNeeded()
+    public bool fuseBackgroundIfNeeded()
     {
         List<Background> backgrounds = Utils.getBackgrounds();
         Background background_found = null;
-        if (hasEnemies()) return;
+        //if (hasEnemies()) return;
 
         foreach(Background background in backgrounds)
         {
             if (background == this) continue;
-            if (string.Compare(background.gameObject.name, gameObject.name) != -1) continue;
-            if (background.hasEnemies() != hasEnemies()) continue;
+            //if (string.Compare(background.gameObject.name, gameObject.name) != -1) continue;
+            bool is_exception = background.mConnectedBackground.Count == 0 && (background.mMaxBorderPos.x - background.mMinBorderPos.x < Utils.OFFSET || background.mMaxBorderPos.y - background.mMinBorderPos.y < Utils.OFFSET);
+            if (background.hasEnemies() != hasEnemies() && !is_exception) continue;
 
             if (mMaxBorderPos.x == background.mMinBorderPos.x && mMinBorderPos.y == background.mMinBorderPos.y && mMaxBorderPos.y == background.mMaxBorderPos.y)
             {
@@ -107,13 +108,49 @@ public class Background : MonoBehaviour
                 background_found = background;
                 break;
             }
+            else if(is_exception) // Handle fucked exception when background is on the same line as another background
+            {
+                if(background.mMaxBorderPos.x - background.mMinBorderPos.x < Utils.OFFSET && mMinBorderPos.y == background.mMinBorderPos.y && mMaxBorderPos.y == background.mMaxBorderPos.y)
+                {
+                    // Min == Max
+                    if(background.mMinBorderPos.x <= mMinBorderPos.x)
+                    {
+                        mMinBorderPos.x = background.mMinBorderPos.x;
+                        background_found = background;
+                        break;
+                    }
+                    else if(background.mMinBorderPos.x > mMaxBorderPos.x)
+                    {
+                        mMaxBorderPos.x = background.mMinBorderPos.x;
+                        background_found = background;
+                        break;
+                    }
+                }
+                if (background.mMaxBorderPos.y - background.mMinBorderPos.y < Utils.OFFSET && mMinBorderPos.x == background.mMinBorderPos.x && mMaxBorderPos.x == background.mMaxBorderPos.x)
+                {
+                    // Min == Max
+                    if (background.mMinBorderPos.y <= mMinBorderPos.y)
+                    {
+                        mMinBorderPos.y = background.mMinBorderPos.y;
+                        background_found = background;
+                        break;
+                    }
+                    else if (background.mMinBorderPos.y > mMaxBorderPos.y)
+                    {
+                        mMaxBorderPos.y = background.mMinBorderPos.y;
+                        background_found = background;
+                        break;
+                    }
+                }
+            }
         }
         if(background_found != null)
         {
             background_found.destroy();
             update();
-            
+            return true;
         }
+        return false;
     }
     public void changeBackgroundColor()
     {
@@ -281,6 +318,16 @@ public class Background : MonoBehaviour
     public Vector3 getCenterPoint()
     {
         return (mMinBorderPos + mMaxBorderPos) / 2f;
+    }
+    public List<Vector3> getPoints()
+    {
+        return new List<Vector3>()
+        { 
+            new Vector3(mMinBorderPos.x, mMinBorderPos.y, mMinBorderPos.z),
+            new Vector3(mMinBorderPos.x, mMaxBorderPos.y, mMinBorderPos.z),
+            new Vector3(mMaxBorderPos.x, mMinBorderPos.y, mMinBorderPos.z),
+            new Vector3(mMaxBorderPos.x, mMaxBorderPos.y, mMinBorderPos.z)
+        };
     }
     public bool addConnection(Background bg)
     {
