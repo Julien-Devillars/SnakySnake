@@ -71,7 +71,7 @@ public class Background : MonoBehaviour
         target.mEnemyList = mEnemyList;
         target.mConnectedBackground = mConnectedBackground;
     }
-    public bool fuseBackgroundIfNeeded()
+    public bool fuseBackgroundIfNeeded ()
     {
         List<Background> backgrounds = Utils.getBackgrounds();
         Background background_found = null;

@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -148,24 +149,38 @@ public class Border : MonoBehaviour
             else if (start_point_can_be_moved)
             {
                 Debug.Log("Move Start Point : " + name);
+                //GameObject drawing = new GameObject();
+                //SpriteRenderer renderer = drawing.AddComponent<SpriteRenderer>();
+                //renderer.sprite = Resources.Load<Sprite>("Sprites/Square");
+                //drawing.name = $"Start Point of {name}";
+                //drawing.transform.position = mStartPoint;
+
                 Vector3 new_point = getClosestPointOnBorder(mStartPoint);
-                if (new_point == mEndPoint)
-                {
-                    destroy();
-                    return;
-                }
+                //if (new_point == mEndPoint)
+                //{
+                //    Debug.Log($"Destroy {name} - {new_point} == {mEndPoint}");
+                //    destroy();
+                //    return;
+                //}
                 if (new_point.x == Mathf.Infinity) return;
                 replaceStartPoint(new_point);
             }
             else if(end_point_can_be_moved)
             {
                 Debug.Log("Move End Point : " + name);
+                //GameObject drawing = new GameObject();
+                //SpriteRenderer renderer = drawing.AddComponent<SpriteRenderer>();
+                //renderer.sprite = Resources.Load<Sprite>("Sprites/Square");
+                //drawing.name = $"End Point of {name}";
+                //drawing.transform.position = mEndPoint;
+
                 Vector3 new_point = getClosestPointOnBorder(mEndPoint);
-                if (new_point == mStartPoint)
-                {
-                    destroy();
-                    return;
-                }
+                //if (new_point == mStartPoint)
+                //{
+                //    Debug.Log($"Destroy {name} - {new_point} == {mEndPoint}");
+                //    destroy();
+                //    return;
+                //}
                 if (new_point.x == Mathf.Infinity) return;
                 replaceEndPoint(new_point);
             }
