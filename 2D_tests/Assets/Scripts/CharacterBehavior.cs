@@ -47,6 +47,7 @@ public class CharacterBehavior : MonoBehaviour
     private PlayerControl mPlayerControl;
     private Direction.direction mInputDirection;
     private bool mInputStop;
+    private float mDeadStickZone = 0.95f;
     private void Awake()
     {
         mPlayerControl = new PlayerControl();
@@ -63,6 +64,46 @@ public class CharacterBehavior : MonoBehaviour
         {
             mInputDirection = Direction.Stop;
             mInputStop = false;
+        };
+        mPlayerControl.PlayerController.XStick.performed += ctx =>
+        {
+            float val_x = mPlayerControl.PlayerController.XStick.ReadValue<float>();
+            float val_y = mPlayerControl.PlayerController.YStick.ReadValue<float>();
+            if (Mathf.Abs(val_x) < Mathf.Abs(val_y)) return;
+            if (Mathf.Abs(val_x) < mDeadStickZone) return;
+            if (mInputDirection != Direction.direction.None) return;
+
+            Debug.Log($"X : {val_x}");
+            if(val_x < 0)
+            {
+                Debug.Log("Go Left");
+                mInputDirection = Direction.Left;
+            }
+            if (val_x > 0)
+            {
+                Debug.Log("Go Right");
+                mInputDirection = Direction.Right;
+            }
+        };
+        mPlayerControl.PlayerController.YStick.performed += ctx =>
+        {
+            float val_x = mPlayerControl.PlayerController.XStick.ReadValue<float>();
+            float val_y = mPlayerControl.PlayerController.YStick.ReadValue<float>();
+            if (Mathf.Abs(val_y) < Mathf.Abs(val_x)) return;
+            if (Mathf.Abs(val_y) < mDeadStickZone) return;
+            if (mInputDirection != Direction.direction.None) return;
+
+            Debug.Log($"Y : {val_y}");
+            if (val_y < 0)
+            {
+                Debug.Log("Go Down");
+                mInputDirection = Direction.Down;
+            }
+            if (val_y > 0)
+            {
+                Debug.Log("Go Up");
+                mInputDirection = Direction.Up;
+            }
         };
 
     }

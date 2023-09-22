@@ -80,6 +80,24 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""XStick"",
+                    ""type"": ""Value"",
+                    ""id"": ""7e86106e-e54a-445b-8a4f-58b3ab745136"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""YStick"",
+                    ""type"": ""Value"",
+                    ""id"": ""b14d515d-5dfa-4fc6-b2da-93b142b369dd"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -390,6 +408,50 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1655c3b-c7d8-44eb-a13f-3de481dcc3f5"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""752a3577-2d24-412c-8a01-8c8dd87cab21"",
+                    ""path"": ""<XInputController>/leftStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6346ac20-9839-4f6d-b35f-95f3d794d62b"",
+                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8be58d18-d3d9-441b-be75-53192ef0f996"",
+                    ""path"": ""<XInputController>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -404,6 +466,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_PlayerController_Down = m_PlayerController.FindAction("Down", throwIfNotFound: true);
         m_PlayerController_Stop = m_PlayerController.FindAction("Stop", throwIfNotFound: true);
         m_PlayerController_Escape = m_PlayerController.FindAction("Escape", throwIfNotFound: true);
+        m_PlayerController_XStick = m_PlayerController.FindAction("XStick", throwIfNotFound: true);
+        m_PlayerController_YStick = m_PlayerController.FindAction("YStick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -471,6 +535,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerController_Down;
     private readonly InputAction m_PlayerController_Stop;
     private readonly InputAction m_PlayerController_Escape;
+    private readonly InputAction m_PlayerController_XStick;
+    private readonly InputAction m_PlayerController_YStick;
     public struct PlayerControllerActions
     {
         private @PlayerControl m_Wrapper;
@@ -481,6 +547,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @Down => m_Wrapper.m_PlayerController_Down;
         public InputAction @Stop => m_Wrapper.m_PlayerController_Stop;
         public InputAction @Escape => m_Wrapper.m_PlayerController_Escape;
+        public InputAction @XStick => m_Wrapper.m_PlayerController_XStick;
+        public InputAction @YStick => m_Wrapper.m_PlayerController_YStick;
         public InputActionMap Get() { return m_Wrapper.m_PlayerController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -508,6 +576,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Escape.started += instance.OnEscape;
             @Escape.performed += instance.OnEscape;
             @Escape.canceled += instance.OnEscape;
+            @XStick.started += instance.OnXStick;
+            @XStick.performed += instance.OnXStick;
+            @XStick.canceled += instance.OnXStick;
+            @YStick.started += instance.OnYStick;
+            @YStick.performed += instance.OnYStick;
+            @YStick.canceled += instance.OnYStick;
         }
 
         private void UnregisterCallbacks(IPlayerControllerActions instance)
@@ -530,6 +604,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Escape.started -= instance.OnEscape;
             @Escape.performed -= instance.OnEscape;
             @Escape.canceled -= instance.OnEscape;
+            @XStick.started -= instance.OnXStick;
+            @XStick.performed -= instance.OnXStick;
+            @XStick.canceled -= instance.OnXStick;
+            @YStick.started -= instance.OnYStick;
+            @YStick.performed -= instance.OnYStick;
+            @YStick.canceled -= instance.OnYStick;
         }
 
         public void RemoveCallbacks(IPlayerControllerActions instance)
@@ -555,5 +635,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnDown(InputAction.CallbackContext context);
         void OnStop(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
+        void OnXStick(InputAction.CallbackContext context);
+        void OnYStick(InputAction.CallbackContext context);
     }
 }
