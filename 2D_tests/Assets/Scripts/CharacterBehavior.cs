@@ -4,6 +4,9 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 using UnityEngine.UIElements;
+using PlasticPipe.PlasticProtocol.Messages;
+using UnityEngine.InputSystem;
+
 
 public class CharacterBehavior : MonoBehaviour
 {
@@ -41,6 +44,38 @@ public class CharacterBehavior : MonoBehaviour
     private bool mFingerDown;
     Vector3 mStartPositionFingerDown;
     Vector3 mLastPositionFingerUp;
+    private PlayerControl mPlayerControl;
+    private Direction.direction mInputDirection;
+    private bool mInputStop;
+    private void Awake()
+    {
+        mPlayerControl = new PlayerControl();
+        mPlayerControl.PlayerController.Left.performed += ctx =>    mInputDirection = Direction.Left;
+        mPlayerControl.PlayerController.Right.performed += ctx =>   mInputDirection = Direction.Right;
+        mPlayerControl.PlayerController.Up.performed += ctx =>      mInputDirection = Direction.Up;
+        mPlayerControl.PlayerController.Down.performed += ctx =>    mInputDirection = Direction.Down;
+        mPlayerControl.PlayerController.Stop.performed += ctx =>
+        {
+            mInputDirection = Direction.Stop;
+            mInputStop = true;
+        };
+        mPlayerControl.PlayerController.Stop.canceled += ctx =>
+        {
+            mInputDirection = Direction.Stop;
+            mInputStop = false;
+        };
+
+    }
+    private void OnEnable()
+    {
+        mPlayerControl.PlayerController.Enable();
+    }
+
+    private void OnDisable()
+    {
+        mPlayerControl.PlayerController.Disable();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -571,25 +606,18 @@ void deleteLine()
     Direction.direction getInputDirection()
     {
 
-        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (mInputDirection != Direction.direction.None)
         {
-            return Direction.Left;
-        }
-        else if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            return Direction.Up;
-        }
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            return Direction.Right;
-        }
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            return Direction.Down;
-        }
-        else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space)) && mTrailPoints.Count == 0)
-        {
-            return Direction.Stop;
+            Direction.direction tmp = mInputDirection;
+            mInputDirection = Direction.direction.None;
+            if(tmp == Direction.direction.Stop && mTrailPoints.Count == 0)
+            {
+                return tmp;
+            }
+            else if(tmp != Direction.direction.Stop)
+            {
+                return tmp;
+            }
         }
 
         if (MobileButtons.mButtonHasBeenPressed)
@@ -1008,7 +1036,7 @@ void deleteLine()
             }
         }
         float speed = mSpeed;
-        if (Input.GetKey(KeyCode.Space) && mTrailPoints.Count == 0)
+        if (mInputStop && mTrailPoints.Count == 0)
         {
             speed = mSpeed/10f;
         }
