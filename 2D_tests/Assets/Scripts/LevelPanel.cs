@@ -33,15 +33,19 @@ public class LevelPanel : MonoBehaviour
             int level_idx = cpt - 1;
             level.GetComponent<Button>().onClick.AddListener(delegate { Play(level_idx); });
             bool level_done = ES3.Load<bool>($"PlayMode_World{GameControler.currentWorld}_Level{level_idx}_status", false);
+            level.GetComponent<Image>().material = new Material(level.GetComponent<Image>().material);
             if (level_done)
             {
                 level.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.blue;
                 level.GetComponent<Image>().color = Color.blue;
+                level.GetComponent<Image>().material.SetFloat("_Glow", 3f);
             }
             else
             {
                 level.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
-                level.GetComponent<Image>().color = new Color(1f, 0.5f, 0f);
+                //level.GetComponent<Image>().color = new Color(1f, 0.5f, 0f);
+                level.GetComponent<Image>().color = Color.magenta;
+                level.GetComponent<Image>().material.SetFloat("_Glow", 0f);
             }
         }
 

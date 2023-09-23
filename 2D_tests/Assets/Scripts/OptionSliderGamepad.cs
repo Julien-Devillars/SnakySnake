@@ -64,13 +64,4 @@ public class OptionSliderGamepad : MonoBehaviour
     {
         mDefaultInputActions.UI.Disable();
     }
-
-    public void onClickSelectMusicSlider()
-    {
-        mSliderMusic.Select();
-    }
-    public void onClickSelectLuminositySlider()
-    {
-        mSliderLuminosity.Select();
-    }
 }

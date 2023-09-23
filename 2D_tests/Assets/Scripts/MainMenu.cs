@@ -4,6 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
+
+[System.Serializable]
+public struct ButtonWithSelect
+{
+    [SerializeField] public GameObject mMenu;
+    [SerializeField] public Button mButton;
+    [SerializeField] public Button mBackButton;
+}
+
 public class MainMenu : MonoBehaviour
 {
     //public GameObject mMainMenu; // 0
@@ -13,10 +24,34 @@ public class MainMenu : MonoBehaviour
     //public GameObject mOptionsMenu; // 4
     //public GameObject mCreditsMenu; // 5
 
-    public List<GameObject> mMenus = new List<GameObject>();
-    public List<TextMeshProUGUI> mInfinityBestScoreText = new List<TextMeshProUGUI>();
+    //public List<Button> mSelectedInMenu = new List<Button>();
+    public List<ButtonWithSelect> mMenusWithSelected = new List<ButtonWithSelect>();
+    private DefaultInputActions mDefaultInputActions;
 
     public int mPreviousIndexMenu = 0;
+    private void Awake()
+    {
+
+        mDefaultInputActions = new DefaultInputActions();
+
+        mDefaultInputActions.UI.Cancel.performed += ctx =>
+        {
+            for (int i = 1;  i < mMenusWithSelected.Count; ++i)
+            {
+                ButtonWithSelect back_menu = mMenusWithSelected[i];
+
+                if (back_menu.mMenu.activeSelf)
+                {
+                    mMenusWithSelected[mPreviousIndexMenu].mMenu.SetActive(false);
+                    mMenusWithSelected[0].mMenu.SetActive(true);
+                    mPreviousIndexMenu = 0;
+                    back_menu.mBackButton.Select();
+                    return;
+                }
+            }
+        };
+    }
+
     public void Start()
     {
         Time.timeScale = 1f;
@@ -24,26 +59,42 @@ public class MainMenu : MonoBehaviour
         {
             DestroyImmediate(MusicHandler.instance.gameObject);
         }
-        foreach (GameObject menu in mMenus)
+        foreach (ButtonWithSelect menu in mMenusWithSelected)
         {
-            menu.SetActive(false);
+            menu.mMenu.SetActive(false);
         }
-        mMenus[0].SetActive(true);
+        mMenusWithSelected[0].mMenu.SetActive(true);
+        mMenusWithSelected[0].mButton.Select();
 
         Utils.GAME_STOPPED = false;
         mPreviousIndexMenu = 0;
         GameControler.type= GameControler.GameType.None;
-        mInfinityBestScoreText[0].text = "Easy - Best : " + ES3.Load<int>("Infinity_HighScore_1", 0).ToString();
-        mInfinityBestScoreText[1].text = "Medium - Best : " + ES3.Load<int>("Infinity_HighScore_2", 0).ToString();
-        mInfinityBestScoreText[2].text = "Hard - Best : " + ES3.Load<int>("Infinity_HighScore_3", 0).ToString();
 
         Worlds.createWorlds();
+    }
+    private void OnEnable()
+    {
+        mDefaultInputActions.UI.Enable();
+    }
+
+    private void OnDisable()
+    {
+        mDefaultInputActions.UI.Disable();
     }
 
     public void switchMenu(int index)
     {
-        mMenus[mPreviousIndexMenu].SetActive(false);
-        mMenus[index].SetActive(true);
+        mMenusWithSelected[mPreviousIndexMenu].mMenu.SetActive(false);
+        mMenusWithSelected[index].mMenu.SetActive(true);
+        if (index == 0)
+        {
+            mMenusWithSelected[mPreviousIndexMenu].mBackButton.Select();
+        }
+        else
+        {
+            mMenusWithSelected[index].mButton.Select();
+        }
+        
         mPreviousIndexMenu = index;
     }
 
