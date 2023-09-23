@@ -2,19 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
     public GameObject mPauseMenu;
     public GameObject mMainMenu;
+    public Button mMainMenuButtonFirstSelected;
+    public Button mMainMenuButtonOnBackSelected;
     public GameObject mOptionMenu;
+    public Button mOptionMenuButtonFirstSelected;
     public GameObject mHelper;
     private bool mIsPaused;
     public Animator mTransitionAnimation;
     private bool mIsLoadingLevel = false;
     public TextMeshProUGUI mLevelInfo;
+    private DefaultInputActions mDefaultInputActions;
+    private PlayerControl mPlayerControl;
+    private void Awake()
+    {
 
+        mDefaultInputActions = new DefaultInputActions();
+        mPlayerControl = new PlayerControl();
+        mDefaultInputActions.UI.Cancel.performed += ctx =>
+        {
+            if (mMainMenu.activeSelf)
+            {
+                Resume();
+            }
+        };
+        mDefaultInputActions.UI.Cancel.performed += ctx =>
+        {
+            if (mOptionMenu.activeSelf)
+            {
+                BackOptions();
+            }
+        };
+        mPlayerControl.PlayerController.Escape.performed += ctx =>
+        {
+            if (mIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        };
+    }
     private void Start()
     {
         mIsPaused = false;
@@ -25,19 +62,30 @@ public class PauseMenu : MonoBehaviour
         mLevelInfo.text = $"World {GameControler.currentWorld + 1} - Level {GameControler.currentLevel + 1}";
     }
 
+    private void OnEnable()
+    {
+        mDefaultInputActions.UI.Enable();
+        mPlayerControl.PlayerController.Enable();
+    }
+
+    private void OnDisable()
+    {
+        mDefaultInputActions.UI.Disable();
+        mPlayerControl.PlayerController.Disable();
+    }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            if(mIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }
+        //if(Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    if(mIsPaused)
+        //    {
+        //        Resume();
+        //    }
+        //    else
+        //    {
+        //        Pause();
+        //    }
+        //}
     }
     public void Resume()
     {
@@ -57,6 +105,7 @@ public class PauseMenu : MonoBehaviour
         //Time.timeScale = 0f;
         mIsPaused = true;
         Utils.GAME_STOPPED = true;
+        mMainMenuButtonFirstSelected.Select();
     }
 
     public void Back()
@@ -76,12 +125,14 @@ public class PauseMenu : MonoBehaviour
     {
         mMainMenu.SetActive(true);
         mOptionMenu.SetActive(false);
+        mMainMenuButtonOnBackSelected.Select();
     }
 
     public void Option()
     {
         mMainMenu.SetActive(false);
         mOptionMenu.SetActive(true);
+        mOptionMenuButtonFirstSelected.Select();
     }
     public void Next()
     {
