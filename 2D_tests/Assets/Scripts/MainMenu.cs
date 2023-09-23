@@ -27,7 +27,10 @@ public class MainMenu : MonoBehaviour
     //public List<Button> mSelectedInMenu = new List<Button>();
     public List<ButtonWithSelect> mMenusWithSelected = new List<ButtonWithSelect>();
     private DefaultInputActions mDefaultInputActions;
-
+    public AudioSource mAudioMusic;
+    public AudioSource mAudioNavigate;
+    public AudioSource mAudioSubmitBack;
+    private GameObject mPreviousSelected = null;
     public int mPreviousIndexMenu = 0;
     private void Awake()
     {
@@ -50,6 +53,24 @@ public class MainMenu : MonoBehaviour
                 }
             }
         };
+
+        //mDefaultInputActions.UI.Navigate.performed += ctx =>
+        //{
+        //    Vector2 navigation = mDefaultInputActions.UI.Navigate.ReadValue<Vector2>();
+        //    if (Mathf.Abs(navigation.x) != 1 && Mathf.Abs(navigation.y) != 1) return;
+        //
+        //    mAudioNavigate.Play();
+        //};
+        mDefaultInputActions.UI.Submit.performed += ctx =>
+        {
+            mAudioSubmitBack.Play();
+        };
+        mDefaultInputActions.UI.Cancel.performed += ctx =>
+        {
+            if (mPreviousIndexMenu == 0) return;
+            mAudioSubmitBack.Play();
+        };
+
     }
 
     public void Start()
@@ -65,6 +86,7 @@ public class MainMenu : MonoBehaviour
         }
         mMenusWithSelected[0].mMenu.SetActive(true);
         mMenusWithSelected[0].mButton.Select();
+        mPreviousSelected = mMenusWithSelected[0].mButton.gameObject;
 
         Utils.GAME_STOPPED = false;
         mPreviousIndexMenu = 0;
@@ -100,7 +122,14 @@ public class MainMenu : MonoBehaviour
 
     public void Update()
     {
-        GetComponent<AudioSource>().volume = ES3.Load<float>("VolumeSlider", 0.5f); ;
+        if(EventSystem.current.currentSelectedGameObject != mPreviousSelected)
+        {
+            mAudioNavigate.Play();
+            mPreviousSelected = EventSystem.current.currentSelectedGameObject;
+        }
+        //mAudioMusic.volume = ES3.Load<float>("VolumeSlider", 0.5f);
+        //mAudioNavigate.volume = ES3.Load<float>("VolumeSlider", 0.5f);
+        //mAudioSubmitBack.volume = ES3.Load<float>("VolumeSlider", 0.5f);
     }
 
     public void PlayGame()
