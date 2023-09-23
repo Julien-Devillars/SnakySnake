@@ -433,6 +433,28 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""dd3220a9-29a3-4d3a-8bdf-f066bc7567a2"",
+                    ""path"": ""<Gamepad>/rightStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0355c31-3978-4e21-bdd1-61129f0a6ed8"",
+                    ""path"": ""<XInputController>/rightStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""6346ac20-9839-4f6d-b35f-95f3d794d62b"",
                     ""path"": ""<Gamepad>/leftStick/y"",
                     ""interactions"": """",
@@ -446,6 +468,28 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""8be58d18-d3d9-441b-be75-53192ef0f996"",
                     ""path"": ""<XInputController>/leftStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""427d6d84-1069-41b4-95bf-0ff2eed54ed6"",
+                    ""path"": ""<Gamepad>/rightStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YStick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb2345aa-b610-44ed-97fd-e3b9cff7700a"",
+                    ""path"": ""<XInputController>/rightStick/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
