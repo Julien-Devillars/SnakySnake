@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -21,6 +22,12 @@ public class PauseMenu : MonoBehaviour
     public TextMeshProUGUI mLevelInfo;
     private DefaultInputActions mDefaultInputActions;
     private PlayerControl mPlayerControl;
+
+
+    public AudioSource mAudioNavigate;
+    public AudioSource mAudioSubmitBack;
+    private GameObject mPreviousSelected = null;
+
     private void Awake()
     {
 
@@ -51,6 +58,14 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         };
+        mDefaultInputActions.UI.Submit.performed += ctx =>
+        {
+            mAudioSubmitBack.Play();
+        };
+        //mDefaultInputActions.UI.Cancel.performed += ctx =>
+        //{
+        //    if (mPreviousSelected != null) mAudioSubmitBack.Play();
+        //};
     }
     private void Start()
     {
@@ -75,6 +90,11 @@ public class PauseMenu : MonoBehaviour
     }
     private void Update()
     {
+        if (EventSystem.current.currentSelectedGameObject != mPreviousSelected)
+        {
+            if(mPreviousSelected != null) mAudioNavigate.Play();
+            mPreviousSelected = EventSystem.current.currentSelectedGameObject;
+        }
         //if(Input.GetKeyDown(KeyCode.Escape))
         //{
         //    if(mIsPaused)
