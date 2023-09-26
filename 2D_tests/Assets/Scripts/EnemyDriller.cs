@@ -10,6 +10,7 @@ public class EnemyDriller : Enemy
     Border last_border;
     Border last_last_border;
     bool mIsOnBorder = false;
+    private Vector2 mPreviousSpeed;
 
     private void Start()
     {
@@ -35,6 +36,8 @@ public class EnemyDriller : Enemy
         last_border = null;
         last_last_border = null;
         mIsOnBorder = false;
+
+        mPreviousSpeed = speed;
     }
 
     private void FixedUpdate()
@@ -48,6 +51,11 @@ public class EnemyDriller : Enemy
             Lose();
         }
 
+        if(speed == Vector2.zero)
+        {
+            speed = mPreviousSpeed;
+        }
+
         if (!mIsOnBorder)
         {
             foreach (Border border in Utils.getBorders())
@@ -56,17 +64,18 @@ public class EnemyDriller : Enemy
                 {
                     last_border = border;
                     mIsOnBorder = true;
+                    mPreviousSpeed = speed;
                     if (border.isVertical())
                     {
                         transform.position = new Vector3(border.mStartPoint.x, transform.position.y, transform.position.z);
-                        speed.y = Mathf.Max(Mathf.Abs(speed.x), Mathf.Abs(speed.y));
+                        speed.y = Mathf.Sqrt(Mathf.Pow(speed.x, 2f) + Mathf.Pow(speed.y, 2f));
                         speed.y = border.isBottomToTop() ? speed.y : -speed.y;
                         speed.x = 0f;
                     }
                     else
                     {
                         transform.position = new Vector3(transform.position.x, border.mStartPoint.y, transform.position.z);
-                        speed.x = Mathf.Max(Mathf.Abs(speed.x), Mathf.Abs(speed.y));
+                        speed.x = Mathf.Sqrt(Mathf.Pow(speed.x, 2f) + Mathf.Pow(speed.y, 2f));
                         speed.x = border.isLeftToRight() ? speed.x : -speed.x;
                         speed.y = 0f;
                     }
@@ -84,6 +93,7 @@ public class EnemyDriller : Enemy
                 {
                     last_last_border = last_border;
                     last_border = border;
+                    mPreviousSpeed = speed;
 
                     if (border.isVertical())
                     {
@@ -124,22 +134,22 @@ public class EnemyDriller : Enemy
                 }
             }
 
-            if (speed.y > 0 && speed.x == 0)
-            {
-                sprite_renderer.material.SetFloat("_RotateUvAmount", Mathf.PI);
-            }
-            else if (speed.y < 0 && speed.x == 0)
-            {
-                sprite_renderer.material.SetFloat("_RotateUvAmount", 0f);
-            }
-            else if (speed.x > 0 && speed.y == 0)
-            {
-                sprite_renderer.material.SetFloat("_RotateUvAmount", -Mathf.PI / 2f);
-            }
-            else if (speed.x < 0 && speed.y == 0)
-            {
-                sprite_renderer.material.SetFloat("_RotateUvAmount", Mathf.PI / 2f);
-            }
+            //if (speed.y > 0 && speed.x == 0)
+            //{
+            //    sprite_renderer.material.SetFloat("_RotateUvAmount", Mathf.PI);
+            //}
+            //else if (speed.y < 0 && speed.x == 0)
+            //{
+            //    sprite_renderer.material.SetFloat("_RotateUvAmount", 0f);
+            //}
+            //else if (speed.x > 0 && speed.y == 0)
+            //{
+            //    sprite_renderer.material.SetFloat("_RotateUvAmount", -Mathf.PI / 2f);
+            //}
+            //else if (speed.x < 0 && speed.y == 0)
+            //{
+            //    sprite_renderer.material.SetFloat("_RotateUvAmount", Mathf.PI / 2f);
+            //}
         }
         
         gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);

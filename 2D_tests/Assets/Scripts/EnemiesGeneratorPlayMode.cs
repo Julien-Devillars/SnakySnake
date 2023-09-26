@@ -21,8 +21,8 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
             level_index = mLevel - 1;
             world_index = mWorld - 1;
             Worlds.createWorlds();
-            GameControler.currentLevel = mLevel;
-            GameControler.currentWorld = mWorld;
+            GameControler.currentLevel = level_index;
+            GameControler.currentWorld = world_index;
         }
         else
         {
