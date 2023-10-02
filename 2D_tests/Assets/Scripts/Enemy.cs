@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
     protected bool mHasCollideHorizontal;
     public EnemyType type;
     public bool mCanCrossBorder = false;
+
+    public List<Enemy> mLinks;
     protected void Awake()
     {
         Camera cam = Camera.main;
@@ -27,10 +29,12 @@ public class Enemy : MonoBehaviour
         mFullMaxPos = new Vector3(width, height, 0);
         mHasCollideVertical = false;
         mHasCollideHorizontal = false;
+        mLinks = new List<Enemy>();
     }
     protected void Start()
     {
         Physics2D.IgnoreLayerCollision(7, 7, true);
+        Physics2D.IgnoreLayerCollision(7, 21, true); // Link
         type = EnemyType.Basic;
     }
     protected void FixedUpdate()
@@ -179,6 +183,19 @@ public class Enemy : MonoBehaviour
     {
         Vector2 pos = new Vector2(x, y);
         setPosition(pos);
+    }
+
+    public void addLink(Enemy target)
+    {
+        mLinks.Add(target);
+        GameObject link = new GameObject();
+        link.transform.parent = transform;
+        link.transform.position = Vector3.zero;
+
+        EnemyLink enemy_link = link.AddComponent<EnemyLink>();
+        enemy_link.setStartEnemy(this);
+        enemy_link.setWidth(transform.localScale.x / 2f);
+        enemy_link.setEndEnemy(target);
     }
 
 }

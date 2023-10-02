@@ -1128,7 +1128,7 @@ void deleteLine()
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.name);
+        //Debug.Log(collision.name);
         if(collision.CompareTag("VerticalBorder") || collision.CompareTag("HorizontalBorder"))
         {
             setOnBorderOppositeDirection();

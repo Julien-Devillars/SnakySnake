@@ -37,14 +37,27 @@ public enum EnemyType
 public class EnemyInfo : ObjectInfo 
 {
     public EnemyType type;
+    public List<int> link;
 
     public EnemyInfo(EnemyType _type, Vector2 _position, Vector2 _direction, float _scale) : base(_position, _direction, _scale)
     {
         type = _type;
+        link = null;
     }
     public EnemyInfo(EnemyType _type, int _position, Vector2 _direction, float _scale) : base(_position, _direction, _scale)
     {
         type = _type;
+        link = null;
+    }
+    public EnemyInfo(EnemyType _type, Vector2 _position, Vector2 _direction, float _scale, List<int> _link) : base(_position, _direction, _scale)
+    {
+        type = _type;
+        link = _link;
+    }
+    public EnemyInfo(EnemyType _type, int _position, Vector2 _direction, float _scale, List<int> _link) : base(_position, _direction, _scale)
+    {
+        type = _type;
+        link = _link;
     }
 }
 public class EnemyCircleInfo : EnemyInfo
@@ -1390,6 +1403,20 @@ public class Levels
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
+    public static Level level_with_Link()
+    {
+        Level level = new Level("level_with_Link", 50);
+        float speed = 10f;
+        List<int> links = new List<int>() { 1, 2  };
+        List<int> links_2 = new List<int>() { 2 };
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, links));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, links_2));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
 
     public Levels(int nb_level)
     {
@@ -1478,6 +1505,7 @@ public class Worlds
         levels.addLevel(8, Levels.level_2_line_basic_with_cross_circle()); // Medium - hard
         levels.addLevel(9, Levels.level_2_triple_triangle()); // HARD
         levels.addLevel(10, Levels.level_with_driller());
+        levels.addLevel(11, Levels.level_with_Link());
         //levels.addLevel(11, Levels.level_1_demon_square());
         //levels.addLevel(12, Levels.level_3_one_fast_follower());
 

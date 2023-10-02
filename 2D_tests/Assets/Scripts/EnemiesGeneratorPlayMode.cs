@@ -30,7 +30,9 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
             world_index = GameControler.currentWorld;
         }
 
-        foreach (EnemyInfo enemy in Worlds.getLevel(world_index, level_index).mEnemies)
+        Level current_level = Worlds.getLevel(world_index, level_index);
+
+        foreach (EnemyInfo enemy in current_level.mEnemies)
         {
             GameObject enemy_go = new GameObject();
             enemy_go.name = "Enemy";
@@ -92,7 +94,6 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
                     Debug.Log("No enemy type found !");
                     break;
             }
-
             enemies.Add(enemy_go);
 
             GameObject particle_go = Instantiate(Resources.Load<GameObject>("Particles/EnemyParticle"));
@@ -108,12 +109,25 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
             enemy_behavior.setRelativePosition(enemy.position);
         }
 
+        for(int i = 0; i < current_level.mEnemies.Count; ++i)
+        {
+            EnemyInfo enemy_info = current_level.mEnemies[i];
+            if (enemy_info.link == null) continue;
+
+            Enemy enemy = enemies[i].GetComponent<Enemy>();
+            foreach(int index in enemy_info.link)
+            {
+                enemy.addLink(enemies[index].GetComponent<Enemy>());
+            }
+        }     
+
+
 
         List<GameObject> stars = new List<GameObject>();
         GameObject stars_go = GameObject.Find(Utils.STARS_STR);
         stars_go.AddComponent<StarsVictory>();
 
-        foreach (StarInfo star in Worlds.getLevel(world_index, level_index).mStars)
+        foreach (StarInfo star in current_level.mStars)
         {
             GameObject star_go = new GameObject();
             star_go.name = Utils.STAR_STR;
