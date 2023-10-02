@@ -82,21 +82,23 @@ public class EnemyCircleInfo : EnemyInfo
         iHexagone,
         iOctogone
     }
-    public EnemyCircleInfo(Vector2 _position, Vector2 _direction, float _scale, float _rotation_position, float _rotation_speed, float _attack_speed, bool _inverse = false) : base(EnemyType.Circle, _position, _direction, _scale)
+    public EnemyCircleInfo(Vector2 _position, Vector2 _direction, float _scale, float _rotation_position, float _rotation_speed, float _attack_speed, bool _inverse = false, List<int> _link = null) : base(EnemyType.Circle, _position, _direction, _scale)
     {
         mRotateSpeed = _rotation_speed;
         mAttackSpeed = _attack_speed;
         mStartRotation = _rotation_position;
         mInverse = _inverse;
+        link = _link;
     }
-    public EnemyCircleInfo(int _position, Vector2 _direction, float _scale, float _rotation_position, float _rotation_speed, float _attack_speed, bool _inverse = false) : base(EnemyType.Circle, _position, _direction, _scale)
+    public EnemyCircleInfo(int _position, Vector2 _direction, float _scale, float _rotation_position, float _rotation_speed, float _attack_speed, bool _inverse = false, List<int> _link = null) : base(EnemyType.Circle, _position, _direction, _scale)
     {
         mRotateSpeed = _rotation_speed;
         mAttackSpeed = _attack_speed;
         mStartRotation = _rotation_position;
         mInverse = _inverse;
+        link = _link;
     }
-    public EnemyCircleInfo(int _position, Vector2 _direction, float _scale, float _rotation_position, Form _form, float _form_scale, bool _inverse = false) : base(EnemyType.Circle, _position, _direction, _scale)
+    public EnemyCircleInfo(int _position, Vector2 _direction, float _scale, float _rotation_position, Form _form, float _form_scale, bool _inverse = false, List<int> _link = null) : base(EnemyType.Circle, _position, _direction, _scale)
     {
         switch(_form)
         {
@@ -144,8 +146,9 @@ public class EnemyCircleInfo : EnemyInfo
         mRotateSpeed *= _form_scale;
         mStartRotation = _rotation_position;
         mInverse = _inverse;
+        link = _link;
     }
-    public EnemyCircleInfo(Vector2 _position, Vector2 _direction, float _scale, float _rotation_position, Form _form, float _form_scale, bool _inverse = false) : base(EnemyType.Circle, _position, _direction, _scale)
+    public EnemyCircleInfo(Vector2 _position, Vector2 _direction, float _scale, float _rotation_position, Form _form, float _form_scale, bool _inverse = false, List<int> _link = null) : base(EnemyType.Circle, _position, _direction, _scale)
     {
         switch (_form)
         {
@@ -193,6 +196,7 @@ public class EnemyCircleInfo : EnemyInfo
         mRotateSpeed *= _form_scale;
         mStartRotation = _rotation_position;
         mInverse = _inverse;
+        link = _link;
     }
 }
 
@@ -567,6 +571,39 @@ public class Levels
         level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
+    public static Level level_1_basic_link()
+    {
+        // Level 1
+        Level level = new Level("Basic", 50);
+
+        float speed = 7f;
+
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(1)));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+
+        level.mLevelHelper = "Some enemies can be linked, do not cross it !";
+        return level;
+    }
+    public static Level level_1_basic_link_2()
+    {
+        // Level 1
+        Level level = new Level("Basic", 50);
+
+        float speed = 7f;
+
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 1, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(2)));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 8, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(0, 2)));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 3, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
     public static Level level_1_12()
     {
         // Level 1
@@ -831,6 +868,26 @@ public class Levels
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
+    public static Level level_2_basic_line_with_inverse_with_link()
+    {
+        // Level 1
+        Level level = new Level("level_2_basic_line_with_inverse", 50);
+
+        float speed = 5f;
+
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(4, 7), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUR, -90, 0.5f, true, Utils.Linker(2)));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(4, 1), Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDR, 90, 0.5f, true, Utils.Linker(3)));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(6, 9), Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUL, 90, 0.5f, true));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(6, 3), Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDL, -90, 0.5f, true));
+
+
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 1), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 3), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 7), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 9), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
 
     public static Level level_2_basic_square()
     {
@@ -848,6 +905,24 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(4,8), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(8,6), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(6,2), Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_2_basic_square_with_link()
+    {
+        // Level 1
+        Level level = new Level("level_2_basic_square", 50);
+
+        float speed = 6f;
+
+        level.addEnemy(new EnemyCircleInfo(8, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDL, EnemyCircleInfo.Form.Square, 1f, false, Utils.Linker(1)));
+        level.addEnemy(new EnemyCircleInfo(4, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rDR, EnemyCircleInfo.Form.Square, 1f, false, Utils.Linker(2)));
+        level.addEnemy(new EnemyCircleInfo(2, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUR, EnemyCircleInfo.Form.Square, 1f, false, Utils.Linker(3)));
+        level.addEnemy(new EnemyCircleInfo(6, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rUL, EnemyCircleInfo.Form.Square, 1f, false, Utils.Linker(0)));
+
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(2, 4), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(4, 8), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(8, 6), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(6, 2), Utils.STAR_DEFAULT_SCALE));
         return level;
     }
     public static Level level_2_triple_triangle()
@@ -883,6 +958,22 @@ public class Levels
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0f, 0.5f), 4), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 1f));
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(4, 5), Utils.DR * speed * 2.5f, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 2.5f));
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(5, 6), Utils.DR * speed * 3.5f, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 3f));
+
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_2_three_protection_with_diff_speed_with_link()
+    {
+        // Level 1
+        Level level = new Level("level_2_three_protection_with_diff_speed", 50);
+
+        float speed = 3f;
+
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(new Vector2(0f, 0.5f), 4), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 1f, false, Utils.Linker(1)));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(4, 5), Utils.DR * speed * 2.5f, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 2.5f, false, Utils.Linker(2)));
+        level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(5, 6), Utils.DR * speed * 3.5f, Utils.ENEMY_DEFAULT_SCALE, 300, EnemyCircleInfo.Form.Hexagone, 3f, false, Utils.Linker(0)));
 
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
@@ -1407,11 +1498,13 @@ public class Levels
     {
         Level level = new Level("level_with_Link", 50);
         float speed = 10f;
-        List<int> links = new List<int>() { 1, 2  };
+        List<int> links = new List<int>() { 1, 2, 3, 4  };
         List<int> links_2 = new List<int>() { 2 };
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Vector3.zero, Utils.ENEMY_DEFAULT_SCALE, links));
-        level.addEnemy(new EnemyInfo(EnemyType.Driller, 5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f));
-        level.addEnemy(new EnemyInfo(EnemyType.Driller, 5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, 8, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f, Utils.Linker(2, 3)));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, 4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, 6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, 2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f, Utils.Linker(2, 3)));
 
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
@@ -1471,8 +1564,8 @@ public class Worlds
         levels.addLevel(8, Levels.level_1_9());
         levels.addLevel(9, Levels.level_1_12());
         levels.addLevel(10, Levels.level_1_11());
-        levels.addLevel(11, Levels.level_2_basic_square_circle());
-        levels.addLevel(12, Levels.level_2_circle_show_form());
+        levels.addLevel(11, Levels.level_1_basic_link());
+        levels.addLevel(12, Levels.level_1_basic_link_2());
 
         //levels.addLevel(11, Levels.level_1_11()); // Either level 10 or 11 can be removed
         //levels.addLevel(12, Levels.level_1_13()); // COuld be remvoed too
@@ -1494,18 +1587,24 @@ public class Worlds
         levels.mWorldColorSecond_2 = Color.cyan;
         //levels.addLevel(Levels.level_1_1());
         //levels.addLevel(Levels.level_1_2());
-        levels.addLevel(1, Levels.level_2_basic_line());
-        levels.addLevel(2, Levels.level_2_basic_line_with_inverse());
-        levels.addLevel(3, Levels.level_2_octogone_turning()); // OK
-        levels.addLevel(4, Levels.level_2_basic_square()); // OK - Medium
-        levels.addLevel(5, Levels.level_2_three_protection_with_diff_speed()); // MEDIUM
-        
-        levels.addLevel(6, Levels.level_3_Basic_Follower());
-        levels.addLevel(7, Levels.level_3_Double_Follower());
-        levels.addLevel(8, Levels.level_2_line_basic_with_cross_circle()); // Medium - hard
-        levels.addLevel(9, Levels.level_2_triple_triangle()); // HARD
-        levels.addLevel(10, Levels.level_with_driller());
-        levels.addLevel(11, Levels.level_with_Link());
+        levels.addLevel(1, Levels.level_2_basic_square_circle());
+        levels.addLevel(2, Levels.level_2_circle_show_form());
+
+        levels.addLevel(3, Levels.level_2_basic_line());
+        levels.addLevel(4, Levels.level_2_basic_line_with_inverse());
+        levels.addLevel(5, Levels.level_2_basic_square()); // OK - Medium
+        levels.addLevel(6, Levels.level_2_octogone_turning()); // OK
+        levels.addLevel(7, Levels.level_2_three_protection_with_diff_speed()); // MEDIUM
+        levels.addLevel(8, Levels.level_2_basic_square_with_link()); 
+        levels.addLevel(9, Levels.level_2_three_protection_with_diff_speed_with_link()); 
+        levels.addLevel(10, Levels.level_2_basic_line_with_inverse_with_link()); 
+        levels.addLevel(11, Levels.level_2_line_basic_with_cross_circle()); // Medium - hard
+        levels.addLevel(12, Levels.level_2_triple_triangle()); // HARD
+
+        //levels.addLevel(8, Levels.level_3_Basic_Follower());
+        //levels.addLevel(9, Levels.level_3_Double_Follower());
+        //levels.addLevel(10, Levels.level_with_driller());
+        //levels.addLevel(11, Levels.level_with_Link());
         //levels.addLevel(11, Levels.level_1_demon_square());
         //levels.addLevel(12, Levels.level_3_one_fast_follower());
 

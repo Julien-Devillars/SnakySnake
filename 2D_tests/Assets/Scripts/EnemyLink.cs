@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,9 +12,11 @@ public class EnemyLink : MonoBehaviour
     private Enemy mStartEnemy;
     private Enemy mEndEnemy;
     private float scale = 0.5f;
+    static int count = 0;
     void Awake()
     {
-        gameObject.name = "Link";
+        gameObject.name = "Link " + count.ToString();
+        count++;
         gameObject.tag = "Link";
         gameObject.layer = 21;
         lineRenderer = gameObject.AddComponent<LineRenderer>();
@@ -98,20 +101,15 @@ public class EnemyLink : MonoBehaviour
     {
         CameraHandler.mTargetPosition = transform.position;
         GameControler.status = GameControler.GameStatus.Lose;
-        if (Utils.HAS_LOSE)
-        {
-            if (GameControler.type == GameControler.GameType.Play)
-            {
-                CameraHandler.mTargetPosition = transform.position;
-                GameControler.status = GameControler.GameStatus.Lose;
-            }
-        }
+        count = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        CameraHandler.mTargetPosition = collision.gameObject.transform.position;
-        GameControler.status = GameControler.GameStatus.Lose;
+        if(collision.gameObject.name == Utils.CHARACTER)
+        {
+            Lose();
+        }
     }
 
 }

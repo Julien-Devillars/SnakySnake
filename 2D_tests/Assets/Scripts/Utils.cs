@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -329,5 +331,6 @@ public class Utils
         return Vector2.Angle(v1 - v0, v2 - v0);
         //return AngleInDeg(v1 - v0, v2 - v0);
     }
+    public static List<int> Linker(params int[] links) => links.ToList<int>();
 
 }
