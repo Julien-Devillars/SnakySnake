@@ -514,6 +514,10 @@ public class Border : MonoBehaviour
     {
         return mEndPoint;
     }
+    public Vector3 getCenter()
+    {
+        return (mStartPoint + mEndPoint) / 2f;
+    }
     public bool isLeftToRight()
     {
         return mStartPoint.x < mEndPoint.x;

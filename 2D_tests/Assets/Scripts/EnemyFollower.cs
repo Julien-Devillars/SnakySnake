@@ -40,6 +40,7 @@ public class EnemyFollower : Enemy
         if (Utils.GAME_STOPPED) return;
 
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
+
         if (character.mTrails.Count > 0)
         {
             Vector3 character_pos = character.transform.position;
@@ -51,7 +52,7 @@ public class EnemyFollower : Enemy
             speed = rotation * speed;
             mExcalamationMark.SetActive(true);
             sprite_renderer.material.SetColor("_GlowColor", Color.magenta);
-
+            gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
         }
         else
         {
@@ -59,7 +60,6 @@ public class EnemyFollower : Enemy
             sprite_renderer.material.SetColor("_GlowColor", Color.cyan);
         }
 
-        gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
 
     }
 

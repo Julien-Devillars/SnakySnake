@@ -1464,6 +1464,33 @@ public class Levels
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
+    public static Level level_3_Triple_Follower()
+    {
+        // Level 1
+        Level level = new Level("level_3_Basic_Follower", 50);
+        float speed = 6f;
+        level.addEnemy(new EnemyInfo(EnemyType.Follower, 1, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Follower, 8, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Follower, 7, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_3_Quad_Follower()
+    {
+        // Level 1
+        Level level = new Level("level_3_Basic_Follower", 50);
+        float speed = 6f;
+        level.addEnemy(new EnemyInfo(EnemyType.Follower, 4, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Follower, 6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
 
     public static Level level_3_follower_with_circle()
     {
@@ -1544,7 +1571,7 @@ public class Worlds
     {
         Levels levels = new Levels(12);
 
-        levels.levels_name = "Journey";
+        levels.levels_name = "Base";
         levels.mWorldMusic = "Synthwave/Countach";
         levels.mWorldColorPrincipal_1 = Color.magenta;
         levels.mWorldColorPrincipal_2 = Color.cyan;
@@ -1579,7 +1606,7 @@ public class Worlds
     {
         Levels levels = new Levels(12);
 
-        levels.levels_name = "Translation";
+        levels.levels_name = "Scripted";
         levels.mWorldMusic = "Synthwave/20 - Galaxy";
         levels.mWorldColorPrincipal_1 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
         levels.mWorldColorPrincipal_2 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
@@ -1619,9 +1646,13 @@ public class Worlds
     }
     private static Levels world_3()
     {
-        Levels levels = new Levels();
+        Levels levels = new Levels(12);
+        levels.levels_name = "Follower";
+        levels.mWorldMusic = "Synthwave/32 - Dangerous";
 
-        levels.levels_name = "World 3";
+        levels.addLevel(1, Levels.level_3_Basic_Follower());
+        levels.addLevel(2, Levels.level_3_Double_Follower());
+        //levels.addLevel(3, Levels.level_3_one_fast_follower());
 
         return levels;
     }
@@ -1659,7 +1690,7 @@ public class Worlds
 
         worlds.Add(world_1());
         worlds.Add(world_2());
-        //worlds.Add(world_3());
+        worlds.Add(world_3());
         //worlds.Add(world_4());
         //worlds.Add(world_5());
     }
