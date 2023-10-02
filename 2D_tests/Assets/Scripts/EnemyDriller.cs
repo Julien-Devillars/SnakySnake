@@ -81,6 +81,7 @@ public class EnemyDriller : Enemy
                     }
                 }
             }
+            gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
         }
         else
         {
@@ -134,25 +135,28 @@ public class EnemyDriller : Enemy
                 }
             }
 
-            //if (speed.y > 0 && speed.x == 0)
-            //{
-            //    sprite_renderer.material.SetFloat("_RotateUvAmount", Mathf.PI);
-            //}
-            //else if (speed.y < 0 && speed.x == 0)
-            //{
-            //    sprite_renderer.material.SetFloat("_RotateUvAmount", 0f);
-            //}
-            //else if (speed.x > 0 && speed.y == 0)
-            //{
-            //    sprite_renderer.material.SetFloat("_RotateUvAmount", -Mathf.PI / 2f);
-            //}
-            //else if (speed.x < 0 && speed.y == 0)
-            //{
-            //    sprite_renderer.material.SetFloat("_RotateUvAmount", Mathf.PI / 2f);
-            //}
+            float move = Mathf.Max(Mathf.Abs(speed.x), Mathf.Abs(speed.y)); 
+            if (speed.y > 0 && speed.x == 0)
+            {
+                transform.rotation = Quaternion.AngleAxis(0f, Vector3.forward);
+            }
+            else if (speed.y < 0 && speed.x == 0)
+            {
+                transform.rotation = Quaternion.AngleAxis(180f, Vector3.forward);
+            }
+            else if (speed.x > 0 && speed.y == 0)
+            {
+                transform.rotation = Quaternion.AngleAxis(-90f, Vector3.forward); 
+            }
+            else if (speed.x < 0 && speed.y == 0)
+            {
+                transform.rotation = Quaternion.AngleAxis(90f, Vector3.forward); 
+            }
+            gameObject.transform.Translate(0f, move * Time.deltaTime, 0);
         }
         
-        gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
+        // Before
+        
 
         //Vector3 center = transform.position;
         //float width = sprite_renderer.bounds.size.x / 2f;

@@ -1409,9 +1409,9 @@ public class Levels
         float speed = 10f;
         List<int> links = new List<int>() { 1, 2  };
         List<int> links_2 = new List<int>() { 2 };
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, links));
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, links_2));
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Vector3.zero, Utils.ENEMY_DEFAULT_SCALE, links));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, 5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f));
+        level.addEnemy(new EnemyInfo(EnemyType.Driller, 5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f));
 
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
