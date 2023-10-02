@@ -18,13 +18,14 @@ public class EnemyLink : MonoBehaviour
         gameObject.layer = 21;
         lineRenderer = gameObject.AddComponent<LineRenderer>();
 
-        lineRenderer.startColor = Color.red;
-        lineRenderer.endColor = Color.red;
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.white;
 
         // Set 2 points
         lineRenderer.positionCount = 2;
         lineRenderer.useWorldSpace = true;
         lineRenderer.numCapVertices = 8;
+        lineRenderer.textureMode = LineTextureMode.Tile;
         // Hide linerenderer until update
         //lineRenderer.enabled = false;
         lineRenderer.sortingLayerName = "Link";
@@ -35,7 +36,8 @@ public class EnemyLink : MonoBehaviour
         lineCollider.isTrigger = false;
 
         // Set Material
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        //lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.material = Resources.Load<Material>("Materials/Link");
 
         mStartEnemy = null;
         mEndEnemy = null;
