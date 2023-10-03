@@ -769,16 +769,6 @@ public class CharacterBehavior : MonoBehaviour
             bg.addConnectedEnemy();
             bg.changeBackgroundColor();
         }
-        for (int i = 0; i < mBackgrounds.Count; ++i)
-        {
-            Background bg = mBackgrounds[i];
-            bool fused = bg.fuseBackgroundIfNeeded();
-            if (fused)
-            {
-                i = 0;
-            }
-        }
-        mLastBorderWhichCreateTrail = null;
         // Draw bg
         Border.mOnDeleteLine = false;
     }
