@@ -8,6 +8,7 @@ public class EnemyFollower : Enemy
 
     CharacterBehavior character;
     GameObject mExcalamationMark;
+    public bool mKeepMoving = false;
 
     new private void Start()
     {
@@ -34,6 +35,10 @@ public class EnemyFollower : Enemy
         mExcalamationMark.SetActive(false);
 
         character = GameObject.Find(Utils.CHARACTER).GetComponent<CharacterBehavior>();
+
+        // Add Circle Collider 2D
+        CircleCollider2D collider = GetComponent<CircleCollider2D>();
+        collider.radius -= collider.radius / 3f;
     }
     new private void FixedUpdate()
     {
@@ -58,6 +63,10 @@ public class EnemyFollower : Enemy
         {
             mExcalamationMark.SetActive(false);
             sprite_renderer.material.SetColor("_GlowColor", Color.cyan);
+            if(mKeepMoving)
+            {
+                gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
+            }
         }
 
 

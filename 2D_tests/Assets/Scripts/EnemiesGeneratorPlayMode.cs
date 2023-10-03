@@ -81,7 +81,10 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
                     enemy_behavior = enemy_circle;
                     break;
                 case EnemyType.Follower:
-                    enemy_behavior = enemy_go.AddComponent<EnemyFollower>();
+                    EnemyFollowerInfo enemy_follower_info = (EnemyFollowerInfo)enemy;
+                    EnemyFollower enemy_follower = enemy_go.AddComponent<EnemyFollower>();
+                    enemy_follower.mKeepMoving = enemy_follower_info.mKeepMoving;
+                    enemy_behavior = enemy_follower;
                     break;
                 case EnemyType.Flyer:
                     enemy_behavior = enemy_go.AddComponent<EnemyFlyer>();

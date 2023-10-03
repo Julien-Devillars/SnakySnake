@@ -201,6 +201,21 @@ public class EnemyCircleInfo : EnemyInfo
     }
 }
 
+public class EnemyFollowerInfo : EnemyInfo
+{
+    public bool mKeepMoving;
+    public EnemyFollowerInfo(Vector2 _position, Vector2 _direction, float _scale, bool keep_moving = false, List<int> _link = null) : base(EnemyType.Follower, _position, _direction, _scale)
+    {
+        mKeepMoving = keep_moving;
+        link = _link;
+    }
+    public EnemyFollowerInfo(int _position, Vector2 _direction, float _scale, bool keep_moving = false, List<int> _link = null) : base(EnemyType.Follower, _position, _direction, _scale)
+    {
+        mKeepMoving = keep_moving;
+        link = _link;
+    }
+}
+
 public class StarInfo : ObjectInfo
 {
     public StarInfo(Vector2 _position, float _scale = 1f) : base(_position, new Vector2(0, 0), _scale)
@@ -1465,9 +1480,19 @@ public class Levels
     {
         // Level 1
         Level level = new Level("level_3_Basic_Follower", 50);
-        float speed = 7f;
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+        float speed = 8f;
+        level.addEnemy(new EnemyFollowerInfo(5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.mLevelHelper = "New enemy : <br>It will follow you !";
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_3_Basic_Follower_moving()
+    {
+        // Level 1
+        Level level = new Level("level_3_Basic_Follower_moving", 50);
+        float speed = 8f;
+        level.addEnemy(new EnemyFollowerInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, true));
+        
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
@@ -1475,40 +1500,100 @@ public class Levels
     {
         // Level 1
         Level level = new Level("level_3_Basic_Follower", 50);
-        float speed = 6f;
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 4, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        float speed = 8f;
+        level.addEnemy(new EnemyFollowerInfo(4, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_3_Double_Follower_split_in_2()
+    {
+        // Level 1
+        Level level = new Level("level_3_Double_Follower_split_in_2", 50);
+        float speed = 8f;
+        level.addEnemy(new EnemyFollowerInfo(4, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(3, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
+
+        level.addTrail(new Vector3(0.5f, 0f), new Vector3(0.5f, 1f));
+        return level;
+    }
+    public static Level level_3_Double_Follower_Link()
+    {
+        // Level 1
+        Level level = new Level("level_3_Double_Follower_Link", 50);
+        float speed = 8f;
+        level.addEnemy(new EnemyFollowerInfo(4, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, false, Utils.Linker(1)));
+        level.addEnemy(new EnemyFollowerInfo(6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_3_Basic_Follower_Faster()
+    {
+        // Level 1
+        Level level = new Level("level_3_Basic_Follower", 50);
+        float speed = 16f;
+        level.addEnemy(new EnemyFollowerInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
     public static Level level_3_Triple_Follower()
     {
         // Level 1
         Level level = new Level("level_3_Basic_Follower", 50);
-        float speed = 6f;
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 1, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 8, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 7, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        float speed = 8f;
+        level.addEnemy(new EnemyFollowerInfo(1, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(8, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(3, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
     public static Level level_3_Quad_Follower()
     {
         // Level 1
         Level level = new Level("level_3_Basic_Follower", 50);
-        float speed = 6f;
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 4, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        float speed = 8f;
+        level.addEnemy(new EnemyFollowerInfo(2, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(8, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_3_Quad_Follower_split_in_2()
+    {
+        // Level 1
+        Level level = new Level("level_3_Quad_Follower_split_in_2", 50);
+        float speed = 8f;
+        level.addEnemy(new EnemyFollowerInfo(1, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(3, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(7, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(9, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(1, 4), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(7, 4), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(3, 6), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(9, 6), Utils.STAR_DEFAULT_SCALE));
+
+        level.addTrail(new Vector3(0.5f, 0f), new Vector3(0.5f, 1f));
         return level;
     }
 
@@ -1517,10 +1602,10 @@ public class Levels
 
         Level level = new Level("level_3_follower_with_circle", 50);
         float speed = 5f;
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 1, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 3, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 7, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Follower, 9, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(1, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(3, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(7, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFollowerInfo(9, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE));
         //level.addEnemy(new EnemyCircleInfo(9, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE));
         //level.addEnemy(new EnemyCircleInfo(9, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE));
 
@@ -1671,7 +1756,14 @@ public class Worlds
         levels.mWorldMusic = "Synthwave/32 - Dangerous";
 
         levels.addLevel(1, Levels.level_3_Basic_Follower());
-        levels.addLevel(2, Levels.level_3_Double_Follower());
+        levels.addLevel(2, Levels.level_3_Basic_Follower_moving());
+        //levels.addLevel(2, Levels.level_3_Double_Follower());
+        levels.addLevel(3, Levels.level_3_Basic_Follower_Faster());
+        levels.addLevel(4, Levels.level_3_Double_Follower_split_in_2());
+        levels.addLevel(5, Levels.level_3_Triple_Follower());
+        levels.addLevel(6, Levels.level_3_Double_Follower_Link());
+        levels.addLevel(7, Levels.level_3_Quad_Follower());
+        levels.addLevel(8, Levels.level_3_Quad_Follower_split_in_2());
         //levels.addLevel(3, Levels.level_3_one_fast_follower());
 
         return levels;
