@@ -171,8 +171,9 @@ public class CharacterBehavior : MonoBehaviour
         mTrailGO = new GameObject();
         mTrailGO.name = "Trails";
         mTrails = new List<GameObject>();
-    }
 
+        addAdditionalBorder();
+    }
     public void addBorder(Border border)
     {
         border.setName("Border_" + mBorders.Count);
@@ -199,6 +200,30 @@ public class CharacterBehavior : MonoBehaviour
         addBorder(right);
         addBorder(bot);
         addBorder(left);
+    }
+    public void addAdditionalBorder()
+    {
+        Level current_level = Worlds.getLevel(GameControler.currentWorld, GameControler.currentLevel);
+        foreach(AdditionalBorder additionalBorder in current_level.mAdditionalBorders)
+        {
+            for(int i = 0; i < additionalBorder.mFakeTrails.Count - 1; ++i)
+            {
+                Vector3 pos_1 = additionalBorder.mFakeTrails[i];
+                Vector3 pos_2 = additionalBorder.mFakeTrails[i + 1];
+                addFakeTrail(pos_1, pos_2);
+            }
+            deleteFakeTrail();
+        }
+        //addFakeTrail(new Vector3(0.25f, 0.00f), new Vector3(0.25f, 0.75f));
+        //addFakeTrail(new Vector3(0.25f, 0.75f), new Vector3(0.75f, 0.75f));
+        //addFakeTrail(new Vector3(0.75f, 0.75f), new Vector3(0.75f, 0f));
+        //deleteFakeTrail();
+        //addFakeTrail(new Vector3(0.75f, 0.25f), new Vector3(0.75f, 0.75f));
+        //deleteFakeTrail();
+        //addFakeTrail(new Vector3(0.25f, 0.25f), new Vector3(0.75f, 0.25f));
+        //deleteFakeTrail();
+        //addFakeTrail(new Vector3(0.25f, 0.75f), new Vector3(0.75f, 0.75f));
+        //deleteFakeTrail();
     }
 
     // Update is called once per frame
@@ -409,6 +434,15 @@ public class CharacterBehavior : MonoBehaviour
         mTrails.Add(current_trail);
         StartCoroutine(waiterAddLine());
     }
+    void addFakeTrail(Vector3 pos_1, Vector3 pos_2)
+    {
+        GameObject current_trail = new GameObject();
+        current_trail.gameObject.transform.parent = mTrailGO.gameObject.transform;
+        FakeTrail fake_trail = current_trail.AddComponent<FakeTrail>();
+        fake_trail.setRelativeStartPoint(pos_1);
+        fake_trail.setRelativeEndPoint(pos_2);
+        mTrails.Add(current_trail);
+    }
     void addStartLine()
     {
         if (!mCanAddLine)
@@ -504,18 +538,18 @@ public class CharacterBehavior : MonoBehaviour
         mTrails[mTrails.Count - 2].GetComponent<Trail>().forceUpdateTrailPoint();
         Debug.Log("split trail");
     }
-void deleteLine()
+    void deleteLine()
     {
-        if (mTrailPoints.Count == 0)
-            return;
-        Border.mOnDeleteLine = true;
-        fixLastTrailIfNeeded();
+            if (mTrailPoints.Count == 0)
+                return;
+            Border.mOnDeleteLine = true;
+            fixLastTrailIfNeeded();
 
-        foreach (GameObject trail_point in mTrailPoints)
-        {
-            Destroy(trail_point);
-        }
-        mTrailPoints.Clear();
+            foreach (GameObject trail_point in mTrailPoints)
+            {
+                Destroy(trail_point);
+            }
+            mTrailPoints.Clear();
 
         List<Background> deleted_bgs = new List<Background>();
         foreach (GameObject trail in mTrails)
@@ -538,7 +572,7 @@ void deleteLine()
             {
                 Debug.Log("TOTO");
             }
-            line_to_border.mNewBorderOnDelete = true;
+                line_to_border.mNewBorderOnDelete = true;
             addBorder(line_to_border);
 
             List<Vector3> points = Utils.getIntermediatePointFromTrail(line_to_border);
@@ -634,6 +668,112 @@ void deleteLine()
             Background bg = mBackgrounds[i];
             bool fused = bg.fuseBackgroundIfNeeded();
             if(fused)
+            {
+                i = 0;
+            }
+        }
+        mLastBorderWhichCreateTrail = null;
+        // Draw bg
+        Border.mOnDeleteLine = false;
+    }
+
+    void deleteFakeTrail()
+    {
+        List<Background> deleted_bgs = new List<Background>();
+        foreach (GameObject trail in mTrails)
+        {
+            FakeTrail trail_script = trail.GetComponent<FakeTrail>();
+            LineRenderer lineRenderer = trail.GetComponent<LineRenderer>();
+
+            Border line_to_border = Border.create(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1), false);
+            addBorder(line_to_border);
+
+            List<Vector3> points = Utils.getIntermediatePointFromTrail(line_to_border);
+            List<Background> bgs = new List<Background>();
+            foreach (Vector3 point in points)
+            {
+                Background bg = GetBackground(point);
+                if (bg != null && !bgs.Contains(bg))
+                {
+                    bgs.Add(bg);
+                }
+            }
+
+            foreach (Background bg in bgs)
+            {
+                Vector3 start_point = lineRenderer.GetPosition(0);
+                Vector3 middle_point = lineRenderer.GetPosition(1);
+
+                Vector3 bg_start_point = bg.getPointFromBackground(start_point, middle_point);
+                Vector3 bg_end_point = bg.getPointFromBackground(middle_point, start_point);
+                splitBackground(bg, bg_start_point, bg_end_point);
+                deleted_bgs.Add(bg);
+            }
+
+            Destroy(trail);
+        }
+        mTrails.Clear();
+
+        foreach (Background bg in mBackgrounds)
+        {
+            bg.mEnemyList.Clear();
+        }
+
+        foreach (Background bg_1 in mBackgrounds)
+        {
+            bg_1.mConnectedBackground.Clear();
+            foreach (GameObject ennemy_to_reassign in mEnemies)
+            {
+                if (bg_1.containsEquals(ennemy_to_reassign.transform.position))
+                {
+                    bg_1.addEnemy(ennemy_to_reassign);
+                }
+            }
+            Vector3 center_1 = bg_1.getCenterPoint();
+            foreach (Background bg_2 in mBackgrounds)
+            {
+                if (bg_1 == bg_2)
+                    continue;
+
+                Vector3 center_2 = bg_2.getCenterPoint();
+                Vector3 mix_point_1 = new Vector3(center_1.x, center_2.y);
+                Vector3 mix_point_2 = new Vector3(center_2.x, center_1.y);
+                bool c1_is_connected = true;
+                bool c2_is_connected = true;
+                foreach (Border border in mBorders)
+                {
+                    bool mix1_c1_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_1, center_1);
+                    bool mix1_c2_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_1, center_2);
+                    bool mix2_c1_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_2, center_1);
+                    bool mix2_c2_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_2, center_2);
+
+                    bool mix1_is_ok = mix1_c1_intersect && mix1_c2_intersect;
+                    bool mix2_is_ok = mix2_c1_intersect && mix2_c2_intersect;
+
+                    c1_is_connected &= mix1_is_ok;
+                    c2_is_connected &= mix2_is_ok;
+                }
+                if (c1_is_connected || c2_is_connected)
+                {
+                    bg_1.addConnection(bg_2);
+                }
+            }
+        }
+
+        // Propagate connection
+        Utils.propagateBackgrounds(mBackgrounds);
+
+        // Add ennemis related to propagate
+        foreach (Background bg in mBackgrounds)
+        {
+            bg.addConnectedEnemy();
+            bg.changeBackgroundColor();
+        }
+        for (int i = 0; i < mBackgrounds.Count; ++i)
+        {
+            Background bg = mBackgrounds[i];
+            bool fused = bg.fuseBackgroundIfNeeded();
+            if (fused)
             {
                 i = 0;
             }

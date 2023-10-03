@@ -10,9 +10,6 @@ public class LevelHelper : MonoBehaviour
     
     void Start()
     {
-        int world = GameControler.currentWorld + 1;
-        int level = GameControler.currentLevel + 1;
-
         string helper_text = Worlds.getLevel(GameControler.currentWorld, GameControler.currentLevel).mLevelHelper;
         if(helper_text == "")
         {

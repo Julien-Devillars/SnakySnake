@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -216,6 +217,7 @@ public class Level
     public int mGoalScore;
     public List<EnemyInfo> mEnemies;
     public List<StarInfo> mStars;
+    public List<AdditionalBorder> mAdditionalBorders;
 
     int mBestReach = 0;
     public Level(string name, int goal)
@@ -224,6 +226,7 @@ public class Level
         mGoalScore = goal;
         mEnemies = new List<EnemyInfo>();
         mStars = new List<StarInfo>();
+        mAdditionalBorders = new List<AdditionalBorder>();
     }
 
     public void addEnemy(EnemyInfo enemy)
@@ -234,6 +237,23 @@ public class Level
     {
         mStars.Add(star);
     }
+    public void addTrail(params Vector3[] points)
+    {
+        AdditionalBorder additional_border = new AdditionalBorder();
+        additional_border.Add(points);
+        mAdditionalBorders.Add(additional_border);
+    }
+}
+
+public class AdditionalBorder
+{
+    public List<Vector3> mFakeTrails = new List<Vector3>();
+    public AdditionalBorder()
+    {
+        mFakeTrails = new List<Vector3>();
+    }
+    public void Add(params Vector3[] points) => mFakeTrails.AddRange(points);
+    public void Add(Vector3 point) => mFakeTrails.Add(point);
 }
 
 public class Levels

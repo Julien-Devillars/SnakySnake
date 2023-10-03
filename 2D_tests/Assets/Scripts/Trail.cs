@@ -12,6 +12,7 @@ public class Trail : MonoBehaviour
     //Color mEndColor = new Color(212/255f, 0/255f, 120/255f);
     Color mStartColor = new Color(250 / 255f, 49f / 255f, 98 / 255f);
     Color mEndColor = new Color(249 / 255f, 152 / 255f, 29 / 255f);
+    public bool mIsFake;
     void Awake()
     {
         //gameObject.name = "Trail";
@@ -56,6 +57,7 @@ public class Trail : MonoBehaviour
         }
         //red_mat.SetColor("_Color", line_color);
         mHasBeenUpdated = false;
+        mIsFake = false;
     }
 
     void Update()
