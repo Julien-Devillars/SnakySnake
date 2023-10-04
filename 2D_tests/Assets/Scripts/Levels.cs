@@ -1516,7 +1516,6 @@ public class Levels
         Level level = new Level("level_3_Basic_Follower", 50);
         float speed = 8f;
         level.addEnemy(new EnemyFollowerInfo(5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.mLevelHelper = "New enemy : <br>It will follow you !";
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
@@ -1538,6 +1537,7 @@ public class Levels
         level.addEnemy(new EnemyFollowerInfo(4, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyFollowerInfo(6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
 
+        level.mLevelHelper = "New enemy : <br>It will follow you !";
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
@@ -1760,11 +1760,15 @@ public class Levels
         Level level = new Level("level_4_diag_flyer", 50);
 
         float speed = 8f;
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE))
+
 
         level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
@@ -1840,15 +1844,19 @@ public class Levels
         Level level = new Level("level_4_three_horitontale_flyers_linked", 50);
 
         float speed = 9f;
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 4, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(4, 8), Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(1, 3)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(4, 8), Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(0, 2)));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 8, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 4, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(4, 2), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(4, 6)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(4, 2), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(3, 5)));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 2, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
 
         level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
@@ -1867,13 +1875,16 @@ public class Levels
         Level level = new Level("level_4_cross_flyer_link_square", 50);
 
         float speed = 8f;
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(3)));
-        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(4)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(2)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(3)));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 6, Utils.R  * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(1, 2)));
-        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(3, 4)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 6, Utils.R  * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(0, 1)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(2, 3)));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
 
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
@@ -2262,7 +2273,7 @@ public class Worlds
     {
         Levels levels = new Levels(12);
 
-        levels.levels_name = "Base";
+        levels.levels_name = "Countach";
         levels.mWorldMusic = "Synthwave/Countach";
         levels.mWorldColorPrincipal_1 = Color.magenta;
         levels.mWorldColorPrincipal_2 = Color.cyan;
@@ -2297,7 +2308,7 @@ public class Worlds
     {
         Levels levels = new Levels(12);
 
-        levels.levels_name = "Scripted";
+        levels.levels_name = "Galaxy";
         levels.mWorldMusic = "Synthwave/20 - Galaxy";
         levels.mWorldColorPrincipal_1 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
         levels.mWorldColorPrincipal_2 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
@@ -2338,21 +2349,21 @@ public class Worlds
     private static Levels world_3()
     {
         Levels levels = new Levels(12);
-        levels.levels_name = "Follower";
+        levels.levels_name = "Dangerous";
         levels.mWorldMusic = "Synthwave/32 - Dangerous";
 
-        levels.addLevel(1, Levels.level_3_Basic_Follower());
+        levels.addLevel(1, Levels.level_3_Double_Follower());
         levels.addLevel(2, Levels.level_3_Basic_Follower_moving());
-        levels.addLevel(3, Levels.level_3_Double_Follower());
-        levels.addLevel(4, Levels.level_3_Basic_Follower_Faster());
-        levels.addLevel(5, Levels.level_3_Double_Follower_split_in_2()); 
-        levels.addLevel(6, Levels.level_3_Triple_Follower());
-        levels.addLevel(7, Levels.level_3_Double_Follower_Link());
-        levels.addLevel(8, Levels.level_3_Quad_Follower());
-        levels.addLevel(9, Levels.level_3_Quad_Follower_split_in_2());
-        levels.addLevel(10, Levels.level_3_Quad_Follower_Cross_Link());
-        levels.addLevel(11, Levels.level_3_Quad_Follower_Square_Link());
-        levels.addLevel(12, Levels.level_3_Quad_Follower_In_Cell_Move());
+        levels.addLevel(3, Levels.level_3_Basic_Follower());
+        levels.addLevel(4, Levels.level_3_Double_Follower_split_in_2()); 
+        levels.addLevel(5, Levels.level_3_Triple_Follower());
+        levels.addLevel(6, Levels.level_3_Double_Follower_Link());
+        levels.addLevel(7, Levels.level_3_Quad_Follower());
+        levels.addLevel(8, Levels.level_3_Quad_Follower_split_in_2());
+        levels.addLevel(9, Levels.level_3_Quad_Follower_Cross_Link());
+        levels.addLevel(10, Levels.level_3_Quad_Follower_In_Cell_Move());
+        levels.addLevel(11, Levels.level_3_Basic_Follower_Faster());
+        levels.addLevel(12, Levels.level_3_Quad_Follower_Square_Link());
         //levels.addLevel(3, Levels.level_3_one_fast_follower());
 
         return levels;
@@ -2360,7 +2371,7 @@ public class Worlds
     private static Levels world_4()
     {
         Levels levels = new Levels(12);
-        levels.levels_name = "Chase";
+        levels.levels_name = "Last Stop";
         levels.mWorldMusic = "Synthwave/Last Stop";
 
         levels.addLevel(1, Levels.level_4_basic_flyer());
@@ -2381,7 +2392,7 @@ public class Worlds
     private static Levels world_5()
     {
         Levels levels = new Levels(12);
-        levels.levels_name = "Drill";
+        levels.levels_name = "The Saga";
         levels.mWorldMusic = "Synthwave/68 - The Saga";
 
         levels.addLevel(1, Levels.level_5_basic_driller());
