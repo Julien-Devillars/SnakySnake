@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,8 +15,9 @@ public class Enemy : MonoBehaviour
     protected bool mHasCollideHorizontal;
     public EnemyType type;
     public bool mCanCrossBorder = false;
+    public static int mCounter = 0;
 
-    public List<Enemy> mLinks;
+    public List<EnemyLink> mLinks;
     protected void Awake()
     {
         Camera cam = Camera.main;
@@ -29,7 +31,7 @@ public class Enemy : MonoBehaviour
         mFullMaxPos = new Vector3(width, height, 0);
         mHasCollideVertical = false;
         mHasCollideHorizontal = false;
-        mLinks = new List<Enemy>();
+        mLinks = new List<EnemyLink>();
     }
     protected void Start()
     {
@@ -187,7 +189,6 @@ public class Enemy : MonoBehaviour
 
     public void addLink(Enemy target)
     {
-        mLinks.Add(target);
         GameObject link = new GameObject();
         link.transform.parent = transform;
         link.transform.position = Vector3.zero;
@@ -196,6 +197,7 @@ public class Enemy : MonoBehaviour
         enemy_link.setStartEnemy(this);
         enemy_link.setWidth(transform.localScale.x / 2f);
         enemy_link.setEndEnemy(target);
+        mLinks.Add(enemy_link);
     }
 
 }

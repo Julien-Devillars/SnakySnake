@@ -10,7 +10,17 @@ public class EnemyDriller : Enemy
     Border last_border;
     Border last_last_border;
     bool mIsOnBorder = false;
+    bool mIsOnTrail = false;
+    public bool mReverseVertical = false;
+    public bool mReverseHorizontal = false;
     private Vector2 mPreviousSpeed;
+    private Quaternion mPreviousRotation;
+
+    new private void Awake()
+    {
+        base.Awake();
+        name = "Driller " + mCounter.ToString();
+    }
 
     private void Start()
     {
@@ -29,8 +39,9 @@ public class EnemyDriller : Enemy
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
         sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/EnemyDriller");
         sprite_renderer.material = Resources.Load<Material>("Materials/Enemies/EnemyDrillerMaterial");
-        Destroy(gameObject.GetComponent<Collider2D>());
-        name = "Driller";
+        CircleCollider2D collider = gameObject.GetComponent<CircleCollider2D>();
+        collider.isTrigger = true;
+        collider.radius -= collider.radius/3f;
 
         character = GameObject.Find(Utils.CHARACTER).GetComponent<CharacterBehavior>();
         last_border = null;
@@ -38,6 +49,8 @@ public class EnemyDriller : Enemy
         mIsOnBorder = false;
 
         mPreviousSpeed = speed;
+        mPreviousRotation = transform.rotation;
+
     }
 
     private void FixedUpdate()
@@ -56,85 +69,8 @@ public class EnemyDriller : Enemy
             speed = mPreviousSpeed;
         }
 
-        if (!mIsOnBorder)
+        if (mIsOnBorder || mIsOnTrail)
         {
-            foreach (Border border in Utils.getBorders())
-            {
-                if (border.onSmallFuzzyBorder(transform.position))
-                {
-                    last_border = border;
-                    mIsOnBorder = true;
-                    mPreviousSpeed = speed;
-                    if (border.isVertical())
-                    {
-                        transform.position = new Vector3(border.mStartPoint.x, transform.position.y, transform.position.z);
-                        speed.y = Mathf.Sqrt(Mathf.Pow(speed.x, 2f) + Mathf.Pow(speed.y, 2f));
-                        speed.y = border.isBottomToTop() ? speed.y : -speed.y;
-                        speed.x = 0f;
-                    }
-                    else
-                    {
-                        transform.position = new Vector3(transform.position.x, border.mStartPoint.y, transform.position.z);
-                        speed.x = Mathf.Sqrt(Mathf.Pow(speed.x, 2f) + Mathf.Pow(speed.y, 2f));
-                        speed.x = border.isLeftToRight() ? speed.x : -speed.x;
-                        speed.y = 0f;
-                    }
-                }
-            }
-            gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
-        }
-        else
-        {
-            foreach (Border border in Utils.getBorders())
-            {
-                if (last_border != null && last_border == border) continue;
-                if (last_last_border != null && last_last_border == border) continue;
-
-                if (border.onSmallFuzzyBorder(transform.position))
-                {
-                    last_last_border = last_border;
-                    last_border = border;
-                    mPreviousSpeed = speed;
-
-                    if (border.isVertical())
-                    {
-                        transform.position = new Vector3(border.mStartPoint.x, transform.position.y, transform.position.z);
-                        if (transform.position == border.mStartPoint)
-                        {
-                            speed.y = border.isBottomToTop() ? Mathf.Abs(speed.x) : -Mathf.Abs(speed.x);
-
-                        }
-                        else if (transform.position == border.mEndPoint)
-                        {
-                            speed.y = border.isBottomToTop() ? -Mathf.Abs(speed.x) : Mathf.Abs(speed.x);
-                        }
-                        else
-                        {
-                            speed.y = (Random.value > 0.5f) ? -Mathf.Abs(speed.x) : Mathf.Abs(speed.x); 
-                        }
-                        speed.x = 0f;
-                    }
-                    else
-                    {
-                        transform.position = new Vector3(transform.position.x, border.mStartPoint.y, transform.position.z);
-                        if (transform.position == border.mStartPoint)
-                        {
-                            speed.x = border.isLeftToRight() ? Mathf.Abs(speed.y) : -Mathf.Abs(speed.y);
-
-                        }
-                        else if (transform.position == border.mEndPoint)
-                        {
-                            speed.x = border.isLeftToRight() ? -Mathf.Abs(speed.y) : Mathf.Abs(speed.y);
-                        }
-                        else
-                        {
-                            speed.x = (Random.value > 0.5f) ? -Mathf.Abs(speed.y) : Mathf.Abs(speed.y);
-                        }
-                        speed.y = 0f;
-                    }
-                }
-            }
-
             float move = Mathf.Max(Mathf.Abs(speed.x), Mathf.Abs(speed.y)); 
             if (speed.y > 0 && speed.x == 0)
             {
@@ -152,32 +88,130 @@ public class EnemyDriller : Enemy
             {
                 transform.rotation = Quaternion.AngleAxis(90f, Vector3.forward); 
             }
-            gameObject.transform.Translate(0f, move * Time.deltaTime, 0);
-        }
-        
-        // Before
-        
+            float speed_up = (mIsOnTrail ? 2.5f : 1f);
+            gameObject.transform.Translate(0f, move * speed_up * Time.deltaTime, 0);
 
-        //Vector3 center = transform.position;
-        //float width = sprite_renderer.bounds.size.x / 2f;
-        //float height = sprite_renderer.bounds.size.y;
-        //Vector3 top_left = new Vector3(center.x - width / 2f, center.y + height / 2f);
-        //Vector3 top_right = new Vector3(center.x + width / 2f, center.y + height / 2f);
-        //Vector3 bot_left = new Vector3(center.x - width / 2f, center.y - height / 2f);
-        //Vector3 bot_right = new Vector3(center.x + width / 2f, center.y - height / 2f);
-        //List<Vector3> points_to_check = new List<Vector3> { center };
-        //if(Utils.allPointsAreInBackgroundsWithoutEnemies(points_to_check))
-        //{
-        //    sprite_renderer.material.SetColor("_GlowColor", Color.magenta);
-        //    sprite_renderer.material.SetFloat("_GhostBlend", 0f);
-        //}
-        //else
-        //{
-        //    sprite_renderer.material.SetColor("_GlowColor", Color.cyan);
-        //    sprite_renderer.material.SetFloat("_GhostBlend", 1f);
-        //}
+            if (mPreviousRotation != transform.rotation)
+            {
+                mPreviousRotation = transform.rotation;
+                foreach(EnemyLink enemy_link in mLinks)
+                {
+                    enemy_link.setCollider(false);
+                }
+            }
+        }
+        else
+        {
+            gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
+        }
+
+        if (mIsOnTrail)
+        {
+            //sprite_renderer.material.SetFloat("_GhostBlend", 0.8f);
+            sprite_renderer.material.SetFloat("_FishEyeUvAmount", 0.35f);
+        }
+        else
+        {
+            //sprite_renderer.material.SetFloat("_GhostBlend", 0f);
+            sprite_renderer.material.SetFloat("_FishEyeUvAmount", 0f);
+        }
     }
 
 
     new void OnCollisionEnter2D(Collision2D collision){}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.name.Contains("Border"))
+        {
+            mIsOnBorder = true;
+            mIsOnTrail = false;
+            Border border = collision.gameObject.GetComponent<Border>();
+            if(speed != Vector2.zero)
+            {
+                mPreviousSpeed = speed;
+            }
+            if (border.isVertical())
+            {
+                float shift = transform.position.x - border.mStartPoint.x;
+                transform.position = new Vector3(border.mStartPoint.x, transform.position.y, transform.position.z);
+                if (transform.position == border.mStartPoint)
+                {
+                    speed.y = border.isBottomToTop() ? Mathf.Abs(speed.x) : -Mathf.Abs(speed.x);
+
+                }
+                else if (transform.position == border.mEndPoint)
+                {
+                    speed.y = border.isBottomToTop() ? -Mathf.Abs(speed.x) : Mathf.Abs(speed.x);
+                }
+                else
+                {
+                    if (shift > 0)
+                    {
+                        speed.y = mReverseVertical ? -Mathf.Abs(speed.x) : Mathf.Abs(speed.x);
+                    }
+                    else
+                    {
+                        speed.y = mReverseVertical ? Mathf.Abs(speed.x) : -Mathf.Abs(speed.x);
+                    }
+                    //speed.y = (Random.value > 0.5f) ? -Mathf.Abs(speed.x) : Mathf.Abs(speed.x);
+                }
+                speed.x = 0f;
+            }
+            else
+            {
+                float shift = transform.position.y - border.mStartPoint.y;
+                transform.position = new Vector3(transform.position.x, border.mStartPoint.y, transform.position.z);
+                if (transform.position == border.mStartPoint)
+                {
+                    speed.x = border.isLeftToRight() ? Mathf.Abs(speed.y) : -Mathf.Abs(speed.y);
+
+                }
+                else if (transform.position == border.mEndPoint)
+                {
+                    speed.x = border.isLeftToRight() ? -Mathf.Abs(speed.y) : Mathf.Abs(speed.y);
+                }
+                else
+                {
+                    if (shift < 0)
+                    {
+                        speed.x = mReverseHorizontal ? -Mathf.Abs(speed.y) : Mathf.Abs(speed.y);
+                    }
+                    else
+                    {
+                        speed.x = mReverseHorizontal  ? Mathf.Abs(speed.y) : -Mathf.Abs(speed.y);
+                    }
+                    //speed.x = (Random.value > 0.5f) ? -Mathf.Abs(speed.y) : Mathf.Abs(speed.y);
+                }
+                speed.y = 0f;
+            }
+        }
+
+        if (collision.name.Contains("Trail"))
+        {
+            mIsOnTrail = true;
+            mIsOnBorder = false;
+            Trail trail = collision.gameObject.GetComponent<Trail>();
+            Vector3 start_point = trail.getStartPoint();
+            Vector3 end_point = trail.getEndPoint();
+            if (speed != Vector2.zero)
+            {
+                mPreviousSpeed = speed;
+            }
+            if (trail.isVertical())
+            {
+                transform.position = new Vector3(start_point.x, transform.position.y, transform.position.z);
+                float direction = end_point.y - start_point.y;
+
+                speed.y = (direction > 0) ? Mathf.Abs(speed.x) : -Mathf.Abs(speed.x);
+                speed.x = 0f;
+            }
+            else
+            {
+                transform.position = new Vector3(transform.position.x, start_point.y, transform.position.z);
+                float direction = end_point.x - start_point.x;
+                speed.x = (direction > 0) ? Mathf.Abs(speed.y) : -Mathf.Abs(speed.y);
+                speed.y = 0f;
+            }
+        }
+    }
 }

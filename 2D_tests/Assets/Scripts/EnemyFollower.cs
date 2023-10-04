@@ -10,6 +10,11 @@ public class EnemyFollower : Enemy
     GameObject mExcalamationMark;
     public bool mKeepMoving = false;
 
+    new private void Awake()
+    {
+        base.Awake();
+        name = "Follower " + mCounter.ToString();
+    }
     new private void Start()
     {
         base.Start();
@@ -18,7 +23,6 @@ public class EnemyFollower : Enemy
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
         sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/EnemyFollower");
         sprite_renderer.material = Resources.Load<Material>("Materials/Enemies/EnemyFollowerMaterial");
-        name = "Follower";
 
         mExcalamationMark = new GameObject();
         mExcalamationMark.transform.parent = transform;

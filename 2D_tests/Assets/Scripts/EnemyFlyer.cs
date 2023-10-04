@@ -8,6 +8,11 @@ public class EnemyFlyer : Enemy
     CharacterBehavior character;
     GameObject mExcalamationMark;
 
+    new private void Awake()
+    {
+        base.Awake();
+        name = "Flyer " + mCounter.ToString();
+    }
     private void Start()
     {
         base.Start();
@@ -29,7 +34,6 @@ public class EnemyFlyer : Enemy
         CircleCollider2D collider = gameObject.GetComponent<CircleCollider2D>();
         collider.isTrigger = true;
         collider.radius -= collider.radius /3f;
-        name = "Flyer";
 
         character = GameObject.Find(Utils.CHARACTER).GetComponent<CharacterBehavior>();
 

@@ -13,11 +13,12 @@ public class Trail : MonoBehaviour
     Color mStartColor = new Color(250 / 255f, 49f / 255f, 98 / 255f);
     Color mEndColor = new Color(249 / 255f, 152 / 255f, 29 / 255f);
     public bool mIsFake;
+    private LineRenderer lineRenderer;
     void Awake()
     {
         //gameObject.name = "Trail";
         gameObject.tag = "Trail";
-        LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
 
         // Need a ball to have a trail
         GameObject ball = GameObject.Find(Utils.CHARACTER);
@@ -72,9 +73,6 @@ public class Trail : MonoBehaviour
 
     private void updateTrailPoint()
     {
-        LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
-        //For drawing line in the world space, provide the x,y,z values
-
         GameObject points = GameObject.Find("Trail Points");
         GameObject end_point_go = GameObject.Find("Ball");
 
@@ -171,11 +169,23 @@ public class Trail : MonoBehaviour
         mHasBeenUpdated = true;
     }
 
-    private void OnDestroy()
+    public Vector3 getStartPoint()
     {
-        //Debug.Log("Trail deleted");
+        return lineRenderer.GetPosition(0);
+    }
+    public Vector3 getEndPoint()
+    {
+        return lineRenderer.GetPosition(1);
     }
 
+    public bool isVertical()
+    {
+        return getStartPoint().x == getEndPoint().x;
+    }
+    public bool isHorizontal()
+    {
+        return getStartPoint().y == getEndPoint().y;
+    }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {

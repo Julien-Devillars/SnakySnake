@@ -217,6 +217,24 @@ public class EnemyFollowerInfo : EnemyInfo
     }
 }
 
+public class EnemyDrillerInfo : EnemyInfo
+{
+    public bool mReverseVertical;
+    public bool mReverseHorizontal;
+    public EnemyDrillerInfo(Vector2 _position, Vector2 _direction, float _scale, bool reverse_on_vertical = false, bool reverse_on_horizontal = false, List<int> _link = null) 
+        : base(EnemyType.Driller, _position, _direction, _scale, _link)
+    {
+        mReverseVertical = reverse_on_vertical;
+        mReverseHorizontal = reverse_on_horizontal;
+    }
+    public EnemyDrillerInfo(int _position, Vector2 _direction, float _scale, bool reverse_on_vertical = false, bool reverse_on_horizontal = false, List<int> _link = null) 
+        : base(EnemyType.Driller, _position, _direction, _scale, _link)
+    {
+        mReverseVertical = reverse_on_vertical;
+        mReverseHorizontal = reverse_on_horizontal;
+    }
+}
+
 public class StarInfo : ObjectInfo
 {
     public StarInfo(Vector2 _position, float _scale = 1f) : base(_position, new Vector2(0, 0), _scale)
@@ -252,6 +270,20 @@ public class Level
     public void addStar(StarInfo star)
     {
         mStars.Add(star);
+    }
+    public void addStars(params int[] position)
+    {
+        foreach(int pos in position)
+        {
+            addStar(new StarInfo(pos, Utils.STAR_DEFAULT_SCALE));
+        }
+    }
+    public void addStars(params Vector2[] position)
+    {
+        foreach (Vector2 pos in position)
+        {
+            addStar(new StarInfo(pos, Utils.STAR_DEFAULT_SCALE));
+        }
     }
     public void addTrail(params Vector3[] points)
     {
@@ -1953,28 +1985,230 @@ public class Levels
         return level;
     }
 
+    public static Level level_5_basic_driller()
+    {
+        Level level = new Level("level_5_basic_driller", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyDrillerInfo(2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
+
+        level.mLevelHelper = "New Enemy : It will chase you throught the border.";
+
+        return level;
+    }
+    public static Level level_5_Double_driller()
+    {
+        Level level = new Level("level_5_Double_driller", 50);
+
+        float speed = 11f;
+
+        level.addEnemy(new EnemyDrillerInfo(2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, true, true));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addStars(1, 2, 3);
+        level.addStars(
+            Utils.getMidRelativePositionFromPosition(new Vector2(0f, 0.25f), 1),
+            Utils.getMidRelativePositionFromPosition(1, 2),
+            Utils.getMidRelativePositionFromPosition(2, 3),
+            Utils.getMidRelativePositionFromPosition(3, new Vector2(1f, 0.25f)));
+
+        level.mLevelHelper = "Be careful to not get caught up.";
+
+        return level;
+    }
+    public static Level level_5_Quad_driller()
+    {
+        Level level = new Level("level_5_basic_driller", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyDrillerInfo(2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(8, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
+
+        return level;
+    }
+    public static Level level_5_Double_driller_link()
+    {
+        Level level = new Level("level_5_basic_driller", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyDrillerInfo(2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE, false, false, Utils.Linker(1)));
+        level.addEnemy(new EnemyDrillerInfo(8, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
+
+        return level;
+    }
+    public static Level level_5_Quad_driller_link_cross()
+    {
+        Level level = new Level("level_5_Quad_driller_link_cross", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyDrillerInfo(2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE, false, false, Utils.Linker(1)));
+        level.addEnemy(new EnemyDrillerInfo(8, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, false, false, Utils.Linker(3)));
+        level.addEnemy(new EnemyDrillerInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
+
+        return level;
+    }
+    public static Level level_5_Quad_driller_link_square()
+    {
+        Level level = new Level("level_5_Quad_driller_link_square", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyDrillerInfo(2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE, false, false,  Utils.Linker(2)));
+        level.addEnemy(new EnemyDrillerInfo(8, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, false, false,  Utils.Linker(3)));
+        level.addEnemy(new EnemyDrillerInfo(4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, false, false,  Utils.Linker(1)));
+        level.addEnemy(new EnemyDrillerInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, false, false, Utils.Linker(0)));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
+
+        return level;
+    }
+    public static Level level_5_driller_fast()
+    {
+        Level level = new Level("level_5_driller_fast", 50);
+
+        float speed = 24f;
+
+        level.addEnemy(new EnemyDrillerInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
+
+        return level;
+    }
+    public static Level level_5_quad_driller_split_in_2()
+    {
+        Level level = new Level("level_5_quad_driller_split_in_2", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyDrillerInfo(4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(4, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 4, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 6, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStars(1, 4, 7, 3, 6, 9);
+
+        level.addTrail(new Vector3(0.5f, 0f), new Vector3(0.5f, 1f));
+
+        return level;
+    }
+    public static Level level_5_quad_driller_split_in_2_linked()
+    {
+        Level level = new Level("level_5_quad_driller_split_in_2_linked", 50);
+        
+        float speed = 8f;
+
+        level.addEnemy(new EnemyDrillerInfo(4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, false, false, Utils.Linker(1)));
+        level.addEnemy(new EnemyDrillerInfo(4, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, false, false, Utils.Linker(3)));
+        level.addEnemy(new EnemyDrillerInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 4, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 6, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStars(1, 4, 7, 3, 6, 9);
+        level.addTrail(new Vector3(0.5f, 0f), new Vector3(0.5f, 1f));
+
+        return level;
+    }
+    public static Level level_5_quad_driller_in_small_area()
+    {
+        Level level = new Level("level_5_double_driller_in_small_area", 50);
+
+        float speed = 11f;
+
+        level.addEnemy(new EnemyDrillerInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStars(5);
+
+        level.addTrail(new Vector3(0.3f, 0.3f), new Vector3(0.3f, 0.7f), new Vector3(0.7f, 0.7f), new Vector3(0.7f, 0.3f), new Vector3(0.3f, 0.3f));
+
+        return level;
+    }
+    public static Level level_5_double_driller_in_small_area_linked()
+    {
+        Level level = new Level("level_5_double_driller_in_small_area_linked", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyDrillerInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, false, false, Utils.Linker(1)));
+        level.addEnemy(new EnemyDrillerInfo(5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStars(5);
+
+        level.addTrail(new Vector3(0.3f, 0.3f), new Vector3(0.3f, 0.7f), new Vector3(0.7f, 0.7f), new Vector3(0.7f, 0.3f), new Vector3(0.3f, 0.3f));
+
+        return level;
+    }
+    public static Level level_5_quad_driller_with_follower_linked()
+    {
+        Level level = new Level("level_5_double_driller_in_small_area_linked", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyFollowerInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, false, Utils.Linker(1, 2, 3, 4)));
+
+        level.addEnemy(new EnemyDrillerInfo(4, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(4, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(6, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyDrillerInfo(6, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStars(2,4,6,8);
+        level.addStars(
+            Utils.getMidRelativePositionFromPosition(1, 5),
+            Utils.getMidRelativePositionFromPosition(3, 5),
+            Utils.getMidRelativePositionFromPosition(7, 5),
+            Utils.getMidRelativePositionFromPosition(9, 5));
+
+        return level;
+    }
+
     public static Level level_with_driller()
     {
         Level level = new Level("level_with_driller", 50);
         float speed = 10f;
-        level.addEnemy(new EnemyInfo(EnemyType.Driller, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE * 0.5f));
+        level.addEnemy(new EnemyDrillerInfo(5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE * 0.5f));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
-
-        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
-        return level;
-    }
-    public static Level level_with_Link()
-    {
-        Level level = new Level("level_with_Link", 50);
-        float speed = 10f;
-        List<int> links = new List<int>() { 1, 2, 3, 4  };
-        List<int> links_2 = new List<int>() { 2 };
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Vector3.zero, Utils.ENEMY_DEFAULT_SCALE, links));
-        level.addEnemy(new EnemyInfo(EnemyType.Driller, 8, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f, Utils.Linker(2, 3)));
-        level.addEnemy(new EnemyInfo(EnemyType.Driller, 4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f));
-        level.addEnemy(new EnemyInfo(EnemyType.Driller, 6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f));
-        level.addEnemy(new EnemyInfo(EnemyType.Driller, 2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE * 0.75f, Utils.Linker(2, 3)));
 
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
@@ -2146,9 +2380,22 @@ public class Worlds
     }
     private static Levels world_5()
     {
-        Levels levels = new Levels();
+        Levels levels = new Levels(12);
+        levels.levels_name = "Drill";
+        levels.mWorldMusic = "Synthwave/68 - The Saga";
 
-        levels.levels_name = "World 5";
+        levels.addLevel(1, Levels.level_5_basic_driller());
+        levels.addLevel(2, Levels.level_5_Double_driller());
+        levels.addLevel(3, Levels.level_5_Quad_driller());
+        levels.addLevel(4, Levels.level_5_Double_driller_link());
+        levels.addLevel(5, Levels.level_5_Quad_driller_link_cross());
+        levels.addLevel(6, Levels.level_5_driller_fast());
+        levels.addLevel(7, Levels.level_5_quad_driller_split_in_2());
+        levels.addLevel(8, Levels.level_5_quad_driller_with_follower_linked());
+        levels.addLevel(9, Levels.level_5_quad_driller_split_in_2_linked());
+        levels.addLevel(10, Levels.level_5_quad_driller_in_small_area());
+        levels.addLevel(11, Levels.level_5_double_driller_in_small_area_linked());
+        levels.addLevel(12, Levels.level_5_Quad_driller_link_square());
 
         return levels;
     }
@@ -2172,6 +2419,6 @@ public class Worlds
         worlds.Add(world_2());
         worlds.Add(world_3());
         worlds.Add(world_4());
-        //worlds.Add(world_5());
+        worlds.Add(world_5());
     }
 }

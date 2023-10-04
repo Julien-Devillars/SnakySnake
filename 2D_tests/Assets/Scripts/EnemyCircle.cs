@@ -24,6 +24,12 @@ public class EnemyCircle : Enemy
     private float mMaxOutlineGlow = 50f;
     private string str_OutlineColor = "_OutlineColor";
 
+    new private void Awake()
+    {
+        base.Awake();
+        name = "Circle " + mCounter.ToString();
+    }
+
     private void Start()
     {
         base.Start();
@@ -32,7 +38,6 @@ public class EnemyCircle : Enemy
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
         sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/EnemyCircle");
         sprite_renderer.material = Resources.Load<Material>("Materials/Enemies/EnemyCircleMaterial");
-        name = "Circle";
 
         mRotateCircle = new GameObject();
         mRotateCircle.transform.position = transform.position;

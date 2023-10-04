@@ -86,6 +86,14 @@ public class EnemyLink : MonoBehaviour
         angle += 90f; // Because the default forward is lookign at top and not right
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward); 
         transform.rotation = rotation;
+        if(lineCollider.enabled == false)
+        {
+            setCollider(true);
+        }
+    }
+    public void setCollider(bool value)
+    {
+        lineCollider.enabled = value;
     }
 
     // Update is called once per frame

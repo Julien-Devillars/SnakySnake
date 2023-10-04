@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class EnemiesGeneratorPlayMode : MonoBehaviour
 {
@@ -31,11 +32,11 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
         }
 
         Level current_level = Worlds.getLevel(world_index, level_index);
-
+        Enemy.mCounter = 0;
         foreach (EnemyInfo enemy in current_level.mEnemies)
         {
             GameObject enemy_go = new GameObject();
-            enemy_go.name = "Enemy";
+            enemy_go.name = "Enemy " + Enemy.mCounter.ToString();
             enemy_go.tag = "Enemy";
             enemy_go.layer = 7; // Enemy Layer
             enemy_go.transform.localScale = new Vector3(enemy.scale, enemy.scale, 0.5f);
@@ -102,7 +103,11 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
                     enemy_behavior = enemy_go.AddComponent<EnemyFlyer>();
                     break;
                 case EnemyType.Driller:
-                    enemy_behavior = enemy_go.AddComponent<EnemyDriller>();
+                    EnemyDrillerInfo enemy_driller_info = (EnemyDrillerInfo)enemy;
+                    EnemyDriller enemy_driller = enemy_go.AddComponent<EnemyDriller>();
+                    enemy_driller.mReverseHorizontal = enemy_driller_info.mReverseHorizontal;
+                    enemy_driller.mReverseVertical = enemy_driller_info.mReverseVertical;
+                    enemy_behavior = enemy_driller;
                     break;
                 default:
                     enemy_behavior = new Enemy();
@@ -118,6 +123,7 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
 
             // Set enemy position
             enemy_behavior.setRelativePosition(enemy.position);
+            Enemy.mCounter++;
         }
 
         for(int i = 0; i < current_level.mEnemies.Count; ++i)
