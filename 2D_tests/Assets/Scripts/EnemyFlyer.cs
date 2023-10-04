@@ -25,7 +25,10 @@ public class EnemyFlyer : Enemy
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
         sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/EnemyFlyer");
         sprite_renderer.material = Resources.Load<Material>("Materials/Enemies/EnemyFlyerMaterial");
-        Destroy(gameObject.GetComponent<Collider2D>());
+        //Destroy(gameObject.GetComponent<Collider2D>());
+        CircleCollider2D collider = gameObject.GetComponent<CircleCollider2D>();
+        collider.isTrigger = true;
+        collider.radius -= collider.radius /3f;
         name = "Flyer";
 
         character = GameObject.Find(Utils.CHARACTER).GetComponent<CharacterBehavior>();
@@ -37,11 +40,12 @@ public class EnemyFlyer : Enemy
 
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
         SpriteRenderer character_sprite_renderer = character.GetComponent<SpriteRenderer>();
-        if (sprite_renderer.bounds.Intersects(character_sprite_renderer.bounds))
-        {
-            Lose();
+        Bounds bounds = character_sprite_renderer.bounds;
 
-        }
+        //if (sprite_renderer.bounds.Intersects(bounds))
+        //{
+        //    Lose();
+        //}
         float size = sprite_renderer.bounds.size.x / 2;
         if (transform.position.y - size <= mMinPos.y||  transform.position.y + size >= mMaxPos.y)
         {
@@ -74,6 +78,16 @@ public class EnemyFlyer : Enemy
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.name == Utils.CHARACTER)
+        {
+            Lose();
+        }
+        if(collision.gameObject.name.Contains("Trail"))
+        {
+            Lose();
+        }
+    }
 
-    new void OnCollisionEnter2D(Collision2D collision){}
 }

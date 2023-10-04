@@ -28,6 +28,7 @@ public class ObjectInfo
 
 public enum EnemyType
 {
+    Dummy,
     Basic,
     Circle,
     Follower,
@@ -295,10 +296,11 @@ public class Levels
         // Level 1
         Level level = new Level("level_1_only_stars", 50);
 
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector3.zero, Utils.ENEMY_DEFAULT_SCALE));
+
         level.mLevelHelper = "Catch all the stars to end the level.";
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE / 2f));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
         return level;
@@ -1671,6 +1673,285 @@ public class Levels
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
+    public static Level level_4_basic_flyer()
+    {
+        Level level = new Level("level_with_dummy", 50);
+
+        float speed = 7f;
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+
+        level.addTrail(new Vector3(0.35f, 0f), new Vector3(0.35f, 1f));
+        level.addTrail(new Vector3(0.65f, 0f), new Vector3(0.65f, 1f));
+
+        level.mLevelHelper = "New enemy : It can cross the borders.";
+        return level;
+    }
+    public static Level level_4_mid_flyer()
+    {
+        Level level = new Level("level_4_mid_flyer", 50);
+
+        float speed = 7f;
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+    public static Level level_4_two_horizontale_flyer_linked()
+    {
+        Level level = new Level("level_4_two_horizontale_flyer_linked", 50);
+
+        float speed = 9f;
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 3, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(2)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 9, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+    public static Level level_4_diag_flyer()
+    {
+        Level level = new Level("level_4_diag_flyer", 50);
+
+        float speed = 8f;
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(3, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+    public static Level level_4_flyer_in_line()
+    {
+        Level level = new Level("level_4_flyer_in_line", 50);
+
+        float speed = 8f;
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        for(int i = 0; i < 6; ++i)
+        {
+            level.addEnemy(new EnemyInfo(EnemyType.Flyer, new Vector2(0.2f + 0.1f * i, 0.5f), Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        }
+
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(4,5), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 6), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+    public static Level level_4_cross_flyer_link_cross()
+    {
+        Level level = new Level("level_4_cross_flyer_link_cross", 50);
+
+        float speed = 8f;
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(2)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(4)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE));
+        
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+    public static Level level_4_cross_flyer_link_square()
+    {
+        Level level = new Level("level_4_cross_flyer_link_square", 50);
+
+        float speed = 8f;
+        float speed_2 = 5f;
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(2)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UL * speed_2, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(3)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(4)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DR * speed_2, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(1)));
+
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+    public static Level level_4_three_flyers_linked()
+    {
+        Level level = new Level("level_4_three_horitontale_flyers_linked", 50);
+
+        float speed = 9f;
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 4, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(4, 8), Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(1, 3)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 8, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 4, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(4, 2), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(4, 6)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 2, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+
+        level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(3, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+    public static Level level_4_cross_flyer_link_hexagone()
+    {
+        Level level = new Level("level_4_cross_flyer_link_square", 50);
+
+        float speed = 8f;
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(3)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(4)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 6, Utils.R  * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(1, 2)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(3, 4)));
+
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+
+    public static Level level_4_five_flyers_linked()
+    {
+        Level level = new Level("level_4_three_horitontale_flyers_linked", 50);
+
+        float speed = 9f;
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 1, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(5)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(1, 5), Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(1)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(2)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(5, 9), Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(3)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 9, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(4)));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 7, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(10)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(7, 5), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(6)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(7)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(5, 3), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(8)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 3, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(9)));
+
+
+        level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(3, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+    public static Level level_4_five_flyers_linked_2_directions()
+    {
+        Level level = new Level("level_4_five_flyers_linked_2_directions", 50);
+
+        float speed = 6f;
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(4, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 1, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(5)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(1, 5), Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(1)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(2)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(5, 9), Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(3)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 9, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(4)));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 7, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(10)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(7, 5), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(6)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(7)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(5, 3), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(8)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 3, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(9)));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 1, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(15)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(1, 5), Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(11)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(12)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(5, 9), Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(13)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 9, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(14)));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 7, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(20)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(7, 5), Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(16)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(17)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(5, 3), Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(18)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 3, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(19)));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(5, 6), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+
+
+        level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(3, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
+
+    public static Level level_4_flyer_with_follower()
+    {
+        Level level = new Level("level_4_flyer_with_follower", 50);
+
+        float speed = 6f;
+
+        level.addEnemy(new EnemyFollowerInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, false, Utils.Linker(1, 2, 3, 4, 5, 6, 7, 8)));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 2, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 2, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 4, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 4, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 6, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 6, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 8, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Flyer, 8, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(1, 5, 0.25f), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(3, 5, 0.25f), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(7, 5, 0.25f), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(9, 5, 0.25f), Utils.STAR_DEFAULT_SCALE));
+
+        return level;
+    }
 
     public static Level level_with_driller()
     {
@@ -1697,6 +1978,20 @@ public class Levels
 
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
+    public static Level level_with_dummy()
+    {
+        Level level = new Level("level_with_dummy", 50);
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector3.zero, Utils.ENEMY_DEFAULT_SCALE));
+        //level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector3.zero, Utils.ENEMY_DEFAULT_SCALE));
+        //level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector3.zero, Utils.ENEMY_DEFAULT_SCALE));
+        //level.addEnemy(new EnemyInfo(EnemyType.Dummy, 8, Vector3.zero, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
 
@@ -1830,9 +2125,22 @@ public class Worlds
     }
     private static Levels world_4()
     {
-        Levels levels = new Levels();
+        Levels levels = new Levels(12);
+        levels.levels_name = "Chase";
+        levels.mWorldMusic = "Synthwave/Last Stop";
 
-        levels.levels_name = "World 4";
+        levels.addLevel(1, Levels.level_4_basic_flyer());
+        levels.addLevel(2, Levels.level_4_mid_flyer());
+        levels.addLevel(3, Levels.level_4_two_horizontale_flyer_linked());
+        levels.addLevel(4, Levels.level_4_diag_flyer());
+        levels.addLevel(5, Levels.level_4_flyer_in_line());
+        levels.addLevel(6, Levels.level_4_cross_flyer_link_cross());
+        levels.addLevel(7, Levels.level_4_three_flyers_linked());
+        levels.addLevel(8, Levels.level_4_cross_flyer_link_square());
+        levels.addLevel(9, Levels.level_4_five_flyers_linked());
+        levels.addLevel(10, Levels.level_4_cross_flyer_link_hexagone());
+        levels.addLevel(11, Levels.level_4_five_flyers_linked_2_directions());
+        levels.addLevel(12, Levels.level_4_flyer_with_follower());
 
         return levels;
     }
@@ -1863,7 +2171,7 @@ public class Worlds
         worlds.Add(world_1());
         worlds.Add(world_2());
         worlds.Add(world_3());
-        //worlds.Add(world_4());
+        worlds.Add(world_4());
         //worlds.Add(world_5());
     }
 }

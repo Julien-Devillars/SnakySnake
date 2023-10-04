@@ -63,11 +63,23 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
             // Add Rigidbody 2D
             Rigidbody2D rigidbody_2D = enemy_go.AddComponent<Rigidbody2D>();
             rigidbody_2D.gravityScale = 0;
-
+            
+            // Particles
+            GameObject particle_go = Instantiate(Resources.Load<GameObject>("Particles/EnemyParticle"));
+            particle_go.transform.parent = enemy_go.transform;
+            particle_go.transform.localScale = new Vector3(enemy.scale, enemy.scale, enemy.scale) / Utils.ENEMY_DEFAULT_SCALE;
 
             Enemy enemy_behavior;
             switch(enemy.type)
             {
+                case EnemyType.Dummy:
+                    enemy_behavior = enemy_go.AddComponent<Enemy>();
+                    collider.enabled = false;
+                    sprite_renderer.enabled = false;
+                    enemy.direction = Vector2.zero;
+                    enemy.scale = 0.01f;
+                    particle_go.SetActive(false);
+                    break;
                 case EnemyType.Basic:
                     enemy_behavior = enemy_go.AddComponent<Enemy>();
                     break;
@@ -98,10 +110,6 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
                     break;
             }
             enemies.Add(enemy_go);
-
-            GameObject particle_go = Instantiate(Resources.Load<GameObject>("Particles/EnemyParticle"));
-            particle_go.transform.parent = enemy_go.transform;
-            particle_go.transform.localScale = new Vector3(enemy.scale, enemy.scale, enemy.scale) / Utils.ENEMY_DEFAULT_SCALE;
 
             // Set enemy direction
             enemy_behavior.setDirection(enemy.direction);
