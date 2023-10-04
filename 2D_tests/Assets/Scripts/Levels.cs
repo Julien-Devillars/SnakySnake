@@ -1767,7 +1767,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE))
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
 
         level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
