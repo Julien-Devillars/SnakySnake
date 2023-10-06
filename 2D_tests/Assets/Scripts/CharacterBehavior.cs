@@ -859,7 +859,7 @@ public class CharacterBehavior : MonoBehaviour
         {
             StartCoroutine(waiter());
             mPreviousDirection = mCurrentDirection;
-            mCurrentDirection = mCurrentDirection == Direction.Right ? Direction.None : Direction.Left;
+            mCurrentDirection =  Direction.Left;
             GetComponent<SpriteRenderer>().flipX = true;
             return true;
         }
@@ -867,14 +867,14 @@ public class CharacterBehavior : MonoBehaviour
         {
             StartCoroutine(waiter());
             mPreviousDirection = mCurrentDirection;
-            mCurrentDirection = mCurrentDirection == Direction.Down ? Direction.None : Direction.Up;
+            mCurrentDirection = Direction.Up;
             return true;
         }
         else if ((new_direction == Direction.Right && mCurrentDirection != Direction.Right) && (can_move_backward || mCurrentDirection != Direction.Left))
         {
             StartCoroutine(waiter());
             mPreviousDirection = mCurrentDirection;
-            mCurrentDirection = mCurrentDirection == Direction.Left ? Direction.None : Direction.Right;
+            mCurrentDirection =  Direction.Right;
             GetComponent<SpriteRenderer>().flipX = false;
             return true;
         }
@@ -882,7 +882,7 @@ public class CharacterBehavior : MonoBehaviour
         {
             StartCoroutine(waiter());
             mPreviousDirection = mCurrentDirection;
-            mCurrentDirection = mCurrentDirection == Direction.Up ? Direction.None : Direction.Down;
+            mCurrentDirection =  Direction.Down;
             return true;
         }
         else if (new_direction == Direction.Stop && mCurrentDirection != Direction.Stop)
@@ -1208,7 +1208,7 @@ public class CharacterBehavior : MonoBehaviour
         float speed = mSpeed;
         if (mInputStop && mTrailPoints.Count == 0)
         {
-            speed = mSpeed/10f;
+            speed = mSpeed/6f;
         }
         Vector3 new_pos = transform.position + mDirections[mCurrentDirection] * speed * Time.deltaTime;
         mPreviousPosition = transform.position;
