@@ -402,7 +402,7 @@ public class Levels
         // Level 1
         Level level = new Level("Basic", 50);
 
-        float speed = 14f;
+        float speed = 10f;
 
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 7, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 1, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
@@ -422,17 +422,37 @@ public class Levels
         Vector2 v4 = Utils.getMidRelativePositionFromPosition(2, 3);
         Vector2 v5 = Utils.getMidRelativePositionFromPosition(5, 6);
         Vector2 v6 = Utils.getMidRelativePositionFromPosition(8, 9);
+
+        Vector2 v7 = Utils.getMidRelativePositionFromPosition(new Vector3(0f, 0.25f), 1);
+        Vector2 v8 = Utils.getMidRelativePositionFromPosition(new Vector3(0f, 0.5f), 4);
+        Vector2 v9 = Utils.getMidRelativePositionFromPosition(new Vector3(0f, 0.75f), 7);
+        Vector2 v10 = Utils.getMidRelativePositionFromPosition(new Vector3(1f, 0.25f), 3);
+        Vector2 v11 = Utils.getMidRelativePositionFromPosition(new Vector3(1f, 0.5f), 6);
+        Vector2 v12 = Utils.getMidRelativePositionFromPosition(new Vector3(1f, 0.75f), 9);
+
         level.addStar(new StarInfo(v1, Utils.STAR_DEFAULT_SCALE * 0.75f));
         level.addStar(new StarInfo(v2, Utils.STAR_DEFAULT_SCALE * 0.75f));
         level.addStar(new StarInfo(v3, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v1, v2), Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v2, v3), Utils.STAR_DEFAULT_SCALE * 0.75f));
 
         level.addStar(new StarInfo(v4, Utils.STAR_DEFAULT_SCALE * 0.75f));
         level.addStar(new StarInfo(v5, Utils.STAR_DEFAULT_SCALE * 0.75f));
         level.addStar(new StarInfo(v6, Utils.STAR_DEFAULT_SCALE * 0.75f));
-        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v1, v2), Utils.STAR_DEFAULT_SCALE * 0.75f));
-        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v2, v3), Utils.STAR_DEFAULT_SCALE * 0.75f));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v4, v5), Utils.STAR_DEFAULT_SCALE * 0.75f));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v5, v6), Utils.STAR_DEFAULT_SCALE * 0.75f));
+
+        level.addStar(new StarInfo(v7, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(v8, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(v9, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v7, v8), Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v8, v9), Utils.STAR_DEFAULT_SCALE * 0.75f));
+
+        level.addStar(new StarInfo(v10, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(v11, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(v12, Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v10, v11), Utils.STAR_DEFAULT_SCALE * 0.75f));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v11, v12), Utils.STAR_DEFAULT_SCALE * 0.75f));
 
         return level;
     }
