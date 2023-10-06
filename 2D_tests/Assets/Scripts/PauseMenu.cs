@@ -154,8 +154,11 @@ public class PauseMenu : MonoBehaviour
         mOptionMenu.SetActive(true);
         mOptionMenuButtonFirstSelected.Select();
     }
+    private bool hasNext = false;
     public void Next()
     {
+        if (hasNext) return;
+        hasNext = true;
         mIsPaused = false;
         Utils.GAME_STOPPED = false;
         if (GameControler.currentLevel < Worlds.worlds[GameControler.currentWorld].levels.Count - 1)
