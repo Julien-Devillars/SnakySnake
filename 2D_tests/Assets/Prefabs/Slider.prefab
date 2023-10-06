@@ -505,15 +505,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
       propertyPath: m_text
-      value: Music
+      value: Luminosity
       objectReference: {fileID: 0}
     - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
       propertyPath: m_fontSize
-      value: 32
+      value: 27.5
       objectReference: {fileID: 0}
     - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
       propertyPath: m_margin.x
-      value: 1.1383489
+      value: -6.6926804
       objectReference: {fileID: 0}
     - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
       propertyPath: m_margin.y
@@ -521,11 +521,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
       propertyPath: m_margin.z
-      value: -1.2419586
+      value: 20.945786
       objectReference: {fileID: 0}
     - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
       propertyPath: m_fontSizeMax
       value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 19.23
       objectReference: {fileID: 0}
     - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
       propertyPath: m_characterSpacing
