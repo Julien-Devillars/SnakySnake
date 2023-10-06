@@ -2293,7 +2293,7 @@ public class Worlds
     {
         Levels levels = new Levels(12);
 
-        levels.levels_name = "Countach";
+        levels.levels_name = "World 1 - Countach";
         levels.mWorldMusic = "Synthwave/Countach";
         levels.mWorldColorPrincipal_1 = Color.magenta;
         levels.mWorldColorPrincipal_2 = Color.cyan;
@@ -2328,7 +2328,7 @@ public class Worlds
     {
         Levels levels = new Levels(12);
 
-        levels.levels_name = "Galaxy";
+        levels.levels_name = "World 2 - Galaxy";
         levels.mWorldMusic = "Synthwave/20 - Galaxy";
         levels.mWorldColorPrincipal_1 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
         levels.mWorldColorPrincipal_2 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
@@ -2369,7 +2369,7 @@ public class Worlds
     private static Levels world_3()
     {
         Levels levels = new Levels(12);
-        levels.levels_name = "Dangerous";
+        levels.levels_name = "World 3 - Dangerous";
         levels.mWorldMusic = "Synthwave/32 - Dangerous";
 
         levels.addLevel(1, Levels.level_3_Double_Follower());
@@ -2391,7 +2391,7 @@ public class Worlds
     private static Levels world_4()
     {
         Levels levels = new Levels(12);
-        levels.levels_name = "Last Stop";
+        levels.levels_name = "World 4 - Last Stop";
         levels.mWorldMusic = "Synthwave/Last Stop";
 
         levels.addLevel(1, Levels.level_4_basic_flyer());
@@ -2412,7 +2412,7 @@ public class Worlds
     private static Levels world_5()
     {
         Levels levels = new Levels(12);
-        levels.levels_name = "The Saga";
+        levels.levels_name = "World 5 - The Saga";
         levels.mWorldMusic = "Synthwave/68 - The Saga";
 
         levels.addLevel(1, Levels.level_5_basic_driller());
