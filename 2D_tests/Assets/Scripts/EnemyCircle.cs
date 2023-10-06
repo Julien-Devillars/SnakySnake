@@ -74,9 +74,20 @@ public class EnemyCircle : Enemy
 
         SpriteRenderer circle_sprite_renderer = mCircle.GetComponent<SpriteRenderer>();
         mTimer += Time.deltaTime;
+
         Color new_color = Color.Lerp(mStartColor, mEndColor, mTimer / mAttackSpeed);
-        float new_glow = Mathf.Lerp(mMinOutlineGlow, mMaxOutlineGlow, mTimer / mAttackSpeed);
         float new_width = Mathf.Lerp(mMinOutlineWidth, mMaxOutlineWidth, mTimer / mAttackSpeed);
+        if (mTimer / mAttackSpeed  < 0.8f)
+        {
+            new_color = mStartColor;
+            new_width = Mathf.Lerp(mMinOutlineWidth, mMaxOutlineWidth / 4f, mTimer / mAttackSpeed);
+        }
+        else
+        {
+            new_color = mEndColor;
+            new_width = mMaxOutlineWidth;
+        }
+        float new_glow = Mathf.Lerp(mMinOutlineGlow, mMaxOutlineGlow, mTimer / mAttackSpeed);
 
         circle_sprite_renderer.material.SetFloat(str_OutlineGlow, new_glow);
         circle_sprite_renderer.material.SetFloat(str_OutlineWidth, new_width);
