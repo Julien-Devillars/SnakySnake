@@ -62,15 +62,16 @@ public class MainMenu : MonoBehaviour
                 mMenusWithSelected[mPreviousIndexMenu].mButton.Select();
             }
         };
-        mDefaultInputActions.UI.Submit.performed += ctx =>
-        {
-            mAudioSubmitBack.Play();
-        };
-        mDefaultInputActions.UI.Cancel.performed += ctx =>
-        {
-            if (mPreviousIndexMenu == 0) return;
-            mAudioSubmitBack.Play();
-        };
+
+        //mDefaultInputActions.UI.Submit.performed += ctx =>
+        //{
+        //    mAudioSubmitBack.Play();
+        //};
+        //mDefaultInputActions.UI.Cancel.performed += ctx =>
+        //{
+        //    if (mPreviousIndexMenu == 0) return;
+        //    mAudioSubmitBack.Play();
+        //};
 
     }
 
@@ -117,7 +118,8 @@ public class MainMenu : MonoBehaviour
         {
             mMenusWithSelected[index].mButton.Select();
         }
-        
+
+        mAudioSubmitBack.Play();
         mPreviousIndexMenu = index;
     }
 

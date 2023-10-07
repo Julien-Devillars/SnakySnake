@@ -55,7 +55,7 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
     public void OnPointerEnter(PointerEventData eventData)
     {
         highlight(true);
-        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(eventData.pointerEnter);
     }
 
     public void OnPointerExit(PointerEventData eventData)
