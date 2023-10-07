@@ -1730,9 +1730,13 @@ public class Levels
         Level level = new Level("level_with_dummy", 50);
 
         float speed = 7f;
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
 
@@ -1753,6 +1757,11 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
 
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
@@ -1768,6 +1777,11 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 3, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(2)));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 9, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
@@ -1812,6 +1826,11 @@ public class Levels
             level.addEnemy(new EnemyInfo(EnemyType.Flyer, new Vector2(0.2f + 0.1f * i, 0.5f), Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
         }
 
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(4,5), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
@@ -1830,7 +1849,11 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(4)));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE));
-        
+
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
@@ -1851,6 +1874,10 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(4)));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 5, Utils.DR * speed_2, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(1)));
 
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
@@ -1934,6 +1961,10 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(5, 3), Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(8)));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 3, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(9)));
 
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
@@ -1977,7 +2008,10 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, Utils.getMidRelativePositionFromPosition(5, 3), Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(18)));
         level.addEnemy(new EnemyInfo(EnemyType.Flyer, 3, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.Linker(19)));
 
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(5, 6), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
 
         level.addStar(new StarInfo(1, Utils.STAR_DEFAULT_SCALE));
@@ -2024,7 +2058,10 @@ public class Levels
 
         level.addEnemy(new EnemyDrillerInfo(2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
 
         level.mLevelHelper = "New Enemy : It will chase you throught the border.";
@@ -2040,7 +2077,10 @@ public class Levels
         level.addEnemy(new EnemyDrillerInfo(2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyDrillerInfo(4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, true, true));
 
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addStars(1, 2, 3);
         level.addStars(
             Utils.getMidRelativePositionFromPosition(new Vector2(0f, 0.25f), 1),
@@ -2118,7 +2158,10 @@ public class Levels
         level.addEnemy(new EnemyDrillerInfo(4, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, false, false,  Utils.Linker(1)));
         level.addEnemy(new EnemyDrillerInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, false, false, Utils.Linker(0)));
 
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
 
         return level;
@@ -2131,7 +2174,10 @@ public class Levels
 
         level.addEnemy(new EnemyDrillerInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
 
         return level;
@@ -2147,8 +2193,10 @@ public class Levels
         level.addEnemy(new EnemyDrillerInfo(6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyDrillerInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 4, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 6, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStars(1, 4, 7, 3, 6, 9);
 
@@ -2167,8 +2215,10 @@ public class Levels
         level.addEnemy(new EnemyDrillerInfo(6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, false, false, Utils.Linker(3)));
         level.addEnemy(new EnemyDrillerInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 4, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 6, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStars(1, 4, 7, 3, 6, 9);
         level.addTrail(new Vector3(0.5f, 0f), new Vector3(0.5f, 1f));
@@ -2186,7 +2236,10 @@ public class Levels
         level.addEnemy(new EnemyDrillerInfo(5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyDrillerInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStars(5);
 
@@ -2203,7 +2256,10 @@ public class Levels
         level.addEnemy(new EnemyDrillerInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, false, false, Utils.Linker(1)));
         level.addEnemy(new EnemyDrillerInfo(5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.addEnemy(new EnemyInfo(EnemyType.Dummy, 5, Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(1, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(3, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(7, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStars(5);
 
@@ -2430,27 +2486,6 @@ public class Worlds
 
         return levels;
     }
-    private static Levels world_6()
-    {
-        Levels levels = new Levels(12);
-        levels.levels_name = "World 6 - The Saga";
-        levels.mWorldMusic = "Synthwave/68 - The Saga";
-
-        levels.addLevel(1, Levels.level_5_basic_driller());
-        levels.addLevel(2, Levels.level_5_Double_driller());
-        levels.addLevel(3, Levels.level_5_Quad_driller());
-        levels.addLevel(4, Levels.level_5_Double_driller_link());
-        levels.addLevel(5, Levels.level_5_Quad_driller_link_cross());
-        levels.addLevel(6, Levels.level_5_driller_fast());
-        levels.addLevel(7, Levels.level_5_quad_driller_split_in_2());
-        levels.addLevel(8, Levels.level_5_quad_driller_with_follower_linked());
-        levels.addLevel(9, Levels.level_5_quad_driller_split_in_2_linked());
-        levels.addLevel(10, Levels.level_5_quad_driller_in_small_area());
-        levels.addLevel(11, Levels.level_5_double_driller_in_small_area_linked());
-        levels.addLevel(12, Levels.level_5_Quad_driller_link_square());
-
-        return levels;
-    }
 
 
     public static Level getLevel(int world, int level)
@@ -2472,6 +2507,5 @@ public class Worlds
         worlds.Add(world_3());
         worlds.Add(world_4());
         worlds.Add(world_5());
-        worlds.Add(world_6());
     }
 }
