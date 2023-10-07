@@ -1079,10 +1079,10 @@ public class Levels
         float speed_circle = 5f;
         //float offset = 0.15f;
 
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5, 8), Utils.R * speed_basic, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5, 8), Utils.L * speed_basic, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5, 2), Utils.R * speed_basic, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5, 2), Utils.L * speed_basic, Utils.ENEMY_DEFAULT_SCALE));
+        //level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5, 8), Utils.R * speed_basic, Utils.ENEMY_DEFAULT_SCALE));
+        //level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5, 8), Utils.L * speed_basic, Utils.ENEMY_DEFAULT_SCALE));
+        //level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5, 2), Utils.R * speed_basic, Utils.ENEMY_DEFAULT_SCALE));
+        //level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5, 2), Utils.L * speed_basic, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addEnemy(new EnemyCircleInfo(1, Utils.UR * speed_circle, Utils.ENEMY_DEFAULT_SCALE, Utils.rUR, EnemyCircleInfo.Form.Line, 0.5f));
         level.addEnemy(new EnemyCircleInfo(3, Utils.UL * speed_circle, Utils.ENEMY_DEFAULT_SCALE, Utils.rUL, EnemyCircleInfo.Form.Line, 0.5f));
@@ -1587,9 +1587,8 @@ public class Levels
         level.addEnemy(new EnemyFollowerInfo(4, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, false, Utils.Linker(1)));
         level.addEnemy(new EnemyFollowerInfo(6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
-        level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 2), Utils.STAR_DEFAULT_SCALE));
+        level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 8), Utils.STAR_DEFAULT_SCALE));
         return level;
     }
     public static Level level_3_Basic_Follower_Faster()
