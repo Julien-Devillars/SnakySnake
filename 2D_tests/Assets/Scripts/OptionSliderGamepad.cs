@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using Unity.Plastic.Newtonsoft.Json.Bson;
 
 public class OptionSliderGamepad : MonoBehaviour
 {
@@ -63,5 +64,19 @@ public class OptionSliderGamepad : MonoBehaviour
     private void OnDisable()
     {
         mDefaultInputActions.UI.Disable();
+    }
+
+    bool has_click = false;
+    public void clearSave()
+    {
+        for(int i = 0; i < 6; ++i)
+        {
+
+            for (int j = 0; j < 12; ++j)
+            {
+                ES3.Save<bool>($"PlayMode_World{i}_Level{j}_status", has_click);
+            }
+        }
+        has_click = true;
     }
 }

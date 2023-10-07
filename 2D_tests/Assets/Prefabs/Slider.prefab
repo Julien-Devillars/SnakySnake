@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: 3110221305176677556}
   - component: {fileID: 3110221305176677558}
   - component: {fileID: 3110221305176677559}
+  - component: {fileID: 836005364465794465}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -381,6 +382,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 11.9
+--- !u!114 &836005364465794465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3110221305176677557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07bd419a450b9c44cb21b194767fe605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mStartColor: {r: 0, g: 0, b: 0, a: 0}
+  mStartIntensity: 0
+  mSelectedColor: {r: 0, g: 0.7900574, b: 1, a: 0}
+  mSelectedIntensity: 30
 --- !u!1 &3110221305219521454
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,6 +409,7 @@ GameObject:
   - component: {fileID: 3110221305219521449}
   - component: {fileID: 3110221305219521450}
   - component: {fileID: 3110221305219521451}
+  - component: {fileID: 3900377960246947314}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -459,6 +477,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1.08
+--- !u!114 &3900377960246947314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3110221305219521454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07bd419a450b9c44cb21b194767fe605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mStartColor: {r: 0, g: 0, b: 0, a: 0}
+  mStartIntensity: 0
+  mSelectedColor: {r: 0, g: 0.4953575, b: 1, a: 0}
+  mSelectedIntensity: 15
 --- !u!1 &3110221305535350297
 GameObject:
   m_ObjectHideFlags: 0

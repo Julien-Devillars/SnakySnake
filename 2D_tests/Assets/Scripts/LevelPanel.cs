@@ -10,6 +10,7 @@ public class LevelPanel : MonoBehaviour
     public TextMeshProUGUI mWorldName;
     public GameObject mLevels;
     public Animator mTransitionAnimation;
+    public GameObject mLock;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,23 @@ public class LevelPanel : MonoBehaviour
         display();
     }
 
+    public bool isLock()
+    {
+        if (GameControler.currentWorld == 0) return false;
+        if (ES3.Load<bool>($"PlayMode_World{GameControler.currentWorld}_Level0_status", false)) return false;
+        int previous_world = GameControler.currentWorld - 1;
+        int cpt = 0;
+        for(int i = 0; i < mLevels.transform.childCount; ++i)
+        {
+            bool level_done = ES3.Load<bool>($"PlayMode_World{previous_world}_Level{i}_status", false);
+            if(level_done)
+            {
+                cpt++;
+            }
+        }
+        
+        return cpt < 8;
+    }
 
     public void display()
     {
@@ -25,7 +43,21 @@ public class LevelPanel : MonoBehaviour
         //mLevelName.text = current_level.mLevelName;
 
         mWorldName.text = Worlds.worlds[GameControler.currentWorld].levels_name;
+
+        bool is_lock = isLock();
+        if(is_lock)
+        {
+            mLock.SetActive(true);
+            mLevels.SetActive(false);
+        }
+        else
+        {
+            mLock.SetActive(false);
+            mLevels.SetActive(true);
+        }
+
         int cpt = 0;
+
         foreach(Transform level in mLevels.transform)
         {
             cpt++;
@@ -33,19 +65,25 @@ public class LevelPanel : MonoBehaviour
             int level_idx = cpt - 1;
             level.GetComponent<Button>().onClick.AddListener(delegate { Play(level_idx); });
             bool level_done = ES3.Load<bool>($"PlayMode_World{GameControler.currentWorld}_Level{level_idx}_status", false);
-            level.GetComponent<Image>().material = new Material(level.GetComponent<Image>().material);
+            level.GetComponent<Image>().material = level.GetComponent<Image>().material;
             if (level_done)
             {
-                level.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.blue;
-                level.GetComponent<Image>().color = Color.blue;
-                level.GetComponent<Image>().material.SetFloat("_Glow", 3f);
+                //level.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.blue;
+                //level.GetComponent<Image>().color = Color.blue;
+                level.GetComponent<Image>().material.SetFloat("_Glow", 4f);
+                level.GetComponent<Image>().material.SetColor("_GlowColor", Color.yellow);
+                level.GetComponent<ButtonHandler>().mStartColor = Color.yellow;
+                level.GetComponent<ButtonHandler>().mStartIntensity = 4f;
             }
             else
             {
-                level.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
+                //level.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
                 //level.GetComponent<Image>().color = new Color(1f, 0.5f, 0f);
-                level.GetComponent<Image>().color = Color.magenta;
-                level.GetComponent<Image>().material.SetFloat("_Glow", 0f);
+                //level.GetComponent<Image>().color = Color.magenta;
+                level.GetComponent<Image>().material.SetFloat("_Glow", 8f);
+                level.GetComponent<Image>().material.SetColor("_GlowColor", Color.magenta);
+                level.GetComponent<ButtonHandler>().mStartColor = Color.magenta;
+                level.GetComponent<ButtonHandler>().mStartIntensity = 8f;
             }
         }
 

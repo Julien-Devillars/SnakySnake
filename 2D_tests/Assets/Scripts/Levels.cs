@@ -2430,6 +2430,27 @@ public class Worlds
 
         return levels;
     }
+    private static Levels world_6()
+    {
+        Levels levels = new Levels(12);
+        levels.levels_name = "World 6 - The Saga";
+        levels.mWorldMusic = "Synthwave/68 - The Saga";
+
+        levels.addLevel(1, Levels.level_5_basic_driller());
+        levels.addLevel(2, Levels.level_5_Double_driller());
+        levels.addLevel(3, Levels.level_5_Quad_driller());
+        levels.addLevel(4, Levels.level_5_Double_driller_link());
+        levels.addLevel(5, Levels.level_5_Quad_driller_link_cross());
+        levels.addLevel(6, Levels.level_5_driller_fast());
+        levels.addLevel(7, Levels.level_5_quad_driller_split_in_2());
+        levels.addLevel(8, Levels.level_5_quad_driller_with_follower_linked());
+        levels.addLevel(9, Levels.level_5_quad_driller_split_in_2_linked());
+        levels.addLevel(10, Levels.level_5_quad_driller_in_small_area());
+        levels.addLevel(11, Levels.level_5_double_driller_in_small_area_linked());
+        levels.addLevel(12, Levels.level_5_Quad_driller_link_square());
+
+        return levels;
+    }
 
 
     public static Level getLevel(int world, int level)
@@ -2451,5 +2472,6 @@ public class Worlds
         worlds.Add(world_3());
         worlds.Add(world_4());
         worlds.Add(world_5());
+        worlds.Add(world_6());
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using System;
 
 [System.Serializable]
 public struct ButtonWithSelect
@@ -54,13 +55,13 @@ public class MainMenu : MonoBehaviour
             }
         };
 
-        //mDefaultInputActions.UI.Navigate.performed += ctx =>
-        //{
-        //    Vector2 navigation = mDefaultInputActions.UI.Navigate.ReadValue<Vector2>();
-        //    if (Mathf.Abs(navigation.x) != 1 && Mathf.Abs(navigation.y) != 1) return;
-        //
-        //    mAudioNavigate.Play();
-        //};
+        mDefaultInputActions.UI.Navigate.performed += ctx =>
+        {
+            if(EventSystem.current.currentSelectedGameObject == null)
+            {
+                mMenusWithSelected[mPreviousIndexMenu].mButton.Select();
+            }
+        };
         mDefaultInputActions.UI.Submit.performed += ctx =>
         {
             mAudioSubmitBack.Play();

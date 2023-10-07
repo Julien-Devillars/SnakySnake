@@ -7,6 +7,7 @@ public class StarsVictory : MonoBehaviour
 {
 
     CharacterBehavior character;
+    bool mWin = false;
     private void Start()
     {
         character = GameObject.Find(Utils.CHARACTER).GetComponent<CharacterBehavior>();
@@ -24,10 +25,13 @@ public class StarsVictory : MonoBehaviour
         {
             if (star_child.gameObject.activeSelf) return;
         }
+        
 
         GameControler.status = GameControler.GameStatus.Win;
-        ES3.Save<bool>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_status", true);
-
-        
+        if(!mWin)
+        {
+            mWin = true;
+            ES3.Save<bool>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_status", true);
+        }
     }
 }
