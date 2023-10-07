@@ -51,9 +51,13 @@ public class CharacterBehavior : MonoBehaviour
     {
         mPlayerControl = new PlayerControl();
         mPlayerControl.PlayerController.Left.performed += ctx =>    mInputDirection = Direction.Left;
+        mPlayerControl.PlayerController.Left.canceled += ctx => mInputDirection = Direction.Stop;
         mPlayerControl.PlayerController.Right.performed += ctx =>   mInputDirection = Direction.Right;
+        mPlayerControl.PlayerController.Right.canceled += ctx => mInputDirection = Direction.Stop;
         mPlayerControl.PlayerController.Up.performed += ctx =>      mInputDirection = Direction.Up;
+        mPlayerControl.PlayerController.Up.canceled += ctx => mInputDirection = Direction.Stop;
         mPlayerControl.PlayerController.Down.performed += ctx =>    mInputDirection = Direction.Down;
+        mPlayerControl.PlayerController.Down.canceled += ctx => mInputDirection = Direction.Stop;
         mPlayerControl.PlayerController.Stop.performed += ctx =>
         {
             mInputDirection = Direction.Stop;
