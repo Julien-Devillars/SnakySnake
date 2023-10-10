@@ -161,6 +161,7 @@ public class PauseMenu : MonoBehaviour
         hasNext = true;
         mIsPaused = false;
         Utils.GAME_STOPPED = false;
+        GameControler.CancelTimer();
         if (GameControler.currentLevel < Worlds.worlds[GameControler.currentWorld].levels.Count - 1)
         {
             GameControler.currentLevel++;
@@ -172,6 +173,7 @@ public class PauseMenu : MonoBehaviour
             {
                 GameControler.currentWorld++;
                 GameControler.currentLevel = 0;
+                GameControler.StartTimer();
                 StartCoroutine(LoadLevel("PlayLevel"));
             }
             else

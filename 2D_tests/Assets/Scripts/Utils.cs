@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -333,4 +334,11 @@ public class Utils
     }
     public static List<int> Linker(params int[] links) => links.ToList<int>();
 
+    public static string getTimeFromFloat(float time)
+    {
+        TimeSpan ts = TimeSpan.FromSeconds(time);
+        string time_str = string.Format("{0:00}:{1:00}:{2:00}", (int)ts.TotalMinutes, ts.Seconds, ts.Milliseconds);
+        Debug.Log("Time : " + time + " -> " + time_str);
+        return time_str;
+    }
 }

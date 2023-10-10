@@ -52,6 +52,8 @@ public class EndLevel : MonoBehaviour
             //mNextLevelButton.interactable = false;
             //mNextLevelButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Skip Level";
             // mTextLevel.text = $"World {GameControler.currentWorld} - Level {GameControler.currentLevel + 1}<br>FAILED";
+            int death = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_death", 0);
+            ES3.Save<int>($"PlayMode_World{GameControler.currentWorld}_death", ++death);
             StartCoroutine(Replay());
         }
     }
@@ -72,6 +74,7 @@ public class EndLevel : MonoBehaviour
         {
             if(GameControler.currentWorld < Worlds.worlds.Count - 1)
             {
+                GameControler.SaveTime();
                 GameControler.currentWorld++;
                 GameControler.currentLevel = 0;
                 StartCoroutine(LoadLevel("PlayLevel"));

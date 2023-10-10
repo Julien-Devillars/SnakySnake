@@ -11,6 +11,8 @@ public class LevelPanel : MonoBehaviour
     public GameObject mLevels;
     public Animator mTransitionAnimation;
     public GameObject mLock;
+    public TextMeshProUGUI mTextDeathCounter;
+    public TextMeshProUGUI mTextTimer;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,7 +60,13 @@ public class LevelPanel : MonoBehaviour
 
         int cpt = 0;
 
-        foreach(Transform level in mLevels.transform)
+        mTextDeathCounter.text = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_death", 0).ToString();
+
+        float timer = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", 0f);
+
+        mTextTimer.text = Utils.getTimeFromFloat(timer);
+
+        foreach (Transform level in mLevels.transform)
         {
             cpt++;
             level.GetChild(0).GetComponent<TextMeshProUGUI>().text = cpt.ToString();
@@ -121,6 +129,10 @@ public class LevelPanel : MonoBehaviour
         if(Worlds.worlds.Count == 0)
         {
             Worlds.createWorlds();
+        }
+        if(level == 0)
+        {
+            GameControler.StartTimer();
         }
         EnemiesGeneratorPlayMode.test_level = false;
         GameControler.status = GameControler.GameStatus.InProgress;

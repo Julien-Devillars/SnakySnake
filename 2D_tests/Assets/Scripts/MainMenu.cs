@@ -72,7 +72,7 @@ public class MainMenu : MonoBehaviour
         //    if (mPreviousIndexMenu == 0) return;
         //    mAudioSubmitBack.Play();
         //};
-
+        GameControler.CancelTimer();
     }
 
     public void Start()
