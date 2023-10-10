@@ -165,6 +165,7 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
 
             stars.Add(star_go);
         }
+        GameControler.StartLevelTimer();
     }
 }
 

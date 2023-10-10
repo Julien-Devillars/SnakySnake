@@ -74,6 +74,8 @@ public class OptionSliderGamepad : MonoBehaviour
             for (int j = 0; j < 12; ++j)
             {
                 ES3.Save<bool>($"PlayMode_World{i}_Level{j}_status", has_click);
+                ES3.Save<int>($"PlayMode_World{i}_Level{j}_death", 0);
+                ES3.Save<float>($"PlayMode_World{i}_Level{j}_death", 0f);
             }
             ES3.Save<int>($"PlayMode_World{i}_death", 0);
             ES3.Save<float>($"PlayMode_World{i}_timer", 0f);

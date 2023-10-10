@@ -173,7 +173,7 @@ public class PauseMenu : MonoBehaviour
             {
                 GameControler.currentWorld++;
                 GameControler.currentLevel = 0;
-                GameControler.StartTimer();
+                GameControler.StartWorldTimer();
                 StartCoroutine(LoadLevel("PlayLevel"));
             }
             else
