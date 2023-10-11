@@ -73,6 +73,11 @@ public class CharacterBehavior : MonoBehaviour
             float val_x = mPlayerControl.PlayerController.XStick.ReadValue<float>();
             float val_y = mPlayerControl.PlayerController.YStick.ReadValue<float>();
             if (Mathf.Abs(val_x) < Mathf.Abs(val_y)) return;
+            if (Mathf.Abs(val_y) < mDeadStickZone && Mathf.Abs(val_x) < mDeadStickZone)
+            {
+                mInputDirection = Direction.Stop;
+                return;
+            }
             if (Mathf.Abs(val_x) < mDeadStickZone) return;
             if (mInputDirection != Direction.direction.None) return;
 
@@ -93,6 +98,11 @@ public class CharacterBehavior : MonoBehaviour
             float val_x = mPlayerControl.PlayerController.XStick.ReadValue<float>();
             float val_y = mPlayerControl.PlayerController.YStick.ReadValue<float>();
             if (Mathf.Abs(val_y) < Mathf.Abs(val_x)) return;
+            if (Mathf.Abs(val_y) < mDeadStickZone && Mathf.Abs(val_x) < mDeadStickZone)
+            {
+                mInputDirection = Direction.Stop;
+                return;
+            }
             if (Mathf.Abs(val_y) < mDeadStickZone) return;
             if (mInputDirection != Direction.direction.None) return;
 
