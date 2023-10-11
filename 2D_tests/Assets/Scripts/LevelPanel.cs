@@ -132,7 +132,7 @@ public class LevelPanel : MonoBehaviour
         }
         if(level == 0)
         {
-            GameControler.StartWorldTimer();
+            Timer.StartWorldTimer();
         }
         EnemiesGeneratorPlayMode.test_level = false;
         GameControler.status = GameControler.GameStatus.InProgress;

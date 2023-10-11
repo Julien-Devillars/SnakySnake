@@ -43,12 +43,12 @@ public class EndLevel : MonoBehaviour
         }
         if (GameControler.status == GameControler.GameStatus.Win)
         {
-            GameControler.SaveLevelTime();
+            Timer.SaveLevelTime();
             Next();
         }
         if (GameControler.status == GameControler.GameStatus.Lose)
         {
-            GameControler.addDeath();
+            Timer.addDeath();
             StartCoroutine(Replay());
         }
     }
@@ -69,7 +69,7 @@ public class EndLevel : MonoBehaviour
         {
             if(GameControler.currentWorld < Worlds.worlds.Count - 1)
             {
-                GameControler.SaveWorldTime();
+                Timer.SaveWorldTime();
                 GameControler.currentWorld++;
                 GameControler.currentLevel = 0;
                 StartCoroutine(LoadLevel("PlayLevel"));

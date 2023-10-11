@@ -47,7 +47,7 @@ public class PauseMenu : MonoBehaviour
                 BackOptions();
             }
         };
-        mPlayerControl.PlayerController.Escape.performed += ctx =>
+        mPlayerControl.PlayerController.Escape.started += ctx =>
         {
             if (mIsPaused)
             {
@@ -109,15 +109,18 @@ public class PauseMenu : MonoBehaviour
     }
     public void Resume()
     {
+        Debug.Log("Resume");
         mPauseMenu.SetActive(false);
         mOptionMenu.SetActive(false);
         mMainMenu.SetActive(false);
         Time.timeScale = 1f;
         mIsPaused = false;
         Utils.GAME_STOPPED = false;
+        Timer.EndLevelPauseTimer();
     }
     public void Pause()
     {
+        Debug.Log("Pause");
         if (GameControler.status != GameControler.GameStatus.InProgress) return;
         mPauseMenu.SetActive(true);
         mMainMenu.SetActive(true);
@@ -126,6 +129,7 @@ public class PauseMenu : MonoBehaviour
         mIsPaused = true;
         Utils.GAME_STOPPED = true;
         mMainMenuButtonFirstSelected.Select();
+        Timer.StartLevelPauseTimer();
     }
 
     public void Back()
@@ -161,7 +165,7 @@ public class PauseMenu : MonoBehaviour
         hasNext = true;
         mIsPaused = false;
         Utils.GAME_STOPPED = false;
-        GameControler.CancelTimer();
+        Timer.CancelTimer();
         if (GameControler.currentLevel < Worlds.worlds[GameControler.currentWorld].levels.Count - 1)
         {
             GameControler.currentLevel++;
@@ -173,7 +177,7 @@ public class PauseMenu : MonoBehaviour
             {
                 GameControler.currentWorld++;
                 GameControler.currentLevel = 0;
-                GameControler.StartWorldTimer();
+                Timer.StartWorldTimer();
                 StartCoroutine(LoadLevel("PlayLevel"));
             }
             else
