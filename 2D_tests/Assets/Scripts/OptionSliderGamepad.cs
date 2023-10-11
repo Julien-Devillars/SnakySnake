@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using UnityEditor.SearchService;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class OptionSliderGamepad : MonoBehaviour
 {
@@ -14,7 +17,6 @@ public class OptionSliderGamepad : MonoBehaviour
     public Slider mSliderLuminosity;
     private void Awake()
     {
-
         mDefaultInputActions = new DefaultInputActions();
 
         mDefaultInputActions.UI.Submit.performed += ctx =>

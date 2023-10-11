@@ -27,8 +27,9 @@ public class PauseMenu : MonoBehaviour
     public AudioSource mAudioNavigate;
     public AudioSource mAudioSubmitBack;
     private GameObject mPreviousSelected = null;
+    public GameObject mClearLevel;
 
-    private void Awake()
+private void Awake()
     {
 
         mDefaultInputActions = new DefaultInputActions();
@@ -75,6 +76,8 @@ public class PauseMenu : MonoBehaviour
         mOptionMenu.SetActive(false);
         mHelper.SetActive(true);
         mLevelInfo.text = $"World {GameControler.currentWorld + 1} - Level {GameControler.currentLevel + 1}";
+        mClearLevel.SetActive(false);
+        
     }
 
     private void OnEnable()
