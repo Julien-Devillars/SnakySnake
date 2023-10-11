@@ -36,6 +36,33 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
             mMaterial.SetFloat("_Glow", mStartIntensity);
             GetComponent<Image>().color = Color.white;
         }
+
+        if (gameObject.name == "Level")
+        {
+            GameObject time_go = GameObject.Find("ChronometerText");
+            GameObject death_go = GameObject.Find("DeathText");
+            if (time_go == null || death_go == null) return;
+            if (transform.childCount != 1) return;
+
+            GameObject button_text_go = transform.GetChild(0).gameObject;
+            TextMeshProUGUI button_text_mesh = button_text_go.GetComponent<TextMeshProUGUI>();
+            int current_level = int.Parse(button_text_mesh.text) - 1;
+
+            TextMeshProUGUI time_text_mesh = time_go.GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI death_text_mesh = death_go.GetComponent<TextMeshProUGUI>();
+            if(flag)
+            {
+                death_text_mesh.text = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_Level{current_level}_death", 0).ToString();
+                float timer = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_Level{current_level}_timer", 0f);
+                time_text_mesh.text = Utils.getTimeFromFloat(timer);
+            }
+            else
+            {
+                death_text_mesh.text = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_death", 0).ToString();
+                float timer = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", 0f);
+                time_text_mesh.text = Utils.getTimeFromFloat(timer);
+            }
+        }
     }
     private void highlight()
     {
@@ -57,42 +84,11 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
     {
         highlight(true);
         EventSystem.current.SetSelectedGameObject(eventData.pointerEnter);
-        if(gameObject.name == "Level")
-        {
-            GameObject time_go = GameObject.Find("ChronometerText");
-            GameObject death_go = GameObject.Find("DeathText");
-            if (time_go == null || death_go == null) return;
-            if (transform.childCount != 1) return;
-
-            GameObject button_text_go = transform.GetChild(0).gameObject;
-            TextMeshProUGUI button_text_mesh = button_text_go.GetComponent<TextMeshProUGUI>();
-            int current_level = int.Parse(button_text_mesh.text) - 1;
-
-            TextMeshProUGUI time_text_mesh = time_go.GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI death_text_mesh = death_go.GetComponent<TextMeshProUGUI>();
-
-            death_text_mesh.text = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_Level{current_level}_death", 0).ToString();
-            float timer = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_Level{current_level}_timer", 0f);
-            time_text_mesh.text = Utils.getTimeFromFloat(timer);
-        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         highlight(false);
-        if (gameObject.name == "Level")
-        {
-            GameObject time_go = GameObject.Find("ChronometerText");
-            GameObject death_go = GameObject.Find("DeathText");
-            if (time_go == null || death_go == null) return;
-
-            TextMeshProUGUI time_text_mesh = time_go.GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI death_text_mesh = death_go.GetComponent<TextMeshProUGUI>();
-
-            death_text_mesh.text = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_death", 0).ToString();
-            float timer = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", 0f);
-            time_text_mesh.text = Utils.getTimeFromFloat(timer);
-        }
     }
 
     // Start is called before the first frame update
