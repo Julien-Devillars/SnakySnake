@@ -73,18 +73,18 @@ public class Background : MonoBehaviour
     }
     public bool fuseBackgroundIfNeeded ()
     {
-        List<Background> backgrounds = Utils.getBackgrounds();
+        //List<Background> backgrounds = Utils.getBackgrounds();
         Background background_found = null;
         //if (hasEnemies()) return;
 
-        foreach(Background background in backgrounds)
+        foreach(Background background in mConnectedBackground)
         {
             if (background == this) continue;
             //if (string.Compare(background.gameObject.name, gameObject.name) != -1) continue;
             bool is_exception = background.mConnectedBackground.Count == 0 && (background.mMaxBorderPos.x - background.mMinBorderPos.x < Utils.OFFSET || background.mMaxBorderPos.y - background.mMinBorderPos.y < Utils.OFFSET);
             if (background.hasEnemies() != hasEnemies() && !is_exception) continue;
             if ((background.mConnectedBackground.Count == 0 || mConnectedBackground.Count == 0 ) && !is_exception) continue;
-            if (background.mConnectedBackground.Contains(this) && mConnectedBackground.Contains(background) && !is_exception) continue;
+            //if (background.mConnectedBackground.Contains(this) && mConnectedBackground.Contains(background) && !is_exception) continue;
 
             if (mMaxBorderPos.x == background.mMinBorderPos.x && mMinBorderPos.y == background.mMinBorderPos.y && mMaxBorderPos.y == background.mMaxBorderPos.y)
             {

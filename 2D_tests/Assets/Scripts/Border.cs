@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 
 public class BorderPointsConnection
@@ -445,6 +446,7 @@ public class Border : MonoBehaviour
 
     public void destroy()
     {
+        connectCloseBackground();
         GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();
         character.mBorders.Remove(this);
@@ -452,6 +454,33 @@ public class Border : MonoBehaviour
 
         GameObject.DestroyImmediate(gameObject);
     }
+    public void connectCloseBackground()
+    {
+        List<Vector3> points = Utils.getIntermediatePointFromTrail(this);
+        List<Background> backgrounds = Utils.getBackgrounds();
+        List<Background> background_to_connect = new List<Background>();
+        foreach (Background background in backgrounds)
+        {
+            foreach (Vector3 point in points)
+            {
+                if(background.containsEquals(point))
+                {
+                    background_to_connect.Add(background);
+                    break;
+                }
+            }
+        }
+        foreach (Background background_1 in background_to_connect)
+        {
+            foreach (Background background_2 in background_to_connect)
+            {
+                if (background_1 == background_2) continue;
+                //Debug.Log("Connect " + background_1.name + " & " + background_2);
+                background_1.addConnection(background_2);
+            }
+        }
+    }
+
     public bool equals(Border other_border)
     {
         return (mStartPoint == other_border.mStartPoint && mEndPoint == other_border.mEndPoint) || (mStartPoint == other_border.mEndPoint && mEndPoint == other_border.mStartPoint);
