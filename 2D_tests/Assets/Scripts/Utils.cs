@@ -341,4 +341,29 @@ public class Utils
         Debug.Log("Time : " + time + " -> " + time_str);
         return time_str;
     }
+
+    public static bool checkNoBorderBetwennBackground(Background bg_1, Background bg_2, List<Border> borders)
+    {
+        Vector3 center_1 = bg_1.getCenterPoint();
+        Vector3 center_2 = bg_2.getCenterPoint();
+        Vector3 mix_point_1 = new Vector3(center_1.x, center_2.y);
+        Vector3 mix_point_2 = new Vector3(center_2.x, center_1.y);
+        bool c1_is_connected = true;
+        bool c2_is_connected = true;
+        foreach (Border border in borders)
+        {
+            bool mix1_c1_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_1, center_1);
+            bool mix1_c2_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_1, center_2);
+            bool mix2_c1_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_2, center_1);
+            bool mix2_c2_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_2, center_2);
+
+            bool mix1_is_ok = mix1_c1_intersect && mix1_c2_intersect;
+            bool mix2_is_ok = mix2_c1_intersect && mix2_c2_intersect;
+
+            c1_is_connected &= mix1_is_ok;
+            c2_is_connected &= mix2_is_ok;
+        }
+
+        return c1_is_connected || c2_is_connected;
+    }
 }

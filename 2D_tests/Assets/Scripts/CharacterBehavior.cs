@@ -554,16 +554,16 @@ public class CharacterBehavior : MonoBehaviour
     }
     void deleteLine()
     {
-            if (mTrailPoints.Count == 0)
-                return;
-            Border.mOnDeleteLine = true;
-            fixLastTrailIfNeeded();
+        if (mTrailPoints.Count == 0)
+            return;
+        Border.mOnDeleteLine = true;
+        fixLastTrailIfNeeded();
 
-            foreach (GameObject trail_point in mTrailPoints)
-            {
-                Destroy(trail_point);
-            }
-            mTrailPoints.Clear();
+        foreach (GameObject trail_point in mTrailPoints)
+        {
+            Destroy(trail_point);
+        }
+        mTrailPoints.Clear();
 
         List<Background> deleted_bgs = new List<Background>();
         foreach (GameObject trail in mTrails)
@@ -582,11 +582,7 @@ public class CharacterBehavior : MonoBehaviour
                 lineRenderer.SetPosition(1, pos_on_border);
             }
             Border line_to_border = Border.create(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
-            if(line_to_border.mStartPoint == Vector3.zero || line_to_border.mEndPoint == Vector3.zero)
-            {
-                Debug.Log("TOTO");
-            }
-                line_to_border.mNewBorderOnDelete = true;
+            line_to_border.mNewBorderOnDelete = true;
             addBorder(line_to_border);
 
             List<Vector3> points = Utils.getIntermediatePointFromTrail(line_to_border);
@@ -607,7 +603,7 @@ public class CharacterBehavior : MonoBehaviour
 
                 Vector3 bg_start_point = bg.getPointFromBackground(start_point, middle_point);
                 Vector3 bg_end_point = bg.getPointFromBackground(middle_point, start_point);
-                splitBackground(bg, bg_start_point, bg_end_point);
+                splitBackground(bg, bg_start_point, bg_end_point, line_to_border);
                 deleted_bgs.Add(bg);
             }
 
@@ -642,26 +638,8 @@ public class CharacterBehavior : MonoBehaviour
             {
                 if (bg_1 == bg_2)
                     continue;
-                
-                Vector3 center_2 = bg_2.getCenterPoint();
-                Vector3 mix_point_1 = new Vector3(center_1.x, center_2.y);
-                Vector3 mix_point_2 = new Vector3(center_2.x, center_1.y);
-                bool c1_is_connected = true;
-                bool c2_is_connected = true;
-                foreach(Border border in mBorders)
-                {
-                    bool mix1_c1_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_1, center_1);
-                    bool mix1_c2_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_1, center_2);
-                    bool mix2_c1_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_2, center_1);
-                    bool mix2_c2_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_2, center_2);
 
-                    bool mix1_is_ok = mix1_c1_intersect && mix1_c2_intersect;
-                    bool mix2_is_ok = mix2_c1_intersect && mix2_c2_intersect;
-
-                    c1_is_connected &= mix1_is_ok;
-                    c2_is_connected &= mix2_is_ok;
-                }
-                if(c1_is_connected || c2_is_connected)
+                if (Utils.checkNoBorderBetwennBackground(bg_1, bg_2, mBorders))
                 {
                     bg_1.addConnection(bg_2);
                 }
@@ -720,7 +698,7 @@ public class CharacterBehavior : MonoBehaviour
 
                 Vector3 bg_start_point = bg.getPointFromBackground(start_point, middle_point);
                 Vector3 bg_end_point = bg.getPointFromBackground(middle_point, start_point);
-                splitBackground(bg, bg_start_point, bg_end_point);
+                splitBackground(bg, bg_start_point, bg_end_point, line_to_border);
                 deleted_bgs.Add(bg);
             }
 
@@ -749,25 +727,7 @@ public class CharacterBehavior : MonoBehaviour
                 if (bg_1 == bg_2)
                     continue;
 
-                Vector3 center_2 = bg_2.getCenterPoint();
-                Vector3 mix_point_1 = new Vector3(center_1.x, center_2.y);
-                Vector3 mix_point_2 = new Vector3(center_2.x, center_1.y);
-                bool c1_is_connected = true;
-                bool c2_is_connected = true;
-                foreach (Border border in mBorders)
-                {
-                    bool mix1_c1_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_1, center_1);
-                    bool mix1_c2_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_1, center_2);
-                    bool mix2_c1_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_2, center_1);
-                    bool mix2_c2_intersect = !Utils.intersect(border.mStartPoint, border.mEndPoint, mix_point_2, center_2);
-
-                    bool mix1_is_ok = mix1_c1_intersect && mix1_c2_intersect;
-                    bool mix2_is_ok = mix2_c1_intersect && mix2_c2_intersect;
-
-                    c1_is_connected &= mix1_is_ok;
-                    c2_is_connected &= mix2_is_ok;
-                }
-                if (c1_is_connected || c2_is_connected)
+                if (Utils.checkNoBorderBetwennBackground(bg_1, bg_2, mBorders))
                 {
                     bg_1.addConnection(bg_2);
                 }
@@ -1000,7 +960,7 @@ public class CharacterBehavior : MonoBehaviour
         return borders[0];
     }
 
-    void splitBackground(Background current_bg, Vector3 start_point, Vector3 end_point)
+    void splitBackground(Background current_bg, Vector3 start_point, Vector3 end_point, Border split_border)
     {
         List<GameObject> background_splitten = current_bg.split(start_point, end_point);
 
@@ -1012,6 +972,7 @@ public class CharacterBehavior : MonoBehaviour
             Background background_1 = bg_1.GetComponent<Background>();
             mBackgroundGameObjects.Add(bg_1);
             mBackgrounds.Add(background_1);
+            background_1.split_border = split_border;
         }
 
         GameObject bg_2 = background_splitten[1];
@@ -1020,6 +981,7 @@ public class CharacterBehavior : MonoBehaviour
             Background background_2 = bg_2.GetComponent<Background>();
             mBackgroundGameObjects.Add(bg_2);
             mBackgrounds.Add(background_2);
+            background_2.split_border = split_border;
         }
     }
 

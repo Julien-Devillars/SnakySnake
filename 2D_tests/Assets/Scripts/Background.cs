@@ -10,7 +10,7 @@ public class Background : MonoBehaviour
     public Vector3 mMaxBorderPos;
     public List<GameObject> mEnemyList;
     public List<Background> mConnectedBackground;
-
+    public Border split_border;
     public void Awake()
     {
         mEnemyList = new List<GameObject>();
@@ -27,6 +27,7 @@ public class Background : MonoBehaviour
 
         renderer.sortingLayerName = "Background";
         mConnectedBackground = new List<Background>();
+        split_border = null;
     }
 
     public void Update()
@@ -84,7 +85,7 @@ public class Background : MonoBehaviour
             bool is_exception = background.mConnectedBackground.Count == 0 && (background.mMaxBorderPos.x - background.mMinBorderPos.x < Utils.OFFSET || background.mMaxBorderPos.y - background.mMinBorderPos.y < Utils.OFFSET);
             if (background.hasEnemies() != hasEnemies() && !is_exception) continue;
             if ((background.mConnectedBackground.Count == 0 || mConnectedBackground.Count == 0 ) && !is_exception) continue;
-            //if (background.mConnectedBackground.Contains(this) && mConnectedBackground.Contains(background) && !is_exception) continue;
+            if (split_border != null && split_border == background.split_border && !Utils.checkNoBorderBetwennBackground(this, background, new List<Border>(){ split_border})) continue;
 
             if (mMaxBorderPos.x == background.mMinBorderPos.x && mMinBorderPos.y == background.mMinBorderPos.y && mMaxBorderPos.y == background.mMaxBorderPos.y)
             {
