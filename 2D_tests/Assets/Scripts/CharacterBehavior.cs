@@ -298,7 +298,7 @@ public class CharacterBehavior : MonoBehaviour
         //    setOnBorderOppositeDirection();
         //}
 
-        if(current_border == null && current_bg.hasEnemies())
+        if(current_border == null && current_bg != null && current_bg.hasEnemies())
         {
             if(next_border == null && mTrails.Count == 0)
             {
@@ -677,7 +677,7 @@ public class CharacterBehavior : MonoBehaviour
             FakeTrail trail_script = trail.GetComponent<FakeTrail>();
             LineRenderer lineRenderer = trail.GetComponent<LineRenderer>();
 
-            Border line_to_border = Border.create(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1), false);
+            Border line_to_border = Border.create(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1), true);
             addBorder(line_to_border);
 
             List<Vector3> points = Utils.getIntermediatePointFromTrail(line_to_border);
