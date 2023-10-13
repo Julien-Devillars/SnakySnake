@@ -145,6 +145,8 @@ public class Border : MonoBehaviour
         {
             if (start_point_can_be_moved && end_point_can_be_moved)
             {
+                start_point_can_be_moved = borderIsInBackgroundWithoutEnemies(getShiftPlusPoint(mStartPoint), true);
+                end_point_can_be_moved = borderIsInBackgroundWithoutEnemies(getShiftMinusPoint(mEndPoint), true);
                 destroy();
             }
             else if (start_point_can_be_moved)
@@ -175,6 +177,7 @@ public class Border : MonoBehaviour
                 //drawing.name = $"End Point of {name}";
                 //drawing.transform.position = mEndPoint;
 
+                end_point_can_be_moved = borderIsInBackgroundWithoutEnemies(getShiftMinusPoint(mEndPoint));
                 Vector3 new_point = getClosestPointOnBorder(mEndPoint);
                 //if (new_point == mStartPoint)
                 //{
@@ -196,18 +199,22 @@ public class Border : MonoBehaviour
         if (mStartPoint == border_to_merge.mEndPoint)
         {
             replaceStartPoint(border_to_merge.mStartPoint);
+            Debug.Log("Merge " + name + " & " + border_to_merge.name);
         }
         else if (mStartPoint == border_to_merge.mStartPoint)
         {
             replaceStartPoint(border_to_merge.mEndPoint);
+            Debug.Log("Merge " + name + " & " + border_to_merge.name);
         }
         else if (mEndPoint == border_to_merge.mStartPoint)
         {
             replaceEndPoint(border_to_merge.mEndPoint);
+            Debug.Log("Merge " + name + " & " + border_to_merge.name);
         }
         else if (mEndPoint == border_to_merge.mEndPoint)
         {
             replaceEndPoint(border_to_merge.mStartPoint);
+            Debug.Log("Merge " + name + " & " + border_to_merge.name);
         }
         border_to_merge.mToDelete = true;
         replaceCollider2D();
@@ -446,6 +453,10 @@ public class Border : MonoBehaviour
 
     public void destroy()
     {
+        if(name == "Border_7")
+        {
+            Debug.Log("toto");
+        }
         connectCloseBackground();
         GameObject character_go = GameObject.Find(Utils.CHARACTER);
         CharacterBehavior character = character_go.GetComponent<CharacterBehavior>();

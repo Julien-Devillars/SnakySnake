@@ -261,21 +261,22 @@ public class Background : MonoBehaviour
         {
             bg_1 = new GameObject();
             Background background_1 = bg_1.AddComponent<Background>();
-            background_1.initWithXScaleDivideBy2(mMinBorderPos, (fuzzyCompare(start_point.y, mMinBorderPos.y)) ? end_point : start_point, mId + "_1");
+            //background_1.initWithXScaleDivideBy2(mMinBorderPos, (fuzzyCompare(start_point.y, mMinBorderPos.y)) ? end_point : start_point, mId + "_1");
+            background_1.initWithXScaleDivideBy2(mMinBorderPos, (start_point.y == mMinBorderPos.y) ? end_point : start_point, mId + "_1");
 
             bg_2 = new GameObject();
             Background background_2 = bg_2.AddComponent<Background>();
-            background_2.initWithXScaleDivideBy2((fuzzyCompare(start_point.y, mMaxBorderPos.y)) ? end_point : start_point, mMaxBorderPos, mId + "_2");
+            background_2.initWithXScaleDivideBy2((start_point.y == mMaxBorderPos.y) ? end_point : start_point, mMaxBorderPos, mId + "_2");
         }
         else if (start_point.y == end_point.y)
         {
             bg_1 = new GameObject();
             Background background_1 = bg_1.AddComponent<Background>();
-            background_1.initWithXScaleDivideBy2(mMinBorderPos, (fuzzyCompare(start_point.x, mMinBorderPos.x)) ? end_point : start_point, mId + "_1");
+            background_1.initWithXScaleDivideBy2(mMinBorderPos, (start_point.x == mMinBorderPos.x) ? end_point : start_point, mId + "_1");
 
             bg_2 = new GameObject();
             Background background_2 = bg_2.AddComponent<Background>();
-            background_2.initWithXScaleDivideBy2((fuzzyCompare(start_point.x, mMaxBorderPos.x)) ? end_point : start_point, mMaxBorderPos, mId + "_2");
+            background_2.initWithXScaleDivideBy2((start_point.x == mMaxBorderPos.x) ? end_point : start_point, mMaxBorderPos, mId + "_2");
         }
 
         if (bg_1 == null || bg_2 == null)
