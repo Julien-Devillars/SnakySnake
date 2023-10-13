@@ -327,6 +327,12 @@ public class CharacterBehavior : MonoBehaviour
         }
         else
         {
+            if(mCurrentDirection == mCollidingDirection && mCollidingBorder != null)
+            {
+                setOnBorderOppositeDirection(mCollidingBorder);
+                mCollidingBorder = null;
+                mCollidingDirection = Direction.direction.None;
+            }
             if (mCurrentDirection == Direction.direction.None)
             {
                 deleteLine();
@@ -1063,7 +1069,46 @@ public class CharacterBehavior : MonoBehaviour
 
         transform.position = getClosestPoint(border_points);
     }
+    bool setOnBorderOppositeDirection(Border border)
+    {
+        if (mCurrentDirection == Direction.None) return false;
 
+        Dictionary<Border, Vector3> border_points = new Dictionary<Border, Vector3>();
+
+        if (border.isHorizontal() && Direction.isVertical(mCurrentDirection))
+        {
+            if (border.isLeftToRight() && (transform.position.x < border.mStartPoint.x || border.mEndPoint.x < transform.position.x)) return false;
+            if (!border.isLeftToRight() && (transform.position.x < border.mEndPoint.x || border.mStartPoint.x < transform.position.x)) return false;
+            if (mCollidingBorder == null && mCurrentDirection == Direction.direction.Up && transform.position.y > border.mStartPoint.y) return false;
+            if (mCollidingBorder == null && mCurrentDirection == Direction.direction.Down && transform.position.y < border.mStartPoint.y) return false;
+
+            Vector3 point = new Vector3(gameObject.transform.position.x, border.mStartPoint.y, 0);
+            if (point == transform.position) return false;
+            border_points.Add(border, point);
+        }
+        else if (border.isVertical() && Direction.isHorizontal(mCurrentDirection))
+        {
+            if (border.isBottomToTop() && (transform.position.y < border.mStartPoint.y || border.mEndPoint.y < transform.position.y)) return false;
+            if (!border.isBottomToTop() && (transform.position.y < border.mEndPoint.y || border.mStartPoint.y < transform.position.y)) return false;
+            if (mCollidingBorder == null && mCurrentDirection == Direction.direction.Left && transform.position.x < border.mStartPoint.x) return false;
+            if (mCollidingBorder == null && mCurrentDirection == Direction.direction.Right && transform.position.x > border.mStartPoint.x) return false;
+
+            Vector3 point = new Vector3(border.mStartPoint.x, gameObject.transform.position.y, 0);
+            if (point == transform.position) return false;
+            border_points.Add(border, point);
+        }
+        
+
+        if (border_points.Count == 0)
+        {
+            return false;
+        }
+
+        mCurrentDirection = Direction.direction.None;
+        transform.position = getClosestPoint(border_points);
+        mWaitOneFrame = true;
+        return true;
+    }
     void setOnBorderOppositeDirection(bool check_previous_direction = false)
     {
         Dictionary<Border, Vector3> border_points = new Dictionary<Border, Vector3>();
@@ -1248,13 +1293,61 @@ public class CharacterBehavior : MonoBehaviour
         }
         return false;
     }
+    private Border mCollidingBorder = null;
+    private Direction.direction mCollidingDirection = Direction.direction.None;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log(collision.name);
         if(collision.CompareTag("VerticalBorder") || collision.CompareTag("HorizontalBorder"))
         {
-            setOnBorderOppositeDirection();
+            Border border = collision.GetComponent<Border>();
+            if (border.isHorizontal() && Direction.isVertical(mCurrentDirection) 
+                || border.isVertical() && Direction.isHorizontal(mCurrentDirection))
+            {
+                setOnBorderOppositeDirection(border);
+            }
+            if (border.isHorizontal() && Direction.isHorizontal(mCurrentDirection) && !border.onLine(transform.position))
+            {
+                mCollidingBorder = border;
+                if (transform.position.y > border.y())
+                {
+                    mCollidingDirection = Direction.direction.Down;
+                    Debug.Log("Down on " + border.name);
+                }
+                else
+                {
+                    mCollidingDirection = Direction.direction.Up;
+                    Debug.Log("Up on " + border.name);
+                }
+            }
+            if (border.isVertical() && Direction.isVertical(mCurrentDirection) && !border.onLine(transform.position))
+            {
+                mCollidingBorder = border;
+                if (transform.position.x > border.x())
+                {
+                    mCollidingDirection = Direction.direction.Left;
+                    Debug.Log("Left on " + border.name);
+                }
+                else
+                {
+                    mCollidingDirection = Direction.direction.Right;
+                    Debug.Log("Right on " + border.name);
+                }
+            }
+            //setOnBorderOppositeDirection();
         }
-        
+
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("VerticalBorder") || collision.CompareTag("HorizontalBorder"))
+        {
+            Border border = collision.GetComponent<Border>();
+            if (border == mCollidingBorder)
+            {
+                mCollidingBorder = null;
+                mCollidingDirection = Direction.direction.None;
+            }
+        }
     }
 }

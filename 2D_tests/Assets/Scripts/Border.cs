@@ -773,6 +773,25 @@ public class Border : MonoBehaviour
                 mOtherBorderOnBorders.Add(border, border.mEndPoint);
             }
         }
-        
+
+    }
+    public float x()
+    {
+        return mStartPoint.x;
+    }
+    public float y()
+    {
+        return mStartPoint.y;
+    }
+    public bool onLine(Vector3 pos)
+    {
+        if(isVertical())
+        {
+            return pos.y == mStartPoint.y;
+        }
+        else
+        {
+            return pos.x == mStartPoint.x;
+        }
     }
 }
