@@ -67,7 +67,11 @@ public class OptionSliderGamepad : MonoBehaviour
     bool has_click = false;
     public void clearSave()
     {
-        for(int i = 0; i < 6; ++i)
+
+        LevelPanel.mForceDisplay = true;
+        GameControler.currentLevel = 0;
+        GameControler.currentWorld = 0;
+        for (int i = 0; i < 6; ++i)
         {
 
             for (int j = 0; j < 12; ++j)

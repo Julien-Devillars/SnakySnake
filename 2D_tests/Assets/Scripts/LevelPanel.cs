@@ -13,12 +13,22 @@ public class LevelPanel : MonoBehaviour
     public GameObject mLock;
     public TextMeshProUGUI mTextDeathCounter;
     public TextMeshProUGUI mTextTimer;
+    public static bool mForceDisplay = false;
     // Start is called before the first frame update
     void Start()
     {
         GameControler.currentWorld = 0;
         GameControler.currentLevel = 0;
         display();
+    }
+
+    private void Update()
+    {
+        if(mForceDisplay)
+        {
+            display();
+            mForceDisplay = false;
+        }
     }
 
     public bool isLock()

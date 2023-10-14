@@ -911,10 +911,6 @@ public class Levels
 
         float speed = 4f;
 
-        level.addEnemy(new EnemyCircleInfo(7, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Line, 0.5f));
-        level.addEnemy(new EnemyCircleInfo(9, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Triangle, 0.5f));
-        level.addEnemy(new EnemyCircleInfo(1, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Square, 0.5f));
-        level.addEnemy(new EnemyCircleInfo(3, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Pentagone, 0.5f));
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(2, 5), (Vector2.right + Vector2.up) * speed, Utils.ENEMY_DEFAULT_SCALE, 60, EnemyCircleInfo.Form.Hexagone, 2f));
 
         level.mLevelHelper = "Try to understand their pattern.";
