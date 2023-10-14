@@ -12,6 +12,7 @@ public static class Timer
     public static float totalPauseWorldTimer = 0f;
     public static float totalPauseLevelTimer = 0f;
 
+    static public bool hasDiedInWorld = false;
     public static void StartLevelPauseTimer()
     {
         currentPauseLevelTimer = Time.realtimeSinceStartup;
@@ -43,7 +44,12 @@ public static class Timer
     }
     public static void SaveWorldTime()
     {
+
         if (!calculateTimer) return;
+        if (!hasDiedInWorld)
+        {
+            SteamAchievement.noDeathInWorld();
+        }
         float time = Time.realtimeSinceStartup - startWorldTimer - totalPauseWorldTimer;
         Debug.Log("World Time : " + time);
         float previous_time = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", -1f);
@@ -57,6 +63,7 @@ public static class Timer
         Debug.Log("Start World Timer");
         calculateTimer = true;
         startWorldTimer = Time.realtimeSinceStartup;
+        hasDiedInWorld = false;
         StartWorldPauseTimer();
     }
     public static void CancelTimer()
@@ -73,5 +80,7 @@ public static class Timer
 
         int death_level = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_death", 0);
         ES3.Save<int>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_death", ++death_level);
+
+        hasDiedInWorld = true;
     }
 }

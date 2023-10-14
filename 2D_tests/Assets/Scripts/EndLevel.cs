@@ -43,6 +43,7 @@ public class EndLevel : MonoBehaviour
         }
         if (GameControler.status == GameControler.GameStatus.Win)
         {
+            SteamAchievement.checkWorlFinish();
             Timer.SaveLevelTime();
             Next();
         }

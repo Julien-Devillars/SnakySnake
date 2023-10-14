@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.4
+  m_PixelsPerUnitMultiplier: 2
 --- !u!114 &4560769499874639321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +160,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7273492636290626937, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
       propertyPath: m_fontSize
-      value: 30.51
+      value: 52.6
       objectReference: {fileID: 0}
     - target: {fileID: 7273492636290626938, guid: 29a56a0ae8b55af45b89c6d98b6cba85, type: 3}
       propertyPath: m_Pivot.x
