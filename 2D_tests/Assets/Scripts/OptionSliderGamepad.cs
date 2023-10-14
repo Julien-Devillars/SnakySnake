@@ -63,7 +63,7 @@ public class OptionSliderGamepad : MonoBehaviour
     {
         mDefaultInputActions.UI.Disable();
     }
-
+    
     bool has_click = false;
     public void clearSave()
     {
@@ -71,10 +71,9 @@ public class OptionSliderGamepad : MonoBehaviour
         LevelPanel.mForceDisplay = true;
         GameControler.currentLevel = 0;
         GameControler.currentWorld = 0;
-        for (int i = 0; i < 6; ++i)
+        for (int i = 0; i < Worlds.worlds.Count; ++i)
         {
-
-            for (int j = 0; j < 12; ++j)
+            for (int j = 0; j < Worlds.worlds[i].levels.Count; ++j)
             {
                 ES3.Save<bool>($"PlayMode_World{i}_Level{j}_status", has_click);
                 ES3.Save<int>($"PlayMode_World{i}_Level{j}_death", 0);
