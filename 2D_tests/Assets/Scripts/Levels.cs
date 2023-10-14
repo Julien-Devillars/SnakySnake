@@ -252,6 +252,9 @@ public class Level
     public List<EnemyInfo> mEnemies;
     public List<StarInfo> mStars;
     public List<AdditionalBorder> mAdditionalBorders;
+    public float mBronzeTime = -1f;
+    public float mSilverTime = -1f;
+    public float mGoldTime = -1f;
 
     int mBestReach = 0;
     public Level(string name, int goal)
@@ -291,6 +294,58 @@ public class Level
         additional_border.Add(points);
         mAdditionalBorders.Add(additional_border);
     }
+    public void addTimers(float bronze, float silver, float gold)
+    {
+        mBronzeTime = bronze;
+        mSilverTime = silver;
+        mGoldTime = gold;
+    }
+    public string getGoalTime(float timer)
+    {
+        if (timer < 0f)
+        {
+            return Utils.getTimeFromFloat(mBronzeTime);
+        }
+        else if (timer < mGoldTime)
+        {
+            return Utils.getTimeFromFloat(mGoldTime);
+        }
+        else if (timer < mSilverTime)
+        {
+            return Utils.getTimeFromFloat(mGoldTime);
+        }
+        else if (timer < mBronzeTime)
+        {
+            return Utils.getTimeFromFloat(mSilverTime);
+        }
+        else
+        {
+            return Utils.getTimeFromFloat(mBronzeTime);
+        }
+    }
+    public Material getGoalMaterial(float timer)
+    {
+        if (timer < 0f)
+        {
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalBronze");
+        }
+        else if (timer < mGoldTime)
+        {
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalGold");
+        }
+        else if (timer < mSilverTime)
+        {
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalGold");
+        }
+        else if (timer < mBronzeTime)
+        {
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalSilver");
+        }
+        else
+        {
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalBronze");
+        }
+    }
 }
 
 public class AdditionalBorder
@@ -313,7 +368,9 @@ public class Levels
     public Color mWorldColorPrincipal_2;
     public Color mWorldColorSecond_1;
     public Color mWorldColorSecond_2;
-
+    public float mBronzeTime = -1f;
+    public float mSilverTime = -1f;
+    public float mGoldTime = -1f;
 
     public static Level level_1_one_star()
     {
@@ -321,6 +378,7 @@ public class Levels
         Level level = new Level("level_1_one_star", 50);
         level.mLevelHelper = "Use the arrows or ZQSD to move.";
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE * 2f));
+        level.addTimers(Utils.getSeconds(0, 6f), Utils.getSeconds(0, 4f), Utils.getSeconds(0, 2f));
         return level;
     }
     public static Level level_1_only_stars()
@@ -335,6 +393,9 @@ public class Levels
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+
+        level.addTimers(Utils.getSeconds(0, 8f), Utils.getSeconds(0, 6f), Utils.getSeconds(0, 4f));
+
         return level;
     }
     public static Level level_1_one_slow_enemy()
@@ -348,6 +409,8 @@ public class Levels
 
         level.mLevelHelper = "You lose if someone hits your trail !";
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+
+        level.addTimers(Utils.getSeconds(0, 10f), Utils.getSeconds(0, 5f), Utils.getSeconds(0, 2.5f));
 
         return level;
     }
@@ -379,6 +442,8 @@ public class Levels
 
         level.mLevelHelper = "Press Space bar to stop moving.<br>Keep pressing to move slowly";
         level.addStar(new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE));
+
+        level.addTimers(Utils.getSeconds(0, 20f), Utils.getSeconds(0, 13f), Utils.getSeconds(0, 8f));
         return level;
     }
     public static Level level_1_4()
@@ -454,6 +519,7 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v10, v11), Utils.STAR_DEFAULT_SCALE * 0.75f));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(v11, v12), Utils.STAR_DEFAULT_SCALE * 0.75f));
 
+        level.addTimers(Utils.getSeconds(0, 20f), Utils.getSeconds(0, 16f), Utils.getSeconds(0, 12f));
         return level;
     }
     public static Level level_1_vertical_enemies_harer()
@@ -498,6 +564,8 @@ public class Levels
         level.addStar(new StarInfo(new Vector3(0.33f, 0.66f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(new Vector3(0.66f, 0.33f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(new Vector3(0.66f, 0.66f), Utils.STAR_DEFAULT_SCALE));
+
+        level.addTimers(Utils.getSeconds(0, 20f), Utils.getSeconds(0, 15f), Utils.getSeconds(0, 10f));
         return level;
     }
     public static Level level_1_demon_line()
@@ -514,6 +582,7 @@ public class Levels
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(Utils.getSeconds(0, 22.5f), Utils.getSeconds(0, 17.5f), Utils.getSeconds(0, 12.5f));
         return level;
     }
     public static Level level_1_demon_square()
@@ -658,6 +727,7 @@ public class Levels
         level.addStar(new StarInfo(3, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(Utils.getSeconds(0, 22f), Utils.getSeconds(0, 18f), Utils.getSeconds(0, 13f));
         return level;
     }
     public static Level level_1_basic_link()
@@ -671,6 +741,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(Utils.getSeconds(0, 18f), Utils.getSeconds(0, 13f), Utils.getSeconds(0, 7.5f));
 
         level.mLevelHelper = "Some enemies can be linked, do not cross it !";
         return level;
@@ -690,6 +761,8 @@ public class Levels
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+
+        level.addTimers(Utils.getSeconds(0, 20f), Utils.getSeconds(0, 16f), Utils.getSeconds(0, 11.5f));
 
         return level;
     }
@@ -725,6 +798,7 @@ public class Levels
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(Utils.getSeconds(0, 40f), Utils.getSeconds(0, 30f), Utils.getSeconds(0, 20f));
         return level;
     }
     public static Level level_1_13()
@@ -2332,6 +2406,59 @@ public class Levels
     {
         levels[idx - 1] = level;
     }
+    public void addTimers(float bronze, float silver, float gold)
+    {
+        mBronzeTime = bronze;
+        mSilverTime = silver;
+        mGoldTime = gold;
+    }
+
+    public string getGoalTime(float timer)
+    {
+        if (timer < 0f)
+        {
+            return Utils.getTimeFromFloat(mBronzeTime);
+        }
+        else if (timer < mGoldTime)
+        {
+            return Utils.getTimeFromFloat(mGoldTime);
+        }
+        else if (timer < mSilverTime)
+        {
+            return Utils.getTimeFromFloat(mGoldTime);
+        }
+        else if (timer < mBronzeTime)
+        {
+            return Utils.getTimeFromFloat(mSilverTime);
+        }
+        else
+        {
+            return Utils.getTimeFromFloat(mBronzeTime);
+        }
+    }
+    public Material getGoalMaterial(float timer)
+    {
+        if (timer < 0f)
+        {
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalBronze");
+        }
+        else if (timer < mGoldTime)
+        {
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalGold");
+        }
+        else if (timer < mSilverTime)
+        {
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalGold");
+        }
+        else if (timer < mBronzeTime)
+        {
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalSilver");
+        }
+        else
+        {
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalBronze");
+        }
+    }
 
 }
 
@@ -2339,7 +2466,6 @@ public class Levels
 public class Worlds
 {
     public static List<Levels> worlds;
-
     private static Levels world_1()
     {
         Levels levels = new Levels(12);
@@ -2355,8 +2481,8 @@ public class Worlds
         levels.addLevel(2, Levels.level_1_only_stars());
         levels.addLevel(3, Levels.level_1_one_slow_enemy());
         levels.addLevel(4, Levels.level_1_vertical_enemies());
-        levels.addLevel(6, Levels.level_1_7());
         levels.addLevel(5, Levels.level_1_3());
+        levels.addLevel(6, Levels.level_1_7());
         //levels.addLevel(4, Levels.level_1_2_medium_enemy_horizontal());
         //levels.addLevel(4, Levels.level_1_4());
         //levels.addLevel(7, Levels.level_1_demon_square()); // Could be removed
@@ -2371,7 +2497,9 @@ public class Worlds
         //levels.addLevel(12, Levels.level_1_13()); // COuld be remvoed too
         //levels.addLevel(2, Levels.level_1_15());
 
-
+        levels.mBronzeTime = Utils.getSeconds(10, 00);
+        levels.mSilverTime = Utils.getSeconds(5, 00);
+        levels.mGoldTime = Utils.getSeconds(2, 30);
 
         return levels;
     }
@@ -2401,6 +2529,9 @@ public class Worlds
         levels.addLevel(11, Levels.level_2_line_basic_with_cross_circle()); // Medium - hard
         levels.addLevel(12, Levels.level_2_triple_triangle()); // HARD
 
+        levels.mBronzeTime = Utils.getSeconds(18, 00);
+        levels.mSilverTime = Utils.getSeconds(12, 00);
+        levels.mGoldTime = Utils.getSeconds(6, 00);
         //levels.addLevel(8, Levels.level_3_Basic_Follower());
         //levels.addLevel(9, Levels.level_3_Double_Follower());
         //levels.addLevel(10, Levels.level_with_driller());
@@ -2437,6 +2568,10 @@ public class Worlds
         levels.addLevel(12, Levels.level_3_Quad_Follower_Square_Link());
         //levels.addLevel(3, Levels.level_3_one_fast_follower());
 
+        levels.mBronzeTime = Utils.getSeconds(20, 00);
+        levels.mSilverTime = Utils.getSeconds(14, 00);
+        levels.mGoldTime = Utils.getSeconds(8, 00);
+
         return levels;
     }
     private static Levels world_4()
@@ -2457,6 +2592,10 @@ public class Worlds
         levels.addLevel(10, Levels.level_4_cross_flyer_link_hexagone());
         levels.addLevel(11, Levels.level_4_five_flyers_linked_2_directions());
         levels.addLevel(12, Levels.level_4_flyer_with_follower());
+
+        levels.mBronzeTime = Utils.getSeconds(24, 00);
+        levels.mSilverTime = Utils.getSeconds(17, 00);
+        levels.mGoldTime = Utils.getSeconds(10, 00);
 
         return levels;
     }
@@ -2479,6 +2618,9 @@ public class Worlds
         levels.addLevel(11, Levels.level_5_double_driller_in_small_area_linked());
         levels.addLevel(12, Levels.level_5_Quad_driller_link_square());
 
+        levels.mBronzeTime = Utils.getSeconds(24, 00);
+        levels.mSilverTime = Utils.getSeconds(17, 00);
+        levels.mGoldTime = Utils.getSeconds(10, 00);
         return levels;
     }
 

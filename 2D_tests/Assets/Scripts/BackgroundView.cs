@@ -52,7 +52,7 @@ public class BackgroundView : MonoBehaviour
             float duration = 2f;
             float intensity = Mathf.PingPong(Time.time / duration, max - min) + min;
             Color new_color = new Color(mLineColorAtStart.r * intensity, mLineColorAtStart.g * intensity, mLineColorAtStart.b * intensity);
-            material.SetColor("_LineColor", new_color);
+            //material.SetColor("_LineColor", new_color);
         }
 
             

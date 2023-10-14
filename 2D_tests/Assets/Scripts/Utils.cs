@@ -369,4 +369,9 @@ public class Utils
 
         return c1_is_connected || c2_is_connected;
     }
+
+    public static float getSeconds(float minute, float second)
+    {
+        return 60f * minute + second;
+    }
 }

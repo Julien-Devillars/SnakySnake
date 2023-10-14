@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Codice.Utils;
 
 public class LevelPanel : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class LevelPanel : MonoBehaviour
     public GameObject mLock;
     public TextMeshProUGUI mTextDeathCounter;
     public TextMeshProUGUI mTextTimer;
+    public GameObject mTimerGoal;
+    public TextMeshProUGUI mTextTimerGoal;
     public static bool mForceDisplay = false;
     // Start is called before the first frame update
     void Start()
@@ -72,9 +75,12 @@ public class LevelPanel : MonoBehaviour
 
         mTextDeathCounter.text = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_death", 0).ToString();
 
-        float timer = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", 0f);
-
+        float timer = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", -1f);
         mTextTimer.text = Utils.getTimeFromFloat(timer);
+
+        Levels current_world = Worlds.worlds[GameControler.currentWorld];
+        mTextTimerGoal.text = current_world.getGoalTime(timer);
+        mTimerGoal.GetComponent<Image>().material = current_world.getGoalMaterial(timer);
 
         foreach (Transform level in mLevels.transform)
         {
