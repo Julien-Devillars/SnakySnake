@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
-using UnityEditor.SearchService;
-using UnityEditor.SceneManagement;
-using UnityEngine.SceneManagement;
 
 public class OptionSliderGamepad : MonoBehaviour
 {
@@ -77,10 +74,10 @@ public class OptionSliderGamepad : MonoBehaviour
             {
                 ES3.Save<bool>($"PlayMode_World{i}_Level{j}_status", has_click);
                 ES3.Save<int>($"PlayMode_World{i}_Level{j}_death", 0);
-                ES3.Save<float>($"PlayMode_World{i}_Level{j}_timer", 0f);
+                ES3.Save<float>($"PlayMode_World{i}_Level{j}_timer", -1f);
             }
             ES3.Save<int>($"PlayMode_World{i}_death", 0);
-            ES3.Save<float>($"PlayMode_World{i}_timer", 0f);
+            ES3.Save<float>($"PlayMode_World{i}_timer", -1f);
 
         }
         has_click = true;

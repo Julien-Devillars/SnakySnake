@@ -1,4 +1,3 @@
-using Codice.CM.Client.Differences;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,9 +35,9 @@ public static class Timer
     public static void SaveLevelTime()
     {
         float time = Time.realtimeSinceStartup - startLevelTimer - totalPauseLevelTimer;
-        float previous_time = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_timer", 9999999f);
+        float previous_time = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_timer", -1f);
         Debug.Log("Level Time : " + time);
-        if (previous_time < time) return;
+        if (previous_time >= 0f && previous_time < time) return;
         Debug.Log("Best -> Saved");
         ES3.Save<float>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_timer", time);
     }
@@ -47,9 +46,9 @@ public static class Timer
         if (!calculateTimer) return;
         float time = Time.realtimeSinceStartup - startWorldTimer - totalPauseWorldTimer;
         Debug.Log("World Time : " + time);
-        float previous_time = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", 9999999f);
+        float previous_time = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", -1f);
         
-        if (previous_time < time) return;
+        if (previous_time >= 0f && previous_time < time) return;
         Debug.Log("Best -> Saved");
         ES3.Save<float>($"PlayMode_World{GameControler.currentWorld}_timer", time);
     }

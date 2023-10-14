@@ -336,9 +336,12 @@ public class Utils
 
     public static string getTimeFromFloat(float time)
     {
+        if(time < 0)
+        {
+            return "- -:- -:- - -";
+        }
         TimeSpan ts = TimeSpan.FromSeconds(time);
         string time_str = string.Format("{0:00}:{1:00}:{2:000}", (int)ts.TotalMinutes, ts.Seconds, ts.Milliseconds);
-        Debug.Log("Time : " + time + " -> " + time_str);
         return time_str;
     }
 
