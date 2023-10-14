@@ -338,7 +338,7 @@ public class Utils
     {
         if(time < 0)
         {
-            return "- -:- -:- - -";
+            return "00:00:000";
         }
         TimeSpan ts = TimeSpan.FromSeconds(time);
         string time_str = string.Format("{0:00}:{1:00}:{2:000}", (int)ts.TotalMinutes, ts.Seconds, ts.Milliseconds);
