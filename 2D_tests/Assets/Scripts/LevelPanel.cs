@@ -14,8 +14,10 @@ public class LevelPanel : MonoBehaviour
     public GameObject mLock;
     public TextMeshProUGUI mTextDeathCounter;
     public TextMeshProUGUI mTextTimer;
-    public GameObject mTimerGoal;
-    public TextMeshProUGUI mTextTimerGoal;
+    public GameObject mChronometer;
+    public TextMeshProUGUI mTextTimerGoalGold;
+    public TextMeshProUGUI mTextTimerGoalSilver;
+    public TextMeshProUGUI mTextTimerGoalBronze;
     public static bool mForceDisplay = false;
     // Start is called before the first frame update
 
@@ -144,12 +146,26 @@ public class LevelPanel : MonoBehaviour
         mTextDeathCounter.text = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_death", 0).ToString();
 
         float timer = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", -1f);
-        mTextTimer.text = Utils.getTimeFromFloat(timer);
+        mTextTimer.text = $"{Utils.getTimeFromFloat(timer)}";
 
         Levels current_world = Worlds.worlds[GameControler.currentWorld];
-        mTextTimerGoal.text = current_world.getGoalTime(timer);
-        mTimerGoal.GetComponent<Image>().material = current_world.getGoalMaterial(timer);
-
+        mTextTimerGoalGold.text = Utils.getTimeFromFloat(current_world.mGoldTime);
+        mTextTimerGoalSilver.text = Utils.getTimeFromFloat(current_world.mSilverTime);
+        mTextTimerGoalBronze.text = Utils.getTimeFromFloat(current_world.mBronzeTime);
+        Material mat = current_world.getGoalMaterial(timer);
+        if (mat == null)
+        {
+            //chronometer_go.GetComponent<Image>().enabled = false;
+            mChronometer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/Icons/ChronometerGray");
+            mChronometer.GetComponent<Image>().color = new Color(0.85f, 0.6f, 0.3f);
+        }
+        else
+        {
+            //chronometer_go.GetComponent<Image>().enabled = true;
+            mChronometer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/Icons/Chronometer");
+            mChronometer.GetComponent<Image>().color = Color.white;
+        }
+        mChronometer.GetComponent<Image>().material = mat;
         foreach (Transform level in mLevels.transform)
         {
             cpt++;

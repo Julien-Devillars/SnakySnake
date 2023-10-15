@@ -43,12 +43,16 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
         {
             GameObject time_go = GameObject.Find("ChronometerText");
             GameObject death_go = GameObject.Find("DeathText");
-            GameObject time_goal_go = GameObject.Find("ChronometerGoal");
-            GameObject time_goal_text_go = GameObject.Find("ChronometerGoalText");
+            GameObject time_goal_gold_text_go = GameObject.Find("ChronometerGoalGoldText");
+            GameObject time_goal_silver_text_go = GameObject.Find("ChronometerGoalSilverText");
+            GameObject time_goal_bronze_text_go = GameObject.Find("ChronometerGoalBronzeText");
+            GameObject chronometer_go = GameObject.Find("Chronometer");
             if (time_go == null) return;
             if (death_go == null) return;
-            if (time_goal_go == null) return; 
-            if (time_goal_text_go == null) return;
+            if (time_goal_gold_text_go == null) return; 
+            if (time_goal_silver_text_go == null) return;
+            if (time_goal_bronze_text_go == null) return;
+            if (chronometer_go == null) return;
             if (transform.childCount != 1) return;
 
             GameObject button_text_go = transform.GetChild(0).gameObject;
@@ -57,25 +61,46 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
 
             TextMeshProUGUI time_text_mesh = time_go.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI death_text_mesh = death_go.GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI time_goal_text_mesh = time_goal_text_go.GetComponent<TextMeshProUGUI>();
+
+            TextMeshProUGUI time_goal_gold_text_mesh = time_goal_gold_text_go.GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI time_goal_silver_text_mesh = time_goal_silver_text_go.GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI time_goal_bronze_text_mesh = time_goal_bronze_text_go.GetComponent<TextMeshProUGUI>();
+            Material mat = null;
             if (flag)
             {
                 death_text_mesh.text = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_Level{current_level_idx}_death", 0).ToString();
                 float timer = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_Level{current_level_idx}_timer", -1f);
-                time_text_mesh.text = Utils.getTimeFromFloat(timer);
+                time_text_mesh.text = $"{Utils.getTimeFromFloat(timer)}";
                 Level current_level = Worlds.getLevel(GameControler.currentWorld, current_level_idx);
-                time_goal_text_mesh.text = current_level.getGoalTime(timer);
-                time_goal_go.GetComponent<Image>().material = current_level.getGoalMaterial(timer);
+                time_goal_gold_text_mesh.text = Utils.getTimeFromFloat(current_level.mGoldTime);
+                time_goal_silver_text_mesh.text = Utils.getTimeFromFloat(current_level.mSilverTime);
+                time_goal_bronze_text_mesh.text = Utils.getTimeFromFloat(current_level.mBronzeTime);
+                mat = current_level.getGoalMaterial(timer);
             }
             else
             {
                 death_text_mesh.text = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_death", 0).ToString();
                 float timer = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", -1f);
-                time_text_mesh.text = Utils.getTimeFromFloat(timer);
+                time_text_mesh.text = $"{Utils.getTimeFromFloat(timer)}";
                 Levels current_world = Worlds.getWorld(GameControler.currentWorld);
-                time_goal_text_mesh.text = current_world.getGoalTime(timer);
-                time_goal_go.GetComponent<Image>().material = current_world.getGoalMaterial(timer);
+                time_goal_gold_text_mesh.text = Utils.getTimeFromFloat(current_world.mGoldTime);
+                time_goal_silver_text_mesh.text = Utils.getTimeFromFloat(current_world.mSilverTime);
+                time_goal_bronze_text_mesh.text = Utils.getTimeFromFloat(current_world.mBronzeTime);
+                mat = current_world.getGoalMaterial(timer);
             }
+            if (mat == null)
+            {
+                //chronometer_go.GetComponent<Image>().enabled = false;
+                chronometer_go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/Icons/ChronometerGray");
+                chronometer_go.GetComponent<Image>().color = new Color(0.85f, 0.6f, 0.3f);
+            }
+            else
+            {
+                //chronometer_go.GetComponent<Image>().enabled = true;
+                chronometer_go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/Icons/Chronometer");
+                chronometer_go.GetComponent<Image>().color = Color.white;
+            }
+            chronometer_go.GetComponent<Image>().material = mat;
         }
     }
     private void highlight()

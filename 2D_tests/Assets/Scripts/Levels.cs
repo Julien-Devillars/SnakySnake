@@ -634,6 +634,7 @@ public class Levels
         level.addStar(new StarInfo(3, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(15f);
         return level;
     }
     public static Level level_1_10()
@@ -2494,7 +2495,7 @@ public class Levels
     {
         if (timer < 0f)
         {
-            return Resources.Load<Material>("Materials/UI/ChronometerGoalBronze");
+            return null;
         }
         else if (timer < mGoldTime)
         {
@@ -2502,15 +2503,15 @@ public class Levels
         }
         else if (timer < mSilverTime)
         {
-            return Resources.Load<Material>("Materials/UI/ChronometerGoalGold");
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalSilver");
         }
         else if (timer < mBronzeTime)
         {
-            return Resources.Load<Material>("Materials/UI/ChronometerGoalSilver");
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalBronze");
         }
         else
         {
-            return Resources.Load<Material>("Materials/UI/ChronometerGoalBronze");
+            return null;
         }
     }
 

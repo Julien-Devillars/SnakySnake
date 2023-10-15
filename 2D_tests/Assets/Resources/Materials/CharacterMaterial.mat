@@ -248,10 +248,10 @@ Material:
     - _SrcBlend: 1
     - _TextureScrollXSpeed: 1
     - _TextureScrollYSpeed: 0
-    - _TwistUvAmount: 1
-    - _TwistUvPosX: 0.5
+    - _TwistUvAmount: 1.88
+    - _TwistUvPosX: 0.522
     - _TwistUvPosY: 0.5
-    - _TwistUvRadius: 0.06
+    - _TwistUvRadius: 1.01
     - _UVSec: 0
     - _WaveAmount: 7
     - _WaveSpeed: 10
