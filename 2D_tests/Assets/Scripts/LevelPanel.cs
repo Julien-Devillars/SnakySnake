@@ -18,10 +18,31 @@ public class LevelPanel : MonoBehaviour
     public TextMeshProUGUI mTextTimerGoal;
     public static bool mForceDisplay = false;
     // Start is called before the first frame update
+
+    private Navigation mDefaultLeftNavigation;
+    private Navigation mDefaultRightNavigation;
+    private Navigation mDefaultBackNavigation;
+
     void Start()
     {
         GameControler.currentWorld = 0;
         GameControler.currentLevel = 0;
+
+        GameObject left = GameObject.Find("LeftLevel");
+        GameObject right = GameObject.Find("RightLevel");
+        GameObject back = GameObject.Find("BackLevel");
+
+        if (left && right && back)
+        {
+            Button left_button = left.GetComponent<Button>();
+            Button right_button = right.GetComponent<Button>();
+            Button back_button = back.GetComponent<Button>();
+
+            mDefaultLeftNavigation = left_button.navigation;
+            mDefaultRightNavigation = right_button.navigation;
+            mDefaultBackNavigation = back_button.navigation;
+        }
+
         display();
     }
 
@@ -52,6 +73,51 @@ public class LevelPanel : MonoBehaviour
         return cpt < 8;
     }
 
+
+    public void changeNavigationOnLock(bool flag)
+    {
+        GameObject left = GameObject.Find("LeftLevel");
+        GameObject right = GameObject.Find("RightLevel");
+        GameObject back = GameObject.Find("BackLevel");
+
+        if (!left) return;
+        if (!right) return;
+        if (!back) return;
+
+        Button left_button = left.GetComponent<Button>();
+        Button right_button = right.GetComponent<Button>();
+        Button back_button = back.GetComponent<Button>();
+
+        if (flag)
+        {
+            Navigation new_left_navigation = new Navigation();
+            Navigation new_right_navigation = new Navigation();
+            Navigation new_back_navigation = new Navigation();
+
+            new_left_navigation.mode = Navigation.Mode.Explicit;
+            new_right_navigation.mode = Navigation.Mode.Explicit;
+            new_back_navigation.mode = Navigation.Mode.Explicit;
+
+            new_left_navigation = left_button.navigation;
+            new_right_navigation = right_button.navigation;
+            new_back_navigation = back_button.navigation;
+
+            new_left_navigation.selectOnRight = right_button;
+            new_right_navigation.selectOnLeft = left_button;
+            new_back_navigation.selectOnUp = left_button;
+
+            right_button.navigation = new_right_navigation;
+            left_button.navigation = new_left_navigation;
+            back_button.navigation = new_back_navigation;
+        }
+        else
+        {
+            left_button.navigation = mDefaultLeftNavigation;
+            right_button.navigation = mDefaultRightNavigation;
+            back_button.navigation = mDefaultBackNavigation;
+        }
+    }
+
     public void display()
     {
         //Level current_level = Levels.levels[mDisplayIndex];
@@ -64,11 +130,13 @@ public class LevelPanel : MonoBehaviour
         {
             mLock.SetActive(true);
             mLevels.SetActive(false);
+            changeNavigationOnLock(true);
         }
         else
         {
             mLock.SetActive(false);
             mLevels.SetActive(true);
+            changeNavigationOnLock(false);
         }
 
         int cpt = 0;
