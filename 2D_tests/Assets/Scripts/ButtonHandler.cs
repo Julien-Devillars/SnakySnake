@@ -29,12 +29,14 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
             mMaterial.SetColor("_GlowColor", mSelectedColor);
             mMaterial.SetFloat("_Glow", mSelectedIntensity);
             GetComponent<Image>().color = Color.blue;
+            transform.localScale = new Vector3(1.05f, 1.05f, 1.05f); 
         }
         else
         {
             mMaterial.SetColor("_GlowColor", mStartColor);
             mMaterial.SetFloat("_Glow", mStartIntensity);
             GetComponent<Image>().color = Color.white;
+            transform.localScale = new Vector3(1f, 1f, 1f);
         }
 
         if (gameObject.name == "Level")
