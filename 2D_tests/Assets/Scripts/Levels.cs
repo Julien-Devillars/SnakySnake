@@ -300,6 +300,12 @@ public class Level
         mSilverTime = silver;
         mGoldTime = gold;
     }
+    public void addTimers(float gold)
+    {
+        mBronzeTime = gold * 3f;
+        mSilverTime = gold * 2f;
+        mGoldTime = gold;
+    }
     public string getGoalTime(float timer)
     {
         if (timer < 0f)
@@ -976,6 +982,7 @@ public class Levels
 
         level.mLevelHelper = "New enemy : <br>Changes directions in cycles !";
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(7f);
         return level;
     }
     public static Level level_2_circle_show_form()
@@ -989,6 +996,7 @@ public class Levels
 
         level.mLevelHelper = "Try to understand their pattern.";
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(2.5f);
         return level;
     }
     public static Level level_2_basic_line()
@@ -1004,6 +1012,7 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(4, 5), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 6), Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(20f, 15f, 9f);
         return level;
     }
 
@@ -1024,6 +1033,7 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 3), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 7), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 9), Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(5f);
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         return level;
     }
@@ -1045,6 +1055,7 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 7), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 9), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(6f);
         return level;
     }
 
@@ -1064,6 +1075,7 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(4,8), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(8,6), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(6,2), Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(25f);
         return level;
     }
     public static Level level_2_basic_square_with_link()
@@ -1082,6 +1094,7 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(4, 8), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(8, 6), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(6, 2), Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(9f);
         return level;
     }
     public static Level level_2_triple_triangle()
@@ -1105,6 +1118,7 @@ public class Levels
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 9), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(7f);
         return level;
     }
     public static Level level_2_three_protection_with_diff_speed()
@@ -1121,6 +1135,7 @@ public class Levels
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(15f);
         return level;
     }
     public static Level level_2_three_protection_with_diff_speed_with_link()
@@ -1137,6 +1152,7 @@ public class Levels
         level.addStar(new StarInfo(4, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(12f);
         return level;
     }
 
@@ -1165,6 +1181,7 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 8), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 6), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 2), Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(13f);
         return level;
     }
     public static Level level_2_circle_enemy_hitting_the_border()
@@ -1367,6 +1384,7 @@ public class Levels
 
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 2), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 8), Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(10f);
         return level;
     }
     public static Level level_2_lot_of_speed()
@@ -1607,6 +1625,7 @@ public class Levels
         float speed = 8f;
         level.addEnemy(new EnemyFollowerInfo(5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(7.5f);
         return level;
     }
     public static Level level_3_Basic_Follower_moving()
@@ -1617,6 +1636,7 @@ public class Levels
         level.addEnemy(new EnemyFollowerInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, true));
         
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(3.5f);
         return level;
     }
     public static Level level_3_Double_Follower()
@@ -1631,6 +1651,7 @@ public class Levels
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(2.5f);
         return level;
     }
     public static Level level_3_Double_Follower_split_in_2()
@@ -1647,6 +1668,7 @@ public class Levels
         level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
 
         level.addTrail(new Vector3(0.5f, 0f), new Vector3(0.5f, 1f));
+        level.addTimers(7.5f);
         return level;
     }
     public static Level level_3_Double_Follower_Link()
@@ -1659,6 +1681,7 @@ public class Levels
 
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 2), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 8), Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(5f);
         return level;
     }
     public static Level level_3_Basic_Follower_Faster()
@@ -1672,6 +1695,7 @@ public class Levels
 
         level.addTrail(new Vector3(0.2f, 0.2f), new Vector3(0.2f, 0.4f), new Vector3(0.4f, 0.4f), new Vector3(0.4f, 0.2f), new Vector3(0.2f, 0.2f));
         level.addTrail(new Vector3(0.8f, 0.8f), new Vector3(0.8f, 0.6f), new Vector3(0.6f, 0.6f), new Vector3(0.6f, 0.8f), new Vector3(0.8f, 0.8f));
+        level.addTimers(11.5f);
         return level;
     }
     public static Level level_3_Triple_Follower()
@@ -1686,6 +1710,7 @@ public class Levels
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(7, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(5f);
         return level;
     }
     public static Level level_3_Quad_Follower()
@@ -1703,6 +1728,7 @@ public class Levels
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(12.5f);
         return level;
     }
     public static Level level_3_Quad_Follower_In_Cell_Move()
@@ -1722,6 +1748,7 @@ public class Levels
 
         level.addTrail(new Vector3(0.5f, 0.0f), new Vector3(0.5f, 1.0f));
         level.addTrail(new Vector3(0.0f, 0.5f), new Vector3(1.0f, 0.5f));
+        level.addTimers(11.5f);
         return level;
     }
     public static Level level_3_Quad_Follower_Cross_Link()
@@ -1739,6 +1766,7 @@ public class Levels
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(11.5f);
         return level;
     }
     public static Level level_3_Quad_Follower_Square_Link()
@@ -1756,6 +1784,7 @@ public class Levels
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
+        level.addTimers(10.5f);
         return level;
     }
     public static Level level_3_Quad_Follower_split_in_2()
@@ -1773,6 +1802,7 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(3, 6), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(9, 6), Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(10f);
         level.addTrail(new Vector3(0.5f, 0f), new Vector3(0.5f, 1f));
         return level;
     }
@@ -1812,6 +1842,7 @@ public class Levels
         level.addTrail(new Vector3(0.35f, 0f), new Vector3(0.35f, 1f));
         level.addTrail(new Vector3(0.65f, 0f), new Vector3(0.65f, 1f));
 
+        level.addTimers(3f);
         level.mLevelHelper = "New enemy : It can cross the borders.";
         return level;
     }
@@ -1836,6 +1867,7 @@ public class Levels
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(10f);
         return level;
     }
     public static Level level_4_two_horizontale_flyer_linked()
@@ -1856,6 +1888,7 @@ public class Levels
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(4f);
         return level;
     }
     public static Level level_4_diag_flyer()
@@ -1882,6 +1915,7 @@ public class Levels
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(5f);
         return level;
     }
     public static Level level_4_flyer_in_line()
@@ -1906,6 +1940,7 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(5, 6), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(2.5f);
         return level;
     }
     public static Level level_4_cross_flyer_link_cross()
@@ -1929,6 +1964,7 @@ public class Levels
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(9f);
         return level;
     }
     public static Level level_4_cross_flyer_link_square()
@@ -1953,6 +1989,7 @@ public class Levels
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(9f);
         return level;
     }
     public static Level level_4_three_flyers_linked()
@@ -1984,6 +2021,7 @@ public class Levels
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(5.5f);
         return level;
     }
     public static Level level_4_cross_flyer_link_hexagone()
@@ -2008,6 +2046,7 @@ public class Levels
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(6.5f);
         return level;
     }
 
@@ -2044,6 +2083,7 @@ public class Levels
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(6f);
         return level;
     }
     public static Level level_4_five_flyers_linked_2_directions()
@@ -2092,6 +2132,7 @@ public class Levels
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(9, Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(30f);
         return level;
     }
 
@@ -2116,6 +2157,7 @@ public class Levels
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(7, 5, 0.25f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(Utils.getMidRelativePositionFromPosition(9, 5, 0.25f), Utils.STAR_DEFAULT_SCALE));
 
+        level.addTimers(12.5f);
         return level;
     }
 
@@ -2135,6 +2177,7 @@ public class Levels
 
         level.mLevelHelper = "New Enemy : It will chase you throught the border.";
 
+        level.addTimers(3.5f);
         return level;
     }
     public static Level level_5_Double_driller()
@@ -2159,6 +2202,7 @@ public class Levels
 
         level.mLevelHelper = "Be careful to not get caught up.";
 
+        level.addTimers(3f);
         return level;
     }
     public static Level level_5_Quad_driller()
@@ -2178,6 +2222,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
 
+        level.addTimers(3.5f);
         return level;
     }
     public static Level level_5_Double_driller_link()
@@ -2195,6 +2240,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
 
+        level.addTimers(6.5f);
         return level;
     }
     public static Level level_5_Quad_driller_link_cross()
@@ -2214,6 +2260,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
 
+        level.addTimers(17f);
         return level;
     }
     public static Level level_5_Quad_driller_link_square()
@@ -2233,6 +2280,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
 
+        level.addTimers(40f);
         return level;
     }
     public static Level level_5_driller_fast()
@@ -2249,6 +2297,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Dummy, Utils.getMidRelativePositionFromPosition(9, 5), Vector2.zero, Utils.ENEMY_DEFAULT_SCALE));
         level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
 
+        level.addTimers(5f);
         return level;
     }
     public static Level level_5_quad_driller_split_in_2()
@@ -2271,6 +2320,7 @@ public class Levels
 
         level.addTrail(new Vector3(0.5f, 0f), new Vector3(0.5f, 1f));
 
+        level.addTimers(4f);
         return level;
     }
     public static Level level_5_quad_driller_split_in_2_linked()
@@ -2292,6 +2342,7 @@ public class Levels
         level.addStars(1, 4, 7, 3, 6, 9);
         level.addTrail(new Vector3(0.5f, 0f), new Vector3(0.5f, 1f));
 
+        level.addTimers(13.5f);
         return level;
     }
     public static Level level_5_quad_driller_in_small_area()
@@ -2314,6 +2365,7 @@ public class Levels
 
         level.addTrail(new Vector3(0.3f, 0.3f), new Vector3(0.3f, 0.7f), new Vector3(0.7f, 0.7f), new Vector3(0.7f, 0.3f), new Vector3(0.3f, 0.3f));
 
+        level.addTimers(3f);
         return level;
     }
     public static Level level_5_double_driller_in_small_area_linked()
@@ -2334,6 +2386,7 @@ public class Levels
 
         level.addTrail(new Vector3(0.3f, 0.3f), new Vector3(0.3f, 0.7f), new Vector3(0.7f, 0.7f), new Vector3(0.7f, 0.3f), new Vector3(0.3f, 0.3f));
 
+        level.addTimers(2f);
         return level;
     }
     public static Level level_5_quad_driller_with_follower_linked()
@@ -2356,6 +2409,7 @@ public class Levels
             Utils.getMidRelativePositionFromPosition(7, 5),
             Utils.getMidRelativePositionFromPosition(9, 5));
 
+        level.addTimers(40f);
         return level;
     }
 
@@ -2557,8 +2611,8 @@ public class Worlds
         levels.addLevel(1, Levels.level_3_Double_Follower());
         levels.addLevel(2, Levels.level_3_Basic_Follower_moving());
         levels.addLevel(3, Levels.level_3_Basic_Follower());
-        levels.addLevel(4, Levels.level_3_Double_Follower_split_in_2()); 
-        levels.addLevel(5, Levels.level_3_Triple_Follower());
+        levels.addLevel(4, Levels.level_3_Triple_Follower());
+        levels.addLevel(5, Levels.level_3_Double_Follower_split_in_2()); 
         levels.addLevel(6, Levels.level_3_Double_Follower_Link());
         levels.addLevel(7, Levels.level_3_Quad_Follower());
         levels.addLevel(8, Levels.level_3_Quad_Follower_split_in_2());
@@ -2618,9 +2672,9 @@ public class Worlds
         levels.addLevel(11, Levels.level_5_double_driller_in_small_area_linked());
         levels.addLevel(12, Levels.level_5_Quad_driller_link_square());
 
-        levels.mBronzeTime = Utils.getSeconds(24, 00);
+        levels.mBronzeTime = Utils.getSeconds(25, 00);
         levels.mSilverTime = Utils.getSeconds(17, 00);
-        levels.mGoldTime = Utils.getSeconds(10, 00);
+        levels.mGoldTime = Utils.getSeconds(12, 00);
         return levels;
     }
 
