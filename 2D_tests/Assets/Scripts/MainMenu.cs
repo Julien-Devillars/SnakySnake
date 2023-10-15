@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System;
+using static Codice.CM.Common.CmCallContext;
 
 [System.Serializable]
 public struct ButtonWithSelect
@@ -57,7 +58,13 @@ public class MainMenu : MonoBehaviour
 
         mDefaultInputActions.UI.Navigate.performed += ctx =>
         {
-            if(EventSystem.current.currentSelectedGameObject == null)
+            GameObject selected = EventSystem.current.currentSelectedGameObject;
+            if (selected != null && selected.GetComponent<Slider>())
+            {
+                selected.transform.parent.gameObject.GetComponent<Button>().Select();
+                return;
+            }
+            if (selected == null || selected.name == "Text")
             {
                 mMenusWithSelected[mPreviousIndexMenu].mButton.Select();
             }

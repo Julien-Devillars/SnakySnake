@@ -397,7 +397,6 @@ MonoBehaviour:
   mSliderMusic: {fileID: 7568235028689365275}
   mButtonLuminosity: {fileID: 8650671637971838339}
   mSliderLuminosity: {fileID: 7348894468356021701}
-  mClearLevel: {fileID: 0}
 --- !u!1 &7939901105583503298
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,7 +898,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 1, g: 1, b: 0, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1154,7 +1153,7 @@ PrefabInstance:
       objectReference: {fileID: 8650671637971838339}
     - target: {fileID: 4560769499874639321, guid: 327837dfb65141d49a4f7a7fb6e8869c, type: 3}
       propertyPath: m_Colors.m_SelectedColor.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4560769499874639321, guid: 327837dfb65141d49a4f7a7fb6e8869c, type: 3}
       propertyPath: m_Colors.m_SelectedColor.g

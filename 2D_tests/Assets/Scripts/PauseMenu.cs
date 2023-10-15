@@ -36,19 +36,12 @@ private void Awake()
         mPlayerControl = new PlayerControl();
         mDefaultInputActions.UI.Cancel.performed += ctx =>
         {
-            if (mMainMenu.activeSelf)
-            {
-                Resume();
-            }
-        };
-        mDefaultInputActions.UI.Cancel.performed += ctx =>
-        {
             if (mOptionMenu.activeSelf)
             {
                 BackOptions();
             }
         };
-        mPlayerControl.PlayerController.Escape.started += ctx =>
+        mDefaultInputActions.UI.Cancel.performed += ctx =>
         {
             if (mIsPaused)
             {
@@ -63,10 +56,28 @@ private void Awake()
         {
             mAudioSubmitBack.Play();
         };
-        //mDefaultInputActions.UI.Cancel.performed += ctx =>
-        //{
-        //    if (mPreviousSelected != null) mAudioSubmitBack.Play();
-        //};
+        mDefaultInputActions.UI.Navigate.performed += ctx =>
+        {
+            GameObject selected = EventSystem.current.currentSelectedGameObject;
+            Debug.Log(selected.name);
+            if (selected != null && selected.GetComponent<ButtonHandler>()) return;
+            if (selected != null && selected.GetComponent<Slider>())
+            {
+                selected.transform.parent.gameObject.GetComponent<Button>().Select();
+                return;
+            }
+            if (selected == null || selected.name == "Text")// || (selected.GetComponent<ButtonHandler>() == null && selected.GetComponent<SliderHandler>() == null))
+            {
+                if(mMainMenu.activeSelf)
+                {
+                    mMainMenuButtonFirstSelected.Select();
+                }
+                else if (mOptionMenu.activeSelf)
+                {
+                    mOptionMenuButtonFirstSelected.Select();
+                }
+            }
+        };
     }
     private void Start()
     {
