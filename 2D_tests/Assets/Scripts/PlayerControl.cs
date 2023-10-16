@@ -98,6 +98,24 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RightPanel"",
+                    ""type"": ""Button"",
+                    ""id"": ""63dcb827-6a84-43eb-9b27-7a2a6a3d8b7e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftPanel"",
+                    ""type"": ""Button"",
+                    ""id"": ""64377b56-5486-456f-8d8f-35619026baea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -496,6 +514,116 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""action"": ""YStick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b5b5294-769f-477a-aa81-0605c324b597"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""73f0a774-b2ce-48d8-ba58-b4c4aaf7d294"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1e8d3a1-adff-4d61-b2da-ff65ae56197a"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f50214c7-8447-4418-b200-139e82f98d55"",
+                    ""path"": ""<XInputController>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b84b9599-ecd7-497c-b070-1aafd3bf8ae2"",
+                    ""path"": ""<XInputController>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""375cc66e-fc06-4c5e-8a63-4b62d21a1265"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""506778e6-56ba-4838-afe3-7767341ccfbe"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8799c33b-7989-429e-8f33-ad5355473322"",
+                    ""path"": ""<XInputController>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98dad5d4-9221-4db3-876d-bf48552c3b75"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a4aa86c-a656-4264-9c1d-a289499f771b"",
+                    ""path"": ""<XInputController>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -512,6 +640,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_PlayerController_Escape = m_PlayerController.FindAction("Escape", throwIfNotFound: true);
         m_PlayerController_XStick = m_PlayerController.FindAction("XStick", throwIfNotFound: true);
         m_PlayerController_YStick = m_PlayerController.FindAction("YStick", throwIfNotFound: true);
+        m_PlayerController_RightPanel = m_PlayerController.FindAction("RightPanel", throwIfNotFound: true);
+        m_PlayerController_LeftPanel = m_PlayerController.FindAction("LeftPanel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -581,6 +711,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerController_Escape;
     private readonly InputAction m_PlayerController_XStick;
     private readonly InputAction m_PlayerController_YStick;
+    private readonly InputAction m_PlayerController_RightPanel;
+    private readonly InputAction m_PlayerController_LeftPanel;
     public struct PlayerControllerActions
     {
         private @PlayerControl m_Wrapper;
@@ -593,6 +725,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @Escape => m_Wrapper.m_PlayerController_Escape;
         public InputAction @XStick => m_Wrapper.m_PlayerController_XStick;
         public InputAction @YStick => m_Wrapper.m_PlayerController_YStick;
+        public InputAction @RightPanel => m_Wrapper.m_PlayerController_RightPanel;
+        public InputAction @LeftPanel => m_Wrapper.m_PlayerController_LeftPanel;
         public InputActionMap Get() { return m_Wrapper.m_PlayerController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -626,6 +760,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @YStick.started += instance.OnYStick;
             @YStick.performed += instance.OnYStick;
             @YStick.canceled += instance.OnYStick;
+            @RightPanel.started += instance.OnRightPanel;
+            @RightPanel.performed += instance.OnRightPanel;
+            @RightPanel.canceled += instance.OnRightPanel;
+            @LeftPanel.started += instance.OnLeftPanel;
+            @LeftPanel.performed += instance.OnLeftPanel;
+            @LeftPanel.canceled += instance.OnLeftPanel;
         }
 
         private void UnregisterCallbacks(IPlayerControllerActions instance)
@@ -654,6 +794,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @YStick.started -= instance.OnYStick;
             @YStick.performed -= instance.OnYStick;
             @YStick.canceled -= instance.OnYStick;
+            @RightPanel.started -= instance.OnRightPanel;
+            @RightPanel.performed -= instance.OnRightPanel;
+            @RightPanel.canceled -= instance.OnRightPanel;
+            @LeftPanel.started -= instance.OnLeftPanel;
+            @LeftPanel.performed -= instance.OnLeftPanel;
+            @LeftPanel.canceled -= instance.OnLeftPanel;
         }
 
         public void RemoveCallbacks(IPlayerControllerActions instance)
@@ -681,5 +827,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnEscape(InputAction.CallbackContext context);
         void OnXStick(InputAction.CallbackContext context);
         void OnYStick(InputAction.CallbackContext context);
+        void OnRightPanel(InputAction.CallbackContext context);
+        void OnLeftPanel(InputAction.CallbackContext context);
     }
 }

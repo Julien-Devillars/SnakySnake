@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class LevelPanel : MonoBehaviour
 {
@@ -24,6 +26,46 @@ public class LevelPanel : MonoBehaviour
     private Navigation mDefaultRightNavigation;
     private Navigation mDefaultBackNavigation;
 
+    private PlayerControl mPlayerControlInput;
+    public GameObject mRightSelectedButton;
+    public GameObject mLeftSelectedButton;
+
+    private void Awake()
+    {
+        mPlayerControlInput = new PlayerControl();
+        mPlayerControlInput.PlayerController.LeftPanel.performed += ctx =>
+        {
+            GameObject selected = EventSystem.current.currentSelectedGameObject;
+            onLeft();
+            playSound("MenuUINavigate");
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(selected.activeInHierarchy ? selected : mLeftSelectedButton);
+        };
+        mPlayerControlInput.PlayerController.RightPanel.performed += ctx =>
+        {
+            GameObject selected = EventSystem.current.currentSelectedGameObject;
+            onRight();
+            playSound("MenuUINavigate");
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(selected.activeInHierarchy ? selected : mRightSelectedButton);
+            //EventSystem.current.SetSelectedGameObject(mDefaultSelectedButton);
+        };
+    }
+    private void playSound(string go_str)
+    {
+        GameObject sound = GameObject.Find(go_str);
+        if (!sound) return;
+        sound.GetComponent<AudioSource>().Play();
+    }
+    private void OnEnable()
+    {
+        mPlayerControlInput.PlayerController.Enable();
+    }
+
+    private void OnDisable()
+    {
+        mPlayerControlInput.PlayerController.Disable();
+    }
     void Start()
     {
         GameControler.currentWorld = 0;

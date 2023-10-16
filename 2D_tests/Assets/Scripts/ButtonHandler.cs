@@ -20,6 +20,14 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
         mStartColor = mMaterial.GetColor("_GlowColor");
         mStartIntensity = mMaterial.GetFloat("_Glow");
     }
+    private void OnEnable()
+    {
+        highlight(false);
+    }
+    //private void OnDisable()
+    //{
+    //    highlight(false);
+    //}
 
     private void highlight(bool flag)
     {
