@@ -7,7 +7,6 @@ using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System;
-using static Codice.CM.Common.CmCallContext;
 
 [System.Serializable]
 public struct ButtonWithSelect

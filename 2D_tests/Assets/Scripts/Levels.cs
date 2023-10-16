@@ -333,7 +333,7 @@ public class Level
     {
         if (timer < 0f)
         {
-            return Resources.Load<Material>("Materials/UI/ChronometerGoalBronze");
+            return null;
         }
         else if (timer < mGoldTime)
         {
@@ -341,15 +341,15 @@ public class Level
         }
         else if (timer < mSilverTime)
         {
-            return Resources.Load<Material>("Materials/UI/ChronometerGoalGold");
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalSilver");
         }
         else if (timer < mBronzeTime)
         {
-            return Resources.Load<Material>("Materials/UI/ChronometerGoalSilver");
+            return Resources.Load<Material>("Materials/UI/ChronometerGoalBronze");
         }
         else
         {
-            return Resources.Load<Material>("Materials/UI/ChronometerGoalBronze");
+            return null;
         }
     }
 }

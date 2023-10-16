@@ -11,6 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: a36b7719ff0465b42ab1407d67672c5f, type: 3}
   m_ValidKeywords:
   - CONTRAST_ON
+  - HSV_ON
   - POSTERIZEOUTLINE_ON
   m_InvalidKeywords:
   - _POSTERIZEOUTLINE_ON
