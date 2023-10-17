@@ -14,6 +14,7 @@ public class Trail : MonoBehaviour
     Color mEndColor = new Color(249 / 255f, 152 / 255f, 29 / 255f);
     public bool mIsFake;
     private LineRenderer lineRenderer;
+    private Animator mAnimation;
     void Awake()
     {
         //gameObject.name = "Trail";
@@ -48,22 +49,21 @@ public class Trail : MonoBehaviour
 
         // Set Material
         //Material red_mat = new Material(Shader.Find("Sprites/Default"));
-        if(Utils.SHADER_ON)
-        {
-            lineRenderer.material = (Material)Resources.Load("Shaders/Trail", typeof(Material));
-        }
-        else
-        {
-            lineRenderer.material = (Material)Resources.Load("Materials/Trail", typeof(Material));
-        }
+        lineRenderer.material = new Material(Resources.Load<Material>("Shaders/Trail"));
         //red_mat.SetColor("_Color", line_color);
         mHasBeenUpdated = false;
         mIsFake = false;
+        mAnimation = gameObject.AddComponent<Animator>();
+        mAnimation.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Trail");
     }
 
     void Update()
     {
         updateTrailPoint();
+        if (GameControler.status == GameControler.GameStatus.Lose)
+        {
+            mAnimation.SetTrigger("Death");
+        }
     }
 
     public void forceUpdateTrailPoint()

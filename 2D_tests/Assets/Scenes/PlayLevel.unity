@@ -5163,6 +5163,7 @@ MonoBehaviour:
   mNextLevelButton: {fileID: 1018593699494808637}
   mMenu: {fileID: 5374340350203286249}
   mTransitionAnimation: {fileID: 6646949641763166916}
+  mCharacterDeathAnimation: {fileID: 2066144166}
   mFinish: 0
   mDeathAudio: {fileID: 393421237}
 --- !u!1 &4164901210153676208
