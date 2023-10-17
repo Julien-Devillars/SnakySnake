@@ -47,6 +47,7 @@ public class EnemyFollower : Enemy
     new private void FixedUpdate()
     {
         if (Utils.GAME_STOPPED) return;
+        if (GameControler.status == GameControler.GameStatus.Lose) return;
 
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
 

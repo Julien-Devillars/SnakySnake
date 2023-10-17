@@ -5,7 +5,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UIElements;
 using UnityEngine.InputSystem;
-
+using System.Runtime.CompilerServices;
 
 public class CharacterBehavior : MonoBehaviour
 {
@@ -261,6 +261,7 @@ public class CharacterBehavior : MonoBehaviour
     {
         if (Utils.GAME_STOPPED) return;
         if (GameControler.status == GameControler.GameStatus.Waiting) return;
+        if (GameControler.status == GameControler.GameStatus.Lose) return;
 
         Background current_bg = GetBackground(transform.position);
         Border current_border = GetBorder(transform.position);
@@ -578,6 +579,7 @@ public class CharacterBehavior : MonoBehaviour
     {
         if (mTrailPoints.Count == 0)
             return;
+        if (GameControler.status == GameControler.GameStatus.Lose) return;
         Border.mOnDeleteLine = true;
         fixLastTrailIfNeeded();
 

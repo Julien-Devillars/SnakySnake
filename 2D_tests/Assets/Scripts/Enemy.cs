@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
     {
         if (Utils.GAME_STOPPED) return;
         if (GameControler.status == GameControler.GameStatus.Waiting) return;
+        if (GameControler.status == GameControler.GameStatus.Lose) return;
         gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
     }
 

@@ -11,12 +11,14 @@ public class EndLevel : MonoBehaviour
     public Button mNextLevelButton;
     public GameObject mMenu;
     public Animator mTransitionAnimation;
+    public Animator mCharacterDeathAnimation;
     public bool mFinish;
+    public AudioSource mDeathAudio;
     void Start()
     {
         mMenu.SetActive(false);
         //mNextLevelButton.interactable = true;
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         GameControler.status = GameControler.GameStatus.InProgress;
         mFinish = false;
     }
@@ -34,7 +36,7 @@ public class EndLevel : MonoBehaviour
         }
         if(!mFinish)
         {
-            Time.timeScale = 0f;    
+            //Time.timeScale = 0f;    
             mFinish = true;
         }
         else
@@ -50,6 +52,8 @@ public class EndLevel : MonoBehaviour
         if (GameControler.status == GameControler.GameStatus.Lose)
         {
             Timer.addDeath();
+            mDeathAudio.Play();
+            mCharacterDeathAnimation.SetTrigger("Death");
             StartCoroutine(Replay());
         }
     }
@@ -89,7 +93,7 @@ public class EndLevel : MonoBehaviour
     IEnumerator LoadLevel(string level_name)
     {
         GameControler.status = GameControler.GameStatus.Waiting;
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         mTransitionAnimation.SetTrigger("FadeOut");
         yield return new WaitForSecondsRealtime(0.15f);
         if(!mIsLoadingLevel)
