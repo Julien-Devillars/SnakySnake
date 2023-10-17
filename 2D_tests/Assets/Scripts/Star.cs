@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Star : MonoBehaviour
@@ -9,6 +10,8 @@ public class Star : MonoBehaviour
 
     private Vector3 mMinPos;
     private Vector3 mMaxPos;
+    private Animator mAnimator;
+    private bool active = true;
 
     private void Awake()
     {
@@ -20,6 +23,10 @@ public class Star : MonoBehaviour
 
         mMinPos = new Vector3(-cam_width, -cam_height, 0);
         mMaxPos = new Vector3(cam_width, cam_height, 0);
+        GetComponent<SpriteRenderer>().material = new Material(GetComponent<SpriteRenderer>().material);
+        mAnimator = gameObject.AddComponent<Animator>();
+        mAnimator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Star");
+        active = true;
     }
     void Start()
     {
@@ -42,12 +49,20 @@ public class Star : MonoBehaviour
         GameObject character = GameObject.Find(Utils.CHARACTER);
         SpriteRenderer character_sprite_renderer = character.GetComponent<SpriteRenderer>();
         SpriteRenderer flag_sprite_renderer = GetComponent<SpriteRenderer>();
-        if (flag_sprite_renderer.bounds.Intersects(character_sprite_renderer.bounds) )//|| Utils.allPointsAreInBackgroundsWithoutEnemies(points_to_check))
+        if (active && flag_sprite_renderer.bounds.Intersects(character_sprite_renderer.bounds) )//|| Utils.allPointsAreInBackgroundsWithoutEnemies(points_to_check))
         {
-            gameObject.SetActive(false);
+            AudioSource audio = transform.parent.GetComponent<AudioSource>();
+            if(audio)
+            {
+                audio.volume = Mathf.Lerp(0f, 0.5f, ES3.Load<float>("VolumeSlider", 0.5f));
+                audio.pitch = Random.Range(0.85f, 1f);
+                audio.Play();
+            }
             //flag = true;
             //SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
             //sprite_renderer.material.color = Color.red;
+            mAnimator.SetTrigger("Death");
+            active = false;
         }
     }
 

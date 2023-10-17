@@ -23,7 +23,7 @@ public class StarsVictory : MonoBehaviour
 
         foreach (Transform star_child in transform)
         {
-            if (star_child.gameObject.activeSelf) return;
+            if (star_child.gameObject.GetComponent<SpriteRenderer>().enabled) return;
         }
         
 
