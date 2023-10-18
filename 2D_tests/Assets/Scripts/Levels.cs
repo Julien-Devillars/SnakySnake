@@ -374,6 +374,7 @@ public class Levels
     public Color mWorldColorPrincipal_2;
     public Color mWorldColorSecond_1;
     public Color mWorldColorSecond_2;
+    public float mWorldHue = 0f;
     public float mBronzeTime = -1f;
     public float mSilverTime = -1f;
     public float mGoldTime = -1f;
@@ -2529,8 +2530,9 @@ public class Worlds
         levels.mWorldMusic = "Synthwave/Countach";
         levels.mWorldColorPrincipal_1 = Color.magenta;
         levels.mWorldColorPrincipal_2 = Color.cyan;
-        levels.mWorldColorSecond_1 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
-        levels.mWorldColorSecond_2 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
+        levels.mWorldColorSecond_1 = new Color(1f, 0.15f, 0f);
+        levels.mWorldColorSecond_2 = Color.yellow;
+        levels.mWorldHue = 0f;
 
         levels.addLevel(1, Levels.level_1_one_star());
         levels.addLevel(2, Levels.level_1_only_stars());
@@ -2564,10 +2566,11 @@ public class Worlds
 
         levels.levels_name = "World 2 - Galaxy";
         levels.mWorldMusic = "Synthwave/20 - Galaxy";
-        levels.mWorldColorPrincipal_1 = Color.cyan;
-        levels.mWorldColorPrincipal_2 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
+        levels.mWorldColorPrincipal_1 = Color.yellow;
+        levels.mWorldColorPrincipal_2 = new Color(1f, 0.15f, 0f);
         levels.mWorldColorSecond_1 = Color.magenta;
         levels.mWorldColorSecond_2 = Color.cyan;
+        levels.mWorldHue = 155f;
         //levels.addLevel(Levels.level_1_1());
         //levels.addLevel(Levels.level_1_2());
         levels.addLevel(1, Levels.level_2_basic_square_circle());
@@ -2609,10 +2612,11 @@ public class Worlds
         levels.levels_name = "World 3 - Dangerous";
         levels.mWorldMusic = "Synthwave/32 - Dangerous";
 
-        levels.mWorldColorPrincipal_1 = Color.green;
-        levels.mWorldColorPrincipal_2 = Color.magenta;
-        levels.mWorldColorSecond_1 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
-        levels.mWorldColorSecond_2 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
+        levels.mWorldColorPrincipal_1 = Color.red;
+        levels.mWorldColorPrincipal_2 = new Color(1f, 0f, 0.75f);
+        levels.mWorldColorSecond_1 = Color.blue;
+        levels.mWorldColorSecond_2 = Color.cyan;
+        levels.mWorldHue = 280;
 
         levels.addLevel(1, Levels.level_3_Double_Follower());
         levels.addLevel(2, Levels.level_3_Basic_Follower_moving());
@@ -2640,10 +2644,11 @@ public class Worlds
         levels.levels_name = "World 4 - Last Stop";
         levels.mWorldMusic = "Synthwave/Last Stop";
 
-        levels.mWorldColorPrincipal_1 = Color.yellow;
-        levels.mWorldColorPrincipal_2 = Color.magenta;
-        levels.mWorldColorSecond_1 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
-        levels.mWorldColorSecond_2 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
+        levels.mWorldColorPrincipal_1 = new Color(1f, 0f, 0.75f);
+        levels.mWorldColorPrincipal_2 = Color.blue;
+        levels.mWorldColorSecond_1 = Color.red;
+        levels.mWorldColorSecond_2 = Color.magenta;
+        levels.mWorldHue = 310;
 
         levels.addLevel(1, Levels.level_4_basic_flyer());
         levels.addLevel(2, Levels.level_4_mid_flyer());
@@ -2670,10 +2675,11 @@ public class Worlds
         levels.levels_name = "World 5 - The Saga";
         levels.mWorldMusic = "Synthwave/68 - The Saga";
 
-        levels.mWorldColorPrincipal_1 = Color.white;
+        levels.mWorldColorPrincipal_1 = Color.cyan; 
         levels.mWorldColorPrincipal_2 = Color.magenta;
-        levels.mWorldColorSecond_1 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
-        levels.mWorldColorSecond_2 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
+        levels.mWorldColorSecond_1 = Color.yellow; 
+        levels.mWorldColorSecond_2 = new Color(1f, 0.15f, 0f);
+        levels.mWorldHue = 260f;
 
         levels.addLevel(1, Levels.level_5_basic_driller());
         levels.addLevel(2, Levels.level_5_Double_driller());

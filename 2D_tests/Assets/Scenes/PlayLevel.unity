@@ -653,6 +653,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &469858651 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2611746027778378942, guid: 619b96ff2605d4d49bfbd05a878f02ec, type: 3}
+  m_PrefabInstance: {fileID: 2611746027931948935}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &472592337
 GameObject:
   m_ObjectHideFlags: 0
@@ -2531,7 +2536,9 @@ MonoBehaviour:
   mMainColor2: {r: 0, g: 0.9903991, b: 1, a: 0}
   mSecondColor1: {r: 1, g: 0.9783717, b: 0, a: 0}
   mSecondColor2: {r: 1, g: 0.60640585, b: 0, a: 0}
+  mHue: 0
   mBackgroundView: {fileID: 1704610334}
+  mBackgroundMesh: {fileID: 469858651}
 --- !u!4 &2059373174
 Transform:
   m_ObjectHideFlags: 0
