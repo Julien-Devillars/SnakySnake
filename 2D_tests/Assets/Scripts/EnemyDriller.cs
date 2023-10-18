@@ -58,13 +58,6 @@ public class EnemyDriller : Enemy
         if (Utils.GAME_STOPPED) return;
         if (GameControler.status == GameControler.GameStatus.Lose) return;
 
-        SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
-        SpriteRenderer character_sprite_renderer = character.GetComponent<SpriteRenderer>();
-        if (sprite_renderer.bounds.Intersects(character_sprite_renderer.bounds))
-        {
-            Lose();
-        }
-
         if(speed == Vector2.zero)
         {
             speed = mPreviousSpeed;
@@ -106,6 +99,7 @@ public class EnemyDriller : Enemy
             gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
         }
 
+        SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
         if (mIsOnTrail)
         {
             //sprite_renderer.material.SetFloat("_GhostBlend", 0.8f);
@@ -213,6 +207,10 @@ public class EnemyDriller : Enemy
                 speed.x = (direction > 0) ? Mathf.Abs(speed.y) : -Mathf.Abs(speed.y);
                 speed.y = 0f;
             }
+        }
+        if(collision.name == Utils.CHARACTER)
+        {
+            Lose();
         }
     }
 }
