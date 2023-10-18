@@ -38,6 +38,11 @@ public class EnemyFlyer : Enemy
         character = GameObject.Find(Utils.CHARACTER).GetComponent<CharacterBehavior>();
 
     }
+    private void hit()
+    {
+        launchParticle(getParticleSystem(Utils.PARTICLE_BORDER_HIT_STR));
+        playSound();
+    }
     private void FixedUpdate()
     {
         if (Utils.GAME_STOPPED) return;
@@ -55,10 +60,12 @@ public class EnemyFlyer : Enemy
         if (transform.position.y - size <= mMinPos.y||  transform.position.y + size >= mMaxPos.y)
         {
             speed.y = -speed.y;
+            hit();
         }
         if (transform.position.x - size <= mMinPos.x || transform.position.x + size >= mMaxPos.x)
         {
             speed.x = -speed.x;
+            hit();
         }
 
         gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);

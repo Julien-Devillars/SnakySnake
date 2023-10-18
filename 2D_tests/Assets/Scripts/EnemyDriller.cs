@@ -50,7 +50,7 @@ public class EnemyDriller : Enemy
 
         mPreviousSpeed = speed;
         mPreviousRotation = transform.rotation;
-
+        mAudioSource.clip = Resources.Load<AudioClip>("Musics/UI & Menu/Misc/Data Calculation/Data Calculation Digits B");
     }
 
     private void FixedUpdate()
@@ -63,6 +63,17 @@ public class EnemyDriller : Enemy
             speed = mPreviousSpeed;
         }
 
+        if (mIsOnTrail)
+        {
+            if(!mAudioSource.isPlaying)
+            {
+                playSound();
+            }
+        }
+        else
+        {
+            mAudioSource.Stop();
+        }
         if (mIsOnBorder || mIsOnTrail)
         {
             float move = Mathf.Max(Mathf.Abs(speed.x), Mathf.Abs(speed.y)); 

@@ -82,8 +82,14 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+    protected void playSound(float pitch_min = 0.85f, float pitch_max = 1.15f, float vol_max = 0.25f)
+    {
+        mAudioSource.pitch = Random.RandomRange(pitch_min, pitch_max);
+        mAudioSource.volume = Mathf.Lerp(0f, vol_max, ES3.Load<float>("VolumeSlider", 0.5f));
+        mAudioSource.Play();
+    }
 
-    private ParticleSystem getParticleSystem(string particle_name)
+    protected ParticleSystem getParticleSystem(string particle_name)
     {
         foreach(Transform transform in transform)
         {
@@ -95,7 +101,7 @@ public class Enemy : MonoBehaviour
         return null;
     }
 
-    private void turnParticle(ParticleSystem particle_system)
+    protected void launchParticle(ParticleSystem particle_system)
     {
         float rotation = 45f;
         rotation += (speed.y < 0f) ? 180f : 0f;
@@ -109,12 +115,10 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.name.Contains("Border"))
         {
-            turnParticle(getParticleSystem(Utils.PARTICLE_BORDER_HIT_STR));
+            launchParticle(getParticleSystem(Utils.PARTICLE_BORDER_HIT_STR));
             Border border = collision.gameObject.GetComponent<Border>();
             border.hit();
-            mAudioSource.pitch = Random.RandomRange(0.85f, 1.15f);
-            mAudioSource.volume = Mathf.Lerp(0f, 0.25f, ES3.Load<float>("VolumeSlider", 0.5f));
-            mAudioSource.Play();
+            playSound();
 
             if (!mHasCollideVertical && collision.gameObject.tag == "VerticalBorder")
             {

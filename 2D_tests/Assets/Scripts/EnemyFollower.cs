@@ -43,6 +43,7 @@ public class EnemyFollower : Enemy
         // Add Circle Collider 2D
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
         collider.radius -= collider.radius / 3f;
+        mAudioSource.clip = Resources.Load<AudioClip>("Musics/UI & Menu/Misc/Loading/Loading Phone");
     }
     new private void FixedUpdate()
     {
@@ -63,6 +64,11 @@ public class EnemyFollower : Enemy
             mExcalamationMark.SetActive(true);
             sprite_renderer.material.SetColor("_GlowColor", Color.magenta);
             gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
+
+            if (!mAudioSource.isPlaying)
+            {
+                playSound(0.9f, 1.1f, 1f);
+            }
         }
         else
         {
@@ -72,6 +78,7 @@ public class EnemyFollower : Enemy
             {
                 gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
             }
+            mAudioSource.Stop();
         }
 
 
