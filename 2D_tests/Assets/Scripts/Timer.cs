@@ -77,7 +77,6 @@ public static class Timer
     {
         int death_world = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_death", 0);
         ES3.Save<int>($"PlayMode_World{GameControler.currentWorld}_death", ++death_world);
-
         int death_level = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_death", 0);
         ES3.Save<int>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_death", ++death_level);
 

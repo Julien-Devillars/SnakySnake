@@ -71,18 +71,25 @@ public class OptionSliderGamepad : MonoBehaviour
         LevelPanel.mForceDisplay = true;
         GameControler.currentLevel = 0;
         GameControler.currentWorld = 0;
-        for (int i = 0; i < Worlds.worlds.Count; ++i)
+        if(!has_click)
         {
-            for (int j = 0; j < Worlds.worlds[i].levels.Count; ++j)
-            {
-                ES3.Save<bool>($"PlayMode_World{i}_Level{j}_status", has_click);
-                ES3.Save<int>($"PlayMode_World{i}_Level{j}_death", 0);
-                ES3.Save<float>($"PlayMode_World{i}_Level{j}_timer", -1f);
-            }
-            ES3.Save<int>($"PlayMode_World{i}_death", 0);
-            ES3.Save<float>($"PlayMode_World{i}_timer", -1f);
-
+            ES3.DeleteFile();
         }
-        has_click = true;
+        else
+        {
+            for (int i = 0; i < Worlds.worlds.Count; ++i)
+            {
+                for (int j = 0; j < Worlds.worlds[i].levels.Count; ++j)
+                {
+                    ES3.Save<bool>($"PlayMode_World{i}_Level{j}_status", has_click);
+                    ES3.Save<int>($"PlayMode_World{i}_Level{j}_death", 0);
+                    ES3.Save<float>($"PlayMode_World{i}_Level{j}_timer", -1f);
+                }
+                ES3.Save<int>($"PlayMode_World{i}_death", 0);
+                ES3.Save<float>($"PlayMode_World{i}_timer", -1f);
+
+            }
+        }
+        has_click = !has_click;
     }
 }
