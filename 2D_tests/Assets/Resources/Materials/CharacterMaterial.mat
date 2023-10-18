@@ -10,6 +10,7 @@ Material:
   m_Name: CharacterMaterial
   m_Shader: {fileID: 4800000, guid: a36b7719ff0465b42ab1407d67672c5f, type: 3}
   m_ValidKeywords:
+  - FADE_ON
   - OUTBASE8DIR_ON
   - OUTBASE_ON
   m_InvalidKeywords: []
@@ -148,10 +149,10 @@ Material:
     - _DstBlend: 0
     - _EditorDrawers: 6
     - _EnableExternalAlpha: 0
-    - _FadeAmount: -0.1
-    - _FadeBurnGlow: 2
-    - _FadeBurnTransition: 0.075
-    - _FadeBurnWidth: 0.025
+    - _FadeAmount: 0
+    - _FadeBurnGlow: 40
+    - _FadeBurnTransition: 0.15
+    - _FadeBurnWidth: 0.2
     - _FishEyeUvAmount: 0.393
     - _FlickerAlpha: 0.307
     - _FlickerFreq: 0.56
@@ -273,7 +274,7 @@ Material:
     - _ColorSwapGreen: {r: 1, g: 1, b: 1, a: 1}
     - _ColorSwapRed: {r: 0, g: 1, b: 0.96201396, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FadeBurnColor: {r: 1, g: 1, b: 0, a: 1}
+    - _FadeBurnColor: {r: 1, g: 0, b: 0.76862717, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0.99999976, a: 1}
     - _GradBotLeftCol: {r: 0.6603774, g: 0.64783937, b: 0.15263441, a: 1}

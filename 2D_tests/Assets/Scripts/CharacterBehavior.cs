@@ -202,6 +202,7 @@ public class CharacterBehavior : MonoBehaviour
         mTrailGO.name = "Trails";
         mTrails = new List<GameObject>();
 
+        gameObject.GetComponent<SpriteRenderer>().material = new Material(Resources.Load<Material>("Materials/CharacterMaterial"));
         addAdditionalBorder();
     }
     public void addBorder(Border border)
