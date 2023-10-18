@@ -102,7 +102,9 @@ public class Border : MonoBehaviour
     public bool mIsEditable;
     public bool mNewBorderOnDelete = false;
     private LineRenderer mLineRenderer;
+    private GameObject mOutline;
     private LineRenderer mOutlineRenderer;
+    private Animator mOutlineAnimator;
     public BorderPointsConnections mOtherBorderOnBorders;
     public bool mHasToUpdateBorder = true;
     public bool mToDelete = false;
@@ -369,10 +371,10 @@ public class Border : MonoBehaviour
 
     private void addOutline()
     {
-        GameObject outline = new GameObject();
-        outline.name = "Border Outline";
-        outline.transform.parent = transform;
-        mOutlineRenderer = outline.AddComponent<LineRenderer>();
+        mOutline = new GameObject();
+        mOutline.name = "Border Outline";
+        mOutline.transform.parent = transform;
+        mOutlineRenderer = mOutline.AddComponent<LineRenderer>();
 
         mOutlineRenderer.positionCount = mLineRenderer.positionCount;
         mOutlineRenderer.useWorldSpace = mLineRenderer.useWorldSpace;
@@ -387,9 +389,11 @@ public class Border : MonoBehaviour
         mOutlineRenderer.SetPosition(1, new Vector3(pos_1.x, pos_1.y, pos_1.z + 1));
         mOutlineRenderer.startColor = Color.white;
         mOutlineRenderer.endColor = Color.white;
-        mOutlineRenderer.material = (Material)Resources.Load("Materials/BorderOutline", typeof(Material));
+        mOutlineRenderer.material = new Material(Resources.Load<Material>("Materials/BorderOutline"));
         mOutlineRenderer.sortingLayerName = "Border/Outline";
 
+        mOutlineAnimator = mOutline.AddComponent<Animator>();
+        mOutlineAnimator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Animation/Border Outline");
     }
 
     public bool checkColliderAlreadyExist()
@@ -803,5 +807,9 @@ public class Border : MonoBehaviour
         {
             return pos.x == mStartPoint.x;
         }
+    }
+    public void hit()
+    {
+        mOutlineAnimator.SetTrigger("Hit");
     }
 }

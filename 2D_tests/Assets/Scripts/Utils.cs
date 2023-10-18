@@ -18,6 +18,7 @@ public class Utils
     public static string LEVEL_STR = "LevelController";
     public static string STARS_STR = "Stars";
     public static string STAR_STR = "Star";
+    public static string PARTICLE_BORDER_HIT_STR = "BorderHit";
     public static float EPSILON() => GameObject.Find(CHARACTER).transform.localScale.x / 2f;
     public static float OFFSET => 0.01f;
     public static float DIRECTION_UPDATE_TIME = 0.02f;

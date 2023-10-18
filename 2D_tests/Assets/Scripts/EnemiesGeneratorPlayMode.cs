@@ -63,11 +63,18 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
             // Add Rigidbody 2D
             Rigidbody2D rigidbody_2D = enemy_go.AddComponent<Rigidbody2D>();
             rigidbody_2D.gravityScale = 0;
-            
+
             // Particles
             GameObject particle_go = Instantiate(Resources.Load<GameObject>("Particles/EnemyParticle"));
             particle_go.transform.parent = enemy_go.transform;
+            particle_go.transform.name = "EnemyParticle";
             particle_go.transform.localScale = new Vector3(enemy.scale, enemy.scale, enemy.scale) / Utils.ENEMY_DEFAULT_SCALE;
+
+            GameObject hit_particle_go = Instantiate(Resources.Load<GameObject>("Particles/BorderHit"));
+            hit_particle_go.transform.parent = enemy_go.transform;
+            hit_particle_go.transform.name = Utils.PARTICLE_BORDER_HIT_STR;
+            hit_particle_go.transform.localScale = new Vector3(enemy.scale, enemy.scale, enemy.scale) / Utils.ENEMY_DEFAULT_SCALE;
+
 
             Enemy enemy_behavior;
             switch(enemy.type)

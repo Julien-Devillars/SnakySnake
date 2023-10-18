@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     public static int mCounter = 0;
 
     public List<EnemyLink> mLinks;
+    protected AudioSource mAudioSource;
     protected void Awake()
     {
         Camera cam = Camera.main;
@@ -32,6 +33,12 @@ public class Enemy : MonoBehaviour
         mHasCollideVertical = false;
         mHasCollideHorizontal = false;
         mLinks = new List<EnemyLink>();
+
+        // Sound
+        mAudioSource = gameObject.AddComponent<AudioSource>();
+        mAudioSource.loop = false;
+        mAudioSource.playOnAwake = false;
+        mAudioSource.clip = Resources.Load<AudioClip>("Musics/UI_SFX/Misc/PP_Cute_Impact_1_1");
     }
     protected void Start()
     {
@@ -76,10 +83,39 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private ParticleSystem getParticleSystem(string particle_name)
+    {
+        foreach(Transform transform in transform)
+        {
+            if(transform.gameObject.name == particle_name)
+            {
+                return transform.gameObject.GetComponent<ParticleSystem>();
+            }
+        }
+        return null;
+    }
+
+    private void turnParticle(ParticleSystem particle_system)
+    {
+        float rotation = 45f;
+        rotation += (speed.y < 0f) ? 180f : 0f;
+        rotation += (speed.x <= 0f) ? 90f : 0f;
+        rotation += (speed.x > 0f) ? -90f : 0f;
+        particle_system.shape.rotation.Set(particle_system.shape.rotation.x, particle_system.shape.rotation.y, rotation);
+        particle_system.Play();
+    }
+
     protected void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name.Contains("Border"))
         {
+            turnParticle(getParticleSystem(Utils.PARTICLE_BORDER_HIT_STR));
+            Border border = collision.gameObject.GetComponent<Border>();
+            border.hit();
+            mAudioSource.pitch = Random.RandomRange(0.85f, 1.15f);
+            mAudioSource.volume = Mathf.Lerp(0f, 0.25f, ES3.Load<float>("VolumeSlider", 0.5f));
+            mAudioSource.Play();
+
             if (!mHasCollideVertical && collision.gameObject.tag == "VerticalBorder")
             {
                 StartCoroutine(waiterColliderVertical());
@@ -90,6 +126,7 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(waiterColliderHorizontal());
                 speed.y = -speed.y;
             }
+
         }
         if (collision.gameObject.tag.Contains("Trail"))
         {
