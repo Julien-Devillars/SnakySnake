@@ -5,7 +5,7 @@ using UnityEngine;
 public class BackgroundView : MonoBehaviour
 {
     // Start is called before the first frame update
-    private Color mLineColorAtStart;
+    public Color mLineColorAtStart;
     void Start()
     {
         Camera cam = Camera.main;
@@ -51,8 +51,8 @@ public class BackgroundView : MonoBehaviour
             float max = 0.5f;
             float duration = 2f;
             float intensity = Mathf.PingPong(Time.time / duration, max - min) + min;
-            Color new_color = new Color(mLineColorAtStart.r * intensity, mLineColorAtStart.g * intensity, mLineColorAtStart.b * intensity);
-            material.SetColor("_LineColor", new_color);
+            //Color new_color = new Color(mLineColorAtStart.r * intensity, mLineColorAtStart.g * intensity, mLineColorAtStart.b * intensity);
+            material.SetColor("_LineColor", mLineColorAtStart * 5f);
         }
 
             

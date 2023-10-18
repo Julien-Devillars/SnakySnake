@@ -2564,7 +2564,7 @@ public class Worlds
 
         levels.levels_name = "World 2 - Galaxy";
         levels.mWorldMusic = "Synthwave/20 - Galaxy";
-        levels.mWorldColorPrincipal_1 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
+        levels.mWorldColorPrincipal_1 = Color.cyan;
         levels.mWorldColorPrincipal_2 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
         levels.mWorldColorSecond_1 = Color.magenta;
         levels.mWorldColorSecond_2 = Color.cyan;
@@ -2609,6 +2609,11 @@ public class Worlds
         levels.levels_name = "World 3 - Dangerous";
         levels.mWorldMusic = "Synthwave/32 - Dangerous";
 
+        levels.mWorldColorPrincipal_1 = Color.green;
+        levels.mWorldColorPrincipal_2 = Color.magenta;
+        levels.mWorldColorSecond_1 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
+        levels.mWorldColorSecond_2 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
+
         levels.addLevel(1, Levels.level_3_Double_Follower());
         levels.addLevel(2, Levels.level_3_Basic_Follower_moving());
         levels.addLevel(3, Levels.level_3_Basic_Follower());
@@ -2635,6 +2640,11 @@ public class Worlds
         levels.levels_name = "World 4 - Last Stop";
         levels.mWorldMusic = "Synthwave/Last Stop";
 
+        levels.mWorldColorPrincipal_1 = Color.yellow;
+        levels.mWorldColorPrincipal_2 = Color.magenta;
+        levels.mWorldColorSecond_1 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
+        levels.mWorldColorSecond_2 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
+
         levels.addLevel(1, Levels.level_4_basic_flyer());
         levels.addLevel(2, Levels.level_4_mid_flyer());
         levels.addLevel(3, Levels.level_4_two_horizontale_flyer_linked());
@@ -2659,6 +2669,11 @@ public class Worlds
         Levels levels = new Levels(12);
         levels.levels_name = "World 5 - The Saga";
         levels.mWorldMusic = "Synthwave/68 - The Saga";
+
+        levels.mWorldColorPrincipal_1 = Color.white;
+        levels.mWorldColorPrincipal_2 = Color.magenta;
+        levels.mWorldColorSecond_1 = new Color(249 / 255f, 152 / 255f, 29 / 255f);
+        levels.mWorldColorSecond_2 = new Color(250 / 255f, 49f / 255f, 98 / 255f);
 
         levels.addLevel(1, Levels.level_5_basic_driller());
         levels.addLevel(2, Levels.level_5_Double_driller());
@@ -2687,6 +2702,10 @@ public class Worlds
     public static Levels getWorld(int world)
     {
         return worlds[world];
+    }
+    public static Levels getCurrentWorld()
+    {
+        return worlds[GameControler.currentWorld];
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

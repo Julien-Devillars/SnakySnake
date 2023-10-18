@@ -40,9 +40,9 @@ public class GamePulseToBeat : MonoBehaviour
         mSprite = mBackground.GetComponent<SpriteRenderer>();
 
 
-        if (mUseTestBeatColorIntensity && !mWaiterColorIntensity) StartCoroutine(TestBeatColorIntensity());
+        //if (mUseTestBeatColorIntensity && !mWaiterColorIntensity) StartCoroutine(TestBeatColorIntensity());
         if (mUseTestBeatLineSize && !mWaiterLineSize) StartCoroutine(TestBeatLineSize());
-        returnToStartColorIntensity();
+        //returnToStartColorIntensity();
         returnToStartLineSize();
     }
 
@@ -55,14 +55,14 @@ public class GamePulseToBeat : MonoBehaviour
     }
 
     // Pulse for Line Color
-    public void PulseColorIntensity()
-    {
-        if (GameControler.status != GameControler.GameStatus.InProgress) return;
-        updateSpriteIfNeeded();
-        if (mSprite == null) return;
-        Color color = mSprite.material.GetColor("_LineColor");
-        mSprite.material.SetColor("_LineColor", color * mPulseSizeColorIntensity);
-    }
+    //public void PulseColorIntensity()
+    //{
+    //    if (GameControler.status != GameControler.GameStatus.InProgress) return;
+    //    updateSpriteIfNeeded();
+    //    if (mSprite == null) return;
+    //    Color color = mSprite.material.GetColor("_LineColor");
+    //    mSprite.material.SetColor("_LineColor", color * mPulseSizeColorIntensity);
+    //}
 
     public void returnToStartColorIntensity()
     {
@@ -71,13 +71,13 @@ public class GamePulseToBeat : MonoBehaviour
         mSprite.material.SetColor("_LineColor", new_color);
     }
 
-    IEnumerator TestBeatColorIntensity()
-    {
-        mWaiterColorIntensity = true;
-        yield return new WaitForSeconds(1f);
-        PulseColorIntensity();
-        mWaiterColorIntensity = false;
-    }
+    //IEnumerator TestBeatColorIntensity()
+    //{
+    //    mWaiterColorIntensity = true;
+    //    yield return new WaitForSeconds(1f);
+    //    PulseColorIntensity();
+    //    mWaiterColorIntensity = false;
+    //}
 
     // Pulse for Line Size
     public void PulseLineSize()
