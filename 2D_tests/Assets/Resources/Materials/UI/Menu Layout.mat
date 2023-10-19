@@ -104,9 +104,9 @@ Material:
     - _ColorSwapRedLuminosity: 0.5
     - _Contrast: 1
     - _CullingOption: 0
-    - _DistortAmount: 0.5
-    - _DistortTexXSpeed: 5
-    - _DistortTexYSpeed: 5
+    - _DistortAmount: 0.1
+    - _DistortTexXSpeed: 0
+    - _DistortTexYSpeed: 0.1
     - _EditorDrawers: 6
     - _FadeAmount: 0.347
     - _FadeBurnGlow: 2
@@ -183,8 +183,8 @@ Material:
     - _RandomSeed: 0
     - _RectSize: 1
     - _RotateUvAmount: 0
-    - _RoundWaveSpeed: 2
-    - _RoundWaveStrength: 0.7
+    - _RoundWaveSpeed: 1.5
+    - _RoundWaveStrength: 1
     - _ShadowAlpha: 0.5
     - _ShadowX: 0.1
     - _ShadowY: -0.05

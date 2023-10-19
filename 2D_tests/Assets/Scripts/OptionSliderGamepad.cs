@@ -12,6 +12,9 @@ public class OptionSliderGamepad : MonoBehaviour
     public Slider mSliderMusic;
     public Button mButtonLuminosity;
     public Slider mSliderLuminosity;
+    public GameObject mClearSaveUI;
+    public Button mClearSaveNoButton;
+    public Button mClearSaveButton;
     private void Awake()
     {
         mDefaultInputActions = new DefaultInputActions();
@@ -92,4 +95,17 @@ public class OptionSliderGamepad : MonoBehaviour
         }
         has_click = !has_click;
     }
+    public void displayClearSaveUI(bool flag)
+    {
+        mClearSaveUI.SetActive(flag);
+        if(flag)
+        {
+            mClearSaveNoButton.Select();
+        }
+        else
+        {
+            mClearSaveButton.Select();
+        }
+    }
+
 }
