@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class EnemyFaster : Enemy
 {
 
     CharacterBehavior character;
     Sprite[] mNumberSprite;
+    SpriteRenderer mSpriteRenderer;
+    public float mGlowIntensity;
+    Sprite mSpriteOK;
+    Sprite mSpriteKO;
     GameObject mCounterGameObject;
+    GameObject mRotateCircle;
+    GameObject mCircle;
     TextMeshPro mCounterText;
     int mCounterMax = 3;
     int mCounter ;
@@ -33,13 +38,15 @@ public class EnemyFaster : Enemy
         mCounter = mCounterMax;
         mOriginalSpeed = new Vector2(speed.x, speed.y);
 
-        SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
-        sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/EnemyFollower");
-        sprite_renderer.material = Resources.Load<Material>("Materials/Enemies/EnemyFollowerMaterial");
-
+        mSpriteRenderer = GetComponent<SpriteRenderer>();
+        mSpriteOK = Resources.Load<Sprite>("Sprites/Characters/EnemyFaster");
+        mSpriteKO = Resources.Load<Sprite>("Sprites/Characters/EnemyFasterKO");
+        mSpriteRenderer.sprite = mSpriteOK;
+        mSpriteRenderer.material = new Material(Resources.Load<Material>("Materials/Enemies/EnemyFasterMaterial"));
+        mGlowIntensity = mSpriteRenderer.material.GetFloat("_Glow");
         mCounterGameObject = new GameObject();
         mCounterGameObject.transform.parent = transform;
-        mCounterGameObject.name = "Coounter";
+        mCounterGameObject.name = "Counter";
 
         mNumberSprite = Resources.LoadAll<Sprite>($"Sprites/Characters/Utils/Numbers");
 
@@ -50,10 +57,32 @@ public class EnemyFaster : Enemy
 
         mCounterGameObject.transform.transform.localScale = new Vector2(0.25f, 0.25f);
 
-        float distance = Vector3.Distance(sprite_renderer.bounds.min, sprite_renderer.bounds.max) / 2f;
+        float distance = Vector3.Distance(mSpriteRenderer.bounds.min, mSpriteRenderer.bounds.max) / 2f;
         distance = distance + exclamation_mark_sprite_renderer.sprite.bounds.size.y / 2f - mCounterGameObject.transform.transform.localScale.y;
 
         mCounterGameObject.transform.position = new Vector3(transform.position.x, transform.position.y + distance, transform.position.z);
+
+        mRotateCircle = new GameObject();
+        mRotateCircle.transform.position = transform.position;
+        mRotateCircle.transform.parent = transform;
+        mRotateCircle.name = "Rotation Helper";
+
+
+        mCircle = new GameObject();
+
+        SpriteRenderer circle_sprite_renderer = mCircle.AddComponent<SpriteRenderer>();
+        circle_sprite_renderer.sprite = Resources.Load<Sprite>("Sprites/Characters/Utils/EnemyArrow");
+        circle_sprite_renderer.color = Color.white;
+        circle_sprite_renderer.material = new Material(Resources.Load<Material>("Materials/ArrowFaster"));
+
+        mCircle.transform.parent = mRotateCircle.transform;
+        mCircle.transform.position = new Vector3(mRotateCircle.transform.position.x + distance, mRotateCircle.transform.position.y, mRotateCircle.transform.position.z);
+        mCircle.name = "Arrow";
+
+        mCounterGameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Counter";
+        mCircle.GetComponent<SpriteRenderer>().sortingLayerName = "Arrow";
+
+        mCircle.SetActive(false);
     }
 
     protected IEnumerator waiterMove()
@@ -64,6 +93,9 @@ public class EnemyFaster : Enemy
         mCounter = mCounterMax;
         speed = mNextOriginalSpeed;
         mCounterGameObject.GetComponent<SpriteRenderer>().sprite = mNumberSprite[mCounter];
+        mSpriteRenderer.material.SetFloat("_Glow", mGlowIntensity);
+        mSpriteRenderer.sprite = mSpriteOK;
+        mCircle.SetActive(false);
     }
 
     public void reduceIndex()
@@ -72,6 +104,17 @@ public class EnemyFaster : Enemy
         {
             mCounter--;
             speed = Vector2.zero;
+            mSpriteRenderer.sprite = mSpriteKO;
+            mSpriteRenderer.material.SetFloat("_Glow", 0f);
+
+            Vector3 circle_pos = mCircle.transform.position;
+            Vector3 enemy_pos = transform.position;
+            Vector3 new_direction = circle_pos - enemy_pos;
+
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.right, mNextOriginalSpeed);
+            //Vector3 euler_rotation = Quaternion.ToEulerAngles(rotation);
+            mRotateCircle.transform.rotation = rotation;
+            mCircle.SetActive(true);
             StartCoroutine(waiterMove());
         }
         else

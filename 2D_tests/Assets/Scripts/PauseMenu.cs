@@ -28,10 +28,11 @@ public class PauseMenu : MonoBehaviour
     public AudioSource mAudioSubmitBack;
     private GameObject mPreviousSelected = null;
     public GameObject mClearLevel;
+    private bool mMenuWaiter;
 
 private void Awake()
     {
-
+        mMenuWaiter = false;
         mDefaultInputActions = new DefaultInputActions();
         mPlayerControl = new PlayerControl();
         mDefaultInputActions.UI.Cancel.performed += ctx =>
@@ -43,6 +44,19 @@ private void Awake()
         };
         mDefaultInputActions.UI.Cancel.performed += ctx =>
         {
+            if (mMenuWaiter) return;
+            if (mIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        };
+        mPlayerControl.PlayerController.Escape.performed += ctx =>
+        {
+            if (mMenuWaiter) return;
             if (mIsPaused)
             {
                 Resume();
@@ -121,9 +135,17 @@ private void Awake()
         //    }
         //}
     }
+    IEnumerator waiterMenu()
+    {
+
+        mMenuWaiter = true;
+        yield return new WaitForSeconds(0.1f);
+        mMenuWaiter = false;
+    }
     public void Resume()
     {
         Debug.Log("Resume");
+        StartCoroutine(waiterMenu());
         mPauseMenu.SetActive(false);
         mOptionMenu.SetActive(false);
         mMainMenu.SetActive(false);
@@ -135,6 +157,7 @@ private void Awake()
     public void Pause()
     {
         Debug.Log("Pause");
+        StartCoroutine(waiterMenu());
         if (GameControler.status != GameControler.GameStatus.InProgress) return;
         mPauseMenu.SetActive(true);
         mMainMenu.SetActive(true);

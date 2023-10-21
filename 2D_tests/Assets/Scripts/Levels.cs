@@ -2445,15 +2445,9 @@ public class Levels
     public static Level level_6_basic_faster()
     {
         Level level = new Level("level_6_basic_faster", 50);
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 1, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 2, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 3, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 4, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 5, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 6, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 7, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 8, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 9, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 4, Utils.D * 7f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 5, Utils.D * 8f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 6, Utils.D * 9f, Utils.ENEMY_DEFAULT_SCALE));
 
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         return level;
