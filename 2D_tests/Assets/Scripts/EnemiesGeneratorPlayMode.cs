@@ -115,6 +115,9 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
                     enemy_driller.mReverseVertical = enemy_driller_info.mReverseVertical;
                     enemy_behavior = enemy_driller;
                     break;
+                case EnemyType.Faster:
+                    enemy_behavior = enemy_go.AddComponent<EnemyFaster>();
+                    break;
                 default:
                     enemy_behavior = new Enemy();
                     Debug.Log("No enemy type found !");

@@ -33,7 +33,8 @@ public enum EnemyType
     Circle,
     Follower,
     Flyer,
-    Driller
+    Driller,
+    Faster
 }
 
 public class EnemyInfo : ObjectInfo 
@@ -2441,6 +2442,22 @@ public class Levels
         return level;
     }
 
+    public static Level level_6_basic_faster()
+    {
+        Level level = new Level("level_6_basic_faster", 50);
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 1, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 2, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 3, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 4, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 5, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 6, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 7, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 8, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Faster, 9, Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE));
+
+        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        return level;
+    }
     public Levels(int nb_level)
     {
         levels = new List<Level>();
@@ -2681,7 +2698,8 @@ public class Worlds
         levels.mWorldColorSecond_2 = new Color(1f, 0.15f, 0f);
         levels.mWorldHue = 260f;
 
-        levels.addLevel(1, Levels.level_5_basic_driller());
+        levels.addLevel(1, Levels.level_6_basic_faster());
+        //levels.addLevel(1, Levels.level_5_basic_driller());
         levels.addLevel(2, Levels.level_5_Double_driller());
         levels.addLevel(3, Levels.level_5_Quad_driller());
         levels.addLevel(4, Levels.level_5_Double_driller_link());

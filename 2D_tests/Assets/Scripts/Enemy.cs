@@ -137,13 +137,13 @@ public class Enemy : MonoBehaviour
             Lose();
         }
     }
-    IEnumerator waiterColliderVertical()
+    protected IEnumerator waiterColliderVertical()
     {
         mHasCollideVertical = true;
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
         mHasCollideVertical = false;
     }
-    IEnumerator waiterColliderHorizontal()
+    protected IEnumerator waiterColliderHorizontal()
     {
         mHasCollideHorizontal = true;
         yield return new WaitForSeconds(Utils.DIRECTION_UPDATE_TIME);
