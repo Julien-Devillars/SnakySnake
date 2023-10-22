@@ -235,6 +235,26 @@ public class EnemyDrillerInfo : EnemyInfo
         mReverseHorizontal = reverse_on_horizontal;
     }
 }
+public class EnemyFasterInfo : EnemyInfo
+{
+    public int mCounter;
+    public float mStunTime;
+    public float mMultiplier;
+    public EnemyFasterInfo(Vector2 _position, Vector2 _direction, float _scale, int counter = 3, float stun_time = 1.5f, float multiplier = 1.5f, List<int> _link = null) : base(EnemyType.Faster, _position, _direction, _scale)
+    {
+        link = _link;
+        mCounter = counter;
+        mStunTime = stun_time;
+        mMultiplier = multiplier;
+    }
+    public EnemyFasterInfo(int _position, Vector2 _direction, float _scale, int counter = 3, float stun_time = 1.5f, float multiplier = 1.5f, List<int> _link = null) : base(EnemyType.Faster, _position, _direction, _scale)
+    {
+        link = _link;
+        mCounter = counter;
+        mStunTime = stun_time;
+        mMultiplier = multiplier;
+    }
+}
 
 public class StarInfo : ObjectInfo
 {
@@ -2445,13 +2465,212 @@ public class Levels
     public static Level level_6_basic_faster()
     {
         Level level = new Level("level_6_basic_faster", 50);
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 4, Utils.D * 7f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 5, Utils.D * 8f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Faster, 6, Utils.D * 9f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFasterInfo(Utils.getMidRelativePositionFromPosition(new Vector3(0f, 0.5f), 4),
+            Utils.L * 7f, Utils.ENEMY_DEFAULT_SCALE, 5, 1.5f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(Utils.getMidRelativePositionFromPosition(new Vector3(1f, 0.5f), 6),
+            Utils.R * 7f, Utils.ENEMY_DEFAULT_SCALE, 5, 1.5f, 1.25f));
 
-        level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.D * 8f, Utils.ENEMY_DEFAULT_SCALE, 3, 2f, 2f));
+
+        level.addStars(5);
+
+        level.mLevelHelper = "New enemy : Accelerate each hit until 0 then start again.";
+
+        level.addTrail(new Vector3(0.25f, 0f), new Vector3(0.25f, 1f));
+        level.addTrail(new Vector3(0.75f, 0f), new Vector3(0.75f, 1f));
         return level;
     }
+    public static Level level_6_faster_counter_up()
+    {
+        Level level = new Level("level_6_faster_counter_up", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.25f));
+
+        level.addStars(4, 5, 6);
+        return level;
+    }
+
+    public static Level level_6_one_faster_counter_high()
+    {
+        Level level = new Level("level_6_one_faster_counter_high", 50);
+
+        float speed = 5f;
+
+        level.addEnemy(new EnemyFasterInfo(5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, 8, 0.5f, 1.2f));
+
+        level.addStars(5);
+        level.addStars(
+            Utils.getMidRelativePositionFromPosition(4, 5),
+            Utils.getMidRelativePositionFromPosition(6, 5)
+            );
+
+        level.addTrail(new Vector3(0.25f, 0f), new Vector3(0.25f, 1f));
+        level.addTrail(new Vector3(0.75f, 0f), new Vector3(0.75f, 1f));
+        return level;
+    }
+    public static Level level_6_two_faster_linked()
+    {
+        Level level = new Level("level_6_two_faster_linked", 50);
+
+        float speed = 5f;
+
+        level.addEnemy(new EnemyFasterInfo(5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.5f, Utils.Linker(1)));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.5f));
+
+        level.addStars(4, 5, 6);
+        return level;
+    }
+    public static Level level_6_double_two_faster_linked()
+    {
+        Level level = new Level("level_6_double_two_faster_linked", 50);
+
+        float speed = 5f;
+
+        level.addEnemy(new EnemyFasterInfo(5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.5f, Utils.Linker(1)));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.5f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.5f, Utils.Linker(3)));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.5f));
+
+        level.addStars(4, 5, 6);
+        return level;
+    }
+    public static Level level_6_double_faster_counter_up()
+    {
+        Level level = new Level("level_6_faster_counter_up", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.25f));
+
+        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.25f));
+
+        level.addStars(2, 4, 5, 6, 8);
+        level.addStars(Utils.getMidRelativePositionFromPosition(2, 5),
+            Utils.getMidRelativePositionFromPosition(4, 5),
+            Utils.getMidRelativePositionFromPosition(6, 5),
+            Utils.getMidRelativePositionFromPosition(8, 5));
+        return level;
+    }
+    public static Level level_6_faster_stop_on_hit_fast()
+    {
+        Level level = new Level("level_6_faster_stop_on_hit_fast", 50);
+
+        float speed = 16f;
+
+        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 0.25f, 1f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 0.25f, 1f));
+
+
+        level.addStars(2, 5, 8);
+        return level;
+    }
+    public static Level level_6_faster_on_small_area()
+    {
+        Level level = new Level("level_6_faster_on_small_area", 50);
+
+        float speed = 5f;
+
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 6, 0.5f, 1.25f));
+
+        level.addTrail(new Vector3(0.3f, 0.3f), new Vector3(0.3f, 0.7f), new Vector3(0.7f, 0.7f), new Vector3(0.7f, 0.3f), new Vector3(0.3f, 0.3f));
+
+        level.addStars(5);
+        level.addStars(Utils.getMidRelativePositionFromPosition(5, 4),
+            Utils.getMidRelativePositionFromPosition(5, 6));
+        return level;
+    }
+    public static Level level_6_diagonale()
+    {
+        Level level = new Level("level_6_diagonale", 50);
+
+        float speed = 8f;
+
+        foreach(Vector3 direction in new List<Vector3>() { Utils.UR, Utils.UL, Utils.DR, Utils.DL })
+        {
+            level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 2.25f, 1.2f));
+            level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 2.25f, 1.2f));
+            level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 2.25f, 1.2f));
+            level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 2.25f, 1.2f));
+            level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 6, 2.25f, 1.2f));
+        }
+
+        level.addStars(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        return level;
+    }
+    public static Level level_6_diagonale_link_counter_1()
+    {
+        Level level = new Level("level_6_diagonale_link_counter_1", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyFasterInfo(5, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1f, Utils.Linker(1)));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1f, Utils.Linker(2)));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1f, Utils.Linker(3)));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1f, Utils.Linker(0)));
+
+
+        level.addStars(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        return level;
+    }
+
+    public static Level level_6_diagonale_link_counter_1_with_center()
+    {
+        Level level = new Level("level_6_diagonale_link_counter_1_with_center", 50);
+
+        float speed = 8f;
+
+        level.addEnemy(new EnemyFasterInfo(8, Utils.UR * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1f, Utils.Linker(1)));
+        level.addEnemy(new EnemyFasterInfo(8, Utils.UL * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1f, Utils.Linker(2)));
+        level.addEnemy(new EnemyFasterInfo(2, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1f, Utils.Linker(3)));
+        level.addEnemy(new EnemyFasterInfo(2, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1f, Utils.Linker(0)));
+
+        level.addTrail(new Vector3(0.3f, 0.3f), new Vector3(0.3f, 0.7f), new Vector3(0.7f, 0.7f), new Vector3(0.7f, 0.3f), new Vector3(0.3f, 0.3f));
+
+        level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
+        return level;
+    }
+
+    public static Level level_6_link_line_counter_increase()
+    {
+        Level level = new Level("level_6_link_line_counter_increase", 50);
+
+        float speed = 7f;
+
+        level.addEnemy(new EnemyFasterInfo(8, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1.5f, 2f, Utils.Linker(1)));
+        level.addEnemy(new EnemyFasterInfo(8, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1.5f, 2f));
+        level.addEnemy(new EnemyFasterInfo(2, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1.5f, 2f, Utils.Linker(3)));
+        level.addEnemy(new EnemyFasterInfo(2, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1.5f, 2f));
+
+        level.addEnemy(new EnemyFasterInfo(5, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 1f, 1.5f, Utils.Linker(5)));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 1f, 1.5f));
+
+        level.addEnemy(new EnemyFasterInfo(Utils.getMidRelativePositionFromPosition(5, 8),
+            Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1.25f, 1.75f, Utils.Linker(7)));
+        level.addEnemy(new EnemyFasterInfo(Utils.getMidRelativePositionFromPosition(5, 8),
+            Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1.25f, 1.75f));
+        level.addEnemy(new EnemyFasterInfo(Utils.getMidRelativePositionFromPosition(5, 2),
+            Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1.25f, 1.75f, Utils.Linker(9)));
+        level.addEnemy(new EnemyFasterInfo(Utils.getMidRelativePositionFromPosition(5, 2),
+            Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1.25f, 1.75f));
+
+        level.addStars(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        return level;
+    }
+
     public Levels(int nb_level)
     {
         levels = new List<Level>();
@@ -2686,14 +2905,14 @@ public class Worlds
         levels.levels_name = "World 5 - The Saga";
         levels.mWorldMusic = "Synthwave/68 - The Saga";
 
-        levels.mWorldColorPrincipal_1 = Color.cyan; 
-        levels.mWorldColorPrincipal_2 = Color.magenta;
+        levels.mWorldColorPrincipal_1 = Color.green; 
+        levels.mWorldColorPrincipal_2 = Color.cyan;
         levels.mWorldColorSecond_1 = Color.yellow; 
         levels.mWorldColorSecond_2 = new Color(1f, 0.15f, 0f);
         levels.mWorldHue = 260f;
 
-        levels.addLevel(1, Levels.level_6_basic_faster());
-        //levels.addLevel(1, Levels.level_5_basic_driller());
+        //levels.addLevel(1, Levels.level_6_basic_faster());
+        levels.addLevel(1, Levels.level_5_basic_driller());
         levels.addLevel(2, Levels.level_5_Double_driller());
         levels.addLevel(3, Levels.level_5_Quad_driller());
         levels.addLevel(4, Levels.level_5_Double_driller_link());
@@ -2705,6 +2924,38 @@ public class Worlds
         levels.addLevel(10, Levels.level_5_quad_driller_in_small_area());
         levels.addLevel(11, Levels.level_5_double_driller_in_small_area_linked());
         levels.addLevel(12, Levels.level_5_Quad_driller_link_square());
+
+        levels.mBronzeTime = Utils.getSeconds(25, 00);
+        levels.mSilverTime = Utils.getSeconds(17, 00);
+        levels.mGoldTime = Utils.getSeconds(12, 00);
+        return levels;
+    }
+    private static Levels world_6()
+    {
+        Levels levels = new Levels(12);
+        levels.levels_name = "World 6 - Afterglow";
+        levels.mWorldMusic = "Synthwave/Afterglow";
+
+        levels.mWorldColorPrincipal_1 = Color.green;
+        levels.mWorldColorPrincipal_2 = Color.yellow;
+        levels.mWorldColorSecond_1 = Color.green;
+        levels.mWorldColorSecond_2 = Color.magenta;
+        levels.mWorldHue = 135f;
+
+        levels.addLevel(1, Levels.level_6_basic_faster());
+
+        levels.addLevel(2, Levels.level_6_faster_counter_up());
+        levels.addLevel(3, Levels.level_6_one_faster_counter_high());
+        levels.addLevel(4, Levels.level_6_two_faster_linked());
+        levels.addLevel(5, Levels.level_6_faster_stop_on_hit_fast());
+        levels.addLevel(6, Levels.level_6_faster_on_small_area());
+        levels.addLevel(7, Levels.level_6_diagonale_link_counter_1_with_center());
+        levels.addLevel(8, Levels.level_6_double_faster_counter_up());
+
+        levels.addLevel(9, Levels.level_6_diagonale());
+        levels.addLevel(10, Levels.level_6_double_two_faster_linked());
+        levels.addLevel(11, Levels.level_6_diagonale_link_counter_1());
+        levels.addLevel(12, Levels.level_6_link_line_counter_increase());
 
         levels.mBronzeTime = Utils.getSeconds(25, 00);
         levels.mSilverTime = Utils.getSeconds(17, 00);
@@ -2736,5 +2987,6 @@ public class Worlds
         worlds.Add(world_3());
         worlds.Add(world_4());
         worlds.Add(world_5());
+        worlds.Add(world_6());
     }
 }

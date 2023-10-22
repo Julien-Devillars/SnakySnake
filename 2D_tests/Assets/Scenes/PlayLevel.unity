@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mLevel: 1
-  mWorld: 5
+  mWorld: 6
 --- !u!1 &393421234
 GameObject:
   m_ObjectHideFlags: 0

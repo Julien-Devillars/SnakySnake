@@ -116,7 +116,12 @@ public class EnemiesGeneratorPlayMode : MonoBehaviour
                     enemy_behavior = enemy_driller;
                     break;
                 case EnemyType.Faster:
-                    enemy_behavior = enemy_go.AddComponent<EnemyFaster>();
+                    EnemyFasterInfo enemy_faster_info = (EnemyFasterInfo)enemy;
+                    EnemyFaster enemy_faster = enemy_go.AddComponent<EnemyFaster>();
+                    enemy_faster.mCounterMax = enemy_faster_info.mCounter;
+                    enemy_faster.mMultiplier = enemy_faster_info.mMultiplier;
+                    enemy_faster.mWaiterKeepMoving = enemy_faster_info.mStunTime;
+                    enemy_behavior = enemy_faster;
                     break;
                 default:
                     enemy_behavior = new Enemy();

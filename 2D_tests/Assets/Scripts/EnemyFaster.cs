@@ -17,7 +17,7 @@ public class EnemyFaster : Enemy
     GameObject mRotateCircle;
     GameObject mCircle;
     TextMeshPro mCounterText;
-    int mCounterMax = 3;
+    public int mCounterMax = 3;
     int mCounter ;
     public bool mKeepMoving = true;
     public float mWaiterKeepMoving = 1.5f;
@@ -37,6 +37,9 @@ public class EnemyFaster : Enemy
 
         mCounter = mCounterMax;
         mOriginalSpeed = new Vector2(speed.x, speed.y);
+
+        CircleCollider2D collider = GetComponent<CircleCollider2D>();
+        collider.radius -= collider.radius / 3f;
 
         mSpriteRenderer = GetComponent<SpriteRenderer>();
         mSpriteOK = Resources.Load<Sprite>("Sprites/Characters/EnemyFaster");
@@ -107,10 +110,6 @@ public class EnemyFaster : Enemy
             mSpriteRenderer.sprite = mSpriteKO;
             mSpriteRenderer.material.SetFloat("_Glow", 0f);
 
-            Vector3 circle_pos = mCircle.transform.position;
-            Vector3 enemy_pos = transform.position;
-            Vector3 new_direction = circle_pos - enemy_pos;
-
             Quaternion rotation = Quaternion.FromToRotation(Vector3.right, mNextOriginalSpeed);
             //Vector3 euler_rotation = Quaternion.ToEulerAngles(rotation);
             mRotateCircle.transform.rotation = rotation;
@@ -149,7 +148,7 @@ public class EnemyFaster : Enemy
                 speed.x = -speed.x;
                 Vector2 original_speed = new Vector2(
                     (Mathf.Sign(speed.x) == Mathf.Sign(mOriginalSpeed.x) ? mOriginalSpeed.x : -mOriginalSpeed.x),
-                    mOriginalSpeed.y);
+                    (Mathf.Sign(speed.y) == Mathf.Sign(mOriginalSpeed.y) ? mOriginalSpeed.y : -mOriginalSpeed.y));
                 mNextOriginalSpeed = original_speed;
                 reduceIndex();
             }
@@ -158,7 +157,7 @@ public class EnemyFaster : Enemy
                 StartCoroutine(waiterColliderHorizontal());
                 speed.y = -speed.y;
                 Vector2 original_speed = new Vector2(
-                    mOriginalSpeed.x,
+                    (Mathf.Sign(speed.x) == Mathf.Sign(mOriginalSpeed.x) ? mOriginalSpeed.x : -mOriginalSpeed.x),
                     (Mathf.Sign(speed.y) == Mathf.Sign(mOriginalSpeed.y) ? mOriginalSpeed.y : -mOriginalSpeed.y));
 
                 mNextOriginalSpeed = original_speed;

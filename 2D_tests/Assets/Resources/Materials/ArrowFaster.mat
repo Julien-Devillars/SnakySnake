@@ -11,11 +11,12 @@ Material:
   m_Shader: {fileID: 4800000, guid: a36b7719ff0465b42ab1407d67672c5f, type: 3}
   m_ValidKeywords:
   - BLURISHD_ON
+  - CLIPPING_ON
   - COLORRAMPOUTLINE_ON
+  - GLOW_ON
+  - HSV_ON
   - ONLYINNEROUTLINE_ON
-  - ONLYOUTLINE_ON
   - OUTBASE8DIR_ON
-  - OUTBASE_ON
   m_InvalidKeywords:
   - _BLURHD_ON
   - _COLORRAMPOUTLINE_ON
@@ -94,7 +95,7 @@ Material:
     - _ChromAberrAmount: 0.958
     - _ClipUvDown: 0
     - _ClipUvLeft: 0
-    - _ClipUvRight: 0
+    - _ClipUvRight: 0.411
     - _ClipUvUp: 0
     - _ColorChangeLuminosity: 1
     - _ColorChangeTolerance: 0.543
@@ -126,7 +127,7 @@ Material:
     - _GhostTransparency: 0.192
     - _GlitchAmount: 12.71
     - _GlitchSize: 3.81
-    - _Glow: 1.2
+    - _Glow: 25.9
     - _GlowGlobal: 1
     - _GradBlend: 1
     - _GradBoostX: 0.1
@@ -140,7 +141,7 @@ Material:
     - _GreyscaleBlend: 1
     - _GreyscaleLuminosity: 0
     - _GreyscaleOutline: 0
-    - _HandDrawnAmount: 10
+    - _HandDrawnAmount: 15.7
     - _HandDrawnSpeed: 5
     - _HitEffectBlend: 1
     - _HitEffectGlow: 5
@@ -152,7 +153,7 @@ Material:
     - _HologramUnmodAmount: 0
     - _HsvBright: 1
     - _HsvSaturation: 1
-    - _HsvShift: 180
+    - _HsvShift: 208
     - _InnerOutlineAlpha: 0.996
     - _InnerOutlineGlow: 4
     - _InnerOutlineThickness: 2.11
@@ -183,7 +184,7 @@ Material:
     - _PinchUvAmount: 0.35
     - _PixelateSize: 65
     - _PosterizeGamma: 0.75
-    - _PosterizeNumColors: 8
+    - _PosterizeNumColors: 0
     - _PosterizeOutline: 0
     - _RandomSeed: 0
     - _RectSize: 1
@@ -227,7 +228,7 @@ Material:
     - _ColorSwapGreen: {r: 1, g: 1, b: 1, a: 1}
     - _ColorSwapRed: {r: 0.06124607, g: 0.9911022, b: 0.9911022, a: 1}
     - _FadeBurnColor: {r: 1, g: 1, b: 0, a: 1}
-    - _GlowColor: {r: 1, g: 1, b: 1, a: 1}
+    - _GlowColor: {r: 1, g: 0, b: 0.69310665, a: 1}
     - _GradBotLeftCol: {r: 1, g: 0, b: 1, a: 1}
     - _GradBotRightCol: {r: 0, g: 0, b: 1, a: 1}
     - _GradTopLeftCol: {r: 0.5283019, g: 0.256675, b: 0.5283019, a: 1}
