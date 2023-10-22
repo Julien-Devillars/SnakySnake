@@ -76,7 +76,12 @@ public class OptionSliderGamepad : MonoBehaviour
         GameControler.currentWorld = 0;
         if(!has_click)
         {
+            float music = ES3.Load<float>("VolumeSlider", 0.5f);
+            float luminosity = ES3.Load<float>("LuminositySlider", 0.5f);
             ES3.DeleteFile();
+            ES3.Save<float>("VolumeSlider", music);
+            ES3.Save<float>("LuminositySlider", luminosity);
+
         }
         else
         {
