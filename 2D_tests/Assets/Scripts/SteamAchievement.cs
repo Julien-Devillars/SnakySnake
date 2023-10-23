@@ -28,23 +28,50 @@ public class SteamAchievement : MonoBehaviour
     {
         if (!SteamManager.Initialized) return;
         bool all_done = true;
-        for (int j = 0; j < Worlds.worlds[GameControler.currentWorld].levels.Count; ++j)
+        bool all_gold = true;
+        for (int j = 0; j < Worlds.getCurrentWorld().levels.Count; ++j)
         {
             all_done &= ES3.Load<bool>($"PlayMode_World{GameControler.currentWorld}_Level{j}_status", false);
-            if (!all_done) break;
+            float timer = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_timer", -1f);
+
+            all_done &= (timer >= 0f);
+            all_gold &= all_done && (timer < Worlds.getCurrentWorld().levels[j].mGoldTime);
         }
         if (all_done)
         {
-            SteamUserStats.SetAchievement("ACH_WIN_ONE_GAME");
+            //SteamUserStats.SetAchievement("ACH_WIN_ONE_GAME");
             SteamUserStats.SetAchievement($"FINISH_WORLD_{GameControler.currentWorld + 1}");
+        }
+        if (all_gold)
+        {
+            SteamUserStats.SetAchievement($"GOLD_WORLD_{GameControler.currentWorld + 1}");
+            //SteamUserStats.SetAchievement("ACH_WIN_100_GAMES");
+        }
+        if(all_done || all_gold)
+        {
             SteamUserStats.StoreStats();
         }
+    }
+
+    static public void saveTimeInSteamStats()
+    {
+        if (!SteamManager.Initialized) return;
+
+        if (!SteamUserStats.RequestCurrentStats()) return;
+        float best_time;
+        SteamUserStats.GetStat($"Time_{GameControler.currentWorld}_{GameControler.currentLevel}", out best_time);
+        if(Timer.GetBestLevelTime() < best_time)
+        {
+            Debug.Log($"Save {best_time} in steam stats");
+            SteamUserStats.SetStat($"Time_{GameControler.currentWorld}_{GameControler.currentLevel}", best_time);
+        }
+        SteamUserStats.StoreStats();
+        
     }
     static public void noDeathInWorld()
     {
         if (!SteamManager.Initialized) return;
 
-        SteamUserStats.SetAchievement("ACH_WIN_100_GAMES");
         SteamUserStats.SetAchievement($"NO_DEATH_WORLD_{GameControler.currentWorld + 1}");
         SteamUserStats.StoreStats();
     }

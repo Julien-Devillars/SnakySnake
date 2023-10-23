@@ -73,13 +73,14 @@ public class EndLevel : MonoBehaviour
         }
         if (GameControler.status == GameControler.GameStatus.Win)
         {
-            SteamAchievement.checkWorlFinish();
             Timer.SaveLevelTime();
             Timer.StartLevelPauseTimer();
             mTextLevel.text = $"World {GameControler.currentWorld + 1} - Level {GameControler.currentLevel + 1}";
             mLevelEndStats.updateStatsInPanel();
             Timer.resetDeathLevelCounter();
             mNextLevelButton.Select();
+            SteamAchievement.checkWorlFinish();
+            SteamAchievement.saveTimeInSteamStats();
             //Next();
         }
         if (GameControler.status == GameControler.GameStatus.Lose)

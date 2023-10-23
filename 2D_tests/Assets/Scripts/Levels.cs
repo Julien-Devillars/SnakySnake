@@ -2744,6 +2744,13 @@ public class Levels
         return level;
     }
 
+    public static Level dummy_level()
+    {
+        Level level = new Level("dummy_level", 50);
+
+        level.addTimers(10f);
+        return level;
+    }
     public Levels(int nb_level)
     {
         levels = new List<Level>();
@@ -2825,6 +2832,37 @@ public class Levels
 public class Worlds
 {
     public static List<Levels> worlds;
+    private static Levels world_dummy()
+    {
+        Levels levels = new Levels(12);
+
+        levels.levels_name = "World 1 - Countach";
+        levels.mWorldMusic = "Synthwave/Countach";
+        levels.mWorldColorPrincipal_1 = Color.magenta;
+        levels.mWorldColorPrincipal_2 = Color.cyan;
+        levels.mWorldColorSecond_1 = new Color(1f, 0.15f, 0f);
+        levels.mWorldColorSecond_2 = Color.yellow;
+        levels.mWorldHue = 0f;
+
+        levels.addLevel(1, Levels.dummy_level());
+        levels.addLevel(2, Levels.dummy_level());
+        levels.addLevel(3, Levels.dummy_level());
+        levels.addLevel(4, Levels.dummy_level());
+        levels.addLevel(5, Levels.dummy_level());
+        levels.addLevel(6, Levels.dummy_level());
+        levels.addLevel(7, Levels.dummy_level()); // Could be removed
+        levels.addLevel(8, Levels.dummy_level());
+        levels.addLevel(9, Levels.dummy_level());
+        levels.addLevel(10, Levels.dummy_level());
+        levels.addLevel(11, Levels.dummy_level());
+        levels.addLevel(12, Levels.dummy_level());
+
+        levels.mBronzeTime = Utils.getSeconds(10, 00);
+        levels.mSilverTime = Utils.getSeconds(5, 00);
+        levels.mGoldTime = Utils.getSeconds(2, 30);
+
+        return levels;
+    }
     private static Levels world_1()
     {
         Levels levels = new Levels(12);
