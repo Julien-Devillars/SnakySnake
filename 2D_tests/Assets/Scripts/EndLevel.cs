@@ -27,6 +27,7 @@ public class EndLevel : MonoBehaviour
 
         mDefaultInputActions.UI.Navigate.performed += ctx =>
         {
+            if (GameControler.status != GameControler.GameStatus.Win) return;
             GameObject selected = EventSystem.current.currentSelectedGameObject;
             Debug.Log(selected.name);
             if (selected == null || selected.name == "Text")// || (selected.GetComponent<ButtonHandler>() == null && selected.GetComponent<SliderHandler>() == null))

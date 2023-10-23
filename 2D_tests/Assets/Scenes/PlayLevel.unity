@@ -7233,7 +7233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6218589393588150570, guid: 64744a04461604e4098af246245d80ac, type: 3}
       propertyPath: m_text
-      value: Menu
+      value: Back
       objectReference: {fileID: 0}
     - target: {fileID: 6218589393588150570, guid: 64744a04461604e4098af246245d80ac, type: 3}
       propertyPath: m_fontSize
@@ -9065,7 +9065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4560769501069209246, guid: 327837dfb65141d49a4f7a7fb6e8869c, type: 3}
       propertyPath: m_text
-      value: Back
+      value: Menu
       objectReference: {fileID: 0}
     - target: {fileID: 4560769501069209246, guid: 327837dfb65141d49a4f7a7fb6e8869c, type: 3}
       propertyPath: m_fontSize
