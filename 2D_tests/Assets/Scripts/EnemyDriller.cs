@@ -57,8 +57,9 @@ public class EnemyDriller : Enemy
     {
         if (Utils.GAME_STOPPED) return;
         if (GameControler.status == GameControler.GameStatus.Lose) return;
+        if (GameControler.status == GameControler.GameStatus.Win) return;
 
-        if(speed == Vector2.zero)
+        if (speed == Vector2.zero)
         {
             speed = mPreviousSpeed;
         }

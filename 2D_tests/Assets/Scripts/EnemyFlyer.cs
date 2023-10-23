@@ -47,6 +47,7 @@ public class EnemyFlyer : Enemy
     {
         if (Utils.GAME_STOPPED) return;
         if (GameControler.status == GameControler.GameStatus.Lose) return;
+        if (GameControler.status == GameControler.GameStatus.Win) return;
 
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
         SpriteRenderer character_sprite_renderer = character.GetComponent<SpriteRenderer>();

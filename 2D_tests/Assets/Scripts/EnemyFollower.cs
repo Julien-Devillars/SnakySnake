@@ -49,6 +49,7 @@ public class EnemyFollower : Enemy
     {
         if (Utils.GAME_STOPPED) return;
         if (GameControler.status == GameControler.GameStatus.Lose) return;
+        if (GameControler.status == GameControler.GameStatus.Win) return;
 
         SpriteRenderer sprite_renderer = GetComponent<SpriteRenderer>();
 

@@ -70,6 +70,7 @@ public class EnemyCircle : Enemy
     {
         if (Utils.GAME_STOPPED) return;
         if (GameControler.status == GameControler.GameStatus.Lose) return;
+        if (GameControler.status == GameControler.GameStatus.Win) return;
         gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
         mRotateCircle.transform.RotateAround(transform.position, Vector3.forward, Time.deltaTime * mRotateSpeed);
 

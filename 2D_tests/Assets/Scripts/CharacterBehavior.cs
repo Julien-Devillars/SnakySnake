@@ -263,6 +263,7 @@ public class CharacterBehavior : MonoBehaviour
         if (Utils.GAME_STOPPED) return;
         if (GameControler.status == GameControler.GameStatus.Waiting) return;
         if (GameControler.status == GameControler.GameStatus.Lose) return;
+        if (GameControler.status == GameControler.GameStatus.Win) return;
 
         Background current_bg = GetBackground(transform.position);
         Border current_border = GetBorder(transform.position);
@@ -581,6 +582,7 @@ public class CharacterBehavior : MonoBehaviour
         if (mTrailPoints.Count == 0)
             return;
         if (GameControler.status == GameControler.GameStatus.Lose) return;
+        if (GameControler.status == GameControler.GameStatus.Win) return;
         Border.mOnDeleteLine = true;
         fixLastTrailIfNeeded();
 

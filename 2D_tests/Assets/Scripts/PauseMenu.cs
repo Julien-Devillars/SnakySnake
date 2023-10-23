@@ -72,6 +72,7 @@ private void Awake()
         };
         mDefaultInputActions.UI.Navigate.performed += ctx =>
         {
+            if (GameControler.status == GameControler.GameStatus.Lose || GameControler.status == GameControler.GameStatus.Win) return;
             GameObject selected = EventSystem.current.currentSelectedGameObject;
             Debug.Log(selected.name);
             if (selected != null && selected.GetComponent<ButtonHandler>()) return;

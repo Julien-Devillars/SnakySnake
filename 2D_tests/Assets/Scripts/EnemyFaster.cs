@@ -129,6 +129,7 @@ public class EnemyFaster : Enemy
         if (Utils.GAME_STOPPED) return;
         if (GameControler.status == GameControler.GameStatus.Waiting) return;
         if (GameControler.status == GameControler.GameStatus.Lose) return;
+        if (GameControler.status == GameControler.GameStatus.Win) return;
         if (!mKeepMoving) return;
         gameObject.transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);
     }

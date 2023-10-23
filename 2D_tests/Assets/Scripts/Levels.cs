@@ -2770,15 +2770,16 @@ public class Worlds
         levels.addLevel(4, Levels.level_1_vertical_enemies());
         levels.addLevel(5, Levels.level_1_3());
         levels.addLevel(6, Levels.level_1_7());
-        //levels.addLevel(4, Levels.level_1_2_medium_enemy_horizontal());
-        //levels.addLevel(4, Levels.level_1_4());
-        //levels.addLevel(7, Levels.level_1_demon_square()); // Could be removed
         levels.addLevel(7, Levels.level_1_demon_line()); // Could be removed
         levels.addLevel(8, Levels.level_1_9());
         levels.addLevel(9, Levels.level_1_12());
         levels.addLevel(10, Levels.level_1_11());
         levels.addLevel(11, Levels.level_1_basic_link());
         levels.addLevel(12, Levels.level_1_basic_link_2());
+
+        //levels.addLevel(4, Levels.level_1_2_medium_enemy_horizontal());
+        //levels.addLevel(4, Levels.level_1_4());
+        //levels.addLevel(7, Levels.level_1_demon_square()); // Could be removed
 
         //levels.addLevel(11, Levels.level_1_11()); // Either level 10 or 11 can be removed
         //levels.addLevel(12, Levels.level_1_13()); // COuld be remvoed too
@@ -2975,6 +2976,10 @@ public class Worlds
     public static Levels getCurrentWorld()
     {
         return worlds[GameControler.currentWorld];
+    }
+    public static Level getCurrentLevel()
+    {
+        return worlds[GameControler.currentWorld].levels[GameControler.currentLevel];
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
