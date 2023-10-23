@@ -39,7 +39,7 @@ public class EnemyFaster : Enemy
         mOriginalSpeed = new Vector2(speed.x, speed.y);
 
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
-        collider.radius -= collider.radius / 3f;
+        collider.radius -= collider.radius / 10f;
 
         mSpriteRenderer = GetComponent<SpriteRenderer>();
         mSpriteOK = Resources.Load<Sprite>("Sprites/Characters/EnemyFaster");

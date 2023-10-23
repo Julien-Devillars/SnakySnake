@@ -302,6 +302,13 @@ public class Level
             addStar(new StarInfo(pos, Utils.STAR_DEFAULT_SCALE));
         }
     }
+    public void addStars(float scale, params int[] position)
+    {
+        foreach (int pos in position)
+        {
+            addStar(new StarInfo(pos, scale));
+        }
+    }
     public void addStars(params Vector2[] position)
     {
         foreach (Vector2 pos in position)
@@ -309,6 +316,14 @@ public class Level
             addStar(new StarInfo(pos, Utils.STAR_DEFAULT_SCALE));
         }
     }
+    public void addStars(float scale, params Vector2[] position)
+    {
+        foreach (Vector2 pos in position)
+        {
+            addStar(new StarInfo(pos, scale));
+        }
+    }
+
     public void addTrail(params Vector3[] points)
     {
         AdditionalBorder additional_border = new AdditionalBorder();
@@ -2478,6 +2493,9 @@ public class Levels
 
         level.addTrail(new Vector3(0.25f, 0f), new Vector3(0.25f, 1f));
         level.addTrail(new Vector3(0.75f, 0f), new Vector3(0.75f, 1f));
+
+        level.addTimers(3f);
+        
         return level;
     }
     public static Level level_6_faster_counter_up()
@@ -2486,13 +2504,14 @@ public class Levels
 
         float speed = 8f;
 
-        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1.5f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1.5f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1.5f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(6, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 1.5f, 1.25f));
 
         level.addStars(4, 5, 6);
+
+        level.addTimers(4f);
         return level;
     }
 
@@ -2512,6 +2531,8 @@ public class Levels
 
         level.addTrail(new Vector3(0.25f, 0f), new Vector3(0.25f, 1f));
         level.addTrail(new Vector3(0.75f, 0f), new Vector3(0.75f, 1f));
+
+        level.addTimers(3f);
         return level;
     }
     public static Level level_6_two_faster_linked()
@@ -2524,6 +2545,8 @@ public class Levels
         level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.5f));
 
         level.addStars(4, 5, 6);
+
+        level.addTimers(5f);
         return level;
     }
     public static Level level_6_double_two_faster_linked()
@@ -2538,6 +2561,8 @@ public class Levels
         level.addEnemy(new EnemyFasterInfo(5, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.5f));
 
         level.addStars(4, 5, 6);
+
+        level.addTimers(9f);
         return level;
     }
     public static Level level_6_double_faster_counter_up()
@@ -2546,23 +2571,23 @@ public class Levels
 
         float speed = 8f;
 
-        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1.5f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1.5f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1.5f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 1.5f, 1.25f));
 
-        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 1f, 1.25f));
-        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 1f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1.5f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 1.5f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1.5f, 1.25f));
+        level.addEnemy(new EnemyFasterInfo(5, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 1.5f, 1.25f));
 
         level.addStars(2, 4, 5, 6, 8);
         level.addStars(Utils.getMidRelativePositionFromPosition(2, 5),
             Utils.getMidRelativePositionFromPosition(4, 5),
             Utils.getMidRelativePositionFromPosition(6, 5),
             Utils.getMidRelativePositionFromPosition(8, 5));
+
+        level.addTimers(12f);
         return level;
     }
     public static Level level_6_faster_stop_on_hit_fast()
@@ -2576,6 +2601,8 @@ public class Levels
 
 
         level.addStars(2, 5, 8);
+
+        level.addTimers(4f);
         return level;
     }
     public static Level level_6_faster_on_small_area()
@@ -2586,11 +2613,18 @@ public class Levels
 
         level.addEnemy(new EnemyFasterInfo(5, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 6, 0.5f, 1.25f));
 
-        level.addTrail(new Vector3(0.3f, 0.3f), new Vector3(0.3f, 0.7f), new Vector3(0.7f, 0.7f), new Vector3(0.7f, 0.3f), new Vector3(0.3f, 0.3f));
+        level.addTrail(
+            new Vector3(0.3f, 0.3f), 
+            new Vector3(0.3f, 0.7f), 
+            new Vector3(0.7f, 0.7f), 
+            new Vector3(0.7f, 0.3f), 
+            new Vector3(0.3f, 0.3f));
 
         level.addStars(5);
         level.addStars(Utils.getMidRelativePositionFromPosition(5, 4),
             Utils.getMidRelativePositionFromPosition(5, 6));
+
+        level.addTimers(5f);
         return level;
     }
     public static Level level_6_diagonale()
@@ -2605,7 +2639,26 @@ public class Levels
             level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 2.25f, 1.2f));
             level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 2.25f, 1.2f));
             level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 2.25f, 1.2f));
-            level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 6, 2.25f, 1.2f));
+        }
+
+        level.addStars(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+        level.addTimers(7f);
+        return level;
+    }
+    public static Level level_6_diagonale_hard()
+    {
+        Level level = new Level("level_6_diagonale", 50);
+
+        float speed = 8f;
+
+        foreach (Vector3 direction in new List<Vector3>() { Utils.UR, Utils.UL, Utils.DR, Utils.DL })
+        {
+            level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 2f, 1.2f));
+            level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 2, 2f, 1.2f));
+            level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 2f, 1.2f));
+            level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 4, 2f, 1.2f));
+            level.addEnemy(new EnemyFasterInfo(5, direction * speed, Utils.ENEMY_DEFAULT_SCALE, 5, 2f, 1.2f));
         }
 
         level.addStars(1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -2624,6 +2677,8 @@ public class Levels
 
 
         level.addStars(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+        level.addTimers(9f);
         return level;
     }
 
@@ -2638,9 +2693,25 @@ public class Levels
         level.addEnemy(new EnemyFasterInfo(2, Utils.DL * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1f, Utils.Linker(3)));
         level.addEnemy(new EnemyFasterInfo(2, Utils.DR * speed, Utils.ENEMY_DEFAULT_SCALE, 1, 1f, 1f, Utils.Linker(0)));
 
-        level.addTrail(new Vector3(0.3f, 0.3f), new Vector3(0.3f, 0.7f), new Vector3(0.7f, 0.7f), new Vector3(0.7f, 0.3f), new Vector3(0.3f, 0.3f));
+        level.addTrail(
+            new Vector3(0.3f, 0.3f),
+            new Vector3(0.3f, 0.7f),
+            new Vector3(0.7f, 0.7f),
+            new Vector3(0.7f, 0.3f),
+            new Vector3(0.3f, 0.3f));
 
-        level.addStars(1, 2, 3, 4, 6, 7, 8, 9);
+        level.addStars(
+            Utils.getMidRelativePositionFromPosition(new Vector3(0f, 1f), new Vector3(0.3f, 0.7f)),
+            Utils.getMidRelativePositionFromPosition(new Vector3(0f, 0.5f), new Vector3(0.3f, 0.5f)),
+            Utils.getMidRelativePositionFromPosition(new Vector3(0f, 0f), new Vector3(0.3f, 0.3f)),
+            Utils.getMidRelativePositionFromPosition(new Vector3(0.5f, 1f), new Vector3(0.5f, 0.7f)),
+            Utils.getMidRelativePositionFromPosition(new Vector3(0.5f, 0f), new Vector3(0.5f, 0.3f)),
+            Utils.getMidRelativePositionFromPosition(new Vector3(1f, 1f), new Vector3(0.7f, 0.7f)),
+            Utils.getMidRelativePositionFromPosition(new Vector3(1f, 0.5f), new Vector3(0.7f, 0.5f)),
+            Utils.getMidRelativePositionFromPosition(new Vector3(1f, 0f), new Vector3(0.7f, 0.3f))
+            );
+
+        level.addTimers(6f);
         return level;
     }
 
@@ -2668,6 +2739,8 @@ public class Levels
             Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, 3, 1.25f, 1.75f));
 
         level.addStars(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+        level.addTimers(30f);
         return level;
     }
 
@@ -2958,9 +3031,9 @@ public class Worlds
         levels.addLevel(11, Levels.level_6_diagonale_link_counter_1());
         levels.addLevel(12, Levels.level_6_link_line_counter_increase());
 
-        levels.mBronzeTime = Utils.getSeconds(25, 00);
-        levels.mSilverTime = Utils.getSeconds(17, 00);
-        levels.mGoldTime = Utils.getSeconds(12, 00);
+        levels.mBronzeTime = Utils.getSeconds(28, 00);
+        levels.mSilverTime = Utils.getSeconds(20, 00);
+        levels.mGoldTime = Utils.getSeconds(14, 00);
         return levels;
     }
 
