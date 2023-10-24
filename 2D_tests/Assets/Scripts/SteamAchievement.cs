@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
 using Steamworks;
+using Steamworks.Data;
+using System.Threading.Tasks;
+using System;
+using Codice.Client.Common;
 /*
 public class SteamLeaderboards
 {
@@ -95,28 +99,87 @@ public class SteamAchievement : MonoBehaviour
         }
         if (all_done)
         {
-            var achievement = new Steamworks.Data.Achievement($"FINISH_WORLD_{GameControler.currentWorld + 1}");
+            var achievement = new Achievement($"FINISH_WORLD_{GameControler.currentWorld + 1}");
             achievement.Trigger();
         }
         if (all_gold)
         {
-            var achievement = new Steamworks.Data.Achievement($"GOLD_WORLD_{GameControler.currentWorld + 1}");
+            var achievement = new Achievement($"GOLD_WORLD_{GameControler.currentWorld + 1}");
             achievement.Trigger();
         }
     }
     static public void noDeathInWorld()
     {
-        var achievement = new Steamworks.Data.Achievement($"NO_DEATH_WORLD_{GameControler.currentWorld + 1}");
+        var achievement = new Achievement($"NO_DEATH_WORLD_{GameControler.currentWorld + 1}");
         achievement.Trigger();
     }
 
-    //static public void checkDashBoard()
-    //{
-    //    if (!SteamManager.Initialized) return;
-    //
-    //    SteamLeaderboards.Init();
-    //    SteamLeaderboards.InitTimer();
-    //    SteamLeaderboards.UpdateScore((int)(Timer.GetBestLevelTime() * 1000f));
-    //}
+    static async public void addBestTimeInLeaderBoard(float best_score)
+    {
+        string leaderboard_name = string.Format("LB_BestTime_W{0:00}_L{1:00}", GameControler.currentWorld + 1, GameControler.currentLevel + 1);
+
+        var leaderboard = await SteamUserStats.FindLeaderboardAsync(leaderboard_name);
+        if (!leaderboard.HasValue)
+        {
+            Debug.Log($"Leaderboard '{leaderboard_name}'not found !");
+            return;
+        }
+        else
+        {
+            Debug.Log($"Found {leaderboard.Value.Name}");
+            Debug.Log($" - Display : {leaderboard.Value.Display}");
+            Debug.Log($" - Entries : {leaderboard.Value.EntryCount}");
+        }
+
+        var result = await leaderboard.Value.SubmitScoreAsync((int)(best_score * 1000f));
+
+        if (result.HasValue)
+        {
+            Debug.Log(result.Value.Score);
+            Debug.Log(result.Value.OldGlobalRank);
+            Debug.Log(result.Value.NewGlobalRank);
+            if (result.Value.Changed)
+            {
+                Debug.Log("Value Changed in leaderboard");
+            }
+            else
+            {
+                Debug.Log("Value NOT Changed in leaderboard");
+            }
+        }
+    }
+
+    static async public void checkLeaderBoard(string str_leaderboard)
+    {
+        var leaderboard = await SteamUserStats.FindLeaderboardAsync(str_leaderboard);
+        if(!leaderboard.HasValue)
+        {
+            Debug.Log($"Leaderboard '{str_leaderboard}'not found !");
+            return;
+        }
+        else
+        {
+            Debug.Log($"Found {leaderboard.Value.Name}");
+            Debug.Log($" - Display : {leaderboard.Value.Display}");
+            Debug.Log($" - Entries : {leaderboard.Value.EntryCount}");
+        }
+        var result = await leaderboard.Value.SubmitScoreAsync(6);
+
+        if(result.HasValue)
+        {
+            Debug.Log(result.Value.Score);
+            Debug.Log(result.Value.OldGlobalRank);
+            Debug.Log(result.Value.NewGlobalRank);
+            if (result.Value.Changed)
+            {
+                Debug.Log("Value Changed in leaderboard");
+            }
+            else
+            {
+                Debug.Log("Value NOT Changed in leaderboard");
+            }
+        }
+
+    }
 
 }

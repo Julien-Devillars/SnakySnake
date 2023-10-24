@@ -39,10 +39,23 @@ public class SteamIntegration : MonoBehaviour
                 achievement.Clear();
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.L)) 
+        {
+            //SteamAchievement.checkLeaderBoard("Leaderboard_World1_Level1");
+            //SteamAchievement.checkLeaderBoard("Leaderboard_World1_Level2");
+        }
+
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            Debug.Log(Steamworks.SteamUserStats.SetStat("test", 10));
+        }
+
     }
 
     private void OnApplicationQuit()
     {
+        Debug.Log("Quit Steam Integration");
         Steamworks.SteamClient.Shutdown();
     }
 }
