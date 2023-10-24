@@ -59,7 +59,7 @@ public static class Timer
         if (!calculateTimer) return;
         if (!hasDiedInWorld)
         {
-            SteamAchievement.noDeathInWorld();
+            //SteamAchievement.noDeathInWorld();
         }
         float time = Time.realtimeSinceStartup - startWorldTimer - totalPauseWorldTimer;
         Debug.Log("World Time : " + time);

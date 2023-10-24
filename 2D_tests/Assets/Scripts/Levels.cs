@@ -2305,7 +2305,7 @@ public class Levels
     {
         Level level = new Level("level_5_Quad_driller_link_square", 50);
 
-        float speed = 8f;
+        float speed = 5.5f;
 
         level.addEnemy(new EnemyDrillerInfo(2, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE, false, false,  Utils.Linker(2)));
         level.addEnemy(new EnemyDrillerInfo(8, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE, false, false,  Utils.Linker(3)));

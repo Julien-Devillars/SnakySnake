@@ -80,7 +80,6 @@ public class EndLevel : MonoBehaviour
             Timer.resetDeathLevelCounter();
             mNextLevelButton.Select();
             SteamAchievement.checkWorlFinish();
-            SteamAchievement.saveTimeInSteamStats();
             //Next();
         }
         if (GameControler.status == GameControler.GameStatus.Lose)
