@@ -68,10 +68,11 @@ public class LeaderBoard : MonoBehaviour
             leaderboard_line.display(true);
         }
 
-        int cpt = 0;
+        int cpt = 1;
         foreach (var res in result)
         {
             //Debug.Log($"{res.GlobalRank} -  {res.User.Name} : {res.Score}");
+            // Do not handle title line
             mLeaderBoardLines[cpt].mPosition = res.GlobalRank;
             mLeaderBoardLines[cpt].mName = res.User.Name;
             mLeaderBoardLines[cpt].mTime = res.Score / 1000f;

@@ -13,10 +13,18 @@ public class LeaderBoardLine : MonoBehaviour
     public string mName = "";
     public TextMeshProUGUI mTimeText;
     public float mTime;
+    private Color mStartColor;
+    public Color mUserColor;
+    private void Start()
+    {
+        mStartColor = GetComponent<Image>().color;
+    }
 
     // Update is called once per frame
     void Update()
     {
+        if (gameObject.name.Contains("Title")) return;
+
         mPositionText.text = mPosition.ToString();
         mNameText.text = mName;
         mTimeText.text = Utils.getTimeFromFloat(mTime);
@@ -29,6 +37,6 @@ public class LeaderBoardLine : MonoBehaviour
 
     public void overlay(bool flag)
     {
-        GetComponent<Image>().enabled = flag;
+        GetComponent<Image>().color = flag ? mUserColor : mStartColor;
     }
 }
