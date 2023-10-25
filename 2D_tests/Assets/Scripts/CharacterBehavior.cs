@@ -47,35 +47,41 @@ public class CharacterBehavior : MonoBehaviour
     private Direction.direction mInputDirection;
     private bool mInputStop;
     private float mDeadStickZone = 0.95f;
+    private bool mControllerStickIsActivated = false;
     private void Awake()
     {
         mPlayerControl = new PlayerControl();
         mPlayerControl.PlayerController.Left.performed += ctx =>    mInputDirection = Direction.Left;
         mPlayerControl.PlayerController.Left.canceled += ctx =>
         {
+            mControllerStickIsActivated = false;
             if (mCurrentDirection != Direction.Left) return;
             mInputDirection = Direction.Stop;
         };
         mPlayerControl.PlayerController.Right.performed += ctx =>   mInputDirection = Direction.Right;
         mPlayerControl.PlayerController.Right.canceled += ctx =>
         {
+            mControllerStickIsActivated = false;
             if (mCurrentDirection != Direction.Right) return;
             mInputDirection = Direction.Stop;
         };
         mPlayerControl.PlayerController.Up.performed += ctx =>      mInputDirection = Direction.Up;
         mPlayerControl.PlayerController.Up.canceled += ctx =>
         {
+            mControllerStickIsActivated = false;
             if (mCurrentDirection != Direction.Up) return;
             mInputDirection = Direction.Stop;
         };
         mPlayerControl.PlayerController.Down.performed += ctx =>    mInputDirection = Direction.Down;
         mPlayerControl.PlayerController.Down.canceled += ctx =>
         {
+            mControllerStickIsActivated = false;
             if (mCurrentDirection != Direction.Down) return;
             mInputDirection = Direction.Stop;
         };
         mPlayerControl.PlayerController.Stop.performed += ctx =>
         {
+            Debug.Log("Stop played");
             mInputDirection = Direction.Stop;
             mInputStop = true;
         };
@@ -89,7 +95,7 @@ public class CharacterBehavior : MonoBehaviour
             float val_x = mPlayerControl.PlayerController.XStick.ReadValue<float>();
             float val_y = mPlayerControl.PlayerController.YStick.ReadValue<float>();
             if (Mathf.Abs(val_x) < Mathf.Abs(val_y)) return;
-            if (Mathf.Abs(val_y) < mDeadStickZone && Mathf.Abs(val_x) < mDeadStickZone)
+            if (Mathf.Abs(val_y) < mDeadStickZone && Mathf.Abs(val_x) < mDeadStickZone && mControllerStickIsActivated)
             {
                 mInputDirection = Direction.Stop;
                 return;
@@ -102,11 +108,13 @@ public class CharacterBehavior : MonoBehaviour
             {
                 Debug.Log("Go Left");
                 mInputDirection = Direction.Left;
+                mControllerStickIsActivated = true;
             }
             if (val_x > 0)
             {
                 Debug.Log("Go Right");
                 mInputDirection = Direction.Right;
+                mControllerStickIsActivated = true;
             }
         };
         mPlayerControl.PlayerController.YStick.performed += ctx =>
@@ -114,7 +122,7 @@ public class CharacterBehavior : MonoBehaviour
             float val_x = mPlayerControl.PlayerController.XStick.ReadValue<float>();
             float val_y = mPlayerControl.PlayerController.YStick.ReadValue<float>();
             if (Mathf.Abs(val_y) < Mathf.Abs(val_x)) return;
-            if (Mathf.Abs(val_y) < mDeadStickZone && Mathf.Abs(val_x) < mDeadStickZone)
+            if (Mathf.Abs(val_y) < mDeadStickZone && Mathf.Abs(val_x) < mDeadStickZone && mControllerStickIsActivated)
             {
                 mInputDirection = Direction.Stop;
                 return;
@@ -127,11 +135,13 @@ public class CharacterBehavior : MonoBehaviour
             {
                 Debug.Log("Go Down");
                 mInputDirection = Direction.Down;
+                mControllerStickIsActivated = true;
             }
             if (val_y > 0)
             {
                 Debug.Log("Go Up");
                 mInputDirection = Direction.Up;
+                mControllerStickIsActivated = true;
             }
         };
 
@@ -1108,7 +1118,6 @@ public class CharacterBehavior : MonoBehaviour
         {
             return false;
         }
-
         mCurrentDirection = Direction.direction.None;
         transform.position = getClosestPoint(border_points);
         mWaitOneFrame = true;
@@ -1154,7 +1163,6 @@ public class CharacterBehavior : MonoBehaviour
         {
             return;
         }
-
         mCurrentDirection = Direction.direction.None;
         transform.position = getClosestPoint(border_points);
         mWaitOneFrame = true;
