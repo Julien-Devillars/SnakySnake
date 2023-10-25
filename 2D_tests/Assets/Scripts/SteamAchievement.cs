@@ -7,7 +7,6 @@ using Steamworks;
 using Steamworks.Data;
 using System.Threading.Tasks;
 using System;
-using Codice.Client.Common;
 /*
 public class SteamLeaderboards
 {
@@ -87,6 +86,7 @@ public class SteamAchievement : MonoBehaviour
     {
         bool all_done = true;
         bool all_gold = true;
+
         for (int j = 0; j < Worlds.getCurrentWorld().levels.Count; ++j)
         {
             all_done &= ES3.Load<bool>($"PlayMode_World{GameControler.currentWorld}_Level{j}_status", false);
