@@ -49,10 +49,10 @@ public static class Timer
         float time = GetLevelTime();
         float previous_time = GetBestLevelTime();
         Debug.Log("Level Time : " + time);
+        SteamAchievement.addBestTimeInLeaderBoard(time);
         if (previous_time >= 0f && previous_time < time) return;
         Debug.Log("Best -> Saved");
         ES3.Save<float>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_timer", time);
-        SteamAchievement.addBestTimeInLeaderBoard(time);
     }
     public static void SaveWorldTime()
     {

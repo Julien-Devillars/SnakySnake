@@ -29,7 +29,7 @@ public class EndLevel : MonoBehaviour
         {
             if (GameControler.status != GameControler.GameStatus.Win) return;
             GameObject selected = EventSystem.current.currentSelectedGameObject;
-            Debug.Log(selected.name);
+            //Debug.Log(selected.name);
             if (selected == null || selected.name == "Text")// || (selected.GetComponent<ButtonHandler>() == null && selected.GetComponent<SliderHandler>() == null))
             {
                 mNextLevelButton.Select();

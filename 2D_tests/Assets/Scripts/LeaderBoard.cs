@@ -13,6 +13,7 @@ public class LeaderBoard : MonoBehaviour
     public static int mCurrentWorld = -1;
     public static int mCurrentLevel = -1;
     private static bool mUpdateLeaderBoard = false;
+    public Animator mAnimation;
 
     private string mLeaderBoardFormat = "LB_BestTime_W{0:00}_L{1:00}";
 
@@ -42,6 +43,7 @@ public class LeaderBoard : MonoBehaviour
         //Debug.Log(mCurrentLevel);
         if (mUpdateLeaderBoard)
         {
+            mAnimation.SetTrigger("Refresh");
             mUpdateLeaderBoard = false;
             updateLeaderBoard(string.Format(mLeaderBoardFormat, mCurrentWorld + 1, mCurrentLevel + 1));
         }
@@ -81,6 +83,7 @@ public class LeaderBoard : MonoBehaviour
             Debug.Log($"Hide line {i}");
             mLeaderBoardLines[i].display(false);
         }
+        mAnimation.ResetTrigger("Refresh");
     }
 
     }

@@ -127,8 +127,6 @@ public class SteamAchievement : MonoBehaviour
         else
         {
             Debug.Log($"Found {leaderboard.Value.Name}");
-            Debug.Log($" - Display : {leaderboard.Value.Display}");
-            Debug.Log($" - Entries : {leaderboard.Value.EntryCount}");
         }
 
         var result = await leaderboard.Value.SubmitScoreAsync((int)(best_score * 1000f));
@@ -147,6 +145,8 @@ public class SteamAchievement : MonoBehaviour
                 Debug.Log("Value NOT Changed in leaderboard");
             }
         }
+
+        LeaderBoard.updateLeaderBoardWorldLevel(GameControler.currentWorld, GameControler.currentLevel);
     }
 
     static async public void checkLeaderBoard(string str_leaderboard)
