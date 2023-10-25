@@ -48,46 +48,68 @@ public class CharacterBehavior : MonoBehaviour
     private bool mInputStop;
     private float mDeadStickZone = 0.95f;
     private bool mControllerStickIsActivated = false;
+    private List<Direction.direction> mPressedDirection = new List<Direction.direction>();
     private void Awake()
     {
         mPlayerControl = new PlayerControl();
-        mPlayerControl.PlayerController.Left.performed += ctx =>    mInputDirection = Direction.Left;
+        mPressedDirection.Add(Direction.Stop);
+        mPlayerControl.PlayerController.Left.performed += ctx =>
+        {
+            //mInputDirection = Direction.Left;
+            mPressedDirection.Add(Direction.Left);
+        };
         mPlayerControl.PlayerController.Left.canceled += ctx =>
         {
             mControllerStickIsActivated = false;
+            mPressedDirection.Remove(Direction.Left);
             if (mCurrentDirection != Direction.Left) return;
-            mInputDirection = Direction.Stop;
+            //mInputDirection = Direction.Stop;
         };
-        mPlayerControl.PlayerController.Right.performed += ctx =>   mInputDirection = Direction.Right;
+        mPlayerControl.PlayerController.Right.performed += ctx =>
+        {
+            //mInputDirection = Direction.Right;
+            mPressedDirection.Add(Direction.Right);
+        };
         mPlayerControl.PlayerController.Right.canceled += ctx =>
         {
             mControllerStickIsActivated = false;
+            mPressedDirection.Remove(Direction.Right);
             if (mCurrentDirection != Direction.Right) return;
-            mInputDirection = Direction.Stop;
+            //mInputDirection = Direction.Stop;
         };
-        mPlayerControl.PlayerController.Up.performed += ctx =>      mInputDirection = Direction.Up;
+        mPlayerControl.PlayerController.Up.performed += ctx =>
+        {
+            //mInputDirection = Direction.Up;
+            mPressedDirection.Add(Direction.Up);
+        };
         mPlayerControl.PlayerController.Up.canceled += ctx =>
         {
             mControllerStickIsActivated = false;
+            mPressedDirection.Remove(Direction.Up);
             if (mCurrentDirection != Direction.Up) return;
-            mInputDirection = Direction.Stop;
+            //mInputDirection = Direction.Stop;
         };
-        mPlayerControl.PlayerController.Down.performed += ctx =>    mInputDirection = Direction.Down;
+        mPlayerControl.PlayerController.Down.performed += ctx =>
+        {
+            //mInputDirection = Direction.Down;
+            mPressedDirection.Add(Direction.Down);
+        };
         mPlayerControl.PlayerController.Down.canceled += ctx =>
         {
             mControllerStickIsActivated = false;
+            mPressedDirection.Remove(Direction.Down);
             if (mCurrentDirection != Direction.Down) return;
-            mInputDirection = Direction.Stop;
+            //mInputDirection = Direction.Stop;
         };
         mPlayerControl.PlayerController.Stop.performed += ctx =>
         {
             Debug.Log("Stop played");
-            mInputDirection = Direction.Stop;
+            //mInputDirection = Direction.Stop;
             mInputStop = true;
         };
         mPlayerControl.PlayerController.Stop.canceled += ctx =>
         {
-            mInputDirection = Direction.Stop;
+            //mInputDirection = Direction.Stop;
             mInputStop = false;
         };
         mPlayerControl.PlayerController.XStick.performed += ctx =>
@@ -97,7 +119,9 @@ public class CharacterBehavior : MonoBehaviour
             if (Mathf.Abs(val_x) < Mathf.Abs(val_y)) return;
             if (Mathf.Abs(val_y) < mDeadStickZone && Mathf.Abs(val_x) < mDeadStickZone && mControllerStickIsActivated)
             {
-                mInputDirection = Direction.Stop;
+                //mInputDirection = Direction.Stop;
+                mPressedDirection.Remove(Direction.Down);
+                mPressedDirection.Remove(Direction.Up);
                 return;
             }
             if (Mathf.Abs(val_x) < mDeadStickZone) return;
@@ -107,13 +131,15 @@ public class CharacterBehavior : MonoBehaviour
             if(val_x < 0)
             {
                 Debug.Log("Go Left");
-                mInputDirection = Direction.Left;
+                //mInputDirection = Direction.Left;
+                mPressedDirection.Add(Direction.Left);
                 mControllerStickIsActivated = true;
             }
             if (val_x > 0)
             {
                 Debug.Log("Go Right");
-                mInputDirection = Direction.Right;
+                //mInputDirection = Direction.Right;
+                mPressedDirection.Add(Direction.Right);
                 mControllerStickIsActivated = true;
             }
         };
@@ -124,7 +150,9 @@ public class CharacterBehavior : MonoBehaviour
             if (Mathf.Abs(val_y) < Mathf.Abs(val_x)) return;
             if (Mathf.Abs(val_y) < mDeadStickZone && Mathf.Abs(val_x) < mDeadStickZone && mControllerStickIsActivated)
             {
-                mInputDirection = Direction.Stop;
+                //mInputDirection = Direction.Stop;
+                mPressedDirection.Remove(Direction.Down);
+                mPressedDirection.Remove(Direction.Up);
                 return;
             }
             if (Mathf.Abs(val_y) < mDeadStickZone) return;
@@ -134,13 +162,15 @@ public class CharacterBehavior : MonoBehaviour
             if (val_y < 0)
             {
                 Debug.Log("Go Down");
-                mInputDirection = Direction.Down;
+                //mInputDirection = Direction.Down;
+                mPressedDirection.Add(Direction.Down);
                 mControllerStickIsActivated = true;
             }
             if (val_y > 0)
             {
                 Debug.Log("Go Up");
-                mInputDirection = Direction.Up;
+                //mInputDirection = Direction.Up;
+                mPressedDirection.Add(Direction.Up);
                 mControllerStickIsActivated = true;
             }
         };
@@ -786,7 +816,7 @@ public class CharacterBehavior : MonoBehaviour
 
     Direction.direction getInputDirection()
     {
-
+        mInputDirection = mPressedDirection[mPressedDirection.Count - 1];
         if (mInputDirection != Direction.direction.None)
         {
             Direction.direction tmp = mInputDirection;
