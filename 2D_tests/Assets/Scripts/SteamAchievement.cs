@@ -163,9 +163,14 @@ public class SteamAchievement : MonoBehaviour
             Debug.Log($" - Display : {leaderboard.Value.Display}");
             Debug.Log($" - Entries : {leaderboard.Value.EntryCount}");
         }
-        var result = await leaderboard.Value.SubmitScoreAsync(6);
+        var result = await leaderboard.Value.GetScoresAsync(5);
 
-        if(result.HasValue)
+        foreach (var res in result)
+        {
+            Debug.Log($"{res.User.Name} has {res.Score}");
+
+        }
+            /*if(result.HasValue)
         {
             Debug.Log(result.Value.Score);
             Debug.Log(result.Value.OldGlobalRank);
@@ -178,8 +183,7 @@ public class SteamAchievement : MonoBehaviour
             {
                 Debug.Log("Value NOT Changed in leaderboard");
             }
-        }
-
+        }*/
     }
 
 }
