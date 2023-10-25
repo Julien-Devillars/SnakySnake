@@ -1,8 +1,11 @@
 using Steamworks;
+using Steamworks.Data;
+using Steamworks.ServerList;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -16,6 +19,13 @@ public class LeaderBoard : MonoBehaviour
     public Animator mAnimation;
 
     private string mLeaderBoardFormat = "LB_BestTime_W{0:00}_L{1:00}";
+    public enum Sorting
+    {
+        World,
+        Friends,
+        Local
+    }
+    static public Sorting mSorting = Sorting.Local; 
 
     private void Start()
     {
@@ -25,6 +35,7 @@ public class LeaderBoard : MonoBehaviour
         {
             mLeaderBoardLines.Add(t_leaderboard_line.gameObject.GetComponent<LeaderBoardLine>());
         }
+        mSorting = ES3.Load<Sorting>("LD_SORTING", Sorting.Local);
     }
 
     public static void updateLeaderBoardWorldLevel(int world, int level)
@@ -61,14 +72,37 @@ public class LeaderBoard : MonoBehaviour
         {
             Debug.Log($"Found {leaderboard.Value.Name}");
         }
-        var result = await leaderboard.Value.GetScoresAsync(mLeaderBoardLines.Count - 1);
-        
+        LeaderboardEntry[] result = null;
+        LeaderboardEntry[] my_result = null;
+        if (mSorting == Sorting.World)
+        {
+            result = await leaderboard.Value.GetScoresAsync(mLeaderBoardLines.Count - 2);
+            my_result = await leaderboard.Value.GetScoresAroundUserAsync(0, 0);
+
+        }
+        else if (mSorting == Sorting.Friends)
+        {
+            result = await leaderboard.Value.GetScoresFromFriendsAsync();
+        }
+        else if (mSorting == Sorting.Local)
+        {
+            if(mLeaderBoardLines.Count % 2 == 0)
+            {
+                result = await leaderboard.Value.GetScoresAroundUserAsync(-(mLeaderBoardLines.Count-1) / 2, (mLeaderBoardLines.Count-1) / 2);
+            }
+            else
+            {
+                result = await leaderboard.Value.GetScoresAroundUserAsync(-(mLeaderBoardLines.Count-1) / 2, (mLeaderBoardLines.Count-2) / 2);
+            }
+        }
+
         foreach (LeaderBoardLine leaderboard_line in mLeaderBoardLines)
         {
             leaderboard_line.display(true);
         }
 
         int cpt = 1;
+        bool user_in_list = false;
         foreach (var res in result)
         {
             //Debug.Log($"{res.GlobalRank} -  {res.User.Name} : {res.Score}");
@@ -77,7 +111,16 @@ public class LeaderBoard : MonoBehaviour
             mLeaderBoardLines[cpt].mName = res.User.Name;
             mLeaderBoardLines[cpt].mTime = res.Score / 1000f;
             mLeaderBoardLines[cpt].overlay(res.User.IsMe);
+            user_in_list |= res.User.IsMe;
             cpt++;
+        }
+
+        if((mSorting == Sorting.World || mSorting == Sorting.Friends) && !user_in_list && my_result.Length == 1)
+        {
+            mLeaderBoardLines[cpt - 1].mPosition = my_result[0].GlobalRank;
+            mLeaderBoardLines[cpt - 1].mName = my_result[0].User.Name;
+            mLeaderBoardLines[cpt - 1].mTime = my_result[0].Score / 1000f;
+            mLeaderBoardLines[cpt - 1].overlay(true);
         }
 
         for(int i = cpt; i < mLeaderBoardLines.Count; ++i)
@@ -88,4 +131,10 @@ public class LeaderBoard : MonoBehaviour
         mAnimation.ResetTrigger("Refresh");
     }
 
+    public void changeSorting(int sorting)
+    {
+        mSorting = (Sorting)sorting;
+        mUpdateLeaderBoard = true;
     }
+
+}
