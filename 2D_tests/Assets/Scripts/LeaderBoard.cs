@@ -71,16 +71,17 @@ public class LeaderBoard : MonoBehaviour
         int cpt = 0;
         foreach (var res in result)
         {
-            Debug.Log($"{res.GlobalRank} -  {res.User.Name} : {res.Score}");
+            //Debug.Log($"{res.GlobalRank} -  {res.User.Name} : {res.Score}");
             mLeaderBoardLines[cpt].mPosition = res.GlobalRank;
             mLeaderBoardLines[cpt].mName = res.User.Name;
             mLeaderBoardLines[cpt].mTime = res.Score / 1000f;
+            mLeaderBoardLines[cpt].overlay(res.User.IsMe);
             cpt++;
         }
 
         for(int i = cpt; i < mLeaderBoardLines.Count; ++i)
         {
-            Debug.Log($"Hide line {i}");
+            //Debug.Log($"Hide line {i}");
             mLeaderBoardLines[i].display(false);
         }
         mAnimation.ResetTrigger("Refresh");

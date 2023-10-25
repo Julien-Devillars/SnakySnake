@@ -376,15 +376,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.86353207, a: 0.49019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: -5177388603050735206, guid: cd44075039fe669439e6f4f0f03548e7, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -392,7 +392,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 8
 --- !u!114 &6827930604085805628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,7 +546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2669119869353278091, guid: 04b384b000664b9498fb894239e225e1, type: 3}
       propertyPath: m_fontSize
-      value: 9.55
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 2669119869353278091, guid: 04b384b000664b9498fb894239e225e1, type: 3}
       propertyPath: m_fontSizeMax
@@ -671,7 +671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4612391388280240597, guid: 29c59a5cd1601634289e1f44555da736, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.13499832
+      value: 0.13500214
       objectReference: {fileID: 0}
     - target: {fileID: 4612391388280240597, guid: 29c59a5cd1601634289e1f44555da736, type: 3}
       propertyPath: m_AnchoredPosition.y
