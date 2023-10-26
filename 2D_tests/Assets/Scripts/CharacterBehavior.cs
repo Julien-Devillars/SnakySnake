@@ -322,9 +322,11 @@ public class CharacterBehavior : MonoBehaviour
             new_direction = Direction.direction.None;
             mWaitOneFrame = false;
         }
-
+        Debug.Log("new_direction : " + new_direction);
+        Debug.Log("current_direction before : " + new_direction);
         updateDirection(new_direction);
-        if(mTrailPoints.Count == 0)
+        Debug.Log("current_direction after: " + mCurrentDirection);
+        if (mTrailPoints.Count == 0)
         {
             setOnBorderSameDirection();
         }
@@ -825,10 +827,15 @@ public class CharacterBehavior : MonoBehaviour
             {
                 return tmp;
             }
+            else if (tmp == Direction.direction.Stop && mTrailPoints.Count != 0)
+            {
+                return Direction.None;
+            }
             else if(tmp != Direction.direction.Stop)
             {
                 return tmp;
             }
+
         }
 
         if (MobileButtons.mButtonHasBeenPressed)
@@ -926,10 +933,16 @@ public class CharacterBehavior : MonoBehaviour
             mCurrentDirection =  Direction.Down;
             return true;
         }
-        else if (new_direction == Direction.Stop && mCurrentDirection != Direction.Stop)
+        /*else if (new_direction == Direction.None)
         {
             //mPreviousDirection = mCurrentDirection;
             mCurrentDirection = Direction.None;
+            return true;
+        }*/        
+        else if (new_direction == Direction.Stop && can_move_backward)
+        {
+            mPreviousDirection = mCurrentDirection;
+            mCurrentDirection = Direction.Stop;
             return true;
         }
         return false;
@@ -1360,6 +1373,7 @@ public class CharacterBehavior : MonoBehaviour
             {
                 setOnBorderOppositeDirection(border);
             }
+            if (mCollidingBorder != null) return;
             if (border.isHorizontal() && Direction.isHorizontal(mCurrentDirection) && !border.onLine(transform.position))
             {
                 mCollidingBorder = border;
