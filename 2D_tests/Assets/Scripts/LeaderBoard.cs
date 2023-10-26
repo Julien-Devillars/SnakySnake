@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 using UnityEngine;
 
 
@@ -40,8 +41,6 @@ public class LeaderBoard : MonoBehaviour
 
     public static void updateLeaderBoardWorldLevel(int world, int level)
     {
-        Debug.Log("Update world" + world);
-        Debug.Log("Update level" + level);
         mCurrentWorld = world;
         mCurrentLevel = level;
 
@@ -50,13 +49,20 @@ public class LeaderBoard : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(mCurrentWorld);
-        //Debug.Log(mCurrentLevel);
         if (mUpdateLeaderBoard)
         {
             mAnimation.SetTrigger("Refresh");
             mUpdateLeaderBoard = false;
             updateLeaderBoard(string.Format(mLeaderBoardFormat, mCurrentWorld + 1, mCurrentLevel + 1));
+        }
+    }
+
+    public void hideRemainingLines(int start_index)
+    {
+        for (int i = start_index; i < mLeaderBoardLines.Count; ++i)
+        {
+            //Debug.Log($"Hide line {i}");
+            mLeaderBoardLines[i].display(false);
         }
     }
 
@@ -94,6 +100,16 @@ public class LeaderBoard : MonoBehaviour
             {
                 result = await leaderboard.Value.GetScoresAroundUserAsync(-(mLeaderBoardLines.Count-1) / 2, (mLeaderBoardLines.Count-2) / 2);
             }
+            if(result == null)
+            {
+                mLeaderBoardLines[1].mPosition = -1;
+                mLeaderBoardLines[1].mName = "No score";
+                mLeaderBoardLines[1].mTime = 0f;
+                mLeaderBoardLines[1].overlay(true);
+                hideRemainingLines(2);
+                mAnimation.ResetTrigger("Refresh");
+                return;
+            }
         }
 
         foreach (LeaderBoardLine leaderboard_line in mLeaderBoardLines)
@@ -115,19 +131,16 @@ public class LeaderBoard : MonoBehaviour
             cpt++;
         }
 
-        if((mSorting == Sorting.World || mSorting == Sorting.Friends) && !user_in_list && my_result.Length == 1)
+        if((mSorting == Sorting.World || mSorting == Sorting.Friends) && !user_in_list && my_result != null && my_result.Length == 1)
         {
             mLeaderBoardLines[cpt - 1].mPosition = my_result[0].GlobalRank;
             mLeaderBoardLines[cpt - 1].mName = my_result[0].User.Name;
             mLeaderBoardLines[cpt - 1].mTime = my_result[0].Score / 1000f;
             mLeaderBoardLines[cpt - 1].overlay(true);
+            cpt++;
         }
 
-        for(int i = cpt; i < mLeaderBoardLines.Count; ++i)
-        {
-            //Debug.Log($"Hide line {i}");
-            mLeaderBoardLines[i].display(false);
-        }
+        hideRemainingLines(cpt);
         mAnimation.ResetTrigger("Refresh");
     }
 
@@ -135,6 +148,7 @@ public class LeaderBoard : MonoBehaviour
     {
         mSorting = (Sorting)sorting;
         mUpdateLeaderBoard = true;
+        ES3.Save<Sorting>("LD_SORTING", Sorting.Local);
     }
 
 }

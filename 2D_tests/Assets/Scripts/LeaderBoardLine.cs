@@ -25,7 +25,7 @@ public class LeaderBoardLine : MonoBehaviour
     {
         if (gameObject.name.Contains("Title")) return;
 
-        mPositionText.text = mPosition.ToString();
+        mPositionText.text = mPosition  >= 0 ? mPosition.ToString() : "";
         mNameText.text = mName;
         mTimeText.text = Utils.getTimeFromFloat(mTime);
     }
@@ -38,5 +38,8 @@ public class LeaderBoardLine : MonoBehaviour
     public void overlay(bool flag)
     {
         GetComponent<Image>().color = flag ? mUserColor : mStartColor;
+        mPositionText.color = flag ? Color.blue : Color.white;
+        mNameText.color = flag ? Color.blue : Color.white;
+        mTimeText.color = flag ? Color.blue : Color.white;
     }
 }
