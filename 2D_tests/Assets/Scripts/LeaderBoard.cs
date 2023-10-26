@@ -20,6 +20,7 @@ public class LeaderBoard : MonoBehaviour
     public Animator mAnimation;
 
     private string mLeaderBoardFormat = "LB_BestTime_W{0:00}_L{1:00}";
+    private string mLeaderBoardFormatOnlyWorld = "LB_BestTime_W{0:00}";
     public enum Sorting
     {
         World,
@@ -53,7 +54,14 @@ public class LeaderBoard : MonoBehaviour
         {
             mAnimation.SetTrigger("Refresh");
             mUpdateLeaderBoard = false;
-            updateLeaderBoard(string.Format(mLeaderBoardFormat, mCurrentWorld + 1, mCurrentLevel + 1));
+            if(mCurrentLevel < 0)
+            {
+                updateLeaderBoard(string.Format(mLeaderBoardFormatOnlyWorld, mCurrentWorld + 1));
+            }
+            else
+            {
+                updateLeaderBoard(string.Format(mLeaderBoardFormat, mCurrentWorld + 1, mCurrentLevel + 1));
+            }
         }
     }
 
@@ -100,16 +108,17 @@ public class LeaderBoard : MonoBehaviour
             {
                 result = await leaderboard.Value.GetScoresAroundUserAsync(-(mLeaderBoardLines.Count-1) / 2, (mLeaderBoardLines.Count-2) / 2);
             }
-            if(result == null)
-            {
-                mLeaderBoardLines[1].mPosition = -1;
-                mLeaderBoardLines[1].mName = "No score";
-                mLeaderBoardLines[1].mTime = 0f;
-                mLeaderBoardLines[1].overlay(true);
-                hideRemainingLines(2);
-                mAnimation.ResetTrigger("Refresh");
-                return;
-            }
+        }
+
+        if (result == null)
+        {
+            mLeaderBoardLines[1].mPosition = -1;
+            mLeaderBoardLines[1].mName = "No score";
+            mLeaderBoardLines[1].mTime = 0f;
+            mLeaderBoardLines[1].overlay(true);
+            hideRemainingLines(2);
+            mAnimation.ResetTrigger("Refresh");
+            return;
         }
 
         foreach (LeaderBoardLine leaderboard_line in mLeaderBoardLines)

@@ -97,7 +97,7 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
                 time_goal_silver_text_mesh.text = Utils.getTimeFromFloat(current_world.mSilverTime);
                 time_goal_bronze_text_mesh.text = Utils.getTimeFromFloat(current_world.mBronzeTime);
                 mat = current_world.getGoalMaterial(timer);
-                LeaderBoard.updateLeaderBoardWorldLevel(GameControler.currentWorld, 0);
+                LeaderBoard.updateLeaderBoardWorldLevel(GameControler.currentWorld, -1);
             }
             if (mat == null)
             {

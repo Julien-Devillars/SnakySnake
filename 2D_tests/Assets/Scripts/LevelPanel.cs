@@ -236,6 +236,8 @@ public class LevelPanel : MonoBehaviour
             }
         }
 
+        LeaderBoard.updateLeaderBoardWorldLevel(GameControler.currentWorld, -1);
+
     }
 
     public void onLeft()

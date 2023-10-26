@@ -128,25 +128,21 @@ public class SteamAchievement : MonoBehaviour
         {
             Debug.Log($"Found {leaderboard.Value.Name}");
         }
-
-        var result = await leaderboard.Value.SubmitScoreAsync((int)(best_score * 1000f));
-
-        if (result.HasValue)
-        {
-            Debug.Log(result.Value.Score);
-            Debug.Log(result.Value.OldGlobalRank);
-            Debug.Log(result.Value.NewGlobalRank);
-            if (result.Value.Changed)
-            {
-                Debug.Log("Value Changed in leaderboard");
-            }
-            else
-            {
-                Debug.Log("Value NOT Changed in leaderboard");
-            }
-        }
+        await leaderboard.Value.SubmitScoreAsync((int)(best_score * 1000f));
 
         LeaderBoard.updateLeaderBoardWorldLevel(GameControler.currentWorld, GameControler.currentLevel);
+    }
+    static async public void addBestWorldTimeInLeaderBoard(float best_score)
+    {
+        string leaderboard_name = string.Format("LB_BestTime_W{0:00}", GameControler.currentWorld + 1);
+
+        var leaderboard = await SteamUserStats.FindLeaderboardAsync(leaderboard_name);
+        if (!leaderboard.HasValue)
+        {
+            Debug.Log($"Leaderboard '{leaderboard_name}'not found !");
+            return;
+        }
+        await leaderboard.Value.SubmitScoreAsync((int)(best_score * 1000f));
     }
 
     static async public void checkLeaderBoard(string str_leaderboard)
