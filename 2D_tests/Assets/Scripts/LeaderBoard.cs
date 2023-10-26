@@ -27,7 +27,7 @@ public class LeaderBoard : MonoBehaviour
         Friends,
         Local
     }
-    static public Sorting mSorting = Sorting.Local; 
+    static public Sorting mSorting = Sorting.World; 
 
     private void Start()
     {
@@ -37,7 +37,7 @@ public class LeaderBoard : MonoBehaviour
         {
             mLeaderBoardLines.Add(t_leaderboard_line.gameObject.GetComponent<LeaderBoardLine>());
         }
-        mSorting = ES3.Load<Sorting>("LD_SORTING", Sorting.Local);
+        mSorting = ES3.Load<Sorting>("LD_SORTING", Sorting.World);
     }
 
     public static void updateLeaderBoardWorldLevel(int world, int level)
@@ -157,7 +157,7 @@ public class LeaderBoard : MonoBehaviour
     {
         mSorting = (Sorting)sorting;
         mUpdateLeaderBoard = true;
-        ES3.Save<Sorting>("LD_SORTING", Sorting.Local);
+        ES3.Save<Sorting>("LD_SORTING", mSorting);
     }
 
 }

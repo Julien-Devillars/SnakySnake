@@ -5,7 +5,7 @@ using UnityEngine;
 public static class Timer
 {
     public static bool calculateTimer = false;
-    public static bool allowSkip = true;
+    public static bool allowSkip = false;
     public static float startWorldTimer = 0f;
     public static float startLevelTimer = 0f;
     public static float currentPauseLevelTimer = 0f;
