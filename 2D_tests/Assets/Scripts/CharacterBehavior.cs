@@ -948,6 +948,16 @@ public class CharacterBehavior : MonoBehaviour
         yield return new WaitForSeconds(Utils.ADD_LINE_UPDATE_TIME);
         mCanAddLine = true;
     }
+    IEnumerator waiterOnSetBorder()
+    {
+        mPressedDirection.Add(Direction.Stop);
+        yield return new WaitForSeconds(0.03f);
+        for(int i = mPressedDirection.Count - 1; i > 0; --i)
+        {
+            if (mPressedDirection[i] != Direction.Stop) continue;
+            mPressedDirection.RemoveAt(i);
+        }
+    }
 
     Background GetBackground(Vector3 pos)
     {
@@ -1151,6 +1161,7 @@ public class CharacterBehavior : MonoBehaviour
         mCurrentDirection = Direction.direction.None;
         transform.position = getClosestPoint(border_points);
         mWaitOneFrame = true;
+        StartCoroutine(waiterOnSetBorder());
         return true;
     }
     void setOnBorderOppositeDirection(bool check_previous_direction = false)
