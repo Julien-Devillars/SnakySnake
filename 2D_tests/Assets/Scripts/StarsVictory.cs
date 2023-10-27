@@ -19,7 +19,7 @@ public class StarsVictory : MonoBehaviour
 
         if (!Utils.HAS_WIN) return;
         if (character.mTrailPoints.Count > 0) return; // Cannot win if any trail currently
-        if (character.mCurrentDirection != Direction.direction.None) return; // Cannot win if any movement
+        if (character.mCurrentDirection != Direction.direction.None && character.mCurrentDirection != Direction.direction.Stop) return; // Cannot win if any movement
 
         foreach (Transform star_child in transform)
         {
