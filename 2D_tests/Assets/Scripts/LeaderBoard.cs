@@ -26,7 +26,8 @@ public class LeaderBoard : MonoBehaviour
     {
         World,
         Friends,
-        Local
+        Local,
+        Max
     }
     static public Sorting mSorting = Sorting.World; 
 
