@@ -125,20 +125,22 @@ public class CharacterBehavior : MonoBehaviour
                 return;
             }
             if (Mathf.Abs(val_x) < mDeadStickZone) return;
-            if (mInputDirection != Direction.direction.None) return;
+            if (mInputDirection != Direction.direction.None && mInputDirection != Direction.direction.Stop) return;
 
             Debug.Log($"X : {val_x}");
-            if(val_x < 0)
+            if(val_x < 0 && !mPressedDirection.Contains(Direction.Left))
             {
                 Debug.Log("Go Left");
                 //mInputDirection = Direction.Left;
+                clearPressedButton();
                 mPressedDirection.Add(Direction.Left);
                 mControllerStickIsActivated = true;
             }
-            if (val_x > 0)
+            if (val_x > 0 && !mPressedDirection.Contains(Direction.Right))
             {
                 Debug.Log("Go Right");
                 //mInputDirection = Direction.Right;
+                clearPressedButton();
                 mPressedDirection.Add(Direction.Right);
                 mControllerStickIsActivated = true;
             }
@@ -159,20 +161,32 @@ public class CharacterBehavior : MonoBehaviour
             if (mInputDirection != Direction.direction.None) return;
 
             Debug.Log($"Y : {val_y}");
-            if (val_y < 0)
+            if (val_y < 0 && !mPressedDirection.Contains(Direction.Down))
             {
                 Debug.Log("Go Down");
                 //mInputDirection = Direction.Down;
+                clearPressedButton();
                 mPressedDirection.Add(Direction.Down);
                 mControllerStickIsActivated = true;
             }
-            if (val_y > 0)
+            if (val_y > 0 && !mPressedDirection.Contains(Direction.Up))
             {
                 Debug.Log("Go Up");
                 //mInputDirection = Direction.Up;
+                clearPressedButton();
                 mPressedDirection.Add(Direction.Up);
                 mControllerStickIsActivated = true;
             }
+        };
+        mPlayerControl.PlayerController.XStick.canceled += ctx =>
+        {
+            mPressedDirection.Remove(Direction.Left);
+            mPressedDirection.Remove(Direction.Right);
+        };
+        mPlayerControl.PlayerController.YStick.canceled += ctx =>
+        {
+            mPressedDirection.Remove(Direction.Down);
+            mPressedDirection.Remove(Direction.Up);
         };
 
     }
@@ -964,7 +978,7 @@ public class CharacterBehavior : MonoBehaviour
     IEnumerator waiterOnSetBorder()
     {
         mPressedDirection.Add(Direction.Stop);
-        yield return new WaitForSeconds(0.03f);
+        yield return new WaitForSeconds(0.06f);
         for(int i = mPressedDirection.Count - 1; i > 0; --i)
         {
             if (mPressedDirection[i] != Direction.Stop) continue;
@@ -1418,4 +1432,11 @@ public class CharacterBehavior : MonoBehaviour
             }
         }
     }
+
+    public void clearPressedButton()
+    {
+        mPressedDirection.Clear();
+        mPressedDirection.Add(Direction.Stop);
+    }
+
 }
