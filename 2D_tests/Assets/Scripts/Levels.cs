@@ -478,13 +478,14 @@ public class Levels
         // Level 1
         Level level = new Level("Basic", 50);
 
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, 2, Utils.D * 8f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, 4, Utils.R * 11f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, 6, Utils.L * 11f, Utils.ENEMY_DEFAULT_SCALE));
-        level.addEnemy(new EnemyInfo(EnemyType.Basic, 8, Utils.U * 8f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5,2, 0.3f), Utils.D * 0f, Utils.ENEMY_DEFAULT_SCALE));
+        level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5,8, 0.3f), Utils.D * 0f, Utils.ENEMY_DEFAULT_SCALE));
 
         level.mLevelHelper = "Press Space bar to stop moving.<br>Keep pressing to move slowly";
-        level.addStar(new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE));
+        level.addStars(Utils.STAR_DEFAULT_SCALE * 0.5f, 5);
+
+        level.addTrail(new Vector3(0f,0.70f), new Vector3(1f, 0.70f));
+        level.addTrail(new Vector3(0f,0.3f), new Vector3(1f, 0.30f));
 
         level.addTimers(Utils.getSeconds(0, 20f), Utils.getSeconds(0, 13f), Utils.getSeconds(0, 8f));
         return level;
