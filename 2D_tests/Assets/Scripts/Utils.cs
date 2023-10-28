@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Utils
 {
@@ -374,5 +374,52 @@ public class Utils
     public static float getSeconds(float minute, float second)
     {
         return 60f * minute + second;
+    }
+
+    public static void cleanChronometerImage(Image chronometer)
+    {
+        chronometer.sprite = Resources.Load<Sprite>("Sprites/UI/Icons/ChronometerGray");
+        chronometer.material = null;
+        chronometer.color = new Color(0.85f, 0.6f, 0.3f);
+    }
+    public static void changeChronometerImage(Image chronometer)
+    {
+        chronometer.sprite = Resources.Load<Sprite>("Sprites/UI/Icons/Chronometer");
+        chronometer.material = Resources.Load<Material>($"Materials/UI/{chronometer.gameObject.name}");
+        chronometer.color = Color.white;
+    }
+
+    public static void updateChronometersWithTime(float time, float gold_time, float silver_time, float bronze_time,
+        GameObject gold, GameObject silver, GameObject bronze)
+    {
+        cleanChronometerImage(bronze.GetComponent<Image>());
+        cleanChronometerImage(silver.GetComponent<Image>());
+        cleanChronometerImage(gold.GetComponent<Image>());
+        if (time < 0f) return;
+
+        if (time <= bronze_time)
+        {
+            changeChronometerImage(bronze.GetComponent<Image>());
+        }
+        else
+        {
+            cleanChronometerImage(bronze.GetComponent<Image>());
+        }
+        if (time <= silver_time)
+        {
+            changeChronometerImage(silver.GetComponent<Image>());
+        }
+        else
+        {
+            cleanChronometerImage(silver.GetComponent<Image>());
+        }
+        if (time <= gold_time)
+        {
+            changeChronometerImage(gold.GetComponent<Image>());
+        }
+        else
+        {
+            cleanChronometerImage(gold.GetComponent<Image>());
+        }
     }
 }

@@ -15,7 +15,9 @@ public class LevelPanel : MonoBehaviour
     public GameObject mLock;
     public TextMeshProUGUI mTextDeathCounter;
     public TextMeshProUGUI mTextTimer;
-    public GameObject mChronometer;
+    public GameObject mChronometerBronze;
+    public GameObject mChronometerSilver;
+    public GameObject mChronometerGoal;
     public TextMeshProUGUI mTextTimerGoalGold;
     public TextMeshProUGUI mTextTimerGoalSilver;
     public TextMeshProUGUI mTextTimerGoalBronze;
@@ -193,20 +195,27 @@ public class LevelPanel : MonoBehaviour
         mTextTimerGoalGold.text = Utils.getTimeFromFloat(current_world.mGoldTime);
         mTextTimerGoalSilver.text = Utils.getTimeFromFloat(current_world.mSilverTime);
         mTextTimerGoalBronze.text = Utils.getTimeFromFloat(current_world.mBronzeTime);
-        Material mat = current_world.getGoalMaterial(timer);
-        if (mat == null)
-        {
-            //chronometer_go.GetComponent<Image>().enabled = false;
-            mChronometer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/Icons/ChronometerGray");
-            mChronometer.GetComponent<Image>().color = new Color(0.85f, 0.6f, 0.3f);
-        }
-        else
-        {
-            //chronometer_go.GetComponent<Image>().enabled = true;
-            mChronometer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/Icons/Chronometer");
-            mChronometer.GetComponent<Image>().color = Color.white;
-        }
-        mChronometer.GetComponent<Image>().material = mat;
+        //Material mat = current_world.getGoalMaterial(timer);
+        Utils.updateChronometersWithTime(timer, 
+            current_world.mGoldTime, 
+            current_world.mSilverTime, 
+            current_world.mBronzeTime, 
+            mChronometerGoal, 
+            mChronometerSilver, 
+            mChronometerBronze);
+        //f (mat == null)
+        //
+        //   //chronometer_go.GetComponent<Image>().enabled = false;
+        //   mChronometer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/Icons/ChronometerGray");
+        //   mChronometer.GetComponent<Image>().color = new Color(0.85f, 0.6f, 0.3f);
+        //
+        //lse
+        //
+        //   //chronometer_go.GetComponent<Image>().enabled = true;
+        //   mChronometer.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/Icons/Chronometer");
+        //   mChronometer.GetComponent<Image>().color = Color.white;
+        //
+        //Chronometer.GetComponent<Image>().material = mat;
         foreach (Transform level in mLevels.transform)
         {
             cpt++;

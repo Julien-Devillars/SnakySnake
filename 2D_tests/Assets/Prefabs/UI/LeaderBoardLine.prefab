@@ -542,8 +542,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2669119869353278091, guid: 04b384b000664b9498fb894239e225e1, type: 3}
+      propertyPath: m_text
+      value: '-'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2669119869353278091, guid: 04b384b000664b9498fb894239e225e1, type: 3}
       propertyPath: m_fontSize
-      value: 8
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2669119869353278091, guid: 04b384b000664b9498fb894239e225e1, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 7430420240121455281, guid: 04b384b000664b9498fb894239e225e1, type: 3}
       propertyPath: m_Name
@@ -579,8 +587,12 @@ PrefabInstance:
       value: TextLeaderBoardTime
       objectReference: {fileID: 0}
     - target: {fileID: 4381173164871733625, guid: 29c59a5cd1601634289e1f44555da736, type: 3}
+      propertyPath: m_text
+      value: ---
+      objectReference: {fileID: 0}
+    - target: {fileID: 4381173164871733625, guid: 29c59a5cd1601634289e1f44555da736, type: 3}
       propertyPath: m_fontSize
-      value: 4
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 4612391388280240597, guid: 29c59a5cd1601634289e1f44555da736, type: 3}
       propertyPath: m_Pivot.x
@@ -696,8 +708,12 @@ PrefabInstance:
       value: TextLeaderBoardName
       objectReference: {fileID: 0}
     - target: {fileID: 4089793742928146798, guid: 85dc76ea098158f44b2360b825c82ee1, type: 3}
+      propertyPath: m_text
+      value: No data
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089793742928146798, guid: 85dc76ea098158f44b2360b825c82ee1, type: 3}
       propertyPath: m_fontSize
-      value: 8
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 4903947194743921090, guid: 85dc76ea098158f44b2360b825c82ee1, type: 3}
       propertyPath: m_Pivot.x

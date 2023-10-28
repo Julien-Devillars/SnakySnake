@@ -2831,7 +2831,7 @@ public class Worlds
     {
         Levels levels = new Levels(12);
 
-        levels.levels_name = "World 1 - Countach";
+        levels.levels_name = "World Dummy";
         levels.mWorldMusic = "Synthwave/Countach";
         levels.mWorldColorPrincipal_1 = Color.magenta;
         levels.mWorldColorPrincipal_2 = Color.cyan;
@@ -2862,7 +2862,7 @@ public class Worlds
     {
         Levels levels = new Levels(12);
 
-        levels.levels_name = "World 1 - Countach";
+        levels.levels_name = "World 1";
         levels.mWorldMusic = "Synthwave/Countach";
         levels.mWorldColorPrincipal_1 = Color.magenta;
         levels.mWorldColorPrincipal_2 = Color.cyan;
@@ -2901,7 +2901,7 @@ public class Worlds
     {
         Levels levels = new Levels(12);
 
-        levels.levels_name = "World 2 - Galaxy";
+        levels.levels_name = "World 2";
         levels.mWorldMusic = "Synthwave/20 - Galaxy";
         levels.mWorldColorPrincipal_1 = Color.yellow;
         levels.mWorldColorPrincipal_2 = new Color(1f, 0.15f, 0f);
@@ -2946,7 +2946,7 @@ public class Worlds
     private static Levels world_3()
     {
         Levels levels = new Levels(12);
-        levels.levels_name = "World 3 - Dangerous";
+        levels.levels_name = "World 3";
         levels.mWorldMusic = "Synthwave/32 - Dangerous";
 
         levels.mWorldColorPrincipal_1 = Color.red;
@@ -2978,7 +2978,7 @@ public class Worlds
     private static Levels world_4()
     {
         Levels levels = new Levels(12);
-        levels.levels_name = "World 4 - Last Stop";
+        levels.levels_name = "World 4";
         levels.mWorldMusic = "Synthwave/Last Stop";
 
         levels.mWorldColorPrincipal_1 = new Color(1f, 0f, 0.75f);
@@ -3009,7 +3009,7 @@ public class Worlds
     private static Levels world_5()
     {
         Levels levels = new Levels(12);
-        levels.levels_name = "World 5 - The Saga";
+        levels.levels_name = "World 5";
         levels.mWorldMusic = "Synthwave/68 - The Saga";
 
         levels.mWorldColorPrincipal_1 = Color.green; 
@@ -3040,7 +3040,7 @@ public class Worlds
     private static Levels world_6()
     {
         Levels levels = new Levels(12);
-        levels.levels_name = "World 6 - Afterglow";
+        levels.levels_name = "World 6";
         levels.mWorldMusic = "Synthwave/Afterglow";
 
         levels.mWorldColorPrincipal_1 = Color.green;

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.SocialPlatforms.Impl;
+using Codice.Client.Common;
 
 public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -29,6 +30,53 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
     //{
     //    highlight(false);
     //}
+    /*
+    private void cleanChronometerImage(Image chronometer)
+    {
+        chronometer.sprite = Resources.Load<Sprite>("Sprites/UI/Icons/ChronometerGray");
+        chronometer.material = null;
+        chronometer.color = new Color(0.85f, 0.6f, 0.3f);
+    }
+    private void changeChronometerImage(Image chronometer)
+    {
+        chronometer.sprite = Resources.Load<Sprite>("Sprites/UI/Icons/Chronometer");
+        chronometer.material = Resources.Load<Material>($"Materials/UI/{chronometer.gameObject.name}");
+        chronometer.color = Color.white;
+    }
+
+    private void updateChronometersWithTime(float time, float gold_time, float silver_time, float bronze_time, 
+        GameObject gold, GameObject silver, GameObject bronze)
+    {
+        cleanChronometerImage(bronze.GetComponent<Image>());
+        cleanChronometerImage(silver.GetComponent<Image>());
+        cleanChronometerImage(gold.GetComponent<Image>());
+        if (time < 0f) return;
+
+        if (time <= bronze_time)
+        {
+            changeChronometerImage(bronze.GetComponent<Image>());
+        }
+        else
+        {
+            cleanChronometerImage(bronze.GetComponent<Image>());
+        }
+        if (time <= silver_time)
+        {
+            changeChronometerImage(silver.GetComponent<Image>());
+        }
+        else
+        {
+            cleanChronometerImage(silver.GetComponent<Image>());
+        }
+        if (time <= gold_time)
+        {
+            changeChronometerImage(gold.GetComponent<Image>());
+        }
+        else
+        {
+            cleanChronometerImage(gold.GetComponent<Image>());
+        }
+    }*/
 
     private void highlight(bool flag)
     {
@@ -55,13 +103,17 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
             GameObject time_goal_gold_text_go = GameObject.Find("ChronometerGoalGoldText");
             GameObject time_goal_silver_text_go = GameObject.Find("ChronometerGoalSilverText");
             GameObject time_goal_bronze_text_go = GameObject.Find("ChronometerGoalBronzeText");
-            GameObject chronometer_go = GameObject.Find("Chronometer");
+            GameObject chronometer_bronze_go = GameObject.Find("ChronometerGoalBronze");
+            GameObject chronometer_silver_go = GameObject.Find("ChronometerGoalSilver");
+            GameObject chronometer_gold_go = GameObject.Find("ChronometerGoalGold");
             if (time_go == null) return;
             if (death_go == null) return;
             if (time_goal_gold_text_go == null) return; 
             if (time_goal_silver_text_go == null) return;
             if (time_goal_bronze_text_go == null) return;
-            if (chronometer_go == null) return;
+            if (chronometer_bronze_go == null) return;
+            if (chronometer_silver_go == null) return;
+            if (chronometer_gold_go == null) return;
             if (transform.childCount != 1) return;
 
             GameObject button_text_go = transform.GetChild(0).gameObject;
@@ -74,7 +126,7 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
             TextMeshProUGUI time_goal_gold_text_mesh = time_goal_gold_text_go.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI time_goal_silver_text_mesh = time_goal_silver_text_go.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI time_goal_bronze_text_mesh = time_goal_bronze_text_go.GetComponent<TextMeshProUGUI>();
-            Material mat = null;
+            //Material mat = null;
             if (flag)
             {
                 death_text_mesh.text = ES3.Load<int>($"PlayMode_World{GameControler.currentWorld}_Level{current_level_idx}_death", 0).ToString();
@@ -84,7 +136,16 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
                 time_goal_gold_text_mesh.text = Utils.getTimeFromFloat(current_level.mGoldTime);
                 time_goal_silver_text_mesh.text = Utils.getTimeFromFloat(current_level.mSilverTime);
                 time_goal_bronze_text_mesh.text = Utils.getTimeFromFloat(current_level.mBronzeTime);
-                mat = current_level.getGoalMaterial(timer);
+                //mat = current_level.getGoalMaterial(timer);
+
+                Utils.updateChronometersWithTime(timer,
+                    current_level.mGoldTime,
+                    current_level.mSilverTime,
+                    current_level.mBronzeTime,
+                    chronometer_gold_go,
+                    chronometer_silver_go,
+                    chronometer_bronze_go);
+
                 LeaderBoard.updateLeaderBoardWorldLevel(GameControler.currentWorld, current_level_idx);
             }
             else
@@ -96,10 +157,19 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
                 time_goal_gold_text_mesh.text = Utils.getTimeFromFloat(current_world.mGoldTime);
                 time_goal_silver_text_mesh.text = Utils.getTimeFromFloat(current_world.mSilverTime);
                 time_goal_bronze_text_mesh.text = Utils.getTimeFromFloat(current_world.mBronzeTime);
-                mat = current_world.getGoalMaterial(timer);
+                //mat = current_world.getGoalMaterial(timer);
+
+                Utils.updateChronometersWithTime(timer,
+                    current_world.mGoldTime,
+                    current_world.mSilverTime,
+                    current_world.mBronzeTime,
+                    chronometer_gold_go,
+                    chronometer_silver_go,
+                    chronometer_bronze_go);
                 LeaderBoard.updateLeaderBoardWorldLevel(GameControler.currentWorld, -1);
             }
-            if (mat == null)
+            //if(current_level_idx)
+            /*if (mat == null)
             {
                 //chronometer_go.GetComponent<Image>().enabled = false;
                 chronometer_go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/Icons/ChronometerGray");
@@ -110,8 +180,8 @@ public class ButtonHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IP
                 //chronometer_go.GetComponent<Image>().enabled = true;
                 chronometer_go.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UI/Icons/Chronometer");
                 chronometer_go.GetComponent<Image>().color = Color.white;
-            }
-            chronometer_go.GetComponent<Image>().material = mat;
+            }*/
+            //chronometer_go.GetComponent<Image>().material = mat;
         }
     }
     private void highlight()
