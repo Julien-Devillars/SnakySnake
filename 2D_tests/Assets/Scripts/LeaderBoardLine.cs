@@ -38,8 +38,8 @@ public class LeaderBoardLine : MonoBehaviour
     public void overlay(bool flag)
     {
         GetComponent<Image>().color = flag ? mUserColor : mStartColor;
-        mPositionText.color = flag ? Color.blue : Color.white;
-        mNameText.color = flag ? Color.blue : Color.white;
-        mTimeText.color = flag ? Color.blue : Color.white;
+        mPositionText.color = flag ? Color.yellow : Color.white;
+        mNameText.color = flag ? Color.yellow : Color.white;
+        mTimeText.color = flag ? Color.yellow : Color.white;
     }
 }
