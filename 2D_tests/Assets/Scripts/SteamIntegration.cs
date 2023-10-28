@@ -8,6 +8,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class SteamIntegration : MonoBehaviour
 {
     public static SteamIntegration instance = null;
+    public static bool mHasSteam = false;
 
     private void Awake()
     {
@@ -18,10 +19,12 @@ public class SteamIntegration : MonoBehaviour
             try
             {
                 Steamworks.SteamClient.Init(2573150);
+                mHasSteam = true;
             }
             catch (System.Exception e)
             {
                 Debug.Log(e);
+                mHasSteam = false;
             }
             return;
         }
@@ -38,12 +41,6 @@ public class SteamIntegration : MonoBehaviour
             {
                 achievement.Clear();
             }
-        }
-
-        if(Input.GetKeyDown(KeyCode.L)) 
-        {
-            SteamAchievement.checkLeaderBoard("LB_BestTime_W01_L01");
-            //SteamAchievement.checkLeaderBoard("Leaderboard_World1_Level2");
         }
 
         if(Input.GetKeyDown(KeyCode.W))

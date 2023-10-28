@@ -84,6 +84,7 @@ public class SteamAchievement : MonoBehaviour
     
     static public void checkWorlFinish()
     {
+        if (!SteamIntegration.mHasSteam) return;
         bool all_done = true;
         bool all_gold = true;
 
@@ -110,12 +111,18 @@ public class SteamAchievement : MonoBehaviour
     }
     static public void noDeathInWorld()
     {
+        if (!SteamIntegration.mHasSteam) return;
         var achievement = new Achievement($"NO_DEATH_WORLD_{GameControler.currentWorld + 1}");
         achievement.Trigger();
     }
 
     static async public void addBestTimeInLeaderBoard(float best_score)
     {
+        if (!SteamIntegration.mHasSteam)
+        {
+            LeaderBoard.updateLeaderBoardWorldLevel(0, 0);
+            return;
+        }
         string leaderboard_name = string.Format("LB_BestTime_W{0:00}_L{1:00}", GameControler.currentWorld + 1, GameControler.currentLevel + 1);
 
         var leaderboard = await SteamUserStats.FindLeaderboardAsync(leaderboard_name);
@@ -134,6 +141,11 @@ public class SteamAchievement : MonoBehaviour
     }
     static async public void addBestWorldTimeInLeaderBoard(float best_score)
     {
+        if (!SteamIntegration.mHasSteam)
+        {
+            LeaderBoard.updateLeaderBoardWorldLevel(0, 0);
+            return;
+        }
         string leaderboard_name = string.Format("LB_BestTime_W{0:00}", GameControler.currentWorld + 1);
 
         var leaderboard = await SteamUserStats.FindLeaderboardAsync(leaderboard_name);
@@ -144,42 +156,4 @@ public class SteamAchievement : MonoBehaviour
         }
         await leaderboard.Value.SubmitScoreAsync((int)(best_score * 1000f));
     }
-
-    static async public void checkLeaderBoard(string str_leaderboard)
-    {
-        var leaderboard = await SteamUserStats.FindLeaderboardAsync(str_leaderboard);
-        if(!leaderboard.HasValue)
-        {
-            Debug.Log($"Leaderboard '{str_leaderboard}'not found !");
-            return;
-        }
-        else
-        {
-            Debug.Log($"Found {leaderboard.Value.Name}");
-            Debug.Log($" - Display : {leaderboard.Value.Display}");
-            Debug.Log($" - Entries : {leaderboard.Value.EntryCount}");
-        }
-        var result = await leaderboard.Value.GetScoresAsync(5);
-
-        foreach (var res in result)
-        {
-            Debug.Log($"{res.User.Name} has {res.Score}");
-
-        }
-            /*if(result.HasValue)
-        {
-            Debug.Log(result.Value.Score);
-            Debug.Log(result.Value.OldGlobalRank);
-            Debug.Log(result.Value.NewGlobalRank);
-            if (result.Value.Changed)
-            {
-                Debug.Log("Value Changed in leaderboard");
-            }
-            else
-            {
-                Debug.Log("Value NOT Changed in leaderboard");
-            }
-        }*/
-    }
-
 }

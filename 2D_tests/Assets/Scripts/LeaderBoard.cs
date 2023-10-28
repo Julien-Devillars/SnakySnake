@@ -1,3 +1,4 @@
+using Codice.Client.Common;
 using Steamworks;
 using Steamworks.Data;
 using Steamworks.ServerList;
@@ -74,8 +75,24 @@ public class LeaderBoard : MonoBehaviour
         }
     }
 
+    public void displayOnlyFirstLine(int idx, string str, float time)
+    {
+        mLeaderBoardLines[1].mPosition = idx;
+        mLeaderBoardLines[1].mName = str;
+        mLeaderBoardLines[1].mTime = time;
+        mLeaderBoardLines[1].overlay(true);
+        hideRemainingLines(2);
+        mAnimation.ResetTrigger("Refresh");
+    }
+
     async public void updateLeaderBoard(string str_leaderboard)
     {
+        if(!SteamIntegration.mHasSteam)
+        {
+            displayOnlyFirstLine(-1, "No connection", 0f);
+            return;
+        }
+
         var leaderboard = await SteamUserStats.FindLeaderboardAsync(str_leaderboard);
         if (!leaderboard.HasValue)
         {
@@ -112,12 +129,7 @@ public class LeaderBoard : MonoBehaviour
 
         if (result == null)
         {
-            mLeaderBoardLines[1].mPosition = -1;
-            mLeaderBoardLines[1].mName = "No score";
-            mLeaderBoardLines[1].mTime = 0f;
-            mLeaderBoardLines[1].overlay(true);
-            hideRemainingLines(2);
-            mAnimation.ResetTrigger("Refresh");
+            displayOnlyFirstLine(-1, "No score", 0f);
             return;
         }
 
