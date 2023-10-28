@@ -101,19 +101,31 @@ public class SteamAchievement : MonoBehaviour
         if (all_done)
         {
             var achievement = new Achievement($"FINISH_WORLD_{GameControler.currentWorld + 1}");
-            achievement.Trigger();
+            bool success = achievement.Trigger();
+            if (success)
+            {
+                SteamIntegration.mHasSteam = false;
+            }
         }
         if (all_gold)
         {
             var achievement = new Achievement($"GOLD_WORLD_{GameControler.currentWorld + 1}");
-            achievement.Trigger();
+            bool success = achievement.Trigger();
+            if (success)
+            {
+                SteamIntegration.mHasSteam = false;
+            }
         }
     }
     static public void noDeathInWorld()
     {
         if (!SteamIntegration.mHasSteam) return;
         var achievement = new Achievement($"NO_DEATH_WORLD_{GameControler.currentWorld + 1}");
-        achievement.Trigger();
+        bool success = achievement.Trigger();
+        if(success)
+        {
+            SteamIntegration.mHasSteam = false;
+        }
     }
 
     static async public void addBestTimeInLeaderBoard(float best_score)
@@ -124,8 +136,15 @@ public class SteamAchievement : MonoBehaviour
             return;
         }
         string leaderboard_name = string.Format("LB_BestTime_W{0:00}_L{1:00}", GameControler.currentWorld + 1, GameControler.currentLevel + 1);
-
+        
         var leaderboard = await SteamUserStats.FindLeaderboardAsync(leaderboard_name);
+        if (leaderboard == null)
+        {
+            LeaderBoard.updateLeaderBoardWorldLevel(0, 0);
+            SteamIntegration.mHasSteam = false;
+            return;
+        }
+
         if (!leaderboard.HasValue)
         {
             Debug.Log($"Leaderboard '{leaderboard_name}'not found !");
@@ -149,6 +168,13 @@ public class SteamAchievement : MonoBehaviour
         string leaderboard_name = string.Format("LB_BestTime_W{0:00}", GameControler.currentWorld + 1);
 
         var leaderboard = await SteamUserStats.FindLeaderboardAsync(leaderboard_name);
+
+        if (leaderboard == null)
+        {
+            LeaderBoard.updateLeaderBoardWorldLevel(0, 0);
+            SteamIntegration.mHasSteam = false;
+            return;
+        }
         if (!leaderboard.HasValue)
         {
             Debug.Log($"Leaderboard '{leaderboard_name}'not found !");

@@ -444,11 +444,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mPositionText: {fileID: 4261417218447764188}
-  mPosition: 10
+  mPosition: 0
   mNameText: {fileID: 4677862753866410406}
-  mName: Julexe
+  mName: Error
   mTimeText: {fileID: 2463160595849655370}
-  mTime: 0
+  mTime: -1
   mUserColor: {r: 0, g: 1, b: 1, a: 0.5019608}
 --- !u!1001 &2173274896328740951
 PrefabInstance:
@@ -547,7 +547,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2669119869353278091, guid: 04b384b000664b9498fb894239e225e1, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2669119869353278091, guid: 04b384b000664b9498fb894239e225e1, type: 3}
       propertyPath: m_VerticalAlignment
@@ -592,7 +592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4381173164871733625, guid: 29c59a5cd1601634289e1f44555da736, type: 3}
       propertyPath: m_fontSize
-      value: 28
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4612391388280240597, guid: 29c59a5cd1601634289e1f44555da736, type: 3}
       propertyPath: m_Pivot.x
@@ -713,7 +713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4089793742928146798, guid: 85dc76ea098158f44b2360b825c82ee1, type: 3}
       propertyPath: m_fontSize
-      value: 24
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4903947194743921090, guid: 85dc76ea098158f44b2360b825c82ee1, type: 3}
       propertyPath: m_Pivot.x

@@ -2414,6 +2414,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3647308595847303523, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
+      propertyPath: mPosition
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4261417218447764188, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
       propertyPath: m_text
       value: Rank

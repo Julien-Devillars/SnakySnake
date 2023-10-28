@@ -507,7 +507,7 @@ GameObject:
   - component: {fileID: 694265335210897600}
   - component: {fileID: 694265335210897601}
   m_Layer: 5
-  m_Name: ChronometerGoalBronze
+  m_Name: ChronometerBronze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -639,7 +639,7 @@ GameObject:
   - component: {fileID: 694265335634533662}
   - component: {fileID: 694265335634533663}
   m_Layer: 5
-  m_Name: ChronometerGoalSilver
+  m_Name: ChronometerSilver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -732,7 +732,7 @@ GameObject:
   - component: {fileID: 694265335670364171}
   - component: {fileID: 694265335670364168}
   m_Layer: 5
-  m_Name: ChronometerGoalGold
+  m_Name: ChronometerGold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

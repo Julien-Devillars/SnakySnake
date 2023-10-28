@@ -1,34 +1,32 @@
-using Codice.Client.Common.GameUI;
 using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class SteamIntegration : MonoBehaviour
 {
     public static SteamIntegration instance = null;
     public static bool mHasSteam = false;
+    public bool mTryToReconnect = false;
     private float mTimeToReconnect = 10f;
     IEnumerator tryToConnectToSteam()
     {
-        while (!mHasSteam)
+        mTryToReconnect = true;
+        yield return new WaitForSeconds(mTimeToReconnect);
+        try
         {
-            yield return new WaitForSeconds(mTimeToReconnect);
-            try
-            {
-                Steamworks.SteamClient.Init(2573150);
-                Debug.Log("Steam Found");
-                mHasSteam = true;
-            }
-            catch (System.Exception e)
-            {
-                Debug.Log("Steam not found");
-                Debug.Log(e);
-                mHasSteam = false;
-            }
+            Steamworks.SteamClient.Init(2573150);
+            Debug.Log("Steam Found");
+            mHasSteam = true;
         }
+        catch (System.Exception e)
+        {
+            Debug.Log("Steam not found");
+            Debug.Log(e);
+            mHasSteam = false; 
+        }
+        mTryToReconnect = false;
     }
 
     private void Awake()
@@ -47,7 +45,6 @@ public class SteamIntegration : MonoBehaviour
                 Debug.Log("Steam not found");
                 Debug.Log(e);
                 mHasSteam = false;
-                StartCoroutine(tryToConnectToSteam());
             }
             return;
         }
@@ -57,7 +54,11 @@ public class SteamIntegration : MonoBehaviour
     private void Update()
     {
         Steamworks.SteamClient.RunCallbacks();
-
+        if(!mTryToReconnect && !mHasSteam)
+        {
+            Debug.Log("Try to reconnect to steam");
+            StartCoroutine(tryToConnectToSteam());
+        }
         //if (Input.GetKeyDown(KeyCode.R))
         //{
         //    foreach (var achievement in SteamUserStats.Achievements)

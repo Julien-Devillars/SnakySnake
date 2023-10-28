@@ -89,11 +89,17 @@ public class LeaderBoard : MonoBehaviour
     {
         if(!SteamIntegration.mHasSteam)
         {
-            displayOnlyFirstLine(-1, "No connection", 0f);
+            displayOnlyFirstLine(-1, "Connection Issue", 0f);
             return;
         }
 
         var leaderboard = await SteamUserStats.FindLeaderboardAsync(str_leaderboard);
+        if(leaderboard == null)
+        {
+            displayOnlyFirstLine(-1, "Connection Issue", 0f);
+            SteamIntegration.mHasSteam = false;
+            return;
+        }
         if (!leaderboard.HasValue)
         {
             Debug.Log($"Leaderboard '{str_leaderboard}'not found !");
