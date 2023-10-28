@@ -63,12 +63,11 @@ public static class Timer
             SteamAchievement.noDeathInWorld();
         }
         float time = Time.realtimeSinceStartup - startWorldTimer - totalPauseWorldTimer;
-        Debug.Log("World Time : " + time);
+
         float previous_time = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", -1f);
         SteamAchievement.addBestWorldTimeInLeaderBoard(time);
 
         if (previous_time >= 0f && previous_time < time) return;
-        Debug.Log("Best -> Saved");
         ES3.Save<float>($"PlayMode_World{GameControler.currentWorld}_timer", time);
     }
     public static void StartWorldTimer()

@@ -75,7 +75,7 @@ public class EndLevel : MonoBehaviour
         {
             Timer.SaveLevelTime();
             Timer.StartLevelPauseTimer();
-            mTextLevel.text = $"World {GameControler.currentWorld + 1} - Level {GameControler.currentLevel + 1}";
+            mTextLevel.text = $"{Translation.GetTranslation("World", Application.systemLanguage)} {GameControler.currentWorld + 1} - {Translation.GetTranslation("Level", Application.systemLanguage)} {GameControler.currentLevel + 1}";
             mLevelEndStats.updateStatsInPanel();
             Timer.resetDeathLevelCounter();
             mNextLevelButton.Select();
