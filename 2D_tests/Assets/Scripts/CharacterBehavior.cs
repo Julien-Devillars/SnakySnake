@@ -336,10 +336,9 @@ public class CharacterBehavior : MonoBehaviour
             new_direction = Direction.direction.None;
             mWaitOneFrame = false;
         }
-        Debug.Log("new_direction : " + new_direction);
-        Debug.Log("current_direction before : " + new_direction);
+        
         updateDirection(new_direction);
-        Debug.Log("current_direction after: " + mCurrentDirection);
+        
         if (mTrailPoints.Count == 0)
         {
             setOnBorderSameDirection();

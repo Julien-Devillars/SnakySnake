@@ -36,7 +36,7 @@ public class LevelEndStats : MonoBehaviour
     }
     public void Update()
     {
-
+        /*
         float best_time = Timer.GetBestLevelTime();
         if (mPreviousBestTime < 0f || best_time < mPreviousBestTime)
         {
@@ -45,7 +45,7 @@ public class LevelEndStats : MonoBehaviour
         else
         {
             mBest.SetActive(false);
-        }
+        }*/
     }
 
     public void updateStatsInPanel()
@@ -78,5 +78,15 @@ public class LevelEndStats : MonoBehaviour
 
         mDeathCounter.text = Timer.deathCountInLevel.ToString();
 
+
+        float best_time = Timer.GetBestLevelTime();
+        if (mPreviousBestTime < 0f || best_time < mPreviousBestTime)
+        {
+            mBest.SetActive(true);
+        }
+        else
+        {
+            mBest.SetActive(false);
+        }
     }
 }

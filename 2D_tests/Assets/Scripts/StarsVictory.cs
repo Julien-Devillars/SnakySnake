@@ -32,6 +32,7 @@ public class StarsVictory : MonoBehaviour
         {
             mWin = true;
             ES3.Save<bool>($"PlayMode_World{GameControler.currentWorld}_Level{GameControler.currentLevel}_status", true);
+            Destroy(gameObject);
         }
     }
 }

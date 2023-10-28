@@ -26,6 +26,7 @@ public class ColorHandler : MonoBehaviour
     public void changeStarColor()
     {
         GameObject stars = GameObject.Find(Utils.STARS_STR);
+        if (stars == null) return;
         foreach(Transform star in stars.transform)
         {
             SpriteRenderer sprite_renderer = star.gameObject.GetComponent<SpriteRenderer>();
@@ -38,6 +39,7 @@ public class ColorHandler : MonoBehaviour
         Trail.mStartColor = mSecondColor1;
         Trail.mEndColor = mSecondColor2;
         GameObject trails = GameObject.Find(Utils.TRAILS_STR);
+        if (trails == null) return;
         foreach (Transform trail in trails.transform)
         {
             LineRenderer line_renderer = trail.gameObject.GetComponent<LineRenderer>();
