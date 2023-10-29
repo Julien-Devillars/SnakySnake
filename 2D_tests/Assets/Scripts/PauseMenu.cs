@@ -103,7 +103,9 @@ private void Awake()
         mMainMenu.SetActive(false);
         mOptionMenu.SetActive(false);
         mHelper.SetActive(true);
-        mLevelInfo.text = $"{Translation.GetTranslation("World", Application.systemLanguage)} {GameControler.currentWorld + 1} - {Translation.GetTranslation("Level", Application.systemLanguage)} {GameControler.currentLevel + 1}";
+        string world_tr = Translation.GetTranslation("World", ES3.Load<SystemLanguage>("Language", Application.systemLanguage));
+        string level_tr = Translation.GetTranslation("Level", ES3.Load<SystemLanguage>("Language", Application.systemLanguage));
+        mLevelInfo.text = $"{world_tr} {GameControler.currentWorld + 1} - {level_tr} {GameControler.currentLevel + 1}";
         mClearLevel.SetActive(false);
         
     }

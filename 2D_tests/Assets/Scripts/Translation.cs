@@ -9,6 +9,13 @@ using UnityEngine.UI;
 public static class Translation
 {
 
+    static public Dictionary<SystemLanguage, string> lang = new Dictionary<SystemLanguage, string>()
+    {
+        { SystemLanguage.English, "English" },
+        { SystemLanguage.French, "Français" },
+        { SystemLanguage.Spanish, "Español" }
+    };
+
     static Dictionary<string, Dictionary<SystemLanguage, string>> translation = new Dictionary<string, Dictionary<SystemLanguage, string>>()
     {
         { "PLAY", new Dictionary<SystemLanguage, string>(){
@@ -120,6 +127,11 @@ public static class Translation
             { SystemLanguage.English, "MUSIC BY<br>KARL CASEY @ WHITE BAT AUDIO" },
             { SystemLanguage.French, "MUSIQUE PAR<br>KARL CASEY @ WHITE BAT AUDIO" }
         }},
+        { "LANGUAGE", new Dictionary<SystemLanguage, string>(){
+            { SystemLanguage.English, "Language" },
+            { SystemLanguage.French, "Langue" },
+            { SystemLanguage.French, "Idioma" }
+        }},
         // Add more translations here
     };
 
@@ -143,6 +155,7 @@ public static class Translation
         }
         else
         {
+            Debug.Log($"No translation for '{key}'!");
             return key;
         }
     }
