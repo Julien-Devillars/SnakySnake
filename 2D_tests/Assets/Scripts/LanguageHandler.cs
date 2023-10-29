@@ -48,5 +48,6 @@ public class LanguageHandler : MonoBehaviour
         ES3.Save<SystemLanguage>("Language", language);
         Debug.Log($"Send {language}");
         StartCoroutine(TranslationText.UpdateText(language));
+        LevelPanel.mForceDisplay = true;
     }
 }

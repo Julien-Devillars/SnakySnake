@@ -111,7 +111,24 @@ public class EndLevel : MonoBehaviour
         yield return new WaitForSecondsRealtime(time_to_wait);
         StartCoroutine(LoadLevel("PlayLevel"));
     }
+
+    public int nextLevelIsLock()
+    {
+        int cpt = 0;
+        for (int i = 0; i < Worlds.worlds[GameControler.currentWorld].levels.Count - 1; ++i)
+        {
+            bool level_done = ES3.Load<bool>($"PlayMode_World{GameControler.currentWorld}_Level{i}_status", false);
+            if (level_done)
+            {
+                cpt++;
+            }
+        }
+
+        return cpt;
+    }
+
     private bool hasNext = false;
+
     public void Next()
     {
         if (hasNext) return;
@@ -129,6 +146,15 @@ public class EndLevel : MonoBehaviour
             {
                 Timer.SaveWorldTime();
                 Timer.resetDeathLevelCounter();
+
+                int nb_level_done = nextLevelIsLock();
+                if (nb_level_done < Worlds.mNBLevelToNext)
+                {
+                    GameControler.currentWorld++;
+                    StartCoroutine(LoadLevel("MainMenu"));
+                    return;
+                }
+
                 GameControler.currentWorld++;
                 GameControler.currentLevel = 0;
                 StartCoroutine(LoadLevel("PlayLevel"));

@@ -71,10 +71,17 @@ public class OptionSliderGamepad : MonoBehaviour
     public void clearSave()
     {
 
-        LevelPanel.mForceDisplay = true;
         GameControler.currentLevel = 0;
         GameControler.currentWorld = 0;
-        if(!has_click)
+        LevelPanel.mForceDisplay = true;
+        float music = ES3.Load<float>("VolumeSlider", 0.5f);
+        float luminosity = ES3.Load<float>("LuminositySlider", 0.5f);
+        SystemLanguage language = ES3.Load<SystemLanguage>("Language", Application.systemLanguage);
+        ES3.DeleteFile();
+        ES3.Save<float>("VolumeSlider", music);
+        ES3.Save<float>("LuminositySlider", luminosity);
+        ES3.Save<SystemLanguage>("Language", language);
+        /*if (!has_click)
         {
             float music = ES3.Load<float>("VolumeSlider", 0.5f);
             float luminosity = ES3.Load<float>("LuminositySlider", 0.5f);
@@ -98,7 +105,7 @@ public class OptionSliderGamepad : MonoBehaviour
 
             }
         }
-        has_click = !has_click;
+        has_click = !has_click;*/
     }
     public void displayClearSaveUI(bool flag)
     {
@@ -111,6 +118,41 @@ public class OptionSliderGamepad : MonoBehaviour
         {
             mClearSaveButton.Select();
         }
+    }
+
+    private bool mCanUseSecret = true;
+
+    private IEnumerator secretCommand()
+    {
+        mCanUseSecret = false;
+        for (int i = 0; i < Worlds.worlds.Count; ++i)
+        {
+            for (int j = 0; j < Worlds.worlds[i].levels.Count; ++j)
+            {
+                ES3.Save<bool>($"PlayMode_World{i}_Level{j}_status", true);
+                ES3.Save<int>($"PlayMode_World{i}_Level{j}_death", 0);
+                ES3.Save<float>($"PlayMode_World{i}_Level{j}_timer", -1f);
+            }
+            ES3.Save<int>($"PlayMode_World{i}_death", 0);
+            ES3.Save<float>($"PlayMode_World{i}_timer", -1f);
+
+        }
+        yield return new WaitForSeconds(5);
+        mCanUseSecret = true;
+    }
+    private void Update()
+    {
+        if (!mCanUseSecret) return;
+        if(Input.GetKey(KeyCode.J) 
+            && Input.GetKey(KeyCode.U)
+            && Input.GetKey(KeyCode.L)
+            && Input.GetKey(KeyCode.E)
+            && Input.GetKey(KeyCode.X))
+        {
+            Debug.Log("All level cleared");
+            StartCoroutine(secretCommand());
+        }
+
     }
 
 }

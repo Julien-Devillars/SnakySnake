@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using log4net.Core;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -200,6 +201,23 @@ private void Awake()
         mOptionMenu.SetActive(true);
         mOptionMenuButtonFirstSelected.Select();
     }
+
+
+    public int nextLevelIsLock()
+    {
+        int cpt = 0;
+        for (int i = 0; i <  Worlds.worlds[GameControler.currentWorld].levels.Count - 1; ++i)
+        {
+            bool level_done = ES3.Load<bool>($"PlayMode_World{GameControler.currentWorld}_Level{i}_status", false);
+            if (level_done)
+            {
+                cpt++;
+            }
+        }
+
+        return cpt;
+    }
+
     private bool hasNext = false;
     public void Next()
     {
@@ -217,6 +235,14 @@ private void Awake()
         {
             if(GameControler.currentWorld < Worlds.worlds.Count - 1)
             {
+                int nb_level_done = nextLevelIsLock();
+                if(nb_level_done < Worlds.mNBLevelToNext)
+                {
+                    GameControler.currentWorld++;
+                    StartCoroutine(LoadLevel("MainMenu"));
+                    return;
+                }
+
                 GameControler.currentWorld++;
                 GameControler.currentLevel = 0;
                 Timer.StartWorldTimer();

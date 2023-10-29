@@ -13,6 +13,7 @@ public class LevelPanel : MonoBehaviour
     public GameObject mLevels;
     public Animator mTransitionAnimation;
     public GameObject mLock;
+    public TextMeshProUGUI mLockNumber;
     public TextMeshProUGUI mTextDeathCounter;
     public TextMeshProUGUI mTextTimer;
     public GameObject mChronometerBronze;
@@ -70,8 +71,8 @@ public class LevelPanel : MonoBehaviour
     }
     void Start()
     {
-        GameControler.currentWorld = 0;
-        GameControler.currentLevel = 0;
+        //GameControler.currentWorld = 0;
+        //GameControler.currentLevel = 0;
 
         GameObject left = GameObject.Find("LeftLevel");
         GameObject right = GameObject.Find("RightLevel");
@@ -100,10 +101,10 @@ public class LevelPanel : MonoBehaviour
         }
     }
 
-    public bool isLock()
+    public int isLock()
     {
-        if (GameControler.currentWorld == 0) return false;
-        if (ES3.Load<bool>($"PlayMode_World{GameControler.currentWorld}_Level0_status", false)) return false;
+        if (GameControler.currentWorld == 0) return 12;
+        if (ES3.Load<bool>($"PlayMode_World{GameControler.currentWorld}_Level0_status", false)) return 12;
         int previous_world = GameControler.currentWorld - 1;
         int cpt = 0;
         for(int i = 0; i < mLevels.transform.childCount; ++i)
@@ -115,7 +116,7 @@ public class LevelPanel : MonoBehaviour
             }
         }
         
-        return cpt < 8;
+        return cpt ;
     }
 
 
@@ -171,10 +172,12 @@ public class LevelPanel : MonoBehaviour
         world_name = world_name.Replace("World", Translation.GetTranslation("World", ES3.Load<SystemLanguage>("Language", Application.systemLanguage)));
         mWorldName.text = world_name;
 
-        bool is_lock = isLock();
-        if(is_lock)
+        int nb_level_done = isLock();
+        bool is_lock = nb_level_done < Worlds.mNBLevelToNext;
+        if (is_lock)
         {
             mLock.SetActive(true);
+            mLockNumber.text = $"{nb_level_done} / {Worlds.mNBLevelToNext}";
             mLevels.SetActive(false);
             changeNavigationOnLock(true);
         }

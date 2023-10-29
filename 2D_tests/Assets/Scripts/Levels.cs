@@ -2828,6 +2828,7 @@ public class Levels
 public class Worlds
 {
     public static List<Levels> worlds;
+    public static int mNBLevelToNext = 8;
     private static Levels world_dummy()
     {
         Levels levels = new Levels(12);
