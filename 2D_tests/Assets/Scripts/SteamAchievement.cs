@@ -71,7 +71,7 @@ public class SteamAchievement : MonoBehaviour
 {
     
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -80,7 +80,7 @@ public class SteamAchievement : MonoBehaviour
                 achievement.Clear();
             }
         }
-    }
+    }*/
     
     static public void checkWorlFinish()
     {

@@ -2335,10 +2335,6 @@ PrefabInstance:
       value: -10.469187
       objectReference: {fileID: 0}
     - target: {fileID: 2463160595849655370, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: f5d54733a7e17284eb59c2c7caf5ebb1, type: 2}
-    - target: {fileID: 2463160595849655370, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
       propertyPath: m_fontSizeMax
       value: 18
       objectReference: {fileID: 0}
@@ -2374,10 +2370,6 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2463160595849655370, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
-      propertyPath: m_fontColorGradientPreset
-      value: 
-      objectReference: {fileID: 11400000, guid: c8f8db7065e62194fa0b5ab7f11d9fcd, type: 2}
     - target: {fileID: 3140259860752005360, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2427,10 +2419,6 @@ PrefabInstance:
       value: -11.463553
       objectReference: {fileID: 0}
     - target: {fileID: 4261417218447764188, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: f5d54733a7e17284eb59c2c7caf5ebb1, type: 2}
-    - target: {fileID: 4261417218447764188, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
       propertyPath: m_fontSizeMin
       value: 6
       objectReference: {fileID: 0}
@@ -2450,10 +2438,6 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4261417218447764188, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
-      propertyPath: m_fontColorGradientPreset
-      value: 
-      objectReference: {fileID: 11400000, guid: c8f8db7065e62194fa0b5ab7f11d9fcd, type: 2}
     - target: {fileID: 4333754920971272458, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
       propertyPath: m_SizeDelta.x
       value: -20
@@ -2487,10 +2471,6 @@ PrefabInstance:
       value: -10.469187
       objectReference: {fileID: 0}
     - target: {fileID: 4677862753866410406, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: f5d54733a7e17284eb59c2c7caf5ebb1, type: 2}
-    - target: {fileID: 4677862753866410406, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
       propertyPath: m_fontStyle
       value: 0
       objectReference: {fileID: 0}
@@ -2514,10 +2494,6 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4677862753866410406, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
-      propertyPath: m_fontColorGradientPreset
-      value: 
-      objectReference: {fileID: 11400000, guid: c8f8db7065e62194fa0b5ab7f11d9fcd, type: 2}
     - target: {fileID: 6320142055751534654, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
       propertyPath: m_Name
       value: LeaderBoardTitle
