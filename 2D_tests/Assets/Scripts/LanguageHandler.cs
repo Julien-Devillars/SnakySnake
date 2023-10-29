@@ -12,6 +12,9 @@ public class LanguageHandler : MonoBehaviour
         SystemLanguage.English,
         SystemLanguage.French,
         SystemLanguage.Spanish,
+        SystemLanguage.German,
+        SystemLanguage.Italian,
+        SystemLanguage.Russian,
     };
     public int mLanguageIndex = 0;
 

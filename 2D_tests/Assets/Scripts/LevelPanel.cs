@@ -167,8 +167,9 @@ public class LevelPanel : MonoBehaviour
     {
         //Level current_level = Levels.levels[mDisplayIndex];
         //mLevelName.text = current_level.mLevelName;
-
-        mWorldName.text = Worlds.worlds[GameControler.currentWorld].levels_name;
+        string world_name = Worlds.worlds[GameControler.currentWorld].levels_name;
+        world_name = world_name.Replace("World", Translation.GetTranslation("World", ES3.Load<SystemLanguage>("Language", Application.systemLanguage)));
+        mWorldName.text = world_name;
 
         bool is_lock = isLock();
         if(is_lock)
