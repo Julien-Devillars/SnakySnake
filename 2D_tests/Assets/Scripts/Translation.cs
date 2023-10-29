@@ -316,6 +316,46 @@ public static class Translation
             { SystemLanguage.German, "Neuer Feind: Beschleunige bei jedem Treffer bis 0, dann starte erneut." },
             { SystemLanguage.Italian, "Nuovo nemico: Accelera ad ogni colpo fino a 0, poi ricomincia." },
             { SystemLanguage.Russian, "Новый враг: Ускоряется с каждым ударом до 0, затем начинает сначала." },
+        }},
+        { "DIRECTOR", new Dictionary<SystemLanguage, string>(){
+            { SystemLanguage.English, "Director" },
+            { SystemLanguage.French, "Réalisateur" },
+            { SystemLanguage.Spanish, "Director" },
+            { SystemLanguage.German, "Regisseur" },
+            { SystemLanguage.Italian, "Regista" },
+            { SystemLanguage.Russian, "Режиссер" },
+        }},
+        { "DEVELOPER", new Dictionary<SystemLanguage, string>(){
+            { SystemLanguage.English, "Developer" },
+            { SystemLanguage.French, "Développeur" },
+            { SystemLanguage.Spanish, "Desarrollador" },
+            { SystemLanguage.German, "Entwickler" },
+            { SystemLanguage.Italian, "Sviluppatore" },
+            { SystemLanguage.Russian, "Разработчик" },
+        }},
+        { "GRAPHICS", new Dictionary<SystemLanguage, string>(){
+            { SystemLanguage.English, "Graphics" },
+            { SystemLanguage.French, "Graphiques" },
+            { SystemLanguage.Spanish, "Gráficos" },
+            { SystemLanguage.German, "Grafik" },
+            { SystemLanguage.Italian, "Grafica" },
+            { SystemLanguage.Russian, "Графика" },
+        }},
+        { "TRANSLATION", new Dictionary<SystemLanguage, string>(){
+            { SystemLanguage.English, "Translation" },
+            { SystemLanguage.French, "Traduction" },
+            { SystemLanguage.Spanish, "Traducción" },
+            { SystemLanguage.German, "Übersetzung" },
+            { SystemLanguage.Italian, "Traduzione" },
+            { SystemLanguage.Russian, "Перевод" },
+        }},
+        { "SPECIAL THANKS", new Dictionary<SystemLanguage, string>(){
+            { SystemLanguage.English, "Special Thanks" },
+            { SystemLanguage.French, "Remerciements spéciaux" },
+            { SystemLanguage.Spanish, "Agradecimientos especiales" },
+            { SystemLanguage.German, "Besonderer Dank" },
+            { SystemLanguage.Italian, "Ringraziamenti speciali" },
+            { SystemLanguage.Russian, "Особая благодарность" },
         }}
         // Add more translations here
     };
