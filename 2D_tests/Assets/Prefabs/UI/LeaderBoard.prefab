@@ -2274,22 +2274,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4877730644439399487}
     m_Modifications:
-    - target: {fileID: 166997243747191189, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -3
-      objectReference: {fileID: 0}
-    - target: {fileID: 166997243747191189, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 19.620174
-      objectReference: {fileID: 0}
-    - target: {fileID: 166997243747191189, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 166997243747191189, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 12.1799135
-      objectReference: {fileID: 0}
     - target: {fileID: 1328055956572814748, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2446,6 +2430,14 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -1525186256529246029, guid: f5d54733a7e17284eb59c2c7caf5ebb1, type: 2}
+    - target: {fileID: 4261417218447764188, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 4096
+      objectReference: {fileID: 0}
+    - target: {fileID: 4261417218447764188, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4261417218447764188, guid: c2a43863f3da2c24cbe223247101c12d, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
