@@ -481,7 +481,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5,2, 0.3f), Utils.D * 0f, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, Utils.getMidRelativePositionFromPosition(5,8, 0.3f), Utils.D * 0f, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.mLevelHelper = "Press Space bar to stop moving.<br>Keep pressing to move slowly";
+        level.mLevelHelper = "Press Space bar to move slowly";
         level.addStars(Utils.STAR_DEFAULT_SCALE * 0.5f, 5);
 
         level.addTrail(new Vector3(0f,0.70f), new Vector3(1f, 0.70f));

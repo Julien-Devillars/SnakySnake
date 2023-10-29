@@ -11,7 +11,8 @@ public class LevelHelper : MonoBehaviour
     void Start()
     {
         string helper_text = Worlds.getLevel(GameControler.currentWorld, GameControler.currentLevel).mLevelHelper;
-        if(helper_text == "")
+        helper_text = Translation.GetTranslation(helper_text, ES3.Load<SystemLanguage>("Language", Application.systemLanguage));
+        if (helper_text == "")
         {
             gameObject.SetActive(false);
             GetComponent<Image>().enabled = false;
