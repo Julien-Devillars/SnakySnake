@@ -1019,7 +1019,7 @@ public class Levels
 
         level.addEnemy(new EnemyCircleInfo(Utils.getMidRelativePositionFromPosition(1, 5), Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE, Utils.rR, EnemyCircleInfo.Form.Square, 1f));
 
-        level.mLevelHelper = "New enemy : <br>Changes directions in cycles !";
+        level.mLevelHelper = "New enemy : Changes directions in cycles !";
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addTimers(7f);
         return level;
@@ -1686,7 +1686,7 @@ public class Levels
         level.addEnemy(new EnemyFollowerInfo(4, Utils.R * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyFollowerInfo(6, Utils.L * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.mLevelHelper = "New enemy : <br>It will follow you !";
+        level.mLevelHelper = "New enemy : It will follow you !";
         level.addStar(new StarInfo(2, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));

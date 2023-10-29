@@ -253,13 +253,13 @@ public static class Translation
             { SystemLanguage.Italian, "Alcuni nemici possono essere collegati, non attraversarli!" },
             { SystemLanguage.Russian, "Некоторые враги могут быть связаны, не пересекайте их!" },
         }},
-        { "NEW ENEMY : <BR>CHANGES DIRECTIONS IN CYCLES!", new Dictionary<SystemLanguage, string>(){
-            { SystemLanguage.English, "New enemy: <br>Changes directions in cycles!" },
-            { SystemLanguage.French, "Nouvel ennemi : <br>Change de direction en cycles !" },
-            { SystemLanguage.Spanish, "Nuevo enemigo: <br>Cambia de dirección en ciclos!" },
-            { SystemLanguage.German, "Neuer Feind: <br>Ändert Richtungen in Zyklen!" },
-            { SystemLanguage.Italian, "Nuovo nemico: <br>Cambia direzione in cicli!" },
-            { SystemLanguage.Russian, "Новый враг: <br>Меняет направление в циклах!" },
+        { "NEW ENEMY : CHANGES DIRECTIONS IN CYCLES !", new Dictionary<SystemLanguage, string>(){
+            { SystemLanguage.English, "New enemy: Changes directions in cycles!" },
+            { SystemLanguage.French, "Nouvel ennemi : Change de direction en cycles !" },
+            { SystemLanguage.Spanish, "Nuevo enemigo: Cambia de dirección en ciclos!" },
+            { SystemLanguage.German, "Neuer Feind: Ändert Richtungen in Zyklen!" },
+            { SystemLanguage.Italian, "Nuovo nemico: Cambia direzione in cicli!" },
+            { SystemLanguage.Russian, "Новый враг: Меняет направление в циклах!" },
         }},
         { "TRY TO UNDERSTAND THEIR PATTERN.", new Dictionary<SystemLanguage, string>(){
             { SystemLanguage.English, "Try to understand their pattern." },
@@ -277,13 +277,13 @@ public static class Translation
             { SystemLanguage.Italian, "Trova un passaggio rompendo il modello dei nemici." },
             { SystemLanguage.Russian, "Найдите проход, разбивая шаблон врагов." },
         }},
-        { "NEW ENEMY : <BR>IT WILL FOLLOW YOU!", new Dictionary<SystemLanguage, string>(){
-            { SystemLanguage.English, "New enemy: <br>It will follow you!" },
-            { SystemLanguage.French, "Nouvel ennemi : <br>Il te suivra !" },
-            { SystemLanguage.Spanish, "Nuevo enemigo: <br>¡Te seguirá!" },
-            { SystemLanguage.German, "Neuer Feind: <br>Er wird dir folgen!" },
-            { SystemLanguage.Italian, "Nuovo nemico: <br>Ti seguirà!" },
-            { SystemLanguage.Russian, "Новый враг: <br>Он будет следовать за тобой!" },
+        { "NEW ENEMY : IT WILL FOLLOW YOU !", new Dictionary<SystemLanguage, string>(){
+            { SystemLanguage.English, "New enemy: It will follow you!" },
+            { SystemLanguage.French, "Nouvel ennemi : Il te suivra !" },
+            { SystemLanguage.Spanish, "Nuevo enemigo: ¡Te seguirá!" },
+            { SystemLanguage.German, "Neuer Feind: Er wird dir folgen!" },
+            { SystemLanguage.Italian, "Nuovo nemico: Ti seguirà!" },
+            { SystemLanguage.Russian, "Новый враг: Он будет следовать за тобой!" },
         }},
         { "NEW ENEMY : IT CAN CROSS THE BORDERS.", new Dictionary<SystemLanguage, string>(){
             { SystemLanguage.English, "New enemy: It can cross the borders." },
@@ -293,7 +293,7 @@ public static class Translation
             { SystemLanguage.Italian, "Nuovo nemico: Può attraversare i confini." },
             { SystemLanguage.Russian, "Новый враг: Он может пересекать границы." },
         }},
-        { "NEW ENEMY : IT WILL CHASE YOU THROUGH THE BORDER.", new Dictionary<SystemLanguage, string>(){
+        { "NEW ENEMY : IT WILL CHASE YOU THROUGHT THE BORDER.", new Dictionary<SystemLanguage, string>(){
             { SystemLanguage.English, "New Enemy: It will chase you through the border." },
             { SystemLanguage.French, "Nouvel ennemi : Il te poursuivra à travers les bordures." },
             { SystemLanguage.Spanish, "Nuevo enemigo: Te perseguirá a través de la frontera." },
