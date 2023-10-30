@@ -258,6 +258,8 @@ public class CharacterBehavior : MonoBehaviour
 
         gameObject.GetComponent<SpriteRenderer>().material = new Material(Resources.Load<Material>("Materials/CharacterMaterial"));
         addAdditionalBorder();
+
+        UnityEngine.Cursor.visible = false;
     }
     public void addBorder(Border border)
     {

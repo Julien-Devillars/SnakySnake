@@ -114,12 +114,14 @@ private void Awake()
     {
         mDefaultInputActions.UI.Enable();
         mPlayerControl.PlayerController.Enable();
+        Cursor.visible = true;
     }
 
     private void OnDisable()
     {
         mDefaultInputActions.UI.Disable();
         mPlayerControl.PlayerController.Disable();
+        Cursor.visible = false;
     }
     private void Update()
     {
@@ -154,6 +156,8 @@ private void Awake()
         mPauseMenu.SetActive(false);
         mOptionMenu.SetActive(false);
         mMainMenu.SetActive(false);
+
+        Cursor.visible = false;
         Time.timeScale = 1f;
         mIsPaused = false;
         Utils.GAME_STOPPED = false;
@@ -167,6 +171,7 @@ private void Awake()
         mPauseMenu.SetActive(true);
         mMainMenu.SetActive(true);
         mOptionMenu.SetActive(false);
+        Cursor.visible = true;
         //Time.timeScale = 0f;
         mIsPaused = true;
         Utils.GAME_STOPPED = true;

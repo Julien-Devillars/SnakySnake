@@ -71,6 +71,7 @@ public class EndLevel : MonoBehaviour
         {
             return;
         }
+        Cursor.visible = true;
         if (GameControler.status == GameControler.GameStatus.Win)
         {
             Timer.SaveLevelTime();
