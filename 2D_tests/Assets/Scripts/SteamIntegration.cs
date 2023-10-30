@@ -16,6 +16,7 @@ public class SteamIntegration : MonoBehaviour
         yield return new WaitForSeconds(mTimeToReconnect);
         try
         {
+            Steamworks.SteamClient.Shutdown();
             Steamworks.SteamClient.Init(2573150);
             Debug.Log("Steam Found");
             mHasSteam = true;

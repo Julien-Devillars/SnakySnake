@@ -84,7 +84,6 @@ public class SteamAchievement : MonoBehaviour
     
     static public void checkWorlFinish()
     {
-        if (!SteamIntegration.mHasSteam) return;
         bool all_done = true;
         bool all_gold = true;
 
@@ -101,31 +100,18 @@ public class SteamAchievement : MonoBehaviour
         if (all_done)
         {
             var achievement = new Achievement($"FINISH_WORLD_{GameControler.currentWorld + 1}");
-            bool success = achievement.Trigger();
-            if (success)
-            {
-                SteamIntegration.mHasSteam = false;
-            }
+            achievement.Trigger();
         }
         if (all_gold)
         {
             var achievement = new Achievement($"GOLD_WORLD_{GameControler.currentWorld + 1}");
-            bool success = achievement.Trigger();
-            if (success)
-            {
-                SteamIntegration.mHasSteam = false;
-            }
+            achievement.Trigger();
         }
     }
     static public void noDeathInWorld()
     {
-        if (!SteamIntegration.mHasSteam) return;
         var achievement = new Achievement($"NO_DEATH_WORLD_{GameControler.currentWorld + 1}");
         bool success = achievement.Trigger();
-        if(success)
-        {
-            SteamIntegration.mHasSteam = false;
-        }
     }
 
     static async public void addBestTimeInLeaderBoard(float best_score)

@@ -97,7 +97,7 @@ public class LeaderBoard : MonoBehaviour
         if(leaderboard == null)
         {
             displayOnlyFirstLine(-1, "Connection Issue", 0f);
-            SteamIntegration.mHasSteam = false;
+            //SteamIntegration.mHasSteam = false;
             return;
         }
         if (!leaderboard.HasValue)

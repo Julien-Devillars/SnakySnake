@@ -22,5 +22,5 @@ public static class GameControler
     public static GameType type = GameType.None;
     public static int currentLevel = 0;
     public static int currentWorld = 0;
-    public static bool isDemo = true;
+    public static bool isDemo = false;
 }

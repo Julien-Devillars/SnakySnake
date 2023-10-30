@@ -62,6 +62,10 @@ public static class Timer
         {
             SteamAchievement.noDeathInWorld();
         }
+        else
+        {
+            Debug.Log("no achievement dead");
+        }
         float time = Time.realtimeSinceStartup - startWorldTimer - totalPauseWorldTimer;
 
         float previous_time = ES3.Load<float>($"PlayMode_World{GameControler.currentWorld}_timer", -1f);
@@ -95,6 +99,7 @@ public static class Timer
         deathCountInLevel++;
         
         hasDiedInWorld = true;
+        Debug.Log("deadge");
     }
     public static void resetDeathLevelCounter()
     {
