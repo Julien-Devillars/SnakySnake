@@ -101,6 +101,7 @@ public class MainMenu : MonoBehaviour
         GameControler.type= GameControler.GameType.None;
 
         Worlds.createWorlds();
+        Cursor.visible = true;
     }
     private void OnEnable()
     {

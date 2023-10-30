@@ -58,6 +58,8 @@ public static class Timer
     {
 
         if (!calculateTimer) return;
+        if (GameControler.currentLevel != Worlds.getCurrentWorld().levels.Count - 1) return;
+        Debug.Log("Save world time");
         if (!hasDiedInWorld)
         {
             SteamAchievement.noDeathInWorld();

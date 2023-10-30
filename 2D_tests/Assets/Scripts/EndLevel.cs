@@ -75,6 +75,7 @@ public class EndLevel : MonoBehaviour
         if (GameControler.status == GameControler.GameStatus.Win)
         {
             Timer.SaveLevelTime();
+            Timer.SaveWorldTime();
             Timer.StartLevelPauseTimer();
             string world_tr = Translation.GetTranslation("World", ES3.Load<SystemLanguage>("Language", Application.systemLanguage));
             string level_tr = Translation.GetTranslation("Level", ES3.Load<SystemLanguage>("Language", Application.systemLanguage));
@@ -145,7 +146,6 @@ public class EndLevel : MonoBehaviour
         {
             if(GameControler.currentWorld < Worlds.worlds.Count - 1)
             {
-                Timer.SaveWorldTime();
                 Timer.resetDeathLevelCounter();
 
                 int nb_level_done = nextLevelIsLock();
@@ -159,6 +159,7 @@ public class EndLevel : MonoBehaviour
                     return;
                 }
 
+                Timer.StartWorldTimer();
                 StartCoroutine(LoadLevel("PlayLevel"));
             }
             else
