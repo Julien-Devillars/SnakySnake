@@ -148,15 +148,16 @@ public class EndLevel : MonoBehaviour
                 Timer.resetDeathLevelCounter();
 
                 int nb_level_done = nextLevelIsLock();
-                if (nb_level_done < Worlds.mNBLevelToNext)
+
+                GameControler.currentWorld++;
+                GameControler.currentLevel = 0;
+
+                if (Utils.isLock(nb_level_done))
                 {
-                    GameControler.currentWorld++;
                     StartCoroutine(LoadLevel("MainMenu"));
                     return;
                 }
 
-                GameControler.currentWorld++;
-                GameControler.currentLevel = 0;
                 StartCoroutine(LoadLevel("PlayLevel"));
             }
             else

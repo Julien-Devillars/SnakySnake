@@ -236,15 +236,17 @@ private void Awake()
             if(GameControler.currentWorld < Worlds.worlds.Count - 1)
             {
                 int nb_level_done = nextLevelIsLock();
-                if(nb_level_done < Worlds.mNBLevelToNext)
+
+                GameControler.currentWorld++;
+                GameControler.currentLevel = 0;
+
+                if (Utils.isLock(nb_level_done))
                 {
                     GameControler.currentWorld++;
                     StartCoroutine(LoadLevel("MainMenu"));
                     return;
                 }
 
-                GameControler.currentWorld++;
-                GameControler.currentLevel = 0;
                 Timer.StartWorldTimer();
                 StartCoroutine(LoadLevel("PlayLevel"));
             }

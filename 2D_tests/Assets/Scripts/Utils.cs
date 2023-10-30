@@ -422,4 +422,11 @@ public class Utils
             cleanChronometerImage(gold.GetComponent<Image>());
         }
     }
+    public static bool isLock(int nb_level_done)
+    {
+        bool is_lock = nb_level_done < Worlds.mNBLevelToNext;
+        is_lock |= GameControler.isDemo && GameControler.currentWorld != 0;
+        return is_lock;
+    }
 }
+

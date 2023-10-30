@@ -8,7 +8,10 @@ using UnityEngine.UI;
 
 public static class Translation
 {
-
+    static public SystemLanguage getLanguage()
+    {
+        return ES3.Load<SystemLanguage>("Language", Application.systemLanguage);
+    }
     static public Dictionary<SystemLanguage, string> lang = new Dictionary<SystemLanguage, string>()
     {
         { SystemLanguage.English, "English" },
@@ -356,6 +359,14 @@ public static class Translation
             { SystemLanguage.German, "Besonderer Dank" },
             { SystemLanguage.Italian, "Ringraziamenti speciali" },
             { SystemLanguage.Russian, "Особая благодарность" },
+        }},
+        { "THANKS FOR TESTING THE GAME. UNLOCK OTHER LEVELS BY BUYING THE GAME.", new Dictionary<SystemLanguage, string>(){
+            { SystemLanguage.English, "Thanks for testing the game. Unlock other levels by buying the game." },
+            { SystemLanguage.French, "Merci d'avoir testé le jeu. Débloquez d'autres niveaux en achetant le jeu." },
+            { SystemLanguage.Spanish, "Gracias por probar el juego. Desbloquea otros niveles comprando el juego." },
+            { SystemLanguage.German, "Vielen Dank für das Testen des Spiels. Schalte weitere Level frei, indem du das Spiel kaufst." },
+            { SystemLanguage.Italian, "Grazie per aver testato il gioco. Sblocca altri livelli acquistando il gioco." },
+            { SystemLanguage.Russian, "Спасибо за тестирование игры. Pазблокируйте другие уровни, купив игру." },
         }}
         // Add more translations here
     };

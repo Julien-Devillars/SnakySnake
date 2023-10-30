@@ -172,12 +172,20 @@ public class LevelPanel : MonoBehaviour
         world_name = world_name.Replace("World", Translation.GetTranslation("World", ES3.Load<SystemLanguage>("Language", Application.systemLanguage)));
         mWorldName.text = world_name;
 
+
         int nb_level_done = isLock();
-        bool is_lock = nb_level_done < Worlds.mNBLevelToNext;
+        bool is_lock = Utils.isLock(nb_level_done);
         if (is_lock)
         {
             mLock.SetActive(true);
-            mLockNumber.text = $"{nb_level_done} / {Worlds.mNBLevelToNext}";
+            if(GameControler.isDemo)
+            {
+                mLockNumber.text = Translation.GetTranslation("Thanks for testing the game. Unlock other levels by buying the game.", Translation.getLanguage());
+            }
+            else
+            {
+                mLockNumber.text = $"{nb_level_done} / {Worlds.mNBLevelToNext}";
+            }
             mLevels.SetActive(false);
             changeNavigationOnLock(true);
         }

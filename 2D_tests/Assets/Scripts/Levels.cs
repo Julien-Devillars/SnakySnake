@@ -520,7 +520,7 @@ public class Levels
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 9, Utils.U * speed, Utils.ENEMY_DEFAULT_SCALE));
         level.addEnemy(new EnemyInfo(EnemyType.Basic, 3, Utils.D * speed, Utils.ENEMY_DEFAULT_SCALE));
 
-        level.mLevelHelper = "The created borders will help you out !";
+        level.mLevelHelper = "The created borders will help you out!";
         level.addStar(new StarInfo(new Vector2(0.25f, 0.5f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(new Vector2(0.5f, 0.5f), Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(new Vector2(0.75f, 0.5f), Utils.STAR_DEFAULT_SCALE));
@@ -788,7 +788,7 @@ public class Levels
         level.addStar(new StarInfo(5, Utils.STAR_DEFAULT_SCALE));
         level.addTimers(Utils.getSeconds(0, 18f), Utils.getSeconds(0, 13f), Utils.getSeconds(0, 7.5f));
 
-        level.mLevelHelper = "Some enemies can be linked, do not cross it !";
+        level.mLevelHelper = "Some enemies can be linked, do not cross it!";
         return level;
     }
     public static Level level_1_basic_link_2()
