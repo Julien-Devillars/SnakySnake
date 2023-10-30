@@ -2085,7 +2085,7 @@ public class Levels
         level.addStar(new StarInfo(6, Utils.STAR_DEFAULT_SCALE));
         level.addStar(new StarInfo(8, Utils.STAR_DEFAULT_SCALE));
 
-        level.addTimers(6.5f);
+        level.addTimers(15f);
         return level;
     }
 

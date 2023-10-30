@@ -246,7 +246,6 @@ private void Awake()
 
                 if (Utils.isLock(nb_level_done))
                 {
-                    GameControler.currentWorld++;
                     StartCoroutine(LoadLevel("MainMenu"));
                     return;
                 }
